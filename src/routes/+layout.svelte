@@ -10,18 +10,18 @@
 <Container class="flex size-full flex-col">
 	<Container type="nav" class="flex w-full justify-between p-4 opacity-100 shadow-2xl">
 		<Container class="flex">
-			<Container class="size-48">
+			<Container class="size-16">
 				<Image
 					src="https://picsum.photos/200/300"
 					alt="Fluid UI"
-					class="bg-black-500 size-full object-cover"
+					class="bg-black-500 size-full rounded-full object-cover"
 				></Image>
 			</Container>
-			<Text>Fluid UI</Text>
+			<Text value="Fluid UI"></Text>
 		</Container>
 
 		<Container>
-			<Text>Documentation</Text>
+			<Text value="Documentation"></Text>
 			<img src="" alt="GitHub" />
 		</Container>
 	</Container>

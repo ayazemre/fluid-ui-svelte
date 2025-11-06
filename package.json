@@ -1,6 +1,13 @@
 {
 	"name": "fluid-ui-svelte",
-	"version": "0.0.1",
+	"version": "0.2.5",
+	"author": {
+		"name": "Emre Ayaz",
+		"email": "ayazthemre@gmail.com"
+	},
+	"repository": {
+		"url": "https://github.com/ayazemre/fluid-ui-svelte"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",

@@ -15,6 +15,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-default');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('DIV');
 		await expect.element(container).toContainHTML('<p>Default</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -30,6 +31,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-article');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('ARTICLE');
 		await expect.element(container).toContainHTML('<p>Article</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -45,6 +47,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-aside');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('ASIDE');
 		await expect.element(container).toContainHTML('<p>Aside</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -60,6 +63,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-div');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('DIV');
 		await expect.element(container).toContainHTML('<p>Div</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -75,6 +79,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-footer');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('FOOTER');
 		await expect.element(container).toContainHTML('<p>Footer</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -90,6 +95,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-header');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('HEADER');
 		await expect.element(container).toContainHTML('<p>Header</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -105,6 +111,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-main');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('MAIN');
 		await expect.element(container).toContainHTML('<p>Main</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -120,6 +127,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-nav');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('NAV');
 		await expect.element(container).toContainHTML('<p>Nav</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -135,6 +143,7 @@ describe('Container', () => {
 
 		const container = page.getByTestId('container-section');
 		await expect.element(container).toBeInTheDocument();
+		expect(container.element().tagName).toBe('SECTION');
 		await expect.element(container).toContainHTML('<p>Section</p>');
 		await expect.element(container).toHaveClass('fluid-container');
 	});
@@ -142,7 +151,6 @@ describe('Container', () => {
 	it('Override Default Styling', async () => {
 		render(Container, {
 			id: 'container-section',
-			type: 'section',
 			class: 'override',
 			overrideDefaultStyling: true,
 			children: createRawSnippet(() => {
