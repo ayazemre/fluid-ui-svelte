@@ -103,10 +103,39 @@
 	--color-error-950: #450a0a;
 }
 
-.fluid-container {
+/* Base ----------------------------*/
+.fluid-button {
+	@apply p-1;
 }
 
-/* Buttons ----------------------------*/
-.fluid-button {
-	@apply size-full p-1;
+.fluid-button.fluid-button-primary {
+	@apply bg-primary-600 text-white hover:bg-primary-500;
+}
+
+.fluid-input-field {
+	@apply outline-1 outline-primary-300 focus:outline-2 focus:outline-primary-500;
+}
+
+/* Components ----------------------------*/
+.fluid-switch-button {
+	@apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-neutral-200 transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+}
+.fluid-switch-circle {
+	@apply pointer-events-none inline-block h-4 w-4 translate-x-0 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out checked:translate-x-4;
+}
+.fluid-switch-button.checked {
+	@apply bg-primary-600;
+}
+.fluid-switch-button.checked .fluid-switch-circle {
+	@apply translate-x-4;
+}
+
+.fluid-accordion-trigger {
+	@apply flex w-full flex-col bg-primary-200 p-1;
+}
+.fluid-accordion-header {
+	@apply p-2;
+}
+.fluid-accordion-body {
+	@apply p-2;
 }

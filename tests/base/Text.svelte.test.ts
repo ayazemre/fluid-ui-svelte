@@ -2,7 +2,6 @@ import { page } from '@vitest/browser/context';
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Text from '$lib/base/Text.svelte';
-import { createRawSnippet } from 'svelte';
 
 describe('Text', () => {
 	it('Default', async () => {
@@ -13,106 +12,77 @@ describe('Text', () => {
 
 		const text = page.getByTestId('text-default');
 		await expect.element(text).toBeInTheDocument();
-		await expect(text.element().tagName).toBe('P');
+		expect(text.element().tagName).toBe('P');
 		await expect.element(text).toHaveTextContent('Default');
-		await expect.element(text).toHaveClass('fluid-text');
 	});
 
-	it('P', async () => {
+	it('Types', async () => {
+		const textTypes = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+		for (const textType of textTypes) {
+			render(Text, {
+				id: 'text-' + textType,
+				value: textType,
+				type: textType as any
+			});
+
+			const text = page.getByTestId('text-' + textType);
+			await expect.element(text).toBeInTheDocument();
+			expect(text.element().tagName).toBe(textType.toUpperCase());
+			await expect.element(text).toHaveTextContent(textType);
+		}
+	});
+
+	it('Styling', async () => {
+		for (const overrideDefaultStyling of [true, false]) {
+			render(Text, {
+				id: 'text-override-' + overrideDefaultStyling,
+				value: 'Default',
+				class: 'text-2xl',
+				overrideDefaultStyling
+			});
+
+			const text = page.getByTestId('text-override-' + overrideDefaultStyling);
+			await expect.element(text).toBeInTheDocument();
+			expect(text.element().tagName).toBe('P');
+			await expect.element(text).toHaveTextContent('Default');
+
+			if (overrideDefaultStyling) {
+				await expect.element(text).toHaveClass('text-2xl');
+				await expect.element(text).not.toHaveClass('fluid-text');
+			} else {
+				await expect.element(text).toHaveClass('text-2xl');
+				await expect.element(text).toHaveClass('fluid-text');
+			}
+		}
+	});
+
+	it('Override Default Styling', async () => {
 		render(Text, {
-			id: 'text-p',
-			value: 'paragraph',
-			type: 'p'
+			id: 'text-default',
+			value: 'Default',
+			class: 'text-2xl',
+			overrideDefaultStyling: true
 		});
 
-		const text = page.getByTestId('text-p');
+		const text = page.getByTestId('text-default');
 		await expect.element(text).toBeInTheDocument();
 		expect(text.element().tagName).toBe('P');
-		await expect.element(text).toHaveTextContent('paragraph');
-		await expect.element(text).toHaveClass('fluid-text');
+		await expect.element(text).toHaveTextContent('Default');
+		await expect.element(text).not.toHaveClass('fluid-text');
 	});
 
-	it('H1', async () => {
+	it('Override Default Styling', async () => {
 		render(Text, {
-			id: 'text-h1',
-			value: 'heading1',
-			type: 'h1'
+			id: 'text-default',
+			value: 'Default',
+			'aria-label': 'text'
 		});
 
-		const text = page.getByTestId('text-h1');
+		const text = page.getByTestId('text-default');
 		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H1');
-		await expect.element(text).toHaveTextContent('heading1');
-		await expect.element(text).toHaveClass('fluid-text');
-	});
-
-	it('H2', async () => {
-		render(Text, {
-			id: 'text-h2',
-			value: 'heading2',
-			type: 'h2'
-		});
-
-		const text = page.getByTestId('text-h2');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H2');
-		await expect.element(text).toHaveTextContent('heading2');
-		await expect.element(text).toHaveClass('fluid-text');
-	});
-
-	it('H3', async () => {
-		render(Text, {
-			id: 'text-h3',
-			value: 'heading3',
-			type: 'h3'
-		});
-
-		const text = page.getByTestId('text-h3');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H3');
-		await expect.element(text).toHaveTextContent('heading3');
-		await expect.element(text).toHaveClass('fluid-text');
-	});
-
-	it('H4', async () => {
-		render(Text, {
-			id: 'text-h4',
-			value: 'heading4',
-			type: 'h4'
-		});
-
-		const text = page.getByTestId('text-h4');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H4');
-		await expect.element(text).toHaveTextContent('heading4');
-		await expect.element(text).toHaveClass('fluid-text');
-	});
-
-	it('H5', async () => {
-		render(Text, {
-			id: 'text-h5',
-			value: 'heading5',
-			type: 'h5'
-		});
-
-		const text = page.getByTestId('text-h5');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H5');
-		await expect.element(text).toHaveTextContent('heading5');
-		await expect.element(text).toHaveClass('fluid-text');
-	});
-
-	it('H6', async () => {
-		render(Text, {
-			id: 'text-h6',
-			value: 'heading6',
-			type: 'h6'
-		});
-
-		const text = page.getByTestId('text-h6');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('H6');
-		await expect.element(text).toHaveTextContent('heading6');
-		await expect.element(text).toHaveClass('fluid-text');
+		expect(text.element().tagName).toBe('P');
+		await expect.element(text).toHaveTextContent('Default');
+		expect(text.element().ariaLabel).toBe('text');
 	});
 });

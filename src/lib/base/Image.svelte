@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { HTMLImgAttributes } from 'svelte/elements';
 	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
-	import type { Snippet } from 'svelte';
 
 	const {
 		class: className = '',

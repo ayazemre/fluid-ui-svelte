@@ -8,6 +8,7 @@ describe('Container', () => {
 	it('Default', async () => {
 		render(Container, {
 			id: 'container-default',
+			'aria-label': 'div',
 			children: createRawSnippet(() => {
 				return { render: () => '<p>Default</p>' };
 			})
@@ -17,150 +18,58 @@ describe('Container', () => {
 		await expect.element(container).toBeInTheDocument();
 		expect(container.element().tagName).toBe('DIV');
 		await expect.element(container).toContainHTML('<p>Default</p>');
-		await expect.element(container).toHaveClass('fluid-container');
+		expect(container.element().ariaLabel).toBe('div');
 	});
 
-	it('Article', async () => {
-		render(Container, {
-			id: 'container-article',
-			type: 'article',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Article</p>' };
-			})
-		});
+	it('Types', async () => {
+		const containerTypes = [
+			'article',
+			'aside',
+			'div',
+			'footer',
+			'header',
+			'main',
+			'nav',
+			'section'
+		];
 
-		const container = page.getByTestId('container-article');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('ARTICLE');
-		await expect.element(container).toContainHTML('<p>Article</p>');
-		await expect.element(container).toHaveClass('fluid-container');
+		for (const containerType of containerTypes) {
+			render(Container, {
+				id: `container-${containerType}`,
+				type: containerType as any,
+				children: createRawSnippet(() => {
+					return { render: () => `<p>${containerType}</p>` };
+				})
+			});
+
+			const container = page.getByTestId(`container-${containerType}`);
+			await expect.element(container).toBeInTheDocument();
+			expect(container.element().tagName).toBe(containerType.toUpperCase());
+			await expect.element(container).toContainHTML(`<p>${containerType}</p>`);
+		}
 	});
 
-	it('Aside', async () => {
-		render(Container, {
-			id: 'container-aside',
-			type: 'aside',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Aside</p>' };
-			})
-		});
+	it('Styling', async () => {
+		for (const overrideDefaultStyling of [false, true]) {
+			render(Container, {
+				id: 'container-override-' + overrideDefaultStyling,
+				class: 'override',
+				overrideDefaultStyling,
+				children: createRawSnippet(() => {
+					return { render: () => '<p>div</p>' };
+				})
+			});
 
-		const container = page.getByTestId('container-aside');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('ASIDE');
-		await expect.element(container).toContainHTML('<p>Aside</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Div', async () => {
-		render(Container, {
-			id: 'container-div',
-			type: 'div',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Div</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-div');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('DIV');
-		await expect.element(container).toContainHTML('<p>Div</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Footer', async () => {
-		render(Container, {
-			id: 'container-footer',
-			type: 'footer',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Footer</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-footer');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('FOOTER');
-		await expect.element(container).toContainHTML('<p>Footer</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Header', async () => {
-		render(Container, {
-			id: 'container-header',
-			type: 'header',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Header</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-header');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('HEADER');
-		await expect.element(container).toContainHTML('<p>Header</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Main', async () => {
-		render(Container, {
-			id: 'container-main',
-			type: 'main',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Main</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-main');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('MAIN');
-		await expect.element(container).toContainHTML('<p>Main</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Nav', async () => {
-		render(Container, {
-			id: 'container-nav',
-			type: 'nav',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Nav</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-nav');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('NAV');
-		await expect.element(container).toContainHTML('<p>Nav</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Section', async () => {
-		render(Container, {
-			id: 'container-section',
-			type: 'section',
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Section</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-section');
-		await expect.element(container).toBeInTheDocument();
-		expect(container.element().tagName).toBe('SECTION');
-		await expect.element(container).toContainHTML('<p>Section</p>');
-		await expect.element(container).toHaveClass('fluid-container');
-	});
-
-	it('Override Default Styling', async () => {
-		render(Container, {
-			id: 'container-section',
-			class: 'override',
-			overrideDefaultStyling: true,
-			children: createRawSnippet(() => {
-				return { render: () => '<p>Section</p>' };
-			})
-		});
-
-		const container = page.getByTestId('container-section');
-		await expect.element(container).toBeInTheDocument();
-		await expect.element(container).toContainHTML('<p>Section</p>');
-		await expect.element(container).toHaveClass('override');
+			const container = page.getByTestId('container-override-' + overrideDefaultStyling);
+			await expect.element(container).toBeInTheDocument();
+			await expect.element(container).toContainHTML('<p>div</p>');
+			if (overrideDefaultStyling) {
+				await expect.element(container).toHaveClass('override');
+				await expect.element(container).not.toHaveClass('fluid-container');
+			} else {
+				await expect.element(container).toHaveClass('fluid-container');
+				await expect.element(container).toHaveClass('override');
+			}
+		}
 	});
 });
