@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
-	import type { Snippet } from 'svelte';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { onMount, type Snippet } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const {
 		class: className = '',
@@ -13,9 +14,24 @@
 		overrideDefaultStyling?: boolean;
 		children: Snippet;
 	} & HTMLAnchorAttributes = $props();
-	let isLoaded = $state(false);
+	let element: HTMLAnchorElement;
+
+	onMount(() => {
+		if (element) {
+			element.addEventListener('click', async (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				console.log(element.href);
+				await goto(element.href);
+			});
+		}
+	});
 </script>
 
-<a {...rest} class={createDefaultStyling(className, 'fluid-link', overrideDefaultStyling)}>
+<a
+	bind:this={element}
+	{...rest}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-link')}
+>
 	{@render children()}</a
 >

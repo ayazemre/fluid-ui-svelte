@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLButtonAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
 	import { type Snippet } from 'svelte';
 
 	const {
@@ -25,7 +25,7 @@
 	type="button"
 	onclick={async (event: Event) => onclick(event, buttonState)}
 	{...rest}
-	class={createDefaultStyling(className, 'fluid-button', overrideDefaultStyling)}
+	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-button')}
 >
 	{#if buttonState.inProgress && loadingPlaceholder}
 		{@render loadingPlaceholder()}

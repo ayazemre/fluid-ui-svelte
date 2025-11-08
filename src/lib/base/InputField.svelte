@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLInputAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
 	import { onMount } from 'svelte';
 	import { inputFilter } from '../utilities/inputFilter.js';
 
@@ -32,5 +32,5 @@
 	bind:value
 	{type}
 	{...rest}
-	class={createDefaultStyling(className, 'fluid-input-field', overrideDefaultStyling)}
+	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-input-field')}
 />

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
 	import type { Snippet } from 'svelte';
 	import type { TransitionConfig } from 'svelte/transition';
 
@@ -20,7 +20,7 @@
 		transitionFn?: (node: Element, params?: any) => TransitionConfig;
 		transitionParams?: TransitionConfig;
 		overrideDefaultStyling?: boolean;
-		children: Snippet;
+		children?: Snippet;
 	} & HTMLAttributes<HTMLElement> = $props();
 </script>
 
@@ -28,7 +28,7 @@
 	this={type}
 	{...rest}
 	transition:transitionFn={transitionParams}
-	class={createDefaultStyling(className, 'fluid-container', overrideDefaultStyling)}
+	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-container')}
 >
-	{@render children()}
+	{@render children?.()}
 </svelte:element>
