@@ -19,26 +19,29 @@
 	const components = [
 		{ name: 'Accordion', url: '/documentation/components/accordion' },
 		{ name: 'Calendar', url: '/documentation/components/calendar' },
-		{ name: 'Code Block', url: '/documentation/components/code-block' },
+		{ name: 'Code Viewer', url: '/documentation/components/code-viewer' },
 		{ name: 'Switch', url: '/documentation/components/switch' }
 	];
 </script>
 
-<Container class="flex flex-1 flex-col" id="documentation-page-layout">
-	<Container class="flex size-full justify-between opacity-100" id="documentation-page-two-row">
+<Container
+	class="flex flex-1 flex-col bg-neutral-50  dark:bg-neutral-900"
+	id="documentation-page-layout"
+>
+	<Container class="flex flex-1 justify-between opacity-100" id="documentation-page-two-row">
 		<Container
 			type="aside"
-			class="flex w-1/3 min-w-64 flex-col gap-4 border-r border-neutral-300 px-4 py-8"
+			class="flex min-w-64 flex-col gap-2 border-r border-neutral-300 px-4 py-8 dark:border-neutral-700"
 			id="documentation-page-sidebar"
 		>
 			<Link
-				href="/documentation/introduction"
+				href="/documentation/getting-started"
 				class={mergeClasses(
-					page.url.pathname == '/documentation/introduction' ? 'active' : '',
-					'fluid-sidebar-link'
+					page.url.pathname == '/documentation/getting-started' ? 'active' : '',
+					'fluid-sidebar-link p-2'
 				)}
 			>
-				<Text>Introduction</Text>
+				<Text overrideDefaultStyling>Getting Started</Text>
 			</Link>
 
 			<Accordion>
@@ -53,10 +56,10 @@
 							href={element.url}
 							class={mergeClasses(
 								page.url.pathname == element.url ? 'active' : '',
-								'fluid-sidebar-link'
+								'fluid-sidebar-link p-2 text-left'
 							)}
 						>
-							<Text>{element.name}</Text>
+							{element.name}
 						</Link>
 					{/each}
 				{/snippet}
@@ -71,12 +74,13 @@
 					{#each components as element}
 						<Link
 							href={element.url}
+							overrideDefaultStyling
 							class={mergeClasses(
 								page.url.pathname == element.url ? 'active' : '',
-								'fluid-sidebar-link'
+								'fluid-sidebar-link p-2 text-left'
 							)}
 						>
-							<Text>{element.name}</Text>
+							{element.name}
 						</Link>
 					{/each}
 				{/snippet}
@@ -86,12 +90,17 @@
 				href="/documentation/helpers"
 				class={mergeClasses(
 					page.url.pathname == '/documentation/helpers' ? 'active' : '',
-					'fluid-sidebar-link'
+					'fluid-sidebar-link p-3'
 				)}
 			>
 				<Text>Helpers</Text>
 			</Link>
 		</Container>
-		{@render children()}
+		<Container
+			class="flex min-w-0 flex-1 flex-col gap-2 bg-neutral-50 px-16 py-4 dark:bg-neutral-950"
+			id="documentation-page-content"
+		>
+			{@render children()}
+		</Container>
 	</Container>
 </Container>

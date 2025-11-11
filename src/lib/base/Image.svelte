@@ -16,6 +16,6 @@
 <img
 	onload={() => (isLoaded = true)}
 	{...rest}
-	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-image') +
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-image') +
 		(isLoaded ? '' : ' fluid-image-loading')}
 />

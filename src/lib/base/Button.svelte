@@ -25,7 +25,7 @@
 	type="button"
 	onclick={async (event: Event) => onclick(event, buttonState)}
 	{...rest}
-	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-button')}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-button')}
 >
 	{#if buttonState.inProgress && loadingPlaceholder}
 		{@render loadingPlaceholder()}

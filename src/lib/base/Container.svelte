@@ -28,7 +28,7 @@
 	this={type}
 	{...rest}
 	transition:transitionFn={transitionParams}
-	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-container')}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-container')}
 >
 	{@render children?.()}
 </svelte:element>

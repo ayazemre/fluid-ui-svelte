@@ -18,15 +18,17 @@
 >
 	<Container
 		type="nav"
-		class={'flex w-full justify-between p-4 opacity-100' +
-			(page.url.pathname !== '/' ? ' border-b border-neutral-300' : '')}
+		class={'flex w-full justify-between bg-transparent p-4' +
+			(page.url.pathname !== '/'
+				? ' border-b border-neutral-300 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900'
+				: '')}
 		id="navigation-bar"
 	>
 		<Link href="/" overrideDefaultStyling={true}>
 			<Container class="flex items-center gap-2 text-2xl font-bold" id="branding-block">
 				<div class="flex items-center gap-2">
 					<svg
-						class="size-8 transition-all hover:hue-rotate-45"
+						class="size-8 transition-all hover:brightness-125"
 						viewBox="0 0 32 32"
 						xmlns="http://www.w3.org/2000/svg"
 					>
@@ -37,7 +39,7 @@
 					</svg>
 				</div>
 
-				<Text class="text-black dark:text-neutral-100">Fluid UI</Text>
+				<Text class="text-black transition-colors dark:text-neutral-100">Fluid UI</Text>
 			</Container>
 		</Link>
 
@@ -47,7 +49,7 @@
 					globalState.darkMode = !globalState.darkMode;
 					console.log(globalState.darkMode);
 				}}
-				class="rounded-md p-2 hover:bg-neutral-100"
+				class="rounded-md p-2 hover:bg-neutral-100 dark:text-primary-200 dark:hover:bg-neutral-100/5"
 			>
 				<Icon
 					icon={globalState.darkMode ? 'ri-moon-line' : 'ri-sun-line'}

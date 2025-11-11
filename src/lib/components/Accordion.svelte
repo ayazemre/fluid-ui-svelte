@@ -4,6 +4,7 @@
 	import { slide, type TransitionConfig } from 'svelte/transition';
 	import Button from '../base/Button.svelte';
 	import { mergeClasses } from '../utilities/mergeClasses.js';
+
 	const {
 		variation = '',
 		header,
@@ -20,15 +21,15 @@
 	const componentState = $state({ isExpanded: false });
 </script>
 
-<Button
-	onclick={async () => {
-		componentState.isExpanded = !componentState.isExpanded;
-	}}
-	class={mergeClasses(variation, 'fluid-accordion-trigger')}
->
-	<Container class={mergeClasses(variation, 'fluid-accordion-header')}>
+<Container class={mergeClasses(variation, 'fluid-accordion-wrapper')}>
+	<Button
+		onclick={async () => {
+			componentState.isExpanded = !componentState.isExpanded;
+		}}
+		class={mergeClasses(variation, 'fluid-accordion-header')}
+	>
 		{@render header(componentState)}
-	</Container>
+	</Button>
 	{#if componentState.isExpanded}
 		<Container
 			transitionFn={transitionFunction}
@@ -38,4 +39,4 @@
 			{@render body()}
 		</Container>
 	{/if}
-</Button>
+</Container>

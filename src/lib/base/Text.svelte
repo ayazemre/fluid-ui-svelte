@@ -10,7 +10,27 @@
 		children,
 		...rest
 	}: {
-		type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
+		type?:
+			| 'p'
+			| 'h1'
+			| 'h2'
+			| 'h3'
+			| 'h4'
+			| 'h5'
+			| 'h6'
+			| 'span'
+			| 'pre'
+			| 'code'
+			| 'b'
+			| 'strong'
+			| 'i'
+			| 'em'
+			| 'mark'
+			| 'small'
+			| 'del'
+			| 'ins'
+			| 'sub'
+			| 'sup';
 		children?: Snippet;
 		class?: string;
 		overrideDefaultStyling?: boolean;
@@ -20,6 +40,6 @@
 <svelte:element
 	this={type}
 	{...rest}
-	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-text')}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-text')}
 	>{@render children?.()}
 </svelte:element>

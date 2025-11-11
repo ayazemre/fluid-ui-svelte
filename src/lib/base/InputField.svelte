@@ -32,5 +32,5 @@
 	bind:value
 	{type}
 	{...rest}
-	class={mergeClasses(overrideDefaultStyling ? '' : className, 'fluid-input-field')}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-input-field')}
 />

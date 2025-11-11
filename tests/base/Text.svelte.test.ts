@@ -2,12 +2,15 @@ import { page } from '@vitest/browser/context';
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Text from '$lib/base/Text.svelte';
+import { createRawSnippet } from 'svelte';
 
 describe('Text', () => {
 	it('Default', async () => {
 		render(Text, {
 			id: 'text-default',
-			value: 'Default'
+			children: createRawSnippet(() => {
+				return { render: () => '<span>Default<span>' };
+			})
 		});
 
 		const text = page.getByTestId('text-default');
@@ -17,12 +20,35 @@ describe('Text', () => {
 	});
 
 	it('Types', async () => {
-		const textTypes = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+		const textTypes = [
+			'p',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'span',
+			'pre',
+			'code',
+			'b',
+			'strong',
+			'i',
+			'em',
+			'mark',
+			'small',
+			'del',
+			'ins',
+			'sub',
+			'sup'
+		];
 
 		for (const textType of textTypes) {
 			render(Text, {
 				id: 'text-' + textType,
-				value: textType,
+				children: createRawSnippet(() => {
+					return { render: () => `<span>${textType}<span>` };
+				}),
 				type: textType as any
 			});
 
@@ -37,7 +63,9 @@ describe('Text', () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(Text, {
 				id: 'text-override-' + overrideDefaultStyling,
-				value: 'Default',
+				children: createRawSnippet(() => {
+					return { render: () => '<span>Default<span>' };
+				}),
 				class: 'text-2xl',
 				overrideDefaultStyling
 			});
@@ -60,7 +88,9 @@ describe('Text', () => {
 	it('Override Default Styling', async () => {
 		render(Text, {
 			id: 'text-default',
-			value: 'Default',
+			children: createRawSnippet(() => {
+				return { render: () => '<span>Default<span>' };
+			}),
 			class: 'text-2xl',
 			overrideDefaultStyling: true
 		});
@@ -75,7 +105,9 @@ describe('Text', () => {
 	it('Override Default Styling', async () => {
 		render(Text, {
 			id: 'text-default',
-			value: 'Default',
+			children: createRawSnippet(() => {
+				return { render: () => '<span>Default<span>' };
+			}),
 			'aria-label': 'text'
 		});
 
