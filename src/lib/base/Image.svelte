@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { HTMLImgAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
-	import type { Snippet } from 'svelte';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
 
 	const {
 		class: className = '',
@@ -17,6 +16,6 @@
 <img
 	onload={() => (isLoaded = true)}
 	{...rest}
-	class={createDefaultStyling(className, 'fluid-image', overrideDefaultStyling) +
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-image') +
 		(isLoaded ? '' : ' fluid-image-loading')}
 />

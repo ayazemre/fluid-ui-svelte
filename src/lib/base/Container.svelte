@@ -1,26 +1,34 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { createDefaultStyling } from '../utilities/createDefaultStyling.js';
+	import { mergeClasses } from '../utilities/mergeClasses.js';
 	import type { Snippet } from 'svelte';
+	import type { TransitionConfig } from 'svelte/transition';
 
 	const {
 		type = 'div',
 		class: className = '',
+		transitionFn = (node: Element, params?: any) => {
+			return {};
+		},
+		transitionParams,
 		overrideDefaultStyling = false,
 		children,
 		...rest
 	}: {
 		type?: 'div' | 'nav' | 'section' | 'main' | 'header' | 'footer' | 'aside' | 'article';
 		class?: string;
+		transitionFn?: (node: Element, params?: any) => TransitionConfig;
+		transitionParams?: TransitionConfig;
 		overrideDefaultStyling?: boolean;
-		children: Snippet;
+		children?: Snippet;
 	} & HTMLAttributes<HTMLElement> = $props();
 </script>
 
 <svelte:element
 	this={type}
 	{...rest}
-	class={createDefaultStyling(className, 'fluid-container', overrideDefaultStyling)}
+	transition:transitionFn={transitionParams}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-container')}
 >
-	{@render children()}
+	{@render children?.()}
 </svelte:element>

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
 	--font-family-sans: 'Inter', sans-serif;
 	--color-*: initial;
@@ -103,10 +105,127 @@
 	--color-error-950: #450a0a;
 }
 
-.fluid-container {
+/* Base ----------------------------*/
+.fluid-button {
+	@apply flex cursor-pointer items-center gap-1 rounded-md p-2 transition-all duration-500;
+}
+.fluid-button-primary {
+	@apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
+}
+.fluid-button-secondary {
+	@apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
+}
+.fluid-button-outline {
+	@apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
+}
+.fluid-button-transparent {
+	@apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
 }
 
-/* Buttons ----------------------------*/
-.fluid-button {
-	@apply size-full p-1;
+.fluid-container {
+	@apply transition-all duration-500;
+}
+
+section,
+main.fluid-container {
+	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
+}
+
+.fluid-image {
+	@apply object-contain;
+}
+.fluid-image-loading {
+	@apply animate-pulse bg-neutral-300;
+}
+
+.fluid-input-field {
+	@apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
+}
+.fluid-input-field-error {
+	@apply outline-2 outline-error-500;
+}
+
+.fluid-link {
+	@apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
+}
+
+.fluid-text {
+	@apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
+}
+
+/* Components ----------------------------*/
+
+.fluid-accordion-wrapper {
+	@apply flex-col;
+}
+.fluid-accordion-header {
+	@apply flex w-full flex-nowrap items-center justify-between rounded-md transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+}
+.fluid-accordion-body {
+	@apply flex w-full flex-col gap-1 p-2;
+}
+
+.fluid-calendar {
+}
+.fluid-calendar-container {
+	@apply flex flex-wrap;
+}
+.fluid-calendar-wrapper {
+	@apply flex flex-col items-center gap-1 p-2;
+}
+.fluid-calendar-header {
+	@apply flex w-full justify-center;
+}
+.fluid-calendar-body {
+	@apply grid grid-cols-7 justify-items-center gap-4;
+}
+.fluid-calendar-cell {
+	@apply dark:text-neutral-50;
+}
+.fluid-calendar-cell-selected {
+	@apply bg-primary-600 text-neutral-50;
+}
+.fluid-calendar-cell-in-range {
+	@apply bg-primary-400 text-neutral-50;
+}
+.fluid-calendar-cell-rolling-day {
+	@apply opacity-25;
+}
+
+.fluid-code-block-container {
+	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 p-4 font-mono dark:bg-neutral-800;
+}
+.fluid-code-block-row {
+	@apply flex items-center gap-1;
+}
+.fluid-code-block-index {
+	@apply min-w-8 gap-1 border-r dark:border-neutral-50;
+}
+.fluid-code-block-content {
+	@apply flex flex-col gap-1 px-2;
+}
+
+.fluid-switch-button {
+	@apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-neutral-200 transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+}
+.fluid-switch-circle {
+	@apply pointer-events-none inline-block h-4 w-4 translate-x-0 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out checked:translate-x-4;
+}
+.fluid-switch-button.checked {
+	@apply bg-primary-600;
+}
+.fluid-switch-button.checked .fluid-switch-circle {
+	@apply translate-x-4;
+}
+
+.fluid-page {
+	@apply flex w-full flex-1 flex-col p-8 md:p-16;
+}
+
+/* Custom ----------------------------*/
+.fluid-sidebar-link {
+	@apply rounded-md text-neutral-950 hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+}
+.fluid-sidebar-link.active {
+	@apply bg-primary-500 text-white;
 }

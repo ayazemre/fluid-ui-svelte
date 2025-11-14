@@ -16,9 +16,10 @@ export default defineConfig({
 						enabled: true,
 						provider: 'playwright',
 						instances: [{ browser: 'chromium' }],
-						headless: true,
-						locators: { testIdAttribute: 'id' }
+						locators: { testIdAttribute: 'id' },
+						headless: true
 					},
+
 					include: ['tests/**/*.svelte.{test,spec}.{js,ts}'],
 					setupFiles: ['./vitest-setup-client.ts']
 				}
