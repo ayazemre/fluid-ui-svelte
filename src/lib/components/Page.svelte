@@ -1,12 +1,9 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
 	import type { Snippet } from 'svelte';
-	import type { TransitionConfig } from 'svelte/transition';
 	import Container from '../base/Container.svelte';
 
 	const {
-		class: className = '',
 		title = '',
 		description = '',
 		children,
@@ -24,6 +21,6 @@
 	<meta name="description" content={description} />
 </svelte:head>
 
-<Container class="fluid-page">
+<Container class="fluid-page" type="section">
 	{@render children?.()}
 </Container>

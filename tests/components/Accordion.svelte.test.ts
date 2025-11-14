@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Accordion from '$lib/components/Accordion.svelte';
 import { createRawSnippet } from 'svelte';
 
 describe('Accordion', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(Accordion, {
 			header: createRawSnippet(() => {
 				return { render: () => '<p>Accordion Header</p>' };
@@ -29,7 +29,7 @@ describe('Accordion', () => {
 		await expect.element(accordionBody).toHaveClass('fluid-accordion-body');
 	});
 
-	it('Variant', async () => {
+	test('Variant', async () => {
 		render(Accordion, {
 			variation: 'accordion-default',
 			header: createRawSnippet(() => {

@@ -19,6 +19,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: |
           npm i
-          npm publish --provenance --access public
+          npm run test
+          npm run prepack
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_FLUIDUI_SVELTE_TOKEN }}
+  # npm publish --provenance --access public

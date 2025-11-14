@@ -118,9 +118,17 @@
 .fluid-button-outline {
 	@apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
 }
+.fluid-button-transparent {
+	@apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
+}
 
 .fluid-container {
-	@apply bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
+	@apply transition-all duration-500;
+}
+
+section,
+main.fluid-container {
+	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
 }
 
 .fluid-image {
@@ -157,11 +165,44 @@
 	@apply flex w-full flex-col gap-1 p-2;
 }
 
+.fluid-calendar {
+}
+.fluid-calendar-container {
+	@apply flex flex-wrap;
+}
 .fluid-calendar-wrapper {
-	@apply flex flex-col gap-1 border p-2;
+	@apply flex flex-col items-center gap-1 p-2;
 }
 .fluid-calendar-header {
-	@apply grid grid-cols-2 gap-4;
+	@apply flex w-full justify-center;
+}
+.fluid-calendar-body {
+	@apply grid grid-cols-7 justify-items-center gap-4;
+}
+.fluid-calendar-cell {
+	@apply dark:text-neutral-50;
+}
+.fluid-calendar-cell-selected {
+	@apply bg-primary-600 text-neutral-50;
+}
+.fluid-calendar-cell-in-range {
+	@apply bg-primary-400 text-neutral-50;
+}
+.fluid-calendar-cell-rolling-day {
+	@apply opacity-25;
+}
+
+.fluid-code-block-container {
+	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 p-4 font-mono dark:bg-neutral-800;
+}
+.fluid-code-block-row {
+	@apply flex items-center gap-1;
+}
+.fluid-code-block-index {
+	@apply min-w-8 gap-1 border-r dark:border-neutral-50;
+}
+.fluid-code-block-content {
+	@apply flex flex-col gap-1 px-2;
 }
 
 .fluid-switch-button {
@@ -177,17 +218,8 @@
 	@apply translate-x-4;
 }
 
-.fluid-code-block-container {
-	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 p-4 font-mono dark:bg-neutral-800;
-}
-.fluid-code-block-row {
-	@apply flex items-center gap-1;
-}
-.fluid-code-block-index {
-	@apply min-w-8 gap-1 border-r;
-}
-.fluid-code-block-content {
-	@apply flex flex-col gap-1 px-2;
+.fluid-page {
+	@apply flex w-full flex-1 flex-col p-8 md:p-16;
 }
 
 /* Custom ----------------------------*/

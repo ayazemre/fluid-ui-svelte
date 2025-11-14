@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Image from '$lib/base/Image.svelte';
 import { createRawSnippet } from 'svelte';
 
 describe('Image', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(Image, {
 			id: 'image-default',
 			src: 'https://picsum.photos/200/300',
@@ -19,7 +19,7 @@ describe('Image', () => {
 		expect(image.element().ariaLabel).toBe('image');
 	});
 
-	it('Styling', async () => {
+	test('Styling', async () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(Image, {
 				id: 'image-override-' + overrideDefaultStyling,

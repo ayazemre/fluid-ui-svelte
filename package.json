@@ -1,10 +1,12 @@
 {
 	"name": "fluid-ui-svelte",
-	"version": "0.2.5",
+	"version": "0.3.0",
 	"author": {
 		"name": "Emre Ayaz",
 		"email": "ayazthemre@gmail.com"
 	},
+	"license": "MIT",
+	"homepage": "https://github.com/ayazemre/fluid-ui-svelte",
 	"repository": {
 		"url": "https://github.com/ayazemre/fluid-ui-svelte"
 	},
@@ -33,9 +35,13 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+		"base": {
+			"types": "./dist/base/index.d.ts",
+			"svelte": "./dist/base/index.js"
+		},
+		"components": {
+			"types": "./dist/components/index.d.ts",
+			"svelte": "./dist/components/index.js"
 		}
 	},
 	"peerDependencies": {
@@ -52,6 +58,7 @@
 		"@tailwindcss/vite": "^4.1.14",
 		"@types/node": "^22",
 		"@vitest/browser": "^3.2.4",
+		"@vitest/ui": "^3.2.4",
 		"eslint": "^9.38.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.12.4",

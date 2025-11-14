@@ -1,11 +1,10 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import InputField from '$lib/base/InputField.svelte';
-import { createRawSnippet } from 'svelte';
 
 describe('Input Field', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(InputField, {
 			id: 'input-field-default',
 			'aria-label': 'input'
@@ -20,7 +19,7 @@ describe('Input Field', () => {
 		await expect.element(input).toHaveValue('Test Input');
 	});
 
-	it('Types', async () => {
+	test('Types', async () => {
 		for (const inputFieldType of ['text', 'password']) {
 			render(InputField, {
 				id: 'input-field-' + inputFieldType,
@@ -34,7 +33,7 @@ describe('Input Field', () => {
 		}
 	});
 
-	it('Styling', async () => {
+	test('Styling', async () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(InputField, {
 				id: 'input-field-override-' + overrideDefaultStyling,
@@ -54,7 +53,7 @@ describe('Input Field', () => {
 		}
 	});
 
-	it('Character Filter', async () => {
+	test('Character Filter', async () => {
 		render(InputField, {
 			id: 'input-field-default',
 			'aria-label': 'input',

@@ -17,11 +17,13 @@
 		characterFilter?: Array<string>;
 		overrideDefaultStyling?: boolean;
 	} & HTMLInputAttributes = $props();
+
 	let inputElement: HTMLInputElement;
+
 	onMount(() => {
 		if (characterFilter) {
 			inputElement.addEventListener('input', (event) => {
-				inputFilter(event as any, characterFilter);
+				inputFilter(event as InputEvent, characterFilter);
 			});
 		}
 	});

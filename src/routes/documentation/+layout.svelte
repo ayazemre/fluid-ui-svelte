@@ -19,7 +19,7 @@
 	const components = [
 		{ name: 'Accordion', url: '/documentation/components/accordion' },
 		{ name: 'Calendar', url: '/documentation/components/calendar' },
-		{ name: 'Code Viewer', url: '/documentation/components/code-viewer' },
+		{ name: 'Code Block', url: '/documentation/components/code-block' },
 		{ name: 'Switch', url: '/documentation/components/switch' }
 	];
 </script>
@@ -28,7 +28,10 @@
 	class="flex flex-1 flex-col bg-neutral-50  dark:bg-neutral-900"
 	id="documentation-page-layout"
 >
-	<Container class="flex flex-1 justify-between opacity-100" id="documentation-page-two-row">
+	<Container
+		class="flex min-w-0 flex-1 justify-between opacity-100"
+		id="documentation-page-two-row"
+	>
 		<Container
 			type="aside"
 			class="flex min-w-64 flex-col gap-2 border-r border-neutral-300 px-4 py-8 dark:border-neutral-700"
@@ -96,11 +99,7 @@
 				<Text>Helpers</Text>
 			</Link>
 		</Container>
-		<Container
-			class="flex min-w-0 flex-1 flex-col gap-2 bg-neutral-50 px-16 py-4 dark:bg-neutral-950"
-			id="documentation-page-content"
-		>
-			{@render children()}
-		</Container>
+
+		{@render children()}
 	</Container>
 </Container>

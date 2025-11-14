@@ -13,15 +13,14 @@
 </script>
 
 <Container
+	type="section"
 	class={'flex min-h-screen w-full flex-col' + (globalState.darkMode ? ' dark' : '')}
 	id="global-layout"
 >
 	<Container
 		type="nav"
-		class={'flex w-full justify-between bg-transparent p-4' +
-			(page.url.pathname !== '/'
-				? ' border-b border-neutral-300 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900'
-				: '')}
+		class={'z-2 flex w-full justify-between p-4' +
+			(page.url.pathname !== '/' ? ' border-b border-neutral-300 dark:border-neutral-700 ' : ' ')}
 		id="navigation-bar"
 	>
 		<Link href="/" overrideDefaultStyling={true}>
@@ -43,20 +42,15 @@
 			</Container>
 		</Link>
 
-		<Container id="navigation-theme-mode">
-			<Button
-				onclick={async () => {
-					globalState.darkMode = !globalState.darkMode;
-					console.log(globalState.darkMode);
-				}}
-				class="rounded-md p-2 hover:bg-neutral-100 dark:text-primary-200 dark:hover:bg-neutral-100/5"
-			>
-				<Icon
-					icon={globalState.darkMode ? 'ri-moon-line' : 'ri-sun-line'}
-					class="size-6 transition-all"
-				></Icon>
-			</Button>
-		</Container>
+		<Button
+			onclick={async () => {
+				globalState.darkMode = !globalState.darkMode;
+				console.log(globalState.darkMode);
+			}}
+			class="fluid-button-transparent size-10"
+		>
+			<Icon icon={globalState.darkMode ? 'ri-moon-line' : 'ri-sun-line'} class="size-6"></Icon>
+		</Button>
 	</Container>
 	{@render children()}
 </Container>

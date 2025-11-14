@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Text from '$lib/base/Text.svelte';
 import { createRawSnippet } from 'svelte';
 
 describe('Text', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(Text, {
 			id: 'text-default',
 			children: createRawSnippet(() => {
@@ -19,7 +19,7 @@ describe('Text', () => {
 		await expect.element(text).toHaveTextContent('Default');
 	});
 
-	it('Types', async () => {
+	test('Types', async () => {
 		const textTypes = [
 			'p',
 			'h1',
@@ -59,7 +59,7 @@ describe('Text', () => {
 		}
 	});
 
-	it('Styling', async () => {
+	test('Styling', async () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(Text, {
 				id: 'text-override-' + overrideDefaultStyling,
@@ -85,7 +85,7 @@ describe('Text', () => {
 		}
 	});
 
-	it('Override Default Styling', async () => {
+	test('Override Default Styling', async () => {
 		render(Text, {
 			id: 'text-default',
 			children: createRawSnippet(() => {
@@ -102,7 +102,7 @@ describe('Text', () => {
 		await expect.element(text).not.toHaveClass('fluid-text');
 	});
 
-	it('Override Default Styling', async () => {
+	test('Override Default Styling', async () => {
 		render(Text, {
 			id: 'text-default',
 			children: createRawSnippet(() => {

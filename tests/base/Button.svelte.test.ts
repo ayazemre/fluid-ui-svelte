@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Button from '$lib/base/Button.svelte';
 import { createRawSnippet } from 'svelte';
 
 describe('Button', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(Button, {
 			id: 'button-default',
 			'aria-label': 'button',
@@ -27,7 +27,7 @@ describe('Button', () => {
 		expect(button.element().ariaLabel).toBe('button');
 	});
 
-	it('Loading Placeholder', async () => {
+	test('Loading Placeholder', async () => {
 		render(Button, {
 			id: 'button-loading',
 			onclick: async (event, state) => {
@@ -52,7 +52,7 @@ describe('Button', () => {
 		await expect.element(button).toContainHTML('<p>Button</p>');
 	});
 
-	it('No Loading Placeholder', async () => {
+	test('No Loading Placeholder', async () => {
 		render(Button, {
 			id: 'button-loading',
 			onclick: async (event, state) => {
@@ -74,7 +74,7 @@ describe('Button', () => {
 		await expect.element(button).toContainHTML('<p>Button</p>');
 	});
 
-	it('Styling', async () => {
+	test('Styling', async () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(Button, {
 				id: 'button-override' + overrideDefaultStyling,

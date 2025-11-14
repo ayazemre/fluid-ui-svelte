@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Container from '$lib/base/Container.svelte';
 import { createRawSnippet } from 'svelte';
 
 describe('Container', () => {
-	it('Default', async () => {
+	test('Default', async () => {
 		render(Container, {
 			id: 'container-default',
 			'aria-label': 'div',
@@ -21,7 +21,7 @@ describe('Container', () => {
 		expect(container.element().ariaLabel).toBe('div');
 	});
 
-	it('Types', async () => {
+	test('Types', async () => {
 		const containerTypes = [
 			'article',
 			'aside',
@@ -49,7 +49,7 @@ describe('Container', () => {
 		}
 	});
 
-	it('Styling', async () => {
+	test('Styling', async () => {
 		for (const overrideDefaultStyling of [false, true]) {
 			render(Container, {
 				id: 'container-override-' + overrideDefaultStyling,
