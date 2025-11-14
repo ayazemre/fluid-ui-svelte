@@ -88,18 +88,7 @@
 					{/each}
 				{/snippet}
 			</Accordion>
-
-			<Link
-				href="/documentation/helpers"
-				class={mergeClasses(
-					page.url.pathname == '/documentation/helpers' ? 'active' : '',
-					'fluid-sidebar-link p-3'
-				)}
-			>
-				<Text>Helpers</Text>
-			</Link>
 		</Container>
-
 		{@render children()}
 	</Container>
 </Container>
