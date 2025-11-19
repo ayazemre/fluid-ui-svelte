@@ -149,6 +149,31 @@ main.fluid-container {
 	@apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
 }
 
+.fluid-unordered-list {
+	@apply list-disc text-white;
+}
+.fluid-ordered-list {
+	@apply list-decimal;
+}
+
+.fluid-table {
+	@apply z-10 w-full border-separate border-spacing-0 overflow-hidden rounded-md border dark:border-neutral-300;
+}
+.fluid-table-head {
+	@apply bg-neutral-200 dark:bg-neutral-800;
+}
+.fluid-table-row {
+	@apply even:bg-neutral-200 dark:even:bg-neutral-800;
+}
+.fluid-table-cell {
+	@apply border-collapse bg-clip-padding text-center;
+}
+.fluid-table-body {
+}
+.fluid-table-footer {
+	@apply bg-clip-padding p-2 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+}
+
 .fluid-text {
 	@apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
 }

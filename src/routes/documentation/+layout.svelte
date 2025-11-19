@@ -14,6 +14,7 @@
 		{ name: 'Image', url: '/documentation/base/image' },
 		{ name: 'Input Field', url: '/documentation/base/input-field' },
 		{ name: 'Link', url: '/documentation/base/link' },
+		{ name: 'List', url: '/documentation/base/list' },
 		{ name: 'Text', url: '/documentation/base/text' }
 	];
 	const components = [
