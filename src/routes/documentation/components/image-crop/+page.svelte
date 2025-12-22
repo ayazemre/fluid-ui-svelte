@@ -1,10 +1,9 @@
 <script lang="ts">
-	import ImageCrop from '$lib/components/ImageCrop.svelte';
-	import { Page } from '../../../../lib/index.js';
-	let file: File;
+	import { ImageCrop, Page } from '$lib/index.js';
+	let file: File | null = $state(null);
 </script>
 
-<Page title="asdf" description="asdf">
+<Page title="Image Crop - Fluid UI" description="A component for cropping images.">
 	{#if file}
 		<ImageCrop cropAreaShape="circle" imageFile={file}></ImageCrop>
 		<ImageCrop imageFile={file}></ImageCrop>
@@ -14,12 +13,11 @@
 		accept="image/*"
 		oninput={(event) => {
 			const target = event.target as HTMLInputElement;
-			if (file) {
+			if (target.files && target.files.length > 0) {
+				file = target.files[0];
+			} else {
 				file = null;
 			}
-			file = target.files[0];
-
-			console.log(file);
 		}}
 	/>
 </Page>

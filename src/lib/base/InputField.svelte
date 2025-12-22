@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	import { mergeClasses } from '../utilities/mergeClasses.js';
-	import { onMount } from 'svelte';
-	import { inputFilter } from '../utilities/inputFilter.js';
+	import { applyCharacterFilter } from '../utilities/applyCharacterFilter.js';
 
 	let {
 		type = 'text',
@@ -10,6 +9,7 @@
 		class: className = '',
 		characterFilter,
 		overrideDefaultStyling = false,
+		oninput,
 		...rest
 	}: {
 		class?: string;
@@ -17,22 +17,17 @@
 		characterFilter?: Array<string>;
 		overrideDefaultStyling?: boolean;
 	} & HTMLInputAttributes = $props();
-
-	let inputElement: HTMLInputElement;
-
-	onMount(() => {
-		if (characterFilter) {
-			inputElement.addEventListener('input', (event) => {
-				inputFilter(event as InputEvent, characterFilter);
-			});
-		}
-	});
 </script>
 
 <input
-	bind:this={inputElement}
 	bind:value
 	{type}
+	oninput={(e) => {
+		if (characterFilter) {
+			value = applyCharacterFilter(characterFilter, value);
+		}
+		oninput?.(e as any);
+	}}
 	{...rest}
 	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-input-field')}
 />

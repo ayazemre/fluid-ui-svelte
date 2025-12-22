@@ -27,6 +27,7 @@
 			componentState.isExpanded = !componentState.isExpanded;
 		}}
 		class={mergeClasses(variation, 'fluid-accordion-header')}
+		overrideDefaultStyling
 	>
 		{@render header(componentState)}
 	</Button>

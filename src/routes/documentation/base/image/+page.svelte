@@ -82,7 +82,7 @@
 				{/snippet}
 
 				{#snippet bodyTemplate(item)}
-					<div class="p-2">
+					<Container overrideDefaultStyling={true} class="p-2">
 						{#if item.col === 'prop'}
 							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
 						{:else if item.col === 'type'}
@@ -94,11 +94,11 @@
 						{:else}
 							<Text class="text-sm">{item.value}</Text>
 						{/if}
-					</div>
+					</Container>
 				{/snippet}
 
 				{#snippet footerTemplate(item)}
-					<div></div>
+					<Container overrideDefaultStyling={true} />
 				{/snippet}
 			</Table>
 		</Container>
@@ -115,6 +115,9 @@
 				<!-- Default Image -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Standard Image</Text>
+					<Text class="text-sm text-neutral-500"
+						>Renders a standard image immediately without any artificial delay applied.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Container class="h-48 w-full overflow-hidden rounded-lg">
 							<Image
@@ -162,7 +165,7 @@
 						language="svelte"
 					/>
 				</Container>
-			</div>
+			</Container>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
@@ -170,7 +173,7 @@
 			<CodeBlock
 				language="svelte"
 				code={`<script lang="ts">
-  import { Image, Container } from 'fluid-ui-svelte/base';
+  import { Image, Container } from 'fluid-ui-svelte';
 <\/script>
 
 <Container class="h-64 w-full overflow-hidden rounded-lg">

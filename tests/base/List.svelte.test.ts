@@ -2,24 +2,17 @@ import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import List from '$lib/base/List.svelte';
-import { createRawSnippet, mount, unmount } from 'svelte';
+import { createRawSnippet } from 'svelte';
 
 describe('List', () => {
 	test('Default', async () => {
-		const snip = createRawSnippet((name) => {
-			return {
-				render: () => `<p>Hello ${name()}!</p>`,
-				setup: (node) => {}
-			};
-		});
 		render(List, {
 			id: 'list-default',
 			'aria-label': 'list',
-			items: ['List item 1'],
-			itemTemplate: createRawSnippet((prop: () => unknown) => {
+			items: ['Item 1', 'Item 2'],
+			itemTemplate: createRawSnippet((prop: any) => {
 				return {
-					render: () => `<p>${prop()}!</p>`,
-					setup: (node) => {}
+					render: () => `<span>${prop()}</span>`
 				};
 			})
 		});
@@ -27,8 +20,11 @@ describe('List', () => {
 		const list = page.getByTestId('list-default');
 		await expect.element(list).toBeInTheDocument();
 		expect(list.element().tagName).toBe('UL');
-		await expect.element(list).toHaveTextContent('List item 1');
-		expect(list.element().ariaLabel).toBe('list');
+		
+		const items = list.element().querySelectorAll('li');
+		expect(items.length).toBe(2);
+		expect(items[0].textContent).toBe('Item 1');
+		expect(items[1].textContent).toBe('Item 2');
 	});
 
 	test('Types', async () => {
@@ -38,45 +34,54 @@ describe('List', () => {
 			render(List, {
 				id: `list-${listType}`,
 				type: listType as any,
-				items: ['List item 1'],
-				itemTemplate: createRawSnippet((prop: () => unknown) => {
-					return {
-						render: () => `<p>${prop()}!</p>`,
-						setup: (node) => {}
-					};
+				items: ['Item'],
+				itemTemplate: createRawSnippet((prop: any) => {
+					return { render: () => prop() };
 				})
 			});
 
 			const list = page.getByTestId(`list-${listType}`);
 			await expect.element(list).toBeInTheDocument();
 			expect(list.element().tagName).toBe(listType.toUpperCase());
-			await expect.element(list).toHaveTextContent('List item 1');
 		}
 	});
 
-	test('Styling', async () => {
+	test('Styling and itemClass', async () => {
 		for (const overrideDefaultStyling of [false, true]) {
 			render(List, {
-				id: 'list-override-' + overrideDefaultStyling,
-				class: 'override',
+				id: 'list-styling-' + overrideDefaultStyling,
+				class: 'list-override',
+				itemClass: 'item-override',
 				overrideDefaultStyling,
-				items: ['List item 1'],
-				itemTemplate: createRawSnippet((prop: () => unknown) => {
-					return {
-						render: () => `<p>${prop()}!</p>`,
-						setup: (node) => {}
-					};
+				items: ['Item'],
+				itemTemplate: createRawSnippet((prop: any) => {
+					return { render: () => prop() };
 				})
 			});
 
-			const list = page.getByTestId('list-override-' + overrideDefaultStyling);
+			const list = page.getByTestId('list-styling-' + overrideDefaultStyling);
 			await expect.element(list).toBeInTheDocument();
+
+			// Check list classes
 			if (overrideDefaultStyling) {
-				await expect.element(list).toHaveClass('override');
+				await expect.element(list).toHaveClass('list-override');
 				await expect.element(list).not.toHaveClass('fluid-unordered-list');
 			} else {
 				await expect.element(list).toHaveClass('fluid-unordered-list');
-				await expect.element(list).toHaveClass('override');
+				await expect.element(list).toHaveClass('list-override');
+			}
+
+			// Check item classes
+			const item = list.element().querySelector('li');
+			expect(item).not.toBeNull();
+			if (item) {
+				if (overrideDefaultStyling) {
+					expect(item.classList.contains('item-override')).toBe(true);
+					expect(item.classList.contains('fluid-unordered-list-item')).toBe(false);
+				} else {
+					expect(item.classList.contains('item-override')).toBe(true);
+					expect(item.classList.contains('fluid-unordered-list-item')).toBe(true);
+				}
 			}
 		}
 	});

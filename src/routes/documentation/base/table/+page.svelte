@@ -1,318 +1,226 @@
 <script lang="ts">
-	import { Table, Container, Text, Link } from '$lib/base/index.js';
+	import { Table, Container, Text } from '$lib/base/index.js';
 	import { Page, CodeBlock } from '$lib/components/index.js';
 
-	interface HeadItem {
-		label: string;
-	}
-
-	interface RowItem {
+	interface User {
 		id: number;
 		name: string;
 		age: number;
 	}
 
-	interface FooterItem {
-		label: string;
-	}
-
-	const tableHeadItems: Array<HeadItem> = [{ label: 'ID' }, { label: 'Name' }, { label: 'Age' }];
-	const tableRowItems: Array<Array<RowItem[keyof RowItem]>> = [
+	const headers = ['ID', 'Name', 'Age'];
+	const users: Array<Array<any>> = [
 		[1, 'Alice', 30],
 		[2, 'Bob', 24],
 		[3, 'Charlie', 35]
 	];
-	const tableFooterItems: Array<FooterItem> = [{ label: 'Total' }];
+	const footers = ['Total', '', '3 Users'];
 
-	const tableHeadItems2 = ['ID', 'Name', 'Age'];
-	const tableRowItems2 = [
-		[1, 'Alice', 30],
-		[2, 'Bob', 24],
-		[3, 'Charlie', 35]
+	const propsHeaders = ['Prop', 'Type', 'Default', 'Description'];
+	const propsData = [
+		{
+			prop: 'caption',
+			type: 'string',
+			default: "''",
+			description: 'An optional caption for the table.'
+		},
+		{
+			prop: 'tableHeadItems',
+			type: 'Array<T>',
+			default: 'required',
+			description: 'Data for the header row.'
+		},
+		{
+			prop: 'tableRowItems',
+			type: 'Array<Array<U>>',
+			default: 'required',
+			description: 'Data for the body rows.'
+		},
+		{
+			prop: 'tableFooterItems',
+			type: 'Array<V>',
+			default: 'required',
+			description: 'Data for the footer row.'
+		},
+		{
+			prop: 'headTemplate',
+			type: 'Snippet<[T]>',
+			default: 'required',
+			description: 'Snippet for rendering header cells.'
+		},
+		{
+			prop: 'bodyTemplate',
+			type: 'Snippet<[U]>',
+			default: 'required',
+			description: 'Snippet for rendering body cells.'
+		},
+		{
+			prop: 'footerTemplate',
+			type: 'Snippet<[V]>',
+			default: 'required',
+			description: 'Snippet for rendering footer cells.'
+		},
+		{
+			prop: 'overrideDefaultStyling',
+			type: 'boolean',
+			default: 'false',
+			description: 'If true, removes default fluid-table classes.'
+		}
 	];
-	const tableFooterItems2 = ['Total'];
 
-	const tableCode = `<script lang="ts">
-	interface HeadItem {
-		label: string;
-	}
-
-	interface RowItem {
-		id: number;
-		name: string;
-		age: number;
-	}
-
-	interface FooterItem {
-		label: string;
-	}
-
-	const tableHeadItems: Array<HeadItem> = [{ label: 'ID' }, { label: 'Name' }, { label: 'Age' }];
-	const tableRowItems: Array<Array<RowItem[keyof RowItem]>> = [
-		[1, 'Alice', 30],
-		[2, 'Bob', 24],
-		[3, 'Charlie', 35]
-	];
-	const tableFooterItems: Array<FooterItem> = [{ label: 'Total' }];
-<\/script>
-
-<Table
-	caption="User Data"
-	tableHeadItems={tableHeadItems}
-	tableRowItems={tableRowItems}
-	tableFooterItems={tableFooterItems}
->
-	{#snippet headTemplate(headItem: HeadItem)}
-		{headItem.label}
-	{/snippet}
-	{#snippet bodyTemplate(bodyItem: RowItem[keyof RowItem])}
-		{bodyItem}
-	{/snippet}
-	{#snippet footerTemplate(footerItem: FooterItem)}
-		{footerItem.label}
-	{/snippet}
-</Table>`;
-
-	const styledTableCode = `<Table
-  caption="Styled User Data"
-  {tableHeadItems}
-  {tableRowItems}
-  {tableFooterItems}
-  class="w-full border-2 border-primary-500"
-  headClass="bg-primary-100 dark:bg-primary-900"
-  rowClass="hover:bg-neutral-100 dark:hover:bg-neutral-800"
-  cellClass="p-4 border-b border-neutral-200 dark:border-neutral-700"
-  captionClass="text-lg font-bold text-primary-600 mb-2"
->
-  {#snippet headTemplate(headItem)}
-    {headItem.label}
-  {/snippet}
-  {#snippet bodyTemplate(bodyItem)}
-    {bodyItem}
-  {/snippet}
-  {#snippet footerTemplate(footerItem)}
-    {footerItem.label}
-  {/snippet}
-</Table>`;
-
-	const usageCode = `<script lang="ts">
-  import { Table } from 'fluid-ui-svelte/base';
-
-  // Define your data structures
-  interface HeadItem {
-    label: string;
-  }
-
-  interface RowItem {
-    id: number;
-    name: string;
-    age: number;
-  }
-
-  interface FooterItem {
-    label: string;
-  }
-
-  // Your table data
-  const myTableHeadItems: Array<HeadItem> = [{ label: 'Product ID' }, { label: 'Product Name' }];
-  const myTableRowItems: Array<Array<RowItem[keyof RowItem]>> = [
-    [101, 'Laptop'],
-    [102, 'Mouse']
-  ];
-  const myTableFooterItems: Array<FooterItem> = [{ label: 'Inventory Total' }];
-<\/script>
-
-<Table
-  caption="Product Inventory"
-  tableHeadItems={myTableHeadItems}
-  tableRowItems={myTableRowItems}
-  tableFooterItems={myTableFooterItems}
-  class="w-full"
-  cellClass="p-2 border"
->
-  {#snippet headTemplate(headItem: HeadItem)}
-    <strong>{headItem.label}</strong>
-  {/snippet}
-  {#snippet bodyTemplate(bodyItem: RowItem[keyof RowItem])}
-    <em>{bodyItem}</em>
-  {/snippet}
-  {#snippet footerTemplate(footerItem: FooterItem)}
-    <span class="text-primary-500 font-bold">{footerItem.label}</span>
-  {/snippet}
-</Table>
-`;
+	const tableRows = propsData.map((p) => [
+		{ value: p.prop, col: 'prop' },
+		{ value: p.type, col: 'type' },
+		{ value: p.default, col: 'default' },
+		{ value: p.description, col: 'desc' }
+	]);
 </script>
 
 <Page
 	title="Table - Fluid UI"
-	description="The Table component is used to display tabular data with customizable headers, body rows, and footers using Svelte snippets."
+	description="A flexible component for displaying tabular data with customizable cell rendering using Svelte snippets."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Table</Text>
 			<Text>
-				The Table component provides a flexible way to render tabular data. It supports custom
-				rendering for head, body, and footer cells using Svelte snippets, allowing for rich and
-				dynamic content within your tables.
+				The Table component provides a structured and flexible way to render tabular data. It leverages
+				Svelte 5 snippets to allow full control over the rendering of header, body, and footer cells.
 			</Text>
 		</Container>
+
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Text>The Table component accepts the following props:</Text>
-			<ul class="flex list-disc flex-col gap-2 pl-6">
-				<li>
-					<Text>
-						<Text type="strong">caption:</Text>
-						<Text type="code">string</Text> (optional) - A caption for the table.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">tableHeadItems:</Text>
-						<Text type="code">Array&lt;T&gt;</Text> - Data for the header.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">tableRowItems:</Text>
-						<Text type="code">Array&lt;Array&lt;U&gt;&gt;</Text> - Data for the rows.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">tableFooterItems:</Text>
-						<Text type="code">Array&lt;V&gt;</Text> - Data for the footer.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">headTemplate:</Text>
-						<Text type="code">Snippet&lt;[T]&gt;</Text> - Snippet for header cells.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">bodyTemplate:</Text>
-						<Text type="code">Snippet&lt;[U]&gt;</Text> - Snippet for body cells.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">footerTemplate:</Text>
-						<Text type="code">Snippet&lt;[V]&gt;</Text> - Snippet for footer cells.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">class:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the root
-						<Text type="code">&lt;table&gt;</Text> element.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">captionClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the
-						<Text type="code">&lt;caption&gt;</Text> element.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">headClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the
-						<Text type="code">&lt;thead&gt;</Text> element.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">bodyClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the
-						<Text type="code">&lt;tbody&gt;</Text> element.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">rowClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the
-						<Text type="code">&lt;tr&gt;</Text> elements.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">cellClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for
-						<Text type="code">&lt;th&gt;</Text> and <Text type="code">&lt;td&gt;</Text> elements.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">footerClass:</Text>
-						<Text type="code">string</Text> (optional) - Classes for the
-						<Text type="code">&lt;tfoot&gt;</Text> element.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">overrideDefaultStyling:</Text>
-						<Text type="code">boolean</Text> - When
-						<Text type="code">true</Text>, removes default <Text type="code">fluid-table</Text> classes.
-					</Text>
-				</li>
-			</ul>
+			<Table
+				tableHeadItems={propsHeaders}
+				tableRowItems={tableRows}
+				tableFooterItems={[]}
+				class="w-full text-left"
+			>
+				{#snippet headTemplate(item: string)}
+					<Text class="p-2 font-bold">{item}</Text>
+				{/snippet}
+
+				{#snippet bodyTemplate(item: any)}
+					<Container overrideDefaultStyling={true} class="p-2">
+						{#if item.col === 'prop'}
+							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
+						{:else if item.col === 'type'}
+							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
+								>{item.value}</Text
+							>
+						{:else if item.col === 'default'}
+							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+						{:else}
+							<Text class="text-sm">{item.value}</Text>
+						{/if}
+					</Container>
+				{/snippet}
+
+				{#snippet footerTemplate()}
+					<Container overrideDefaultStyling={true} />
+				{/snippet}
+			</Table>
 		</Container>
+
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
 
-			<Container class="flex flex-col gap-4 rounded-md border p-4">
-				<Text type="h3" class="text-xl font-semibold">Basic Table</Text>
-				<Table caption="User Data" {tableHeadItems} {tableRowItems} {tableFooterItems}>
-					{#snippet headTemplate(headItem: HeadItem)}
-						{headItem.label}
-					{/snippet}
-					{#snippet bodyTemplate(bodyItem: RowItem[keyof RowItem])}
-						{bodyItem}
-					{/snippet}
-					{#snippet footerTemplate(footerItem: FooterItem)}
-						{footerItem.label}
-					{/snippet}
-				</Table>
-				<CodeBlock code={tableCode} language="svelte" />
-			</Container>
+			<Container class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<!-- Basic Table -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Standard Table</Text>
+					<Text class="text-sm text-neutral-500">A basic table with header, body, and footer.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Table
+							caption="User Directory"
+							tableHeadItems={headers}
+							tableRowItems={users}
+							tableFooterItems={footers}
+						>
+							{#snippet headTemplate(item: string)}
+								{item}
+							{/snippet}
+							{#snippet bodyTemplate(item: any)}
+								{item}
+							{/snippet}
+							{#snippet footerTemplate(item: string)}
+								<span class="font-bold">{item}</span>
+							{/snippet}
+						</Table>
+					</Container>
+					<CodeBlock
+						code={`<Table 
+  caption="User Directory"
+  tableHeadItems={['ID', 'Name']}
+  tableRowItems={[[1, 'Alice'], [2, 'Bob']]}
+  tableFooterItems={['Total', '2']}
+>
+  {#snippet headTemplate(item)} {item} {/snippet}
+  {#snippet bodyTemplate(item)} {item} {/snippet}
+  {#snippet footerTemplate(item)} <strong>{item}</strong> {/snippet}
+</Table>`}
+						language="svelte"
+					/>
+				</Container>
 
-			<Container class="flex flex-col gap-4 rounded-md border p-4">
-				<Text type="h3" class="text-xl font-semibold">Styled Table</Text>
-				<Table
-					caption="Styled User Data"
-					{tableHeadItems}
-					{tableRowItems}
-					{tableFooterItems}
-					class="w-full border-2 border-primary-500"
-					headClass="bg-primary-100 dark:bg-primary-900"
-					rowClass="hover:bg-neutral-100 dark:hover:bg-neutral-800"
-					cellClass="p-4 border-b border-neutral-200 dark:border-neutral-700"
-					captionClass="text-lg font-bold text-primary-600 mb-2"
-				>
-					{#snippet headTemplate(headItem)}
-						{headItem.label}
-					{/snippet}
-					{#snippet bodyTemplate(bodyItem)}
-						{bodyItem}
-					{/snippet}
-					{#snippet footerTemplate(footerItem)}
-						{footerItem.label}
-					{/snippet}
-				</Table>
-				<CodeBlock code={styledTableCode} language="svelte" />
+				<!-- Custom Styled -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Styled Table</Text>
+					<Text class="text-sm text-neutral-500">Applying custom classes to specific table sections.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Table
+							tableHeadItems={headers}
+							tableRowItems={users}
+							tableFooterItems={[]}
+							headClass="bg-primary-500 text-white"
+							rowClass="hover:bg-neutral-100 dark:hover:bg-neutral-800"
+							cellClass="p-2 border-b dark:border-neutral-700"
+						>
+							{#snippet headTemplate(item: string)}
+								{item}
+							{/snippet}
+							{#snippet bodyTemplate(item: any)}
+								{item}
+							{/snippet}
+							{#snippet footerTemplate()}
+								<div></div>
+							{/snippet}
+						</Table>
+					</Container>
+					<CodeBlock
+						code={`<Table 
+  tableHeadItems={headers} 
+  tableRowItems={users}
+  headClass="bg-primary-500 text-white"
+  rowClass="hover:bg-neutral-100"
+>
+  ...
+</Table>`}
+						language="svelte"
+					/>
+				</Container>
 			</Container>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Usage</Text>
-			<Text>
-				To use the Table component, import it and pass your data arrays along with the necessary
-				snippets for rendering.
-			</Text>
-			<CodeBlock code={usageCode} language="svelte" />
+			<CodeBlock
+				language="svelte"
+				code={`<script lang="ts">
+  import { Table } from 'fluid-ui-svelte';
+<\/script>
+
+<Table 
+  tableHeadItems={['Header']} 
+  tableRowItems={[['Data']]}
+  tableFooterItems={['Footer']}
+>
+  {#snippet headTemplate(item)} {item} {/snippet}
+  {#snippet bodyTemplate(item)} {item} {/snippet}
+  {#snippet footerTemplate(item)} {item} {/snippet}
+</Table>`}
+			/>
 		</Container>
 	</Container>
 </Page>

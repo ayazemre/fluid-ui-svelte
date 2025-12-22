@@ -69,7 +69,7 @@
 		{/each}
 	</tbody>
 	<tfoot class={mergeClasses(footerClass, overrideDefaultStyling ? '' : 'fluid-table-footer')}>
-		<tr>
+		<tr class={mergeClasses(rowClass, overrideDefaultStyling ? '' : 'fluid-table-row')}>
 			{#each tableFooterItems as item}
 				<td class={mergeClasses(cellClass, overrideDefaultStyling ? '' : 'fluid-table-cell')}>
 					{@render footerTemplate(item)}

@@ -15,12 +15,15 @@
 		{ name: 'Input Field', url: '/documentation/base/input-field' },
 		{ name: 'Link', url: '/documentation/base/link' },
 		{ name: 'List', url: '/documentation/base/list' },
+		{ name: 'Table', url: '/documentation/base/table' },
 		{ name: 'Text', url: '/documentation/base/text' }
 	];
 	const components = [
 		{ name: 'Accordion', url: '/documentation/components/accordion' },
 		{ name: 'Calendar', url: '/documentation/components/calendar' },
 		{ name: 'Code Block', url: '/documentation/components/code-block' },
+		{ name: 'Image Crop', url: '/documentation/components/image-crop' },
+		{ name: 'Page', url: '/documentation/components/page' },
 		{ name: 'Switch', url: '/documentation/components/switch' }
 	];
 </script>

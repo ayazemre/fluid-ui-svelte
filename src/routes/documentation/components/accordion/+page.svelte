@@ -1,81 +1,164 @@
 <script lang="ts">
-	import Accordion from '$lib/components/Accordion.svelte';
-	import Page from '$lib/components/Page.svelte';
-	import Text from '$lib/base/Text.svelte';
-	import Container from '$lib/base/Container.svelte';
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
+	import { Accordion, Page } from '$lib/components/index.js';
+	import { Container, Text, Table } from '$lib/base/index.js';
+	import { CodeBlock } from '$lib/components/index.js';
 	import Icon from '@iconify/svelte';
 	import { fade } from 'svelte/transition';
+
+	const headers = ['Prop', 'Type', 'Default', 'Description'];
+	const propsData = [
+		{
+			prop: 'variation',
+			type: 'string',
+			default: "''",
+			description: 'Custom CSS class to apply to the accordion wrapper.'
+		},
+		{
+			prop: 'header',
+			type: 'Snippet<[{ isExpanded: boolean }]>',
+			default: 'required',
+			description: 'Snippet for the toggleable header content.'
+		},
+		{
+			prop: 'body',
+			type: 'Snippet',
+			default: 'required',
+			description: 'Snippet for the collapsible body content.'
+		},
+		{
+			prop: 'transitionFunction',
+			type: 'function',
+			default: 'slide',
+			description: 'Svelte transition function for the expansion animation.'
+		},
+		{
+			prop: 'transitionDuration',
+			type: 'number',
+			default: '250',
+			description: 'Duration of the expansion animation in ms.'
+		}
+	];
+
+	const tableRows = propsData.map((p) => [
+		{ value: p.prop, col: 'prop' },
+		{ value: p.type, col: 'type' },
+		{ value: p.default, col: 'default' },
+		{ value: p.description, col: 'desc' }
+	]);
 </script>
 
 <Page
 	title="Accordion - Fluid UI"
-	description="A vertically stacked set of interactive headings that each reveal a section of content."
+	description="A collapsible component used to organize content into toggleable sections."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Accordion</Text>
 			<Text>
-				The Accordion component allows you to create collapsible sections of content. It's useful
-				for FAQs, navigation menus, or any situation where you need to toggle the visibility of
-				content to save space.
+				The Accordion component allows users to toggle the visibility of content sections. It's an
+				ideal solution for FAQs, progressive disclosure, or compacting complex information.
 			</Text>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Text>The Accordion component accepts the following props:</Text>
-			<ul class="flex list-disc flex-col gap-2 pl-6">
-				<li>
-					<Text>
-						<Text type="strong">variation:</Text> An optional string of CSS classes to apply custom styling
-						variations to the accordion's trigger, header, and body.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">header:</Text> A required Svelte snippet for the accordion's header.
-						It receives an <Text type="code">options</Text> object with an
-						<Text type="code">isExpanded: boolean</Text> property that you can use to change the header's
-						appearance based on the accordion's state.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">body:</Text> A required Svelte snippet for the accordion's content, which
-						is displayed when the accordion is expanded.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">transitionFunction:</Text> An optional Svelte transition function for
-						the body's reveal animation. Defaults to <Text type="code">slide</Text> from 'svelte/transition'.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">transitionDuration:</Text> An optional number that specifies the duration
-						of the transition in milliseconds. Defaults to <Text type="code">250</Text>.
-					</Text>
-				</li>
-			</ul>
+			<Table
+				tableHeadItems={headers}
+				tableRowItems={tableRows}
+				tableFooterItems={[]}
+				class="w-full text-left"
+			>
+				{#snippet headTemplate(item: string)}
+					<Text class="p-2 font-bold">{item}</Text>
+				{/snippet}
+
+				{#snippet bodyTemplate(item: any)}
+					<Container overrideDefaultStyling={true} class="p-2">
+						{#if item.col === 'prop'}
+							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
+						{:else if item.col === 'type'}
+							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
+								>{item.value}</Text
+							>
+						{:else if item.col === 'default'}
+							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+						{:else}
+							<Text class="text-sm">{item.value}</Text>
+						{/if}
+					</Container>
+				{/snippet}
+
+				{#snippet footerTemplate()}
+					<Container overrideDefaultStyling={true} />
+				{/snippet}
+			</Table>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
-			<Text>Here is an example of the Accordion component.</Text>
-			<Container class="flex flex-col gap-4 rounded-lg border p-4">
-				<Accordion>
-					{#snippet header(options)}
-						<Text>Accordion Header</Text>
-						<Icon icon={options.isExpanded ? 'mdi:chevron-up' : 'mdi:chevron-down'} />
-					{/snippet}
-					{#snippet body()}
-						<Text>
-							This is the content of the accordion. It can contain any Svelte components or HTML.
-						</Text>
-					{/snippet}
-				</Accordion>
+
+			<Container class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<!-- Standard Accordion -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Standard Accordion</Text>
+					<Text class="text-sm text-neutral-500">The default look with chevron indicators.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Accordion>
+							{#snippet header({ isExpanded })}
+								<Container class="flex w-full items-center justify-between p-2">
+									<Text>General Information</Text>
+									<Icon icon={isExpanded ? 'mdi:chevron-up' : 'mdi:chevron-down'} />
+								</Container>
+							{/snippet}
+							{#snippet body()}
+								<Container class="p-4 text-sm text-neutral-600 dark:text-neutral-400">
+									Accordions are perfect for grouping content while keeping the interface clean and
+									scannable.
+								</Container>
+							{/snippet}
+						</Accordion>
+					</Container>
+					<CodeBlock
+						code={`<Accordion>
+  {#snippet header({ isExpanded })}
+    <Text>Title</Text>
+    <Icon icon={isExpanded ? 'up' : 'down'} />
+  {/snippet}
+  {#snippet body()}
+    <Text>Hidden content</Text>
+  {/snippet}
+</Accordion>`}
+						language="svelte"
+					/>
+				</Container>
+
+				<!-- Custom Transition -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Custom Transition</Text>
+					<Text class="text-sm text-neutral-500">Using different Svelte transitions and durations.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Accordion transitionFunction={fade} transitionDuration={500}>
+							{#snippet header({ isExpanded })}
+								<Container class="flex w-full items-center gap-2 p-2">
+									<Text class={isExpanded ? 'font-bold text-primary-500' : ''}>Fade Animation</Text>
+								</Container>
+							{/snippet}
+							{#snippet body()}
+								<Container class="p-4 italic">
+									This accordion uses a cross-fade transition instead of the default slide.
+								</Container>
+							{/snippet}
+						</Accordion>
+					</Container>
+					<CodeBlock
+						code={`import { fade } from 'svelte/transition';
+
+<Accordion transitionFunction={fade} transitionDuration={500}>
+  ...
+</Accordion>`}
+						language="svelte"
+					/>
+				</Container>
 			</Container>
 		</Container>
 
@@ -84,20 +167,15 @@
 			<CodeBlock
 				language="svelte"
 				code={`<script lang="ts">
-  import Accordion from 'fluid-ui-svelte/components/Accordion.svelte';
-  import Text from 'fluid-ui-svelte/base/Text.svelte';
-  import Icon from '@iconify/svelte';
+  import { Accordion } from 'fluid-ui-svelte';
 <\/script>
 
 <Accordion>
   {#snippet header({ isExpanded })}
-    <Text>Is it expanded? {isExpanded ? 'Yes' : 'No'}</Text>
-    <Icon icon={isExpanded ? 'mdi:chevron-up' : 'mdi:chevron-down'} />
+    <span>Click to {isExpanded ? 'close' : 'open'}</span>
   {/snippet}
   {#snippet body()}
-    <Text class="p-4 border-t">
-      Here is some content that was previously hidden.
-    </Text>
+    <p>Expanded content here.</p>
   {/snippet}
 </Accordion>`}
 			/>

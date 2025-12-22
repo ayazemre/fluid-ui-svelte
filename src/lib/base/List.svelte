@@ -8,6 +8,7 @@
 		items = [],
 		itemTemplate,
 		class: className = '',
+		itemClass = '',
 		overrideDefaultStyling = false,
 		...rest
 	}: {
@@ -15,8 +16,9 @@
 		items: Array<T>;
 		itemTemplate: Snippet<[T]>;
 		class?: string;
+		itemClass?: string;
 		overrideDefaultStyling?: boolean;
-	} & HTMLAttributes<HTMLUListElement & HTMLOListElement & HTMLDListElement> = $props();
+	} & HTMLAttributes<HTMLUListElement | HTMLOListElement> = $props();
 
 	const classes = {
 		ol: 'fluid-ordered-list',
@@ -30,7 +32,7 @@
 	class={mergeClasses(className, overrideDefaultStyling ? '' : classes[type])}
 >
 	{#each items as item}
-		<li class={mergeClasses(className, overrideDefaultStyling ? '' : classes[type] + '-item')}>
+		<li class={mergeClasses(itemClass, overrideDefaultStyling ? '' : classes[type] + '-item')}>
 			{@render itemTemplate(item)}
 		</li>
 	{/each}

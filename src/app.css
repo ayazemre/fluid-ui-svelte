@@ -150,10 +150,10 @@ main.fluid-container {
 }
 
 .fluid-unordered-list {
-	@apply list-disc text-white;
+	@apply list-disc text-neutral-950 dark:text-neutral-50;
 }
 .fluid-ordered-list {
-	@apply list-decimal;
+	@apply list-decimal text-neutral-950 dark:text-neutral-50;
 }
 
 .fluid-table {
@@ -184,7 +184,7 @@ main.fluid-container {
 	@apply flex-col;
 }
 .fluid-accordion-header {
-	@apply flex w-full flex-nowrap items-center justify-between rounded-md transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+	@apply flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
 }
 .fluid-accordion-body {
 	@apply flex w-full flex-col gap-1 p-2;

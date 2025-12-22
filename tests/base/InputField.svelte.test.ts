@@ -41,14 +41,14 @@ describe('Input Field', () => {
 				overrideDefaultStyling
 			});
 
-			const button = page.getByTestId('input-field-override-' + overrideDefaultStyling);
-			await expect.element(button).toBeInTheDocument();
+			const input = page.getByTestId('input-field-override-' + overrideDefaultStyling);
+			await expect.element(input).toBeInTheDocument();
 			if (overrideDefaultStyling) {
-				await expect.element(button).not.toHaveClass('fluid-input-field');
-				await expect.element(button).toHaveClass('override');
+				await expect.element(input).not.toHaveClass('fluid-input-field');
+				await expect.element(input).toHaveClass('override');
 			} else {
-				await expect.element(button).toHaveClass('fluid-input-field');
-				await expect.element(button).toHaveClass('override');
+				await expect.element(input).toHaveClass('fluid-input-field');
+				await expect.element(input).toHaveClass('override');
 			}
 		}
 	});

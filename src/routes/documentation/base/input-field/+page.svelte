@@ -1,14 +1,59 @@
 <script lang="ts">
-	import Container from '$lib/base/Container.svelte';
-	import Page from '$lib/components/Page.svelte';
-	import Text from '$lib/base/Text.svelte';
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
-	import InputField from '$lib/base/InputField.svelte';
+	import { InputField, Container, Text, Table } from '$lib/base/index.js';
+	import { Page, CodeBlock } from '$lib/components/index.js';
 
-	let textValue = 'Some text';
-	let passwordValue = 'password123';
-	let numericValue = '';
-	let errorValue = 'invalid-email@';
+	const headers = ['Prop', 'Type', 'Default', 'Description'];
+
+	const propsData = [
+		{
+			prop: 'value',
+			type: 'string',
+			default: "''",
+			description: "The input's bound value."
+		},
+		{
+			prop: 'type',
+			type: "'text' | 'password'",
+			default: "'text'",
+			description: 'The type of the input field.'
+		},
+		{
+			prop: 'characterFilter',
+			type: 'string[]',
+			default: 'undefined',
+			description: 'Array of allowed characters. If set, other characters are rejected.'
+		},
+		{
+			prop: 'class',
+			type: 'string',
+			default: "''",
+			description: 'CSS classes to apply to the input.'
+		},
+		{
+			prop: 'overrideDefaultStyling',
+			type: 'boolean',
+			default: 'false',
+			description: 'If true, removes the base fluid-input-field class.'
+		},
+		{
+			prop: '...rest',
+			type: 'HTMLInputAttributes',
+			default: '—',
+			description: 'Standard HTML <input> attributes.'
+		}
+	];
+
+	const tableRows = propsData.map((p) => [
+		{ value: p.prop, col: 'prop' },
+		{ value: p.type, col: 'type' },
+		{ value: p.default, col: 'default' },
+		{ value: p.description, col: 'desc' }
+	]);
+
+	let textValue = $state('');
+	let passwordValue = $state('');
+	let numericValue = $state('');
+	let errorValue = $state('invalid-email@');
 </script>
 
 <Page
@@ -23,84 +68,133 @@
 					>{'<input>'}</Text
 				>
 				element. It provides built-in functionality for real-time character filtering, making it easy
-				to create inputs that only accept specific characters, such as numbers.
+				to create inputs that only accept specific characters.
 			</Text>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Text>
-				The Input Field component forwards all standard <Text type="code">{'<input>'}</Text> attributes
-				(like <Text type="code">placeholder</Text>, <Text type="code">disabled</Text>, etc.). It
-				also includes the following custom props:
-			</Text>
-			<ul class="flex list-disc flex-col gap-2 pl-6">
-				<li>
-					<Text
-						><Text type="strong">value:</Text> A bindable string that holds the input's value.</Text
-					>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">type:</Text> The type of the input. Can be <Text type="code"
-							>'text'</Text
-						> or <Text type="code">'password'</Text>. Defaults to <Text type="code">'text'</Text>.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">class:</Text> A string of CSS classes to apply to the input for custom
-						styling.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">overrideDefaultStyling:</Text> A boolean that, when `true`, removes the
-						default <Text type="code">fluid-input-field</Text> class. Defaults to `false`.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">characterFilter:</Text> An array of strings representing allowed characters.
-						Any character typed that is not in this array will be automatically removed. For example,
-						to allow only numbers, you can pass <Text type="code"
-							>{`['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']`}</Text
-						>.
-					</Text>
-				</li>
-			</ul>
+			<Table
+				tableHeadItems={headers}
+				tableRowItems={tableRows}
+				tableFooterItems={[]}
+				class="w-full text-left"
+			>
+				{#snippet headTemplate(item)}
+					<Text class="p-2 font-bold">{item}</Text>
+				{/snippet}
+
+				{#snippet bodyTemplate(item)}
+					<Container overrideDefaultStyling={true} class="p-2">
+						{#if item.col === 'prop'}
+							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
+						{:else if item.col === 'type'}
+							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
+								>{item.value}</Text
+							>
+						{:else if item.col === 'default'}
+							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+						{:else}
+							<Text class="text-sm">{item.value}</Text>
+						{/if}
+					</Container>
+				{/snippet}
+
+				{#snippet footerTemplate(item)}
+					<Container overrideDefaultStyling={true} />
+				{/snippet}
+			</Table>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
-			<Text>Here are some examples of the Input Field component in action.</Text>
-			<Container class="flex flex-col gap-4 rounded-lg border p-4">
+
+			<Container class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<!-- Basic Text -->
 				<Container class="flex flex-col gap-2">
-					<Text type="strong">Text Input</Text>
-					<InputField placeholder="Enter your name" bind:value={textValue} />
-				</Container>
-				<Container class="flex flex-col gap-2">
-					<Text type="strong">Password Input</Text>
-					<InputField
-						type="password"
-						placeholder="Enter your password"
-						bind:value={passwordValue}
+					<Text type="h3" class="text-lg font-semibold">Basic Text</Text>
+					<Text class="text-sm text-neutral-500">Standard text input with reactive binding.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<InputField placeholder="Enter your name" bind:value={textValue} class="w-full" />
+						<Text class="mt-2 text-sm text-neutral-500">Value: {textValue}</Text>
+					</Container>
+					<CodeBlock
+						code={`<InputField 
+  placeholder="Enter your name" 
+  bind:value={textValue} 
+  class="w-full"
+/>`}
+						language="svelte"
 					/>
 				</Container>
+
+				<!-- Password -->
 				<Container class="flex flex-col gap-2">
-					<Text type="strong">Numeric Input (with characterFilter)</Text>
-					<InputField
-						placeholder="Enter numbers only"
-						bind:value={numericValue}
-						characterFilter={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+					<Text type="h3" class="text-lg font-semibold">Password</Text>
+					<Text class="text-sm text-neutral-500">Secure entry for passwords and sensitive data.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<InputField
+							type="password"
+							placeholder="Enter password"
+							bind:value={passwordValue}
+							class="w-full"
+						/>
+						<Text class="mt-2 text-sm text-neutral-500">Value: {passwordValue}</Text>
+					</Container>
+					<CodeBlock
+						code={`<InputField
+  type="password"
+  placeholder="Enter password"
+  bind:value={passwordValue}
+  class="w-full"
+/>`}
+						language="svelte"
 					/>
 				</Container>
+
+				<!-- Numeric Filter -->
 				<Container class="flex flex-col gap-2">
-					<Text type="strong">Error State</Text>
-					<InputField
-						class="fluid-input-field-error"
-						placeholder="Enter your email"
-						bind:value={errorValue}
+					<Text type="h3" class="text-lg font-semibold">Numeric Only</Text>
+					<Text class="text-sm text-neutral-500">Using characterFilter to restrict input to digits.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<InputField
+							placeholder="Numbers only..."
+							bind:value={numericValue}
+							characterFilter={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+							class="w-full"
+						/>
+						<Text class="mt-2 text-sm text-neutral-500">Value: {numericValue}</Text>
+					</Container>
+					<CodeBlock
+						code={`<InputField
+  placeholder="Numbers only..."
+  bind:value={numericValue}
+  characterFilter={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+  class="w-full"
+/>`}
+						language="svelte"
+					/>
+				</Container>
+
+				<!-- Error State -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Error State</Text>
+					<Text class="text-sm text-neutral-500">Applying custom error styling for validation feedback.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<InputField
+							class="w-full fluid-input-field-error"
+							placeholder="Error styling"
+							bind:value={errorValue}
+						/>
+						<Text class="mt-2 text-sm text-neutral-500">Value: {errorValue}</Text>
+					</Container>
+					<CodeBlock
+						code={`<InputField
+  class="w-full fluid-input-field-error"
+  placeholder="Error styling"
+  bind:value={errorValue}
+/>`}
+						language="svelte"
 					/>
 				</Container>
 			</Container>
@@ -111,17 +205,12 @@
 			<CodeBlock
 				language="svelte"
 				code={`<script lang="ts">
-  import InputField from 'fluid-ui-svelte/base/InputField.svelte';
+  import { InputField } from 'fluid-ui-svelte';
 
-  let numericValue = '';
-  const numericFilter = Array.from({ length: 10 }, (_, i) => i.toString());
+  let value = '';
 <\/script>
 
-<InputField
-  placeholder="Enter your age"
-  bind:value={numericValue}
-  characterFilter={numericFilter}
-/>`}
+<InputField bind:value />`}
 			/>
 		</Container>
 	</Container>
