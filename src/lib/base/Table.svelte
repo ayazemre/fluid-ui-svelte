@@ -12,6 +12,12 @@
 		bodyTemplate,
 		footerTemplate,
 		class: className = '',
+		captionClass = '',
+		headClass = '',
+		bodyClass = '',
+		rowClass = '',
+		cellClass = '',
+		footerClass = '',
 		overrideDefaultStyling = false,
 		...rest
 	}: {
@@ -23,40 +29,49 @@
 		bodyTemplate: Snippet<[U]>;
 		footerTemplate: Snippet<[V]>;
 		class?: string;
+		captionClass?: string;
+		headClass?: string;
+		bodyClass?: string;
+		rowClass?: string;
+		cellClass?: string;
+		footerClass?: string;
 		overrideDefaultStyling?: boolean;
 	} & HTMLAttributes<HTMLTableElement> = $props();
 </script>
 
-<table class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table')}>
+<table
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table')}
+	{...rest}
+>
 	{#if caption}
-		<caption class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-caption')}>
+		<caption class={mergeClasses(captionClass, overrideDefaultStyling ? '' : 'fluid-table-caption')}>
 			{caption}
 		</caption>
 	{/if}
-	<thead class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-head')}>
-		<tr class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-row')}>
+	<thead class={mergeClasses(headClass, overrideDefaultStyling ? '' : 'fluid-table-head')}>
+		<tr class={mergeClasses(rowClass, overrideDefaultStyling ? '' : 'fluid-table-row')}>
 			{#each tableHeadItems as item}
-				<th class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-cell')}
+				<th class={mergeClasses(cellClass, overrideDefaultStyling ? '' : 'fluid-table-cell')}
 					>{@render headTemplate(item)}
 				</th>
 			{/each}
 		</tr>
 	</thead>
-	<tbody class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-body')}>
+	<tbody class={mergeClasses(bodyClass, overrideDefaultStyling ? '' : 'fluid-table-body')}>
 		{#each tableRowItems as items}
-			<tr class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-row')}>
+			<tr class={mergeClasses(rowClass, overrideDefaultStyling ? '' : 'fluid-table-row')}>
 				{#each items as item}
-					<td class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-cell')}
+					<td class={mergeClasses(cellClass, overrideDefaultStyling ? '' : 'fluid-table-cell')}
 						>{@render bodyTemplate(item)}</td
 					>
 				{/each}
 			</tr>
 		{/each}
 	</tbody>
-	<tfoot class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-footer')}>
+	<tfoot class={mergeClasses(footerClass, overrideDefaultStyling ? '' : 'fluid-table-footer')}>
 		<tr>
 			{#each tableFooterItems as item}
-				<td class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table-cell')}>
+				<td class={mergeClasses(cellClass, overrideDefaultStyling ? '' : 'fluid-table-cell')}>
 					{@render footerTemplate(item)}
 				</td>
 			{/each}

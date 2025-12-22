@@ -135,7 +135,7 @@ main.fluid-container {
 	@apply object-contain;
 }
 .fluid-image-loading {
-	@apply animate-pulse bg-neutral-300;
+	@apply animate-pulse bg-primary-500;
 }
 
 .fluid-input-field {
