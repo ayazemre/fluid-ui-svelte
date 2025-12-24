@@ -1,0 +1,42 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessary for git history comparison in check_version.sh
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: bash scripts/run_tests.sh
+
+      - name: Check Version Update
+        run: bash scripts/check_version.sh
+
+      - name: Build and Publish to NPM
+        run: bash scripts/npm_deploy.sh
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Notify Webhook
+        if: success()
+        run: curl -X POST "${{ env.WEBHOOK_ENDPOINT }}"
+        env:
+          WEBHOOK_ENDPOINT: ${{ secrets.PUBLISH_WEBHOOK_ENDPOINT }}
