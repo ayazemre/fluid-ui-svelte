@@ -8,7 +8,7 @@
 	"license": "MIT",
 	"homepage": "https://github.com/ayazemre/fluid-ui-svelte",
 	"repository": {
-		"url": "https://github.com/ayazemre/fluid-ui-svelte"
+		"url": "git+https://github.com/ayazemre/fluid-ui-svelte.git"
 	},
 	"scripts": {
 		"dev": "vite dev",
