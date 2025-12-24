@@ -7,12 +7,14 @@
 
 	const {
 		variation = '',
+		componentId,
 		header,
 		body,
 		transitionFunction = slide,
 		transitionDuration = 250
 	}: {
 		variation?: string;
+		componentId: string;
 		header: Snippet<[options: { isExpanded: boolean }]>;
 		body: Snippet;
 		transitionFunction?: (node: Element, params?: any) => TransitionConfig;
@@ -21,7 +23,7 @@
 	const componentState = $state({ isExpanded: false });
 </script>
 
-<Container class={mergeClasses(variation, 'fluid-accordion-wrapper')}>
+<Container id={componentId} class={mergeClasses(variation, 'fluid-accordion-wrapper')}>
 	<Button
 		onclick={async () => {
 			componentState.isExpanded = !componentState.isExpanded;

@@ -14,9 +14,12 @@ describe('Container', () => {
 			})
 		});
 
+		// Structure Check
 		const container = page.getByTestId('container-default');
 		await expect.element(container).toBeInTheDocument();
 		expect(container.element().tagName).toBe('DIV');
+
+		// Attributes & Content
 		await expect.element(container).toContainHTML('<p>Default</p>');
 		expect(container.element().ariaLabel).toBe('div');
 	});
@@ -42,6 +45,7 @@ describe('Container', () => {
 				})
 			});
 
+			// Polymorphism Check
 			const container = page.getByTestId(`container-${containerType}`);
 			await expect.element(container).toBeInTheDocument();
 			expect(container.element().tagName).toBe(containerType.toUpperCase());
@@ -60,9 +64,12 @@ describe('Container', () => {
 				})
 			});
 
+			// Structure & Content Check
 			const container = page.getByTestId('container-override-' + overrideDefaultStyling);
 			await expect.element(container).toBeInTheDocument();
 			await expect.element(container).toContainHTML('<p>div</p>');
+
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(container).toHaveClass('override');
 				await expect.element(container).not.toHaveClass('fluid-container');

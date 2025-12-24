@@ -10,10 +10,15 @@ describe('Input Field', () => {
 			'aria-label': 'input'
 		});
 
+		// Structure Check
 		const input = page.getByTestId('input-field-default');
 		await expect.element(input).toBeInTheDocument();
 		expect(input.element().tagName).toBe('INPUT');
+
+		// Attributes
 		expect(input.element().ariaLabel).toBe('input');
+
+		// Interaction (Fill)
 		await input.click();
 		await input.fill('Test Input');
 		await expect.element(input).toHaveValue('Test Input');
@@ -27,6 +32,7 @@ describe('Input Field', () => {
 				type: inputFieldType as any
 			});
 
+			// Polymorphism Check
 			const input = page.getByTestId('input-field-' + inputFieldType);
 			await expect.element(input).toBeInTheDocument();
 			expect(input.element().attributes.getNamedItem('type')!.value).toBe(inputFieldType);
@@ -41,8 +47,11 @@ describe('Input Field', () => {
 				overrideDefaultStyling
 			});
 
+			// Existence Check
 			const input = page.getByTestId('input-field-override-' + overrideDefaultStyling);
 			await expect.element(input).toBeInTheDocument();
+
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(input).not.toHaveClass('fluid-input-field');
 				await expect.element(input).toHaveClass('override');
@@ -60,10 +69,13 @@ describe('Input Field', () => {
 			characterFilter: ['1']
 		});
 
+		// Structure Check
 		const input = page.getByTestId('input-field-default');
 		await expect.element(input).toBeInTheDocument();
 		expect(input.element().tagName).toBe('INPUT');
 		expect(input.element().ariaLabel).toBe('input');
+
+		// Interaction (Filtering Logic)
 		await input.click();
 		await input.fill('Test Input 1');
 		await expect.element(input).toHaveValue('1');

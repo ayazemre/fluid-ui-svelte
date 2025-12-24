@@ -17,10 +17,13 @@ describe('List', () => {
 			})
 		});
 
+		// Structure Check
 		const list = page.getByTestId('list-default');
 		await expect.element(list).toBeInTheDocument();
 		expect(list.element().tagName).toBe('UL');
-		
+
+		// Attributes & Content
+		expect(list.element().ariaLabel).toBe('list');
 		const items = list.element().querySelectorAll('li');
 		expect(items.length).toBe(2);
 		expect(items[0].textContent).toBe('Item 1');
@@ -36,10 +39,11 @@ describe('List', () => {
 				type: listType as any,
 				items: ['Item'],
 				itemTemplate: createRawSnippet((prop: any) => {
-					return { render: () => prop() };
+					return { render: () => `<p>${prop()}</p>` };
 				})
 			});
 
+			// Polymorphism Check
 			const list = page.getByTestId(`list-${listType}`);
 			await expect.element(list).toBeInTheDocument();
 			expect(list.element().tagName).toBe(listType.toUpperCase());
@@ -55,14 +59,15 @@ describe('List', () => {
 				overrideDefaultStyling,
 				items: ['Item'],
 				itemTemplate: createRawSnippet((prop: any) => {
-					return { render: () => prop() };
+					return { render: () => `<p>${prop()}</p>` };
 				})
 			});
 
+			// Existence Check
 			const list = page.getByTestId('list-styling-' + overrideDefaultStyling);
 			await expect.element(list).toBeInTheDocument();
 
-			// Check list classes
+			// List Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(list).toHaveClass('list-override');
 				await expect.element(list).not.toHaveClass('fluid-unordered-list');
@@ -71,7 +76,7 @@ describe('List', () => {
 				await expect.element(list).toHaveClass('list-override');
 			}
 
-			// Check item classes
+			// Item Class Validation
 			const item = list.element().querySelector('li');
 			expect(item).not.toBeNull();
 			if (item) {

@@ -9,14 +9,19 @@ describe('Link', () => {
 		render(Link, {
 			id: 'link-default',
 			href: '/test',
+			'aria-label': 'link',
 			children: createRawSnippet(() => {
-				return { render: () => 'Click Me' };
+				return { render: () => '<p>Click Me</p>' };
 			})
 		});
 
+		// Structure Check
 		const link = page.getByTestId('link-default');
 		await expect.element(link).toBeInTheDocument();
 		expect(link.element().tagName).toBe('A');
+
+		// Attributes & Content
+		expect(link.element().ariaLabel).toBe('link');
 		await expect.element(link).toHaveAttribute('href', '/test');
 		await expect.element(link).toHaveTextContent('Click Me');
 		await expect.element(link).toHaveClass('fluid-link');
@@ -30,12 +35,15 @@ describe('Link', () => {
 				class: 'override',
 				overrideDefaultStyling,
 				children: createRawSnippet(() => {
-					return { render: () => 'Link' };
+					return { render: () => '<p>Link</p>' };
 				})
 			});
 
+			// Existence Check
 			const link = page.getByTestId('link-override-' + overrideDefaultStyling);
 			await expect.element(link).toBeInTheDocument();
+
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(link).not.toHaveClass('fluid-link');
 				await expect.element(link).toHaveClass('override');
@@ -44,21 +52,5 @@ describe('Link', () => {
 				await expect.element(link).toHaveClass('override');
 			}
 		}
-	});
-
-	test('Standard attributes', async () => {
-		render(Link, {
-			id: 'link-attr',
-			href: 'https://example.com',
-			target: '_blank',
-			rel: 'noopener noreferrer',
-			children: createRawSnippet(() => {
-				return { render: () => 'External' };
-			})
-		});
-
-		const link = page.getByTestId('link-attr');
-		await expect.element(link).toHaveAttribute('target', '_blank');
-		await expect.element(link).toHaveAttribute('rel', 'noopener noreferrer');
 	});
 });

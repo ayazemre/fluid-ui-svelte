@@ -13,9 +13,13 @@ describe('Image', () => {
 			class: 'object-cover',
 			'aria-label': 'image'
 		});
+
+		// Structure Check
 		const image = page.getByTestId('image-default');
 		await expect.element(image).toBeInTheDocument();
 		expect(image.element().tagName).toBe('IMG');
+
+		// Attributes
 		expect(image.element().ariaLabel).toBe('image');
 	});
 
@@ -29,8 +33,12 @@ describe('Image', () => {
 				'aria-label': 'image',
 				overrideDefaultStyling
 			});
+
+			// Existence Check
 			const image = page.getByTestId('image-override-' + overrideDefaultStyling);
 			await expect.element(image).toBeInTheDocument();
+
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(image).not.toHaveClass('fluid-image');
 				await expect.element(image).toHaveClass('object-cover');

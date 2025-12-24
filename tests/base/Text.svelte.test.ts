@@ -8,15 +8,20 @@ describe('Text', () => {
 	test('Default', async () => {
 		render(Text, {
 			id: 'text-default',
+			'aria-label': 'semantic-text',
 			children: createRawSnippet(() => {
 				return { render: () => '<span>Default</span>' };
 			})
 		});
 
+		// Structure Check
 		const text = page.getByTestId('text-default');
 		await expect.element(text).toBeInTheDocument();
 		expect(text.element().tagName).toBe('P');
+
+		// Attributes & Content
 		await expect.element(text).toHaveTextContent('Default');
+		expect(text.element().ariaLabel).toBe('semantic-text');
 	});
 
 	test('Types', async () => {
@@ -52,6 +57,7 @@ describe('Text', () => {
 				type: textType as any
 			});
 
+			// Polymorphism Check
 			const text = page.getByTestId('text-' + textType);
 			await expect.element(text).toBeInTheDocument();
 			expect(text.element().tagName).toBe(textType.toUpperCase());
@@ -70,29 +76,17 @@ describe('Text', () => {
 				overrideDefaultStyling
 			});
 
+			// Structure Check
 			const text = page.getByTestId('text-override-' + overrideDefaultStyling);
 			await expect.element(text).toBeInTheDocument();
 			await expect.element(text).toHaveClass('text-custom');
 
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(text).not.toHaveClass('fluid-text');
 			} else {
 				await expect.element(text).toHaveClass('fluid-text');
 			}
 		}
-	});
-
-	test('Aria Label Support', async () => {
-		render(Text, {
-			id: 'text-aria',
-			children: createRawSnippet(() => {
-				return { render: () => '<span>Aria</span>' };
-			}),
-			'aria-label': 'semantic-text'
-		});
-
-		const text = page.getByTestId('text-aria');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().ariaLabel).toBe('semantic-text');
 	});
 });
