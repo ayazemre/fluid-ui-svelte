@@ -1,83 +1,178 @@
 <script lang="ts">
-	import Container from '$lib/base/Container.svelte';
-	import Page from '$lib/components/Page.svelte';
-	import Text from '$lib/base/Text.svelte';
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
+	import { Text, Container, Table } from '$lib/base/index.js';
+	import { Page, CodeBlock } from '$lib/components/index.js';
+
+	const headers = ['Prop', 'Type', 'Default', 'Description'];
+
+	const propsData = [
+		{
+			prop: 'type',
+			type: 'string',
+			default: "'p'",
+			description: 'The HTML element to render (h1-h6, p, span, code, etc.).'
+		},
+		{
+			prop: 'class',
+			type: 'string',
+			default: "''",
+			description: 'CSS classes to apply to the element.'
+		},
+		{
+			prop: 'overrideDefaultStyling',
+			type: 'boolean',
+			default: 'false',
+			description: 'If true, removes the base fluid-text class.'
+		},
+		{
+			prop: 'children',
+			type: 'Snippet',
+			default: '—',
+			description: 'The text content to render.'
+		},
+		{
+			prop: '...rest',
+			type: 'HTMLAttributes',
+			default: '—',
+			description: 'Standard HTML attributes for the chosen element type.'
+		}
+	];
+
+	const tableRows = propsData.map((p) => [
+		{ value: p.prop, col: 'prop' },
+		{ value: p.type, col: 'type' },
+		{ value: p.default, col: 'default' },
+		{ value: p.description, col: 'desc' }
+	]);
+
+	const tags = [
+		'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'pre', 'code', 'b', 'strong', 'i', 'em', 'mark', 'small', 'del', 'ins', 'sub', 'sup'
+	];
 </script>
 
 <Page
 	title="Text - Fluid UI"
-	description="A versatile component for rendering various semantic text elements like paragraphs, headings, and inline styles."
+	description="A versatile component for rendering semantic text elements with consistent typography."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Text</Text>
 			<Text>
-				The Text component is a fundamental building block for displaying text content. It uses
-				Svelte's
+				The Text component is a fundamental building block for displaying content. It uses
 				<Text type="code">{'<svelte:element>'}</Text> to dynamically render a wide range of semantic
-				HTML text elements, from paragraphs and headings to inline styling tags.
+				HTML text elements while applying standard library styling.
 			</Text>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Text>
-				The Text component forwards all standard HTML attributes for the rendered element. It also
-				includes the following custom props:
-			</Text>
-			<ul class="flex list-disc flex-col gap-2 pl-6">
-				<li>
-					<Text>
-						<Text type="strong">type:</Text> Specifies the HTML element to render. Defaults to
-						<Text type="code">'p'</Text>. Possible values are:
-					</Text>
-					<Container class="mt-2 flex flex-wrap gap-2">
-						{#each ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'pre', 'code', 'b', 'strong', 'i', 'em', 'mark', 'small', 'del', 'ins', 'sub', 'sup'] as tag}
-							<Text type="code">{tag}</Text>
-						{/each}
+			<Table
+				tableHeadItems={headers}
+				tableRowItems={tableRows}
+				tableFooterItems={[]}
+				class="w-full text-left"
+			>
+				{#snippet headTemplate(item: string)}
+					<Text class="p-2 font-bold">{item}</Text>
+				{/snippet}
+
+				{#snippet bodyTemplate(item: any)}
+					<Container overrideDefaultStyling={true} class="p-2">
+						{#if item.col === 'prop'}
+							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
+						{:else if item.col === 'type'}
+							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
+								>{item.value}</Text
+							>
+						{:else if item.col === 'default'}
+							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+						{:else}
+							<Text class="text-sm">{item.value}</Text>
+						{/if}
 					</Container>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">class:</Text> A string of CSS classes to apply to the element for custom
-						styling.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">overrideDefaultStyling:</Text> A boolean that, when `true`, removes the
-						default <Text type="code">fluid-text</Text> class. Defaults to `false`.
-					</Text>
-				</li>
-			</ul>
+				{/snippet}
+
+				{#snippet footerTemplate()}
+					<Container overrideDefaultStyling={true} />
+				{/snippet}
+			</Table>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
-			<Text>Here are some examples of the Text component in action.</Text>
-			<Container class="flex flex-col gap-4 rounded-lg border p-4">
-				<Text type="h3" class="font-semibold">This is an H3 heading.</Text>
-				<Text>
-					This is a standard paragraph. You can use the Text component to add emphasis, like
-					<Text type="strong">strong</Text> or <Text type="em">emphasized</Text> text. You can also
-					<Text type="mark">highlight</Text>
-					parts of it.
-				</Text>
-				<Text>
-					Use it for inline code like <Text type="code">const a = 1;</Text> or for block-level code:
-				</Text>
-				<Text type="pre">
-					<Text type="code">
-						{`function greet() {
-  console.log("Hello, world!");
+
+			<Container class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<!-- Headings -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Semantic Headings</Text>
+					<Text class="text-sm text-neutral-500">Render various heading levels using the type prop.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Text type="h1" class="text-2xl font-bold">Heading 1</Text>
+						<Text type="h2" class="text-xl font-semibold">Heading 2</Text>
+						<Text type="h3" class="text-lg font-medium">Heading 3</Text>
+					</Container>
+					<CodeBlock
+						code={`<Text type="h1" class="text-2xl font-bold">Heading 1</Text>
+<Text type="h2" class="text-xl font-semibold">Heading 2</Text>`}
+						language="svelte"
+					/>
+				</Container>
+
+				<!-- Inline Styles -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Inline Emphasis</Text>
+					<Text class="text-sm text-neutral-500">Use semantic tags for bold, italic, or highlighted text.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Text>
+							This is <Text type="strong">bold</Text>, <Text type="em">italic</Text>, and
+							<Text type="mark">highlighted</Text>.
+						</Text>
+					</Container>
+					<CodeBlock
+						code={`<Text>
+  This is <Text type="strong">bold</Text> and <Text type="em">italic</Text>.
+</Text>`}
+						language="svelte"
+					/>
+				</Container>
+
+				<!-- Code and Pre -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Code & Preformatted</Text>
+					<Text class="text-sm text-neutral-500">Perfect for technical documentation or data display.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Text type="code">const fluid = 'awesome';</Text>
+						<Text type="pre" class="mt-2 text-xs">
+							{`{
+  "library": "fluid-ui",
+  "framework": "svelte"
 }`}
-					</Text>
-				</Text>
-				<Text>
-					Other styles include <Text type="del">deleted</Text>, <Text type="ins">inserted</Text>,
-					<Text type="sub">subscript</Text>, and <Text type="sup">superscript</Text>.
-				</Text>
+						</Text>
+					</Container>
+					<CodeBlock
+						code={`<Text type="code">const fluid = 'awesome';</Text>
+<Text type="pre">{"{...}"}</Text>`}
+						language="svelte"
+					/>
+				</Container>
+
+				<!-- Semantic Extras -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Semantic Markers</Text>
+					<Text class="text-sm text-neutral-500">Support for deleted, inserted, sub and superscript.</Text>
+					<Container class="rounded-lg border p-6 dark:border-neutral-700">
+						<Text>
+							<Text type="del">Old price</Text> <Text type="ins">New price</Text>
+						</Text>
+						<Text class="mt-2">
+							H<Text type="sub">2</Text>O and E = mc<Text type="sup">2</Text>
+						</Text>
+					</Container>
+					<CodeBlock
+						code={`<Text type="del">Old</Text> <Text type="ins">New</Text>
+<Text>H<Text type="sub">2</Text>O</Text>`}
+						language="svelte"
+					/>
+				</Container>
 			</Container>
 		</Container>
 
@@ -86,18 +181,11 @@
 			<CodeBlock
 				language="svelte"
 				code={`<script lang="ts">
-  import Text from 'fluid-ui-svelte/base/Text.svelte';
+  import { Text } from 'fluid-ui-svelte';
 <\/script>
 
-<Text type="h1">Main Title</Text>
-<Text>
-  This is a paragraph containing some <Text type="strong">important</Text> text.
-</Text>
-<Text type="code">
-  // This is an inline code snippet
-  const message = 'Hello Svelte!';
-</Text>
-`}
+<Text type="h1">Hello World</Text>
+<Text>Standard paragraph text.</Text>`}
 			/>
 		</Container>
 	</Container>

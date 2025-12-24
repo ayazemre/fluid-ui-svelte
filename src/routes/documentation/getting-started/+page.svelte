@@ -1,15 +1,13 @@
 <script lang="ts">
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
-	import Page from '$lib/components/Page.svelte';
-	import Text from '$lib/base/Text.svelte';
-	import Link from '$lib/base/Link.svelte';
+	import { CodeBlock, Page } from '$lib/components/index.js';
+	import { Text, Link, Container, List } from '$lib/base/index.js';
 </script>
 
 <Page
 	title="Getting Started - Fluid UI"
 	description="Getting started with Fluid UI, a modern Svelte component library."
 >
-	<div class="flex flex-col gap-4">
+	<Container class="flex flex-col gap-4">
 		<Text type="h1" class="text-4xl font-bold">Getting Started</Text>
 
 		<Text>
@@ -25,28 +23,28 @@
 				type="code">Components</Text
 			>.</Text
 		>
-		<ul class="flex list-disc flex-col gap-2 pl-6">
-			<li>
+		<List
+			items={[
+				{
+					label: 'Base Components:',
+					content:
+						'These are minimal wrappers around native HTML elements (like buttons, inputs, etc.). Their primary purpose is to ensure consistent semantics and accessibility across different platforms, especially in cross-platform applications (e.g., using Tauri or Electron). You are not required to use them, but they provide a solid, standardized starting point.'
+				},
+				{
+					label: 'Components:',
+					content:
+						"These are more complex, feature-rich components like Accordions, Calendars, and Switches, built upon the Base layer or from scratch to provide advanced functionality. Many of these components accept a variant prop that allows you to switch between different styles (e.g., 'primary', 'secondary'). To create new variants, you'll need to add the corresponding styles to your app.css file."
+				}
+			]}
+			class="flex list-disc flex-col gap-2 pl-6"
+		>
+			{#snippet itemTemplate(item)}
 				<Text>
-					<Text type="strong">Base Components:</Text> These are minimal wrappers around native HTML elements
-					(like buttons, inputs, etc.). Their primary purpose is to ensure consistent semantics and accessibility
-					across different platforms, especially in cross-platform applications (e.g., using Tauri or
-					Electron). You are not required to use them, but they provide a solid, standardized starting
-					point.
+					<Text type="strong">{item.label}</Text>
+					{item.content}
 				</Text>
-			</li>
-			<li>
-				<Text>
-					<Text type="strong">Components:</Text> These are more complex, feature-rich components like
-					Accordions, Calendars, and Switches, built upon the Base layer or from scratch to provide advanced
-					functionality. Many of these components accept a <Text type="code">variant</Text> prop that
-					allows you to switch between different styles (e.g., 'primary', 'secondary'). To create new
-					variants, you'll need to add the corresponding styles to your <Text type="code"
-						>app.css</Text
-					> file.
-				</Text>
-			</li>
-		</ul>
+			{/snippet}
+		</List>
 
 		<Text type="h3" class="text-xl font-semibold">Styling</Text>
 		<Text>
@@ -80,11 +78,11 @@
 		<Text>You can now import and use components from either the base or components layer.</Text>
 		<CodeBlock
 			code={`// Import from the base layer
-import Button from 'fluid-ui-svelte/base/Button.svelte';
+import { Button } from 'fluid-ui-svelte/base';
 
 // Import from the components layer
-import Accordion from 'fluid-ui-svelte/components/Accordion.svelte';`}
+import { Accordion } from 'fluid-ui-svelte/components';`}
 			language="typescript"
 		/>
-	</div>
+	</Container>
 </Page>

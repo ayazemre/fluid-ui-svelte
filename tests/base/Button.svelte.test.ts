@@ -18,13 +18,18 @@ describe('Button', () => {
 			})
 		});
 
+		// Structure Check
 		const button = page.getByTestId('button-default');
 		await expect.element(button).toBeInTheDocument();
 		expect(button.element().tagName).toBe('BUTTON');
+
+		// Attributes & Content
 		await expect.element(button).toContainHTML('<p>Button</p>');
+		expect(button.element().ariaLabel).toBe('button');
+
+		// Interaction & State Change
 		await button.click();
 		await expect.element(button).toContainHTML('<p>Clicked</p>');
-		expect(button.element().ariaLabel).toBe('button');
 	});
 
 	test('Loading Placeholder', async () => {
@@ -41,13 +46,20 @@ describe('Button', () => {
 			})
 		});
 
+		// Initial State
 		const button = page.getByTestId('button-loading');
 		await expect.element(button).toBeInTheDocument();
 		expect(button.element().tagName).toBe('BUTTON');
+
+		// Content & Styling
 		await expect.element(button).toContainHTML('<p>Button</p>');
 		await expect.element(button).toHaveClass('fluid-button');
+
+		// Loading State (Toggle On)
 		await button.click();
 		await expect.element(button).toContainHTML('<p>Loading</p>');
+
+		// Reset State (Toggle Off)
 		await button.click();
 		await expect.element(button).toContainHTML('<p>Button</p>');
 	});
@@ -63,13 +75,19 @@ describe('Button', () => {
 			})
 		});
 
+		// Initial State
 		const button = page.getByTestId('button-loading');
 		await expect.element(button).toBeInTheDocument();
 		expect(button.element().tagName).toBe('BUTTON');
+
+		// Content & Styling
 		await expect.element(button).toContainHTML('<p>Button</p>');
 		await expect.element(button).toHaveClass('fluid-button');
+
+		// Interaction (Should not change visually without placeholder)
 		await button.click();
 		await expect.element(button).toContainHTML('<p>Button</p>');
+
 		await button.click();
 		await expect.element(button).toContainHTML('<p>Button</p>');
 	});
@@ -88,8 +106,11 @@ describe('Button', () => {
 				})
 			});
 
+			// Structure Check
 			const button = page.getByTestId('button-override' + overrideDefaultStyling);
 			await expect.element(button).toBeInTheDocument();
+
+			// Class Validation
 			if (overrideDefaultStyling) {
 				await expect.element(button).not.toHaveClass('fluid-button');
 				await expect.element(button).toHaveClass('override');

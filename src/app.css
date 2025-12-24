@@ -135,7 +135,7 @@ main.fluid-container {
 	@apply object-contain;
 }
 .fluid-image-loading {
-	@apply animate-pulse bg-neutral-300;
+	@apply animate-pulse bg-primary-500;
 }
 
 .fluid-input-field {
@@ -149,6 +149,31 @@ main.fluid-container {
 	@apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
 }
 
+.fluid-unordered-list {
+	@apply list-disc text-neutral-950 dark:text-neutral-50;
+}
+.fluid-ordered-list {
+	@apply list-decimal text-neutral-950 dark:text-neutral-50;
+}
+
+.fluid-table {
+	@apply z-10 w-full border-separate border-spacing-0 overflow-hidden rounded-md border dark:border-neutral-300;
+}
+.fluid-table-head {
+	@apply bg-neutral-200 dark:bg-neutral-800;
+}
+.fluid-table-row {
+	@apply even:bg-neutral-200 dark:even:bg-neutral-800;
+}
+.fluid-table-cell {
+	@apply border-collapse bg-clip-padding text-center;
+}
+.fluid-table-body {
+}
+.fluid-table-footer {
+	@apply bg-clip-padding p-2 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+}
+
 .fluid-text {
 	@apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
 }
@@ -159,7 +184,7 @@ main.fluid-container {
 	@apply flex-col;
 }
 .fluid-accordion-header {
-	@apply flex w-full flex-nowrap items-center justify-between rounded-md transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+	@apply flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
 }
 .fluid-accordion-body {
 	@apply flex w-full flex-col gap-1 p-2;

@@ -1,0 +1,53 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Check Version Update
+        run: |
+          PACKAGE_VERSION=$(node --input-type=module -e "import fs from 'node:fs'; const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')); console.log(pkg.version)")
+          NPM_VERSION=$(npm view fluid-ui-svelte version)
+
+          if [ "$PACKAGE_VERSION" == "$NPM_VERSION" ]; then
+            echo "Version $PACKAGE_VERSION already exists on NPM. Skipping publish."
+            exit 1
+          fi
+          echo "New version $PACKAGE_VERSION detected (current NPM: $NPM_VERSION). Proceeding."
+
+      - name: Build and Publish to NPM
+        run: |
+          npm run prepack
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Notify Webhook
+        if: success()
+        run: curl -X POST "${{ env.WEBHOOK_ENDPOINT }}"
+        env:
+          WEBHOOK_ENDPOINT: ${{ secrets.WEBSITE_BUILD_WEBHOOK }}

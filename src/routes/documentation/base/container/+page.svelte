@@ -1,8 +1,54 @@
 <script lang="ts">
-	import Container from '$lib/base/Container.svelte';
-	import Page from '$lib/components/Page.svelte';
-	import Text from '$lib/base/Text.svelte';
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
+	import { Container, Text, Table, List, Link } from '$lib/base/index.js';
+	import { Page, CodeBlock } from '$lib/components/index.js';
+
+	const headers = ['Prop', 'Type', 'Default', 'Description'];
+
+	const propsDataRaw = [
+		{
+			prop: 'type',
+			type: "'div' | 'nav' | 'section' | 'main' | 'header' | 'footer' | 'aside' | 'article'",
+			default: "'div'",
+			description: 'The HTML element tag to render.'
+		},
+		{
+			prop: 'class',
+			type: 'string',
+			default: "''",
+			description: 'CSS classes to apply to the container.'
+		},
+		{
+			prop: 'overrideDefaultStyling',
+			type: 'boolean',
+			default: 'false',
+			description: 'If true, removes the base fluid-container class.'
+		},
+		{
+			prop: 'transitionFn',
+			type: 'Function',
+			default: 'undefined',
+			description: 'Svelte transition function.'
+		},
+		{
+			prop: 'transitionParams',
+			type: 'object',
+			default: 'undefined',
+			description: 'Parameters for the transition function.'
+		},
+		{
+			prop: '...rest',
+			type: 'HTMLAttributes',
+			default: '—',
+			description: 'Standard HTML attributes.'
+		}
+	];
+
+	const tableRows = propsDataRaw.map((p) => [
+		{ value: p.prop, col: 'prop' },
+		{ value: p.type, col: 'type' },
+		{ value: p.default, col: 'default' },
+		{ value: p.description, col: 'desc' }
+	]);
 </script>
 
 <Page
@@ -23,46 +69,36 @@
 
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Text>
-				The Container component forwards all standard HTML attributes. It also includes the
-				following custom props:
-			</Text>
-			<ul class="flex list-disc flex-col gap-2 pl-6">
-				<li>
-					<Text>
-						<Text type="strong">type:</Text> Specifies the HTML element to render. It can be one of
-						<Text type="code">'div'</Text>, <Text type="code">'nav'</Text>,
-						<Text type="code">'section'</Text>, <Text type="code">'main'</Text>,
-						<Text type="code">'header'</Text>, <Text type="code">'footer'</Text>,
-						<Text type="code">'aside'</Text>, or <Text type="code">'article'</Text>. Defaults to
-						<Text type="code">'div'</Text>.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">class:</Text> A string of CSS classes to apply to the container for custom
-						styling.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">overrideDefaultStyling:</Text> A boolean that, when `true`, removes the
-						default <Text type="code">fluid-container</Text> class, giving you full control over styling.
-						Defaults to `false`.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">transitionFn:</Text> A Svelte transition function to apply to the container.
-					</Text>
-				</li>
-				<li>
-					<Text>
-						<Text type="strong">transitionParams:</Text> An object of parameters to pass to the
-						<Text type="code">transitionFn</Text>.
-					</Text>
-				</li>
-			</ul>
+			<Table
+				tableHeadItems={headers}
+				tableRowItems={tableRows}
+				tableFooterItems={[]}
+				class="w-full text-left"
+			>
+				{#snippet headTemplate(item)}
+					<Text class="p-2 font-bold">{item}</Text>
+				{/snippet}
+
+				{#snippet bodyTemplate(item)}
+					<div class="p-2">
+						{#if item.col === 'prop'}
+							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
+						{:else if item.col === 'type'}
+							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
+								>{item.value}</Text
+							>
+						{:else if item.col === 'default'}
+							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+						{:else}
+							<Text class="text-sm">{item.value}</Text>
+						{/if}
+					</div>
+				{/snippet}
+
+				{#snippet footerTemplate(item)}
+					<div></div>
+				{/snippet}
+			</Table>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
@@ -71,43 +107,88 @@
 				Here are some examples of how you can use the Container component with different semantic
 				elements.
 			</Text>
-			<Container class="flex flex-col gap-4 rounded-lg border p-4">
-				<Container
-					type="header"
-					overrideDefaultStyling
-					class="rounded bg-primary-100 p-4 dark:bg-primary-900"
-				>
-					<Text type="h3">Header Container</Text>
+
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<!-- Header Container -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Header</Text>
+					<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+						<Container
+							type="header"
+							overrideDefaultStyling
+							class="rounded bg-primary-100 p-4 text-center dark:bg-primary-900"
+						>
+							<Text type="h3" class="text-primary-900 dark:text-primary-100">Header Content</Text>
+						</Container>
+					</Container>
+					<CodeBlock
+						code={`<Container type="header" class="bg-primary-100 p-4">
+  <Text>Header Content</Text>
+</Container>`}
+						language="svelte"
+					/>
 				</Container>
-				<Container
-					type="nav"
-					overrideDefaultStyling
-					class="rounded bg-secondary-100 p-4 dark:bg-secondary-900"
-				>
-					<Text>Navigation Container</Text>
+
+				<!-- Nav Container -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Navigation</Text>
+					<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+						<Container
+							type="nav"
+							overrideDefaultStyling
+							class="rounded bg-secondary-100 p-4 text-center dark:bg-secondary-900"
+						>
+							<Text class="text-secondary-900 dark:text-secondary-100">Navigation Content</Text>
+						</Container>
+					</Container>
+					<CodeBlock
+						code={`<Container type="nav" class="bg-secondary-100 p-4">
+  <Text>Navigation Content</Text>
+</Container>`}
+						language="svelte"
+					/>
 				</Container>
-				<Container
-					type="section"
-					overrideDefaultStyling
-					class="rounded bg-info-100 p-4 dark:bg-info-900"
-				>
-					<Text>Section Container</Text>
+
+				<!-- Section Container -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Section</Text>
+					<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+						<Container
+							type="section"
+							overrideDefaultStyling
+							class="rounded bg-info-100 p-4 text-center dark:bg-info-900"
+						>
+							<Text class="text-info-900 dark:text-info-100">Section Content</Text>
+						</Container>
+					</Container>
+					<CodeBlock
+						code={`<Container type="section" class="bg-info-100 p-4">
+  <Text>Section Content</Text>
+</Container>`}
+						language="svelte"
+					/>
 				</Container>
-				<Container
-					type="article"
-					overrideDefaultStyling
-					class="rounded bg-success-100 p-4 dark:bg-success-900"
-				>
-					<Text>Article Container</Text>
+
+				<!-- Footer Container -->
+				<Container class="flex flex-col gap-2">
+					<Text type="h3" class="text-lg font-semibold">Footer</Text>
+					<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+						<Container
+							type="footer"
+							overrideDefaultStyling
+							class="rounded bg-warning-100 p-4 text-center dark:bg-warning-900"
+						>
+							<Text class="text-warning-900 dark:text-warning-100">Footer Content</Text>
+						</Container>
+					</Container>
+					<CodeBlock
+						code={`<Container type="footer" class="bg-warning-100 p-4">
+  <Text>Footer Content</Text>
+</Container>`}
+						language="svelte"
+					/>
 				</Container>
-				<Container
-					type="footer"
-					overrideDefaultStyling
-					class="rounded bg-warning-100 p-4 dark:bg-warning-900"
-				>
-					<Text>Footer Container</Text>
-				</Container>
-			</Container>
+			</div>
 		</Container>
 
 		<Container class="flex flex-col gap-4">
@@ -115,8 +196,7 @@
 			<CodeBlock
 				language="svelte"
 				code={`<script lang="ts">
-  import Container from 'fluid-ui-svelte/base/Container.svelte';
-  import Text from 'fluid-ui-svelte/base/Text.svelte';
+  import { Container, Text } from 'fluid-ui-svelte/base';
 <\/script>
 
 <Container type="section" class="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">

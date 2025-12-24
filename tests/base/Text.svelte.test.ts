@@ -8,15 +8,20 @@ describe('Text', () => {
 	test('Default', async () => {
 		render(Text, {
 			id: 'text-default',
+			'aria-label': 'semantic-text',
 			children: createRawSnippet(() => {
-				return { render: () => '<span>Default<span>' };
+				return { render: () => '<span>Default</span>' };
 			})
 		});
 
+		// Structure Check
 		const text = page.getByTestId('text-default');
 		await expect.element(text).toBeInTheDocument();
 		expect(text.element().tagName).toBe('P');
+
+		// Attributes & Content
 		await expect.element(text).toHaveTextContent('Default');
+		expect(text.element().ariaLabel).toBe('semantic-text');
 	});
 
 	test('Types', async () => {
@@ -47,11 +52,12 @@ describe('Text', () => {
 			render(Text, {
 				id: 'text-' + textType,
 				children: createRawSnippet(() => {
-					return { render: () => `<span>${textType}<span>` };
+					return { render: () => `<span>${textType}</span>` };
 				}),
 				type: textType as any
 			});
 
+			// Polymorphism Check
 			const text = page.getByTestId('text-' + textType);
 			await expect.element(text).toBeInTheDocument();
 			expect(text.element().tagName).toBe(textType.toUpperCase());
@@ -59,62 +65,28 @@ describe('Text', () => {
 		}
 	});
 
-	test('Styling', async () => {
+	test('Styling and Override', async () => {
 		for (const overrideDefaultStyling of [true, false]) {
 			render(Text, {
 				id: 'text-override-' + overrideDefaultStyling,
 				children: createRawSnippet(() => {
-					return { render: () => '<span>Default<span>' };
+					return { render: () => '<span>Styled</span>' };
 				}),
-				class: 'text-2xl',
+				class: 'text-custom',
 				overrideDefaultStyling
 			});
 
+			// Structure Check
 			const text = page.getByTestId('text-override-' + overrideDefaultStyling);
 			await expect.element(text).toBeInTheDocument();
-			expect(text.element().tagName).toBe('P');
-			await expect.element(text).toHaveTextContent('Default');
+			await expect.element(text).toHaveClass('text-custom');
 
+			// Class Validation
 			if (overrideDefaultStyling) {
-				await expect.element(text).toHaveClass('text-2xl');
 				await expect.element(text).not.toHaveClass('fluid-text');
 			} else {
-				await expect.element(text).toHaveClass('text-2xl');
 				await expect.element(text).toHaveClass('fluid-text');
 			}
 		}
-	});
-
-	test('Override Default Styling', async () => {
-		render(Text, {
-			id: 'text-default',
-			children: createRawSnippet(() => {
-				return { render: () => '<span>Default<span>' };
-			}),
-			class: 'text-2xl',
-			overrideDefaultStyling: true
-		});
-
-		const text = page.getByTestId('text-default');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('P');
-		await expect.element(text).toHaveTextContent('Default');
-		await expect.element(text).not.toHaveClass('fluid-text');
-	});
-
-	test('Override Default Styling', async () => {
-		render(Text, {
-			id: 'text-default',
-			children: createRawSnippet(() => {
-				return { render: () => '<span>Default<span>' };
-			}),
-			'aria-label': 'text'
-		});
-
-		const text = page.getByTestId('text-default');
-		await expect.element(text).toBeInTheDocument();
-		expect(text.element().tagName).toBe('P');
-		await expect.element(text).toHaveTextContent('Default');
-		expect(text.element().ariaLabel).toBe('text');
 	});
 });

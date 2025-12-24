@@ -4,7 +4,12 @@
 	import Text from '$lib/base/Text.svelte';
 	import Container from '$lib/base/Container.svelte';
 	import CodeBlock from '$lib/components/CodeBlock.svelte';
-	import { fade } from 'svelte/transition';
+
+	const multiCalendarState = $state({
+		currentDate: new Date().toISOString(),
+		startDate: undefined,
+		endDate: undefined
+	});
 </script>
 
 <Page
@@ -74,8 +79,21 @@
 				prop to <Text type="code">true</Text>.
 			</Text>
 			<Container class="flex justify-center gap-4 rounded-lg border p-4">
-				<Calendar hideRollingDays />
-				<Calendar hideRollingDays />
+				<Calendar
+					currentDate={new Date(
+						new Date(multiCalendarState.currentDate).setMonth(
+							new Date(multiCalendarState.currentDate).getMonth() - 1
+						)
+					).toISOString()}
+					bind:startDate={multiCalendarState.startDate}
+					bind:endDate={multiCalendarState.endDate}
+					hideRollingDays
+				/>
+				<Calendar
+					bind:startDate={multiCalendarState.startDate}
+					bind:endDate={multiCalendarState.endDate}
+					hideRollingDays
+				/>
 			</Container>
 		</Container>
 
