@@ -1,0 +1,9 @@
+@import './app.css';
+
+/* Sidebar ------------------------- */
+.fluid-sidebar-link {
+	@apply rounded-md text-neutral-950 hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+}
+.fluid-sidebar-link.active {
+	@apply bg-primary-500 text-white;
+}

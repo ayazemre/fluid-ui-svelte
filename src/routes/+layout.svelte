@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import '../documentation.css';
 	import { Container, Text, Link, Button } from '$lib/base/index.js';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
@@ -54,7 +54,7 @@
 					onclick={async () => {
 						globalState.isDocumentationDrawerOpen = true;
 					}}
-					class="fluid-button-transparent size-10 md:hidden"
+					class="fluid-button-transparent size-10 md:hidden!"
 				>
 					<Icon icon="charm:menu-hamburger" class="size-6" />
 				</Button>
