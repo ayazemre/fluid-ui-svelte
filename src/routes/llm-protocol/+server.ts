@@ -1,13 +1,9 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import libraryGuidelines from '../../../guidelines/library_guidelines.md?raw';
 
 export const GET: RequestHandler = async () => {
 	try {
-		const filePath = resolve('guidelines/library_guidelines.md');
-		const fileContent = await readFile(filePath, 'utf-8');
-
-		return new Response(fileContent, {
+		return new Response(libraryGuidelines, {
 			headers: {
 				'Content-Type': 'text/markdown; charset=utf-8'
 			}
