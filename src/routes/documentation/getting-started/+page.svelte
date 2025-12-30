@@ -75,9 +75,7 @@
 					<Text class="text-sm text-neutral-500">
 						Fluid UI does not inject styles automatically. You must include the global CSS file
 						which defines the theme variables and utility classes. Download the reference
-						<Link href="/sampleCss" target="_blank" class="font-bold text-primary-600 underline"
-							>app.css</Link
-						>
+						<Link href="/sample-css" target="_blank" class="font-bold underline">app.css</Link>
 						and import it in your project's root layout.
 					</Text>
 					<CodeBlock code={codeBlockContents.gettingStartedAppCss} language="typescript" />

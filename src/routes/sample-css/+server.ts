@@ -1,5 +1,5 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import sampleCSS from '$lib/app.css?raw';
+import sampleCSS from '../../app.css?raw';
 
 export const GET: RequestHandler = async () => {
 	try {
