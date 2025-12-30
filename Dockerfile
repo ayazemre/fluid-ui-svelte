@@ -4,14 +4,11 @@ WORKDIR /app
 
 # Copy dependency files first for better caching
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --omit=dev
 
 # Copy source and build
 COPY . .
 RUN npm run build
-
-# Remove development dependencies
-RUN npm prune --production
 
 # Stage 2: Production
 FROM node:24-alpine AS runner

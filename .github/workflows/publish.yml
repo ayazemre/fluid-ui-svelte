@@ -52,6 +52,6 @@ jobs:
 
       - name: Notify Webhook
         if: success()
-        run: curl -X POST "${{ env.WEBHOOK_ENDPOINT }}"
+        run: curl -X POST "${{ env.WEBHOOK_ENDPOINT }}" -d '{}'
         env:
           WEBHOOK_ENDPOINT: ${{ secrets.WEBSITE_BUILD_WEBHOOK }}

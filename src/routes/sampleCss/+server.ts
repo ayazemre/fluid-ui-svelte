@@ -1,13 +1,9 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import sampleCSS from '$lib/app.css?raw';
 
 export const GET: RequestHandler = async () => {
 	try {
-		const filePath = resolve('src/lib/app.css');
-		const fileContent = await readFile(filePath, 'utf-8');
-
-		return new Response(fileContent, {
+		return new Response(sampleCSS, {
 			headers: {
 				'Content-Type': 'text/css; charset=utf-8'
 			}
