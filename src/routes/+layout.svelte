@@ -1,13 +1,9 @@
 <script lang="ts">
 	import '../app.css';
-	import Container from '../lib/base/Container.svelte';
-	import Text from '../lib/base/Text.svelte';
-	import Image from '../lib/base/Image.svelte';
-	import Link from '../lib/base/Link.svelte';
+	import { Container, Text, Link, Button } from '$lib/base/index.js';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { globalState } from './globalState.svelte.js';
-	import Button from '../lib/base/Button.svelte';
 
 	let { children } = $props();
 </script>
@@ -42,15 +38,28 @@
 			</Container>
 		</Link>
 
-		<Button
-			onclick={async () => {
-				globalState.darkMode = !globalState.darkMode;
-				console.log(globalState.darkMode);
-			}}
-			class="fluid-button-transparent size-10"
-		>
-			<Icon icon={globalState.darkMode ? 'ri-moon-line' : 'ri-sun-line'} class="size-6"></Icon>
-		</Button>
+		<Container class="flex items-center gap-1">
+			<Button
+				onclick={async () => {
+					globalState.darkMode = !globalState.darkMode;
+					console.log(globalState.darkMode);
+				}}
+				class="fluid-button-transparent size-10"
+			>
+				<Icon icon={globalState.darkMode ? 'ri-moon-line' : 'ri-sun-line'} class="size-6"></Icon>
+			</Button>
+
+			{#if page.url.pathname.startsWith('/documentation')}
+				<Button
+					onclick={async () => {
+						globalState.isDocumentationDrawerOpen = true;
+					}}
+					class="fluid-button-transparent size-10 md:hidden"
+				>
+					<Icon icon="charm:menu-hamburger" class="size-6" />
+				</Button>
+			{/if}
+		</Container>
 	</Container>
 	{@render children()}
 </Container>

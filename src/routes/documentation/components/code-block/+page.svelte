@@ -6,7 +6,7 @@
 </script>
 
 <Page
-	title="CodeBlock - Fluid UI"
+	title="Fluid UI - Code Block"
 	description="A component for displaying formatted code snippets with syntax highlighting."
 >
 	<Container class="flex flex-col gap-8">
@@ -25,8 +25,8 @@
 			<ul class="flex list-disc flex-col gap-2 pl-6">
 				<li>
 					<Text>
-						<Text type="strong">code:</Text> A string containing the code to be displayed. This is a
-						required prop.
+						<Text type="strong">code:</Text> A string containing the code to be displayed. This is a required
+						prop.
 					</Text>
 				</li>
 				<li>

@@ -48,7 +48,7 @@
 </script>
 
 <Page
-	title="Accordion - Fluid UI"
+	title="Fluid UI - Accordion"
 	description="A collapsible component used to organize content into toggleable sections."
 >
 	<Container class="flex flex-col gap-8">
@@ -60,7 +60,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -135,7 +135,9 @@
 				<!-- Custom Transition -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Custom Transition</Text>
-					<Text class="text-sm text-neutral-500">Using different Svelte transitions and durations.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Using different Svelte transitions and durations.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Accordion transitionFunction={fade} transitionDuration={500}>
 							{#snippet header({ isExpanded })}

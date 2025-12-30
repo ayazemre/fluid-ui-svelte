@@ -1,24 +1,22 @@
 <script lang="ts">
-	import Container from '$lib/base/Container.svelte';
+	import { Container, Button, Text } from '$lib/base/index.js';
+	import { Page } from '$lib/components/index.js';
 	import Icon from '@iconify/svelte';
-	import Button from '../lib/base/Button.svelte';
-	import Text from '../lib/base/Text.svelte';
 	import { goto } from '$app/navigation';
-	import Page from '../lib/components/Page.svelte';
 </script>
 
-<Page class="flex-1" title="Fluid UI" description="">
+<Page class="flex-1 overflow-hidden" title="Fluid UI" description="">
 	<Container
-		class="absolute inset-0 z-1 bg-linear-to-br from-primary-50 via-white to-primary-100 transition-colors duration-500 dark:from-neutral-950 dark:via-secondary-950 dark:to-neutral-950"
+		class="fixed inset-0 z-0 overflow-hidden bg-linear-to-br from-primary-50 via-white to-primary-100 transition-colors duration-500 dark:from-neutral-950 dark:via-secondary-950 dark:to-neutral-950"
 	>
 		<Container
-			class="absolute top-[10%] right-[15%] h-[500px] w-[500px] animate-pulse rounded-full bg-linear-to-br from-primary-600/20 via-primary-600/10 to-transparent blur-3xl [animation-duration:8s] dark:from-primary-600/30 dark:via-primary-600/15 dark:to-transparent"
+			class="absolute top-[10%] right-[15%] h-125 w-125 animate-pulse rounded-full bg-linear-to-br from-primary-600/20 via-primary-600/10 to-transparent blur-3xl [animation-duration:8s] dark:from-primary-600/30 dark:via-primary-600/15 dark:to-transparent"
 		></Container>
 		<Container
-			class="absolute bottom-[5%] left-[10%] h-[600px] w-[600px] animate-pulse rounded-full bg-linear-to-tr from-info-400/20 via-info-400/10 to-transparent blur-3xl [animation-delay:2s] [animation-duration:10s] dark:from-info-400/30 dark:via-info-400/15 dark:to-transparent"
+			class="absolute bottom-[5%] left-[10%] h-150 w-150 animate-pulse rounded-full bg-linear-to-tr from-info-400/20 via-info-400/10 to-transparent blur-3xl [animation-delay:2s] [animation-duration:10s] dark:from-info-400/30 dark:via-info-400/15 dark:to-transparent"
 		></Container>
 		<Container
-			class="absolute top-[45%] left-[40%] h-[350px] w-[350px] animate-pulse rounded-full bg-linear-to-bl from-primary-600/15 via-info-400/10 to-transparent blur-3xl [animation-delay:4s] [animation-duration:12s] dark:from-primary-600/25 dark:via-info-400/15 dark:to-transparent"
+			class="absolute top-[45%] left-[40%] h-87.5 w-87.5 animate-pulse rounded-full bg-linear-to-bl from-primary-600/15 via-info-400/10 to-transparent blur-3xl [animation-delay:4s] [animation-duration:12s] dark:from-primary-600/25 dark:via-info-400/15 dark:to-transparent"
 		></Container>
 
 		<Container
@@ -56,10 +54,12 @@
 	</Container>
 
 	<Container
-		class="z-10 flex flex-1 flex-col items-center justify-center gap-6 bg-transparent p-16"
+		class="z-10 flex flex-1 flex-col items-center justify-center gap-6 bg-transparent px-4 py-16 md:p-16"
 	>
 		<Container class="flex text-center">
-			<Text type="h1" class="text-6xl font-bold text-neutral-950 dark:text-neutral-50"
+			<Text
+				type="h1"
+				class="text-4xl font-bold text-neutral-950 sm:text-5xl md:text-6xl dark:text-neutral-50"
 				>Build with <Text
 					type="span"
 					class="bg-linear-to-r from-primary-600 to-secondary-300 bg-clip-text text-transparent"
@@ -69,16 +69,19 @@
 		</Container>
 		<Container class="flex">
 			<Text
-				class="text-center text-xl text-neutral-950 opacity-70 transition-colors dark:text-neutral-50 dark:opacity-80"
+				class="text-center text-lg text-neutral-950 opacity-70 transition-colors sm:text-xl dark:text-neutral-50 dark:opacity-80"
 				>A modern Svelte component library for building beautiful, responsive interfaces.</Text
 			>
 		</Container>
-		<Container class="flex gap-2" overrideDefaultStyling>
+		<Container
+			class="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
+			overrideDefaultStyling
+		>
 			<Button
 				onclick={async () => {
 					await goto('/documentation/getting-started');
 				}}
-				class="fluid-button-primary px-8! py-3! font-semibold"
+				class="fluid-button-primary w-full max-w-xs justify-center px-8! py-3! font-semibold sm:w-auto"
 			>
 				Get Started
 			</Button>
@@ -86,7 +89,7 @@
 				onclick={async () => {
 					window.open('https://github.com/ayazemre/fluid-ui-svelte', '_blank');
 				}}
-				class="fluid-button-outline flex items-center gap-1 px-8! py-3! font-semibold"
+				class="fluid-button-outline flex w-full max-w-xs items-center justify-center gap-2 px-8! py-3! font-semibold sm:w-auto"
 			>
 				<Icon icon="akar-icons:github-fill"></Icon>
 				GitHub

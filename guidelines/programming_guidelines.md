@@ -32,3 +32,12 @@ As a reusable UI library, the following architectural decisions must be respecte
 - **Type Safety**: Ensure all code is strictly typed with TypeScript.
 - **Tailwind 4**: Utilize Tailwind 4 features and syntax for all styling needs.
 - **Dependency Adherence**: Do not introduce alternative frameworks or libraries unless explicitly directed.
+
+## Naming Conventions
+- **Full Words**: Never shorten or abbreviate words in variable names, file names, or function names.
+    - **Bad**: `cal`, `anim`, `btn`, `idx`, `config`, `util`
+    - **Good**: `calendar`, `animation`, `button`, `index`, `configuration`, `utility`
+- **Precision**: Be precise and descriptive. Names should clearly indicate the purpose and content of the variable or function.
+    - **Bad**: `data`, `item`, `handle`
+    - **Good**: `userData`, `menuItem`, `handleButtonClick`
+- **Consistency**: Maintain consistent naming patterns across the codebase (e.g., using `camelCase` for variables and functions, `PascalCase` for components).

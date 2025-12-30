@@ -45,12 +45,31 @@
 	]);
 
 	const tags = [
-		'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'pre', 'code', 'b', 'strong', 'i', 'em', 'mark', 'small', 'del', 'ins', 'sub', 'sup'
+		'p',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5',
+		'h6',
+		'span',
+		'pre',
+		'code',
+		'b',
+		'strong',
+		'i',
+		'em',
+		'mark',
+		'small',
+		'del',
+		'ins',
+		'sub',
+		'sup'
 	];
 </script>
 
 <Page
-	title="Text - Fluid UI"
+	title="Fluid UI - Text"
 	description="A versatile component for rendering semantic text elements with consistent typography."
 >
 	<Container class="flex flex-col gap-8">
@@ -58,12 +77,12 @@
 			<Text type="h1" class="text-4xl font-bold">Text</Text>
 			<Text>
 				The Text component is a fundamental building block for displaying content. It uses
-				<Text type="code">{'<svelte:element>'}</Text> to dynamically render a wide range of semantic
-				HTML text elements while applying standard library styling.
+				<Text type="code">{'<svelte:element>'}</Text> to dynamically render a wide range of semantic HTML
+				text elements while applying standard library styling.
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -104,7 +123,9 @@
 				<!-- Headings -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Semantic Headings</Text>
-					<Text class="text-sm text-neutral-500">Render various heading levels using the type prop.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Render various heading levels using the type prop.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Text type="h1" class="text-2xl font-bold">Heading 1</Text>
 						<Text type="h2" class="text-xl font-semibold">Heading 2</Text>
@@ -120,7 +141,9 @@
 				<!-- Inline Styles -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Inline Emphasis</Text>
-					<Text class="text-sm text-neutral-500">Use semantic tags for bold, italic, or highlighted text.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Use semantic tags for bold, italic, or highlighted text.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Text>
 							This is <Text type="strong">bold</Text>, <Text type="em">italic</Text>, and
@@ -138,7 +161,9 @@
 				<!-- Code and Pre -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Code & Preformatted</Text>
-					<Text class="text-sm text-neutral-500">Perfect for technical documentation or data display.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Perfect for technical documentation or data display.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Text type="code">const fluid = 'awesome';</Text>
 						<Text type="pre" class="mt-2 text-xs">
@@ -158,10 +183,13 @@
 				<!-- Semantic Extras -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Semantic Markers</Text>
-					<Text class="text-sm text-neutral-500">Support for deleted, inserted, sub and superscript.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Support for deleted, inserted, sub and superscript.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Text>
-							<Text type="del">Old price</Text> <Text type="ins">New price</Text>
+							<Text type="del">Old price</Text>
+							<Text type="ins">New price</Text>
 						</Text>
 						<Text class="mt-2">
 							H<Text type="sub">2</Text>O and E = mc<Text type="sup">2</Text>

@@ -57,7 +57,7 @@
 </script>
 
 <Page
-	title="Input Field - Fluid UI"
+	title="Fluid UI - Input Field"
 	description="A form input field component with support for character filtering and custom styling."
 >
 	<Container class="flex flex-col gap-8">
@@ -72,7 +72,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -131,7 +131,9 @@
 				<!-- Password -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Password</Text>
-					<Text class="text-sm text-neutral-500">Secure entry for passwords and sensitive data.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Secure entry for passwords and sensitive data.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<InputField
 							type="password"
@@ -155,7 +157,9 @@
 				<!-- Numeric Filter -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Numeric Only</Text>
-					<Text class="text-sm text-neutral-500">Using characterFilter to restrict input to digits.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Using characterFilter to restrict input to digits.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<InputField
 							placeholder="Numbers only..."
@@ -179,10 +183,12 @@
 				<!-- Error State -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Error State</Text>
-					<Text class="text-sm text-neutral-500">Applying custom error styling for validation feedback.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Applying custom error styling for validation feedback.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<InputField
-							class="w-full fluid-input-field-error"
+							class="fluid-input-field-error w-full"
 							placeholder="Error styling"
 							bind:value={errorValue}
 						/>
