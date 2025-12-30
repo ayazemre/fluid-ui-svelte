@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { Button } from '$lib/base/index.js';
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { Button } from '../base/index.js';
 
 	let {
 		onswitch,

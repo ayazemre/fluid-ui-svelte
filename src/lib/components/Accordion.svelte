@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Container from '$lib/base/Container.svelte';
-	import type { Snippet } from 'svelte';
+	import { Container, Button } from '$lib/base/index.js';
+	import { mergeClasses } from '$lib/utilities/mergeClasses.js';
 	import { slide, type TransitionConfig } from 'svelte/transition';
-	import Button from '../base/Button.svelte';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import type { Snippet } from 'svelte';
 
 	const {
 		variation = '',
@@ -14,7 +13,7 @@
 		transitionDuration = 250
 	}: {
 		variation?: string;
-		componentId: string;
+		componentId?: string;
 		header: Snippet<[options: { isExpanded: boolean }]>;
 		body: Snippet;
 		transitionFunction?: (node: Element, params?: any) => TransitionConfig;

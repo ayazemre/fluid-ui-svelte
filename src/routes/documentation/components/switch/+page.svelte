@@ -55,19 +55,19 @@
 </script>
 
 <Page
-	title="Switch - Fluid UI"
+	title="Fluid UI - Switch"
 	description="A toggleable switch component built on top of the Button base element."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Switch</Text>
 			<Text>
-				The Switch component is a custom toggle button used to switch between two states. It is fully
-				accessible, supporting ARIA roles and keyboard interactions.
+				The Switch component is a custom toggle button used to switch between two states. It is
+				fully accessible, supporting ARIA roles and keyboard interactions.
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -108,7 +108,9 @@
 				<!-- Basic Switch -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Basic Switch</Text>
-					<Text class="text-sm text-neutral-500">Standard toggle functionality with state binding.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Standard toggle functionality with state binding.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Container class="flex items-center gap-4">
 							<Switch onswitch={handleSwitch} bind:checked={basicChecked} />
@@ -136,7 +138,10 @@
 							<Text class="text-sm text-neutral-400">Locked (On)</Text>
 						</Container>
 					</Container>
-					<CodeBlock code={`<Switch onswitch={handleSwitch} checked={true} disabled />`} language="svelte" />
+					<CodeBlock
+						code={`<Switch onswitch={handleSwitch} checked={true} disabled />`}
+						language="svelte"
+					/>
 				</Container>
 			</Container>
 		</Container>

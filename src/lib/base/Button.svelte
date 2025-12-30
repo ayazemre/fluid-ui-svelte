@@ -11,7 +11,7 @@
 		children,
 		...rest
 	}: {
-		onclick: (event: Event, buttonState: { inProgress: boolean }) => Promise<void>;
+		onclick: (event: Event, buttonState: { inProgress: boolean }) => Promise<unknown>;
 		class?: string;
 		overrideDefaultStyling?: boolean;
 		loadingPlaceholder?: Snippet;

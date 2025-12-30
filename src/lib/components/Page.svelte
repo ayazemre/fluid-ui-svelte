@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Container } from '$lib/base/index.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
-	import Container from '../base/Container.svelte';
 
 	const {
 		title = '',

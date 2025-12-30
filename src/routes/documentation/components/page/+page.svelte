@@ -45,20 +45,20 @@
 </script>
 
 <Page
-	title="Page - Fluid UI"
+	title="Fluid UI - Page"
 	description="The Page component is a top-level wrapper that handles document metadata and consistent layout spacing."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Page</Text>
 			<Text>
-				The Page component is used as the root element for all documentation and application pages. It
-				automatically manages the document's SEO metadata and applies standard padding and layout
+				The Page component is used as the root element for all documentation and application pages.
+				It automatically manages the document's SEO metadata and applies standard padding and layout
 				styles.
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

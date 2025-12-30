@@ -77,19 +77,20 @@
 </script>
 
 <Page
-	title="Table - Fluid UI"
+	title="Fluid UI - Table"
 	description="A flexible component for displaying tabular data with customizable cell rendering using Svelte snippets."
 >
 	<Container class="flex flex-col gap-8">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Table</Text>
 			<Text>
-				The Table component provides a structured and flexible way to render tabular data. It leverages
-				Svelte 5 snippets to allow full control over the rendering of header, body, and footer cells.
+				The Table component provides a structured and flexible way to render tabular data. It
+				leverages Svelte 5 snippets to allow full control over the rendering of header, body, and
+				footer cells.
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={propsHeaders}
@@ -167,7 +168,9 @@
 				<!-- Custom Styled -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Styled Table</Text>
-					<Text class="text-sm text-neutral-500">Applying custom classes to specific table sections.</Text>
+					<Text class="text-sm text-neutral-500"
+						>Applying custom classes to specific table sections.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Table
 							tableHeadItems={headers}

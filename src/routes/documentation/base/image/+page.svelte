@@ -54,7 +54,7 @@
 </script>
 
 <Page
-	title="Image - Fluid UI"
+	title="Fluid UI - Image"
 	description="The Image component is a wrapper for the native HTML <img> tag, with built-in styling for loading states."
 >
 	<Container class="flex flex-col gap-8">
@@ -69,7 +69,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

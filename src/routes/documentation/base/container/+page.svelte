@@ -52,7 +52,7 @@
 </script>
 
 <Page
-	title="Container - Fluid UI"
+	title="Fluid UI - Container"
 	description="The Container component is a versatile wrapper for layout and styling, rendering as different HTML5 semantic elements."
 >
 	<Container class="flex flex-col gap-8">
@@ -67,7 +67,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

@@ -47,7 +47,7 @@
 </script>
 
 <Page
-	title="Button - Fluid UI"
+	title="Fluid UI - Button"
 	description="The Button component is used to trigger an action or event, such as submitting a form, opening a dialog, or performing a data-related action."
 >
 	<Container class="flex flex-col gap-8">
@@ -60,7 +60,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

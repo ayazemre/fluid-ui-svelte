@@ -46,7 +46,7 @@
 </script>
 
 <Page
-	title="Link - Fluid UI"
+	title="Fluid UI - Link"
 	description="A standard anchor wrapper styled for Fluid UI, supporting client-side navigation in SvelteKit."
 >
 	<Container class="flex flex-col gap-8">
@@ -61,7 +61,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
+		<Container class="flex flex-col gap-4 overflow-x-auto">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -117,7 +117,9 @@
 				<!-- Custom Styled -->
 				<Container class="flex flex-col gap-2">
 					<Text type="h3" class="text-lg font-semibold">Custom Styled</Text>
-					<Text class="text-sm text-neutral-500">A link with additional Tailwind utility classes.</Text>
+					<Text class="text-sm text-neutral-500"
+						>A link with additional Tailwind utility classes.</Text
+					>
 					<Container class="rounded-lg border p-6 dark:border-neutral-700">
 						<Link href="/documentation/base/image" class="font-bold text-primary-600 uppercase">
 							Bold Primary Link
