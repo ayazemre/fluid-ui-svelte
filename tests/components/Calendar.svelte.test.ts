@@ -4,9 +4,7 @@ import { render } from 'vitest-browser-svelte';
 import Calendar from '$lib/components/Calendar.svelte';
 
 describe('Calendar', () => {
-	// --- New Standardized Tests ---
-
-	test('Default Structure', async () => {
+	test('Default', async () => {
 		render(Calendar, { componentId: 'calendar-default' });
 
 		const wrapper = page.getByTestId('calendar-default');
@@ -55,7 +53,7 @@ describe('Calendar', () => {
 		await expect.element(day16).toHaveClass('fluid-calendar-cell-in-range');
 	});
 
-	test('Variant Propagation', async () => {
+	test('Variant', async () => {
 		render(Calendar, {
 			componentId: 'calendar-variant',
 			variant: 'variant-primary'

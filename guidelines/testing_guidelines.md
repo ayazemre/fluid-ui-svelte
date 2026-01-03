@@ -79,10 +79,10 @@ Components Layer tests focus on the composition, rendering correctness, and uniq
     - **Children Check**: Verify that all expected internal parts (headers, bodies, buttons, etc.) are present in the DOM.
     - **Class/Tag Check**: Verify that children have the correct tags and default classes applied.
 
-3.  **Test Case 2: Variation Prop**:
-    - Most components accept a `variation` prop for theming.
-    - Create a test case passing a specific variation string (e.g., `variation="primary"`).
-    - **Propagation**: Verify that this variation class is correctly applied to **all** relevant internal elements that support styling variations (wrapper, header, body, etc.).
+3.  **Test Case 2: variant Prop**:
+    - Most components accept a `variant` prop for theming.
+    - Create a test case passing a specific variant string (e.g., `variant="primary"`).
+    - **Propagation**: Verify that this variant class is correctly applied to **all** relevant internal elements that support styling variants (wrapper, header, body, etc.).
 
 4.  **Test Case 3: Component-Specific Logic**:
     - Each component has unique behavior (e.g., Accordion expands/collapses, Calendar selects dates).

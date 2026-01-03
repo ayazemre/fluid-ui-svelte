@@ -2,7 +2,7 @@
 	import { Container, Link, Text, Button } from '$lib/base/index.js';
 	import { Accordion, Drawer } from '$lib/components/index.js';
 	import { globalState } from '../globalState.svelte.js';
-	import { mergeClasses } from '$lib/utilities/mergeClasses.js';
+	import { mergeClasses } from '$lib/utilities/common.js';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { fly, fade } from 'svelte/transition';
@@ -108,16 +108,15 @@
 		backdropTransitionFn={fade}
 		backdropTransitionParams={{ duration: 300 }}
 	>
-		<Container class="flex h-full w-64 flex-col gap-2 overflow-y-auto bg-neutral-50 p-4 dark:bg-neutral-900">
+		<Container
+			class="flex h-full w-64 flex-col gap-2 overflow-y-auto bg-neutral-50 p-4 dark:bg-neutral-900"
+		>
 			<Text type="h2" class="mb-4 text-xl font-bold">Menu</Text>
 			{@render navigationContent()}
 		</Container>
 	</Drawer>
 
-	<Container
-		class="flex min-w-0 flex-1 opacity-100"
-		id="documentation-page-two-row"
-	>
+	<Container class="flex min-w-0 flex-1 opacity-100" id="documentation-page-two-row">
 		<!-- Desktop Sidebar -->
 		<Container
 			type="aside"

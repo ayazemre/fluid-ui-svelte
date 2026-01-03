@@ -32,17 +32,17 @@ describe('Drawer', () => {
 		expect(drawerPanel.textContent).toContain('Drawer Content');
 	});
 
-	test('Variation', async () => {
+	test('Variant', async () => {
 		render(Drawer, {
-			componentId: 'drawer-variation',
+			componentId: 'drawer-variant',
 			isOpen: true,
-			variation: 'variant-primary',
+			variant: 'variant-primary',
 			children: createRawSnippet(() => ({
 				render: () => '<span>Content</span>'
 			}))
 		});
 
-		const drawerContainer = page.getByTestId('drawer-variation');
+		const drawerContainer = page.getByTestId('drawer-variant');
 		await expect.element(drawerContainer).toHaveClass('variant-primary');
 
 		const drawerPanel = drawerContainer.element().children[0];
@@ -83,10 +83,10 @@ describe('Drawer', () => {
 		});
 
 		const drawerContainer = page.getByTestId('drawer-interaction');
-		
+
 		// Click backdrop
 		await drawerContainer.click();
-		
+
 		// In a real app, bind:isOpen would update the parent's state.
 		// Here we can at least verify that if we rerender with isOpen false it disappears.
 		// But more importantly, we want to test that the component TRYS to close.

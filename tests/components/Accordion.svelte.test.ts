@@ -65,25 +65,25 @@ describe('Accordion', () => {
 		await expect.element(page.getByText('Body Content')).not.toBeInTheDocument();
 	});
 
-	test('Variation', async () => {
+	test('Variant', async () => {
 		render(Accordion, {
-			componentId: 'accordion-variation',
-			variation: 'variant-primary',
+			componentId: 'accordion-variant',
+			variant: 'variant-primary',
 			header: createRawSnippet(() => ({ render: () => '<p>Title</p>' })),
 			body: createRawSnippet(() => ({ render: () => '<p>Content</p>' }))
 		});
 
-		// Check Wrapper Variation
-		const accordionWrapper = page.getByTestId('accordion-variation');
+		// Check Wrapper variant
+		const accordionWrapper = page.getByTestId('accordion-variant');
 		await expect.element(accordionWrapper).toHaveClass('variant-primary');
 		await expect.element(accordionWrapper).toHaveClass('fluid-accordion-wrapper');
 
-		// Check Header Variation
+		// Check Header variant
 		const headerButton = accordionWrapper.element().children[0];
 		expect(headerButton.classList.contains('variant-primary')).toBe(true);
 		expect(headerButton.classList.contains('fluid-accordion-header')).toBe(true);
 
-		// Check Body Variation (must expand first)
+		// Check Body variant (must expand first)
 		const headerButtonLocator = accordionWrapper.getByRole('button');
 		await headerButtonLocator.click();
 

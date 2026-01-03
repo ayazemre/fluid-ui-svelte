@@ -236,7 +236,7 @@ main.fluid-container {
 
 /* Carousel ------------------------ */
 .fluid-carousel-container {
-	@apply flex snap-mandatory overflow-hidden scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+	@apply relative flex overflow-hidden scroll-smooth [scrollbar-width:none] md:touch-auto [&::-webkit-scrollbar]:hidden;
 }
 .fluid-carousel-item {
 	@apply size-full shrink-0 snap-center;
@@ -244,16 +244,16 @@ main.fluid-container {
 
 /* Code Block ---------------------- */
 .fluid-code-block-container {
-	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 p-4 font-mono dark:bg-neutral-800;
+	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
 }
 .fluid-code-block-row {
-	@apply flex items-center gap-1;
+	@apply flex items-start gap-0;
 }
 .fluid-code-block-index {
-	@apply min-w-8 gap-1 border-r dark:border-neutral-50;
+	@apply sticky left-0 z-1 min-w-10 border-r border-neutral-500 bg-neutral-200 px-2 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
 }
 .fluid-code-block-content {
-	@apply flex flex-col gap-1 px-2;
+	@apply flex flex-1 flex-col px-4;
 }
 
 /* Drawer -------------------------- */

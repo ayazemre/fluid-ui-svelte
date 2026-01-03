@@ -1,3 +1,9 @@
+export type CarouselInternalState = {
+	touchStart: number;
+	initialScroll: number;
+	movementDelta: number;
+};
+
 export function scrollToIndex(
 	componentId: string,
 	activeIndex: number,
@@ -17,25 +23,53 @@ export function scrollToIndex(
 	});
 }
 
-export function getSwipeDirection(
-	touchStartX: number,
-	touchStartY: number,
-	touchEndX: number,
-	touchEndY: number,
-	threshold: number = 50,
-	orientation: 'horizontal' | 'vertical' = 'horizontal'
-): 'next' | 'prev' | null {
-	const diffX = touchStartX - touchEndX;
-	const diffY = touchStartY - touchEndY;
+export function handleTouchStart(
+	e: TouchEvent,
+	orientation: 'horizontal' | 'vertical',
+	internalState: CarouselInternalState
+) {
+	e.stopPropagation();
+	const element = e.currentTarget as HTMLElement;
+	internalState.touchStart =
+		orientation === 'vertical' ? e.touches[0].clientY : e.touches[0].clientX;
+	internalState.initialScroll = orientation === 'vertical' ? element.scrollTop : element.scrollLeft;
+	internalState.movementDelta = 0;
+}
 
-	if (orientation === 'horizontal') {
-		if (Math.abs(diffX) > threshold) {
-			return diffX > 0 ? 'next' : 'prev';
-		}
-	} else {
-		if (Math.abs(diffY) > threshold) {
-			return diffY > 0 ? 'next' : 'prev';
-		}
+export function handleTouchMove(
+	e: TouchEvent,
+	orientation: 'horizontal' | 'vertical',
+	internalState: CarouselInternalState
+) {
+	const element = e.currentTarget as HTMLElement;
+	const currentTouch = orientation === 'vertical' ? e.touches[0].clientY : e.touches[0].clientX;
+	internalState.movementDelta = internalState.touchStart - currentTouch;
+
+	element.scrollTo({
+		left:
+			orientation === 'vertical' ? 0 : internalState.initialScroll + internalState.movementDelta,
+		top: orientation === 'vertical' ? internalState.initialScroll + internalState.movementDelta : 0,
+		behavior: 'instant'
+	});
+}
+
+export function handleTouchEnd(
+	snapItems: boolean,
+	activeIndex: number,
+	totalItems: number,
+	internalState: CarouselInternalState
+): number {
+	if (!snapItems) return activeIndex;
+
+	const threshold = 50;
+	let newIndex = activeIndex;
+
+	if (internalState.movementDelta > threshold && activeIndex < totalItems - 1) {
+		newIndex = activeIndex + 1;
+	} else if (internalState.movementDelta < -threshold && activeIndex > 0) {
+		newIndex = activeIndex - 1;
 	}
-	return null;
+
+	internalState.movementDelta = 0;
+	return newIndex;
 }

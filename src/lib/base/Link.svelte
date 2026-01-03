@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { mergeClasses } from '../utilities/common.js';
 	import type { Snippet } from 'svelte';
 
 	let {
@@ -15,9 +15,6 @@
 	} & HTMLAnchorAttributes = $props();
 </script>
 
-<a
-	{...rest}
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-link')}
->
+<a {...rest} class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-link')}>
 	{@render children()}</a
 >

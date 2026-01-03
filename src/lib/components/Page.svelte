@@ -21,6 +21,6 @@
 	<meta name="description" content={description} />
 </svelte:head>
 
-<Container class="fluid-page" type="section">
+<Container class="fluid-page" type="main" {...rest}>
 	{@render children?.()}
 </Container>

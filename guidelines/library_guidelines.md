@@ -3,17 +3,19 @@
 This document provides the mandatory usage protocol for the Fluid UI Svelte library.
 
 ## Library Structure
+
 Fluid UI uses Tailwind CSS 4. Styling is centralized in a global CSS file (e.g., `app.css`) using `@apply`.
 
 - **Base Layer (`fluid-ui-svelte/base`)**: Thin wrappers around standard HTML elements. Use `overrideDefaultStyling={true}` for headless mode.
-- **Components Layer (`fluid-ui-svelte/components`)**: Fully styled UI components built on the Base Layer. Use the `variation` prop for visual styles.
+- **Components Layer (`fluid-ui-svelte/components`)**: Fully styled UI components built on the Base Layer. Use the `variant` prop for visual styles.
 
 ## Mandatory Directives
+
 - **Styling**: Manage all styles in global CSS. Use inline Tailwind only for dynamic context.
-- **Layer Selection**: 
-    1. Use **Components Layer** for rapid construction.
-    2. Use **Base Layer** for custom designs.
-    3. Use **Native HTML** only if no library element is available.
+- **Layer Selection**:
+  1. Use **Components Layer** for rapid construction.
+  2. Use **Base Layer** for custom designs.
+  3. Use **Native HTML** only if no library element is available.
 - **Svelte 5**: Use Runes (`$props`, `$state`, `$bindable`, etc.) exclusively.
 
 ---
@@ -108,13 +110,13 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                     | Type                    | Default      | Description                                                   |
-| :----------------------- | :---------------------- | :----------- | :------------------------------------------------------------ |
-| `type`                   | `'ul' \| 'ol'`          | `'ul'`       | The list element type.                                        |
-| `items`                  | `Array<T>`              | `[]`         | Data array to iterate over.                                   |
-| `itemTemplate`           | `Snippet<[T]>`          | **Required** | Svelte Snippet to render for each item.                       |
-| `overrideDefaultStyling` | `boolean`               | `false`      | If `true`, removes the base `fluid-*` classes.                |
-| `...rest`                | `HTMLListAttributes`    | `—`          | All other standard list attributes are passed through.        |
+| Prop                     | Type                 | Default      | Description                                            |
+| :----------------------- | :------------------- | :----------- | :----------------------------------------------------- |
+| `type`                   | `'ul' \| 'ol'`       | `'ul'`       | The list element type.                                 |
+| `items`                  | `Array<T>`           | `[]`         | Data array to iterate over.                            |
+| `itemTemplate`           | `Snippet<[T]>`       | **Required** | Svelte Snippet to render for each item.                |
+| `overrideDefaultStyling` | `boolean`            | `false`      | If `true`, removes the base `fluid-*` classes.         |
+| `...rest`                | `HTMLListAttributes` | `—`          | All other standard list attributes are passed through. |
 
 #### `Text`
 
@@ -140,13 +142,14 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                 | Type                                                | Default      | Description                                                                     |
-| :------------------- | :-------------------------------------------------- | :----------- | :------------------------------------------------------------------------------ |
-| `variation`          | `string`                                            | `''`         | Applied as `fluid-accordion-{variation}`.                                       |
-| `header`             | `Snippet<[options: { isExpanded: boolean }]>`       | **Required** | Svelte Snippet for the header. Receives `isExpanded`.                           |
-| `body`               | `Snippet`                                           | **Required** | Svelte Snippet for the body content.                                            |
-| `transitionFunction` | `(node: Element, params?: any) => TransitionConfig` | `slide`      | Transition for expand/collapse.                                                 |
-| `transitionDuration` | `number`                                            | `250`        | Animation duration in ms.                                                       |
+| Prop                 | Type                                                | Default      | Description                                           |
+| :------------------- | :-------------------------------------------------- | :----------- | :---------------------------------------------------- |
+| `variant`            | `string`                                            | `''`         | Applied as `fluid-accordion-{variant}`.               |
+| `componentId`        | `string`                                            | `undefined`  | ID applied to the main container.                     |
+| `header`             | `Snippet<[options: { isExpanded: boolean }]>`       | **Required** | Svelte Snippet for the header. Receives `isExpanded`. |
+| `body`               | `Snippet`                                           | **Required** | Svelte Snippet for the body content.                  |
+| `transitionFunction` | `(node: Element, params?: any) => TransitionConfig` | `slide`      | Transition for expand/collapse.                       |
+| `transitionDuration` | `number`                                            | `250`        | Animation duration in ms.                             |
 
 #### `Calendar`
 
@@ -156,23 +159,82 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop              | Type      | Default                    | Description                                                            |
-| :---------------- | :-------- | :------------------------- | :--------------------------------------------------------------------- |
-| `variant`         | `string`  | `''`                       | Applied as `fluid-calendar-{variant}`.                                 |
-| `currentDate`     | `string`  | Current date in ISO format | The date to display (ISO 8601 string).                                 |
-| `startDate`       | `string`  | `undefined`                | Selected start date (bindable).                                        |
-| `endDate`         | `string`  | `undefined`                | Selected end date (bindable).                                          |
-| `hideRollingDays` | `boolean` | `false`                    | If `true`, hides days from previous/next months.                       |
+| Prop              | Type      | Default                    | Description                                      |
+| :---------------- | :-------- | :------------------------- | :----------------------------------------------- |
+| `variant`         | `string`  | `''`                       | Applied as `fluid-calendar-{variant}`.           |
+| `componentId`     | `string`  | `undefined`                | ID applied to the main container.                |
+| `currentDate`     | `string`  | Current date in ISO format | The date to display (ISO 8601 string).           |
+| `startDate`       | `string`  | `undefined`                | Selected start date (bindable).                  |
+| `endDate`         | `string`  | `undefined`                | Selected end date (bindable).                    |
+| `hideRollingDays` | `boolean` | `false`                    | If `true`, hides days from previous/next months. |
+
+#### `Carousel`
+
+**Description**: A swipeable carousel component with autoplay and snap functionality.
+
+**Import Path**: `import { Carousel } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop               | Type                         | Default               | Description                                                                 |
+| :----------------- | :--------------------------- | :-------------------- | :-------------------------------------------------------------------------- |
+| `componentId`      | `string`                     | `crypto.randomUUID()` | Unique ID for the carousel (required for internal logic).                   |
+| `variant`          | `string`                     | `''`                  | Applied as `fluid-carousel-{variant}`.                                      |
+| `orientation`      | `'horizontal' \| 'vertical'` | `'horizontal'`        | Scroll direction.                                                           |
+| `snapItems`        | `boolean`                    | `true`                | If `true`, snaps items to center/start on scroll end.                       |
+| `swipeable`        | `boolean`                    | `true`                | Enables touch swipe gestures.                                               |
+| `activeIndex`      | `number`                     | `0`                   | Index of the currently visible item (bindable).                             |
+| `autoplay`         | `boolean`                    | `false`               | Enables automatic scrolling.                                                |
+| `autoplayDuration` | `number`                     | `1000`                | Duration in ms between autoplay slides.                                     |
+| `items`            | `Array<T>`                   | `undefined`           | Array of data items to render.                                              |
+| `itemTemplate`     | `Snippet`                    | `undefined`           | Snippet for rendering each item. Receives `{ item, index, internalState }`. |
+
+#### `CodeBlock`
+
+**Description**: Displays a block of code with syntax highlighting classes and optional line numbers.
+
+**Import Path**: `import { CodeBlock } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop              | Type      | Default     | Description                                 |
+| :---------------- | :-------- | :---------- | :------------------------------------------ |
+| `variant`         | `string`  | `''`        | Applied as `fluid-code-block-{variant}`.    |
+| `componentId`     | `string`  | `undefined` | ID applied to the main container.           |
+| `code`            | `string`  | `''`        | The source code to display.                 |
+| `language`        | `string`  | `''`        | Language suffix for the `language-*` class. |
+| `showLineNumbers` | `boolean` | `true`      | If `true`, displays line numbers.           |
+
+#### `Drawer`
+
+**Description**: A modal drawer that slides in from a specified edge of the screen.
+
+**Import Path**: `import { Drawer } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop                   | Type                                     | Default     | Description                                         |
+| :--------------------- | :--------------------------------------- | :---------- | :-------------------------------------------------- |
+| `isOpen`               | `boolean`                                | `false`     | Controls visibility of the drawer (bindable).       |
+| `position`             | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'`    | Edge of the screen the drawer slides from.          |
+| `closeOnBackdropClick` | `boolean`                                | `true`      | If `true`, clicking the backdrop closes the drawer. |
+| `scrollLock`           | `boolean`                                | `true`      | If `true`, prevents body scroll when open.          |
+| `variant`              | `string`                                 | `''`        | Applied as `fluid-drawer-{variant}`.                |
+| `componentId`          | `string`                                 | `undefined` | ID applied to the main container.                   |
+| `children`             | `Snippet`                                | `undefined` | The content to render inside the drawer panel.      |
 
 ---
 
 ## Best Practices
-- **Styling**: Define theme styles in global CSS via `@apply`. Use `variation` for components.
+
+- **Styling**: Define theme styles in global CSS via `@apply`. Use `variant` for components.
+
 - **Composition**: Build custom elements using Base Layer components. Use Snippets for flexible content.
 - **State**: Use `$state()` for local state and `$bindable()` for parent-child flow.
 - **Async**: Use Button's `onclick` with `state.inProgress` for loading feedback.
 
 ## Agent Workflow
+
 1. **Analyze**: Identify the UI target and appropriate layer.
 2. **Scan CSS**: Locate global CSS to identify available `fluid-*` classes.
 3. **Plan**: Define structure and prop bindings (runes).

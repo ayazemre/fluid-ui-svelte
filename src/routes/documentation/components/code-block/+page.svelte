@@ -41,9 +41,9 @@
 				</li>
 				<li>
 					<Text>
-						<Text type="strong">variation:</Text> An optional string of CSS classes to apply custom styling
-						variations to the code block's appearance. Applied as <Text type="code"
-							>fluid-code-block-variation</Text
+						<Text type="strong">variant:</Text> An optional string of CSS classes to apply custom styling
+						variants to the code block's appearance. Applied as <Text type="code"
+							>fluid-code-block-variant</Text
 						>.
 					</Text>
 				</li>

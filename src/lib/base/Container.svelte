@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { mergeClasses } from '../utilities/common.js';
 	import type { Snippet } from 'svelte';
 	import type { TransitionConfig } from 'svelte/transition';
 

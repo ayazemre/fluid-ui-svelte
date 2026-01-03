@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Container } from '$lib/base/index.js';
-	import { mergeClasses } from '$lib/utilities/mergeClasses.js';
+	import { mergeClasses } from '$lib/utilities/common.js';
 	import { fade, fly, type TransitionConfig } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 
 	let {
-		variation = '',
+		variant = '',
 		componentId,
 		isOpen = $bindable(false),
 		position = 'left',
@@ -25,7 +25,7 @@
 		position?: 'left' | 'right' | 'top' | 'bottom';
 		closeOnBackdropClick?: boolean;
 		scrollLock?: boolean;
-		variation?: string;
+		variant?: string;
 		componentId?: string;
 		transitionFn?: (node: Element, params?: any) => TransitionConfig;
 		transitionParams?: TransitionConfig & { x?: number; y?: number };
@@ -65,7 +65,7 @@
 {#if isOpen}
 	<Container
 		id={componentId}
-		class={mergeClasses(variation, 'fluid-drawer-container')}
+		class={mergeClasses(variant, 'fluid-drawer-container')}
 		transitionFn={backdropTransitionFn}
 		transitionParams={backdropTransitionParams}
 		onclick={async () => {
@@ -77,7 +77,7 @@
 			role="dialog"
 			aria-modal="true"
 			onclick={(event) => event.stopPropagation()}
-			class={mergeClasses(variation, `fluid-drawer-panel ${positionClasses[position]}`)}
+			class={mergeClasses(variant, `fluid-drawer-panel ${positionClasses[position]}`)}
 			{transitionFn}
 			{transitionParams}
 			overrideDefaultStyling
