@@ -72,7 +72,7 @@ describe('Drawer', () => {
 		expect(drawerPanel.classList.contains('bottom-0')).toBe(true);
 	});
 
-	test('Interaction - Backdrop Click', async () => {
+	test('Interaction', async () => {
 		const { rerender } = render(Drawer, {
 			componentId: 'drawer-interaction',
 			isOpen: true,

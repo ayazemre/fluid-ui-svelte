@@ -142,12 +142,12 @@ describe('Calendar', () => {
 		});
 
 		const wrapper = page.getByTestId('calendar-initial');
-		const startBtn = wrapper.getByRole('button', { name: '10' });
-		const endBtn = wrapper.getByRole('button', { name: '15' });
-		const midBtn = wrapper.getByRole('button', { name: '12' });
+		const startDateButton = wrapper.getByRole('button', { name: '10' });
+		const endDateButton = wrapper.getByRole('button', { name: '15' });
+		const middleDateButton = wrapper.getByRole('button', { name: '12' });
 
-		await expect.element(startBtn).toHaveClass('fluid-calendar-cell-selected');
-		await expect.element(endBtn).toHaveClass('fluid-calendar-cell-selected');
-		await expect.element(midBtn).toHaveClass('fluid-calendar-cell-in-range');
+		await expect.element(startDateButton).toHaveClass('fluid-calendar-cell-selected');
+		await expect.element(endDateButton).toHaveClass('fluid-calendar-cell-selected');
+		await expect.element(middleDateButton).toHaveClass('fluid-calendar-cell-in-range');
 	});
 });
