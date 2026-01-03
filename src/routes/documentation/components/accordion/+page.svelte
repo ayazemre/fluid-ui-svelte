@@ -8,7 +8,7 @@
 	const headers = ['Prop', 'Type', 'Default', 'Description'];
 	const propsData = [
 		{
-			prop: 'variation',
+			prop: 'variant',
 			type: 'string',
 			default: "''",
 			description: 'Custom CSS class to apply to the accordion wrapper.'
@@ -60,7 +60,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4 overflow-x-auto">
+		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

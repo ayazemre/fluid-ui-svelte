@@ -5,7 +5,7 @@
 		generateCalendarCellStyles,
 		generateDaysOfTheMonthFromDate
 	} from '$lib/utilities/calendar.js';
-	import { mergeClasses } from '$lib/utilities/mergeClasses.js';
+	import { mergeClasses } from '$lib/utilities/common.js';
 
 	let {
 		variant = '',

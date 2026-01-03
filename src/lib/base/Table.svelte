@@ -1,6 +1,6 @@
 <script lang="ts" generics="T,U,V">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { mergeClasses } from '../utilities/common.js';
 	import type { Snippet } from 'svelte';
 
 	const {
@@ -39,12 +39,11 @@
 	} & HTMLAttributes<HTMLTableElement> = $props();
 </script>
 
-<table
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table')}
-	{...rest}
->
+<table class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-table')} {...rest}>
 	{#if caption}
-		<caption class={mergeClasses(captionClass, overrideDefaultStyling ? '' : 'fluid-table-caption')}>
+		<caption
+			class={mergeClasses(captionClass, overrideDefaultStyling ? '' : 'fluid-table-caption')}
+		>
 			{caption}
 		</caption>
 	{/if}

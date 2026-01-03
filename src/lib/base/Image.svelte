@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLImgAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { mergeClasses } from '../utilities/common.js';
 
 	const {
 		class: className = '',

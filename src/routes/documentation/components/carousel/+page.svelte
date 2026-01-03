@@ -6,22 +6,34 @@
 	const headers = ['Prop', 'Type', 'Default', 'Description'];
 	const propsData = [
 		{
-			prop: 'componentId',
-			type: 'string',
-			default: 'crypto.randomUUID()',
-			description: 'The unique identifier for the component wrapper.'
+			prop: 'items',
+			type: 'T[]',
+			default: 'required',
+			description: 'Array of data items to render.'
 		},
 		{
-			prop: 'variant',
-			type: 'string',
-			default: "''",
-			description: 'Custom variation class for theming.'
+			prop: 'itemTemplate',
+			type: 'Snippet<[{ item: T; index: number; internalState: CarouselInternalState }]>',
+			default: 'required',
+			description: 'Snippet to render each item. Provides access to data and touch state.'
 		},
 		{
 			prop: 'orientation',
 			type: "'horizontal' | 'vertical'",
 			default: "'horizontal'",
 			description: 'The scroll direction of the carousel.'
+		},
+		{
+			prop: 'snapItems',
+			type: 'boolean',
+			default: 'true',
+			description: 'Whether to automatically snap to the nearest item after a swipe.'
+		},
+		{
+			prop: 'swipeable',
+			type: 'boolean',
+			default: 'true',
+			description: 'Enable or disable touch-based swiping interaction.'
 		},
 		{
 			prop: 'activeIndex',
@@ -42,16 +54,16 @@
 			description: 'Interval in milliseconds for autoplay.'
 		},
 		{
-			prop: 'items',
-			type: 'T[]',
-			default: 'required',
-			description: 'Array of data items to render.'
+			prop: 'componentId',
+			type: 'string',
+			default: 'crypto.randomUUID()',
+			description: 'The unique identifier for the component wrapper.'
 		},
 		{
-			prop: 'itemTemplate',
-			type: 'Snippet<[{ item: T; index: number }]>',
-			default: 'required',
-			description: 'Snippet to render each item.'
+			prop: 'variant',
+			type: 'string',
+			default: "''",
+			description: 'Custom variant class for theming.'
 		}
 	];
 
@@ -74,29 +86,23 @@
 
 	const next = () => (activeIndex = (activeIndex + 1) % items.length);
 	const prev = () => (activeIndex = (activeIndex - 1 + items.length) % items.length);
-
-	const nextVertical = () => (verticalIndex = (verticalIndex + 1) % items.length);
-	const prevVertical = () => (verticalIndex = (verticalIndex - 1 + items.length) % items.length);
 </script>
 
 <Page
 	title="Fluid UI - Carousel"
-	description="A building-block carousel component using CSS Scroll Snapping for high-performance sliding."
+	description="A high-performance carousel with custom JS-based snapping and smooth touch interactions."
 >
 	<Container class="flex flex-col gap-12">
 		<Container class="flex flex-col gap-4">
 			<Text type="h1" class="text-4xl font-bold">Carousel</Text>
 			<Text>
-				The Carousel is a headless-inspired container that manages index-based scrolling. It
-				utilizes native CSS Scroll Snapping for GPU-accelerated movement and exposes an <Text
-					type="code">activeIndex</Text
-				>
-				that you can bind to for creating your own navigation UI.
+				The Carousel is a flexible container that manages index-based scrolling. It features
+				advanced touch tracking and JS-based snapping for a consistent experience across devices.
 			</Text>
 		</Container>
 
 		<!-- Props -->
-		<Container class="flex flex-col gap-4 overflow-x-auto">
+		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}
@@ -104,11 +110,11 @@
 				tableFooterItems={[]}
 				class="w-full text-left"
 			>
-				{#snippet headTemplate(item: string)}
+				{#snippet headTemplate(item)}
 					<Text class="p-2 font-bold">{item}</Text>
 				{/snippet}
 
-				{#snippet bodyTemplate(item: any)}
+				{#snippet bodyTemplate(item)}
 					<Container overrideDefaultStyling={true} class="p-2">
 						{#if item.col === 'prop'}
 							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
@@ -131,13 +137,45 @@
 		</Container>
 
 		<Container class="flex flex-col gap-10">
-			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
+			<Text type="h2" class="text-2xl font-semibold">Samples and variants</Text>
 
-			<!-- 1. Manual Control -->
+			<!-- 1. Interactive Swiping -->
 			<Container class="flex flex-col gap-4">
-				<Text type="h3" class="text-xl font-bold">Manual Control</Text>
+				<Text type="h3" class="text-xl font-bold">Interactive Swiping</Text>
 				<Text class="text-neutral-500">
-					Bind to <Text type="code">activeIndex</Text> to create external navigation buttons.
+					The carousel follows your finger exactly during touch moves and snaps to the nearest item
+					on release.
+				</Text>
+				<Container
+					class="rounded-md border-l-4 border-primary-500 bg-neutral-100 p-4 dark:bg-neutral-800"
+				>
+					<Text class="text-sm">
+						<Text type="strong" class="text-primary-600 dark:text-primary-400">Note:</Text> To test touch
+						interactions on a desktop, please use your browser's responsive design mode or test on a physical
+						mobile device.
+					</Text>
+				</Container>
+				<Container class="rounded-xl border p-6 dark:border-neutral-800">
+					<Container class="max-w-md overflow-hidden rounded-lg">
+						<Carousel {items} componentId="carousel-swipe-demo">
+							{#snippet itemTemplate({ item })}
+								<Container
+									class="flex h-64 w-full items-center justify-center {item.color} text-white"
+								>
+									<Text type="h2" class="text-4xl font-bold">Swipe Me</Text>
+								</Container>
+							{/snippet}
+						</Carousel>
+					</Container>
+				</Container>
+				<CodeBlock language="svelte" code={codeBlockContents.carouselInteractive} />
+			</Container>
+
+			<!-- 2. Manual Navigation -->
+			<Container class="flex flex-col gap-4">
+				<Text type="h3" class="text-xl font-bold">Manual Navigation</Text>
+				<Text class="text-neutral-500">
+					Bind to <Text type="code">activeIndex</Text> to programmatically control the carousel.
 				</Text>
 				<Container class="rounded-xl border p-6 dark:border-neutral-800">
 					<Container class="mb-4 flex gap-2">
@@ -157,121 +195,38 @@
 						</Carousel>
 					</Container>
 				</Container>
-				<CodeBlock code={codeBlockContents.carouselSlide} language="svelte" />
 			</Container>
 
-			<!-- 2. Autoplay -->
+			<!-- 3. Vertical & Free Scroll -->
 			<Container class="flex flex-col gap-4">
-				<Text type="h3" class="text-xl font-bold">Autoplay</Text>
+				<Text type="h3" class="text-xl font-bold">Vertical & Free Scroll</Text>
 				<Text class="text-neutral-500">
-					Enable the <Text type="code">autoplay</Text> prop to cycle slides automatically.
+					Disable <Text type="code">snapItems</Text> to allow the carousel to stay at any scroll position.
 				</Text>
-				<Container class="rounded-xl border p-6 dark:border-neutral-800">
-					<Container class="max-w-md overflow-hidden rounded-lg">
-						<Carousel
-							{items}
-							autoplay={true}
-							autoplayDuration={2000}
-							componentId="carousel-autoplay-demo"
-						>
-							{#snippet itemTemplate({ item })}
-								<Container
-									class="flex h-64 w-full items-center justify-center {item.color} text-white"
-								>
-									<Text type="h2" class="text-4xl font-bold">Autoplay</Text>
-								</Container>
-							{/snippet}
-						</Carousel>
-					</Container>
-				</Container>
-				<CodeBlock code={codeBlockContents.carouselFade} language="svelte" />
-			</Container>
-
-			<!-- 3. Swipe Interaction -->
-			<Container class="flex flex-col gap-4">
-				<Text type="h3" class="text-xl font-bold">Swipe Interaction</Text>
-				<Text class="text-neutral-500">
-					The carousel supports touch swipe gestures for navigation on mobile devices. Swipe left to
-					go to the next slide, and swipe right to go to the previous slide.
-				</Text>
-				<Container class="rounded-xl border p-6 dark:border-neutral-800">
-					<Container class="max-w-md overflow-hidden rounded-lg">
-						<Carousel {items} componentId="carousel-swipe-demo">
-							{#snippet itemTemplate({ item, index })}
-								<Container
-									class="flex h-64 w-full items-center justify-center {item.color} text-white"
-								>
-									<Text type="h2" class="text-4xl font-bold">Swipe Me</Text>
-								</Container>
-							{/snippet}
-						</Carousel>
-					</Container>
-				</Container>
-			</Container>
-
-			<!-- 4. Vertical Orientation -->
-			<Container class="flex flex-col gap-4">
-				<Text type="h3" class="text-xl font-bold">Vertical Orientation</Text>
-				<Text class="text-neutral-500">
-					Set the <Text type="code">orientation</Text> prop to <Text type="code">vertical</Text> for vertical
-					scrolling.
-				</Text>
-				<Container class="rounded-xl border p-6 dark:border-neutral-800">
-					<Container class="mb-4 flex gap-2">
-						<Button class="fluid-button-secondary" onclick={async () => prevVertical()}>Up</Button>
-						<Button class="fluid-button-secondary" onclick={async () => nextVertical()}>Down</Button
-						>
-						<Text class="flex items-center font-mono">Index: {verticalIndex}</Text>
-					</Container>
-					<Container class="h-64 max-w-md overflow-hidden rounded-lg">
-						<Carousel
-							{items}
-							bind:activeIndex={verticalIndex}
-							orientation="vertical"
-							componentId="carousel-vertical-demo"
-						>
-							{#snippet itemTemplate({ item, index })}
-								<Container
-									class="flex h-64 w-full items-center justify-center {item.color} text-white"
-								>
-									<Text type="h2" class="text-4xl font-bold">Vertical {index + 1}</Text>
-								</Container>
-							{/snippet}
-						</Carousel>
-					</Container>
-				</Container>
-				<CodeBlock
-					code={`<Carousel {items} orientation="vertical" bind:activeIndex>
-  ...
-</Carousel>`}
-					language="svelte"
-				/>
-			</Container>
-
-			<!-- 4. Vertical Autoplay -->
-			<Container class="flex flex-col gap-4">
-				<Text type="h3" class="text-xl font-bold">Vertical Autoplay</Text>
-				<Text class="text-neutral-500">Vertical scrolling with automatic cycling.</Text>
 				<Container class="rounded-xl border p-6 dark:border-neutral-800">
 					<Container class="h-64 max-w-md overflow-hidden rounded-lg">
 						<Carousel
 							{items}
-							autoplay={true}
-							autoplayDuration={2500}
 							orientation="vertical"
-							componentId="carousel-vertical-autoplay-demo"
+							snapItems={false}
+							componentId="carousel-free-demo"
 						>
 							{#snippet itemTemplate({ item, index })}
 								<Container
 									class="flex h-64 w-full items-center justify-center {item.color} text-white"
 								>
-									<Text type="h2" class="text-4xl font-bold">V-Auto {index + 1}</Text>
+									<Text type="h2" class="text-4xl font-bold">Slide {index + 1}</Text>
 								</Container>
 							{/snippet}
 						</Carousel>
 					</Container>
 				</Container>
 			</Container>
+		</Container>
+
+		<Container class="flex flex-col gap-4">
+			<Text type="h2" class="text-2xl font-semibold">Usage</Text>
+			<CodeBlock language="svelte" code={codeBlockContents.carouselUsage} />
 		</Container>
 	</Container>
 </Page>

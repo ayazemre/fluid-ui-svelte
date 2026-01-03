@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { Container, Button } from '$lib/base/index.js';
-	import { mergeClasses } from '$lib/utilities/mergeClasses.js';
+	import { mergeClasses } from '$lib/utilities/common.js';
 	import { slide, type TransitionConfig } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 
 	const {
-		variation = '',
+		variant = '',
 		componentId,
 		header,
 		body,
 		transitionFunction = slide,
 		transitionDuration = 250
 	}: {
-		variation?: string;
+		variant?: string;
 		componentId?: string;
 		header: Snippet<[options: { isExpanded: boolean }]>;
 		body: Snippet;
@@ -22,12 +22,12 @@
 	const componentState = $state({ isExpanded: false });
 </script>
 
-<Container id={componentId} class={mergeClasses(variation, 'fluid-accordion-wrapper')}>
+<Container id={componentId} class={mergeClasses(variant, 'fluid-accordion-wrapper')}>
 	<Button
 		onclick={async () => {
 			componentState.isExpanded = !componentState.isExpanded;
 		}}
-		class={mergeClasses(variation, 'fluid-accordion-header')}
+		class={mergeClasses(variant, 'fluid-accordion-header')}
 		overrideDefaultStyling
 	>
 		{@render header(componentState)}
@@ -36,7 +36,7 @@
 		<Container
 			transitionFn={transitionFunction}
 			transitionParams={{ duration: transitionDuration }}
-			class={mergeClasses(variation, 'fluid-accordion-body')}
+			class={mergeClasses(variant, 'fluid-accordion-body')}
 		>
 			{@render body()}
 		</Container>

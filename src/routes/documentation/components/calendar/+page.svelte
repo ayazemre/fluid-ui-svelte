@@ -15,7 +15,7 @@
 			prop: 'variant',
 			type: 'string',
 			default: "''",
-			description: 'Custom variation class for theming.'
+			description: 'Custom variant class for theming.'
 		},
 		{
 			prop: 'currentDate',
@@ -94,7 +94,7 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4 overflow-x-auto">
+		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLButtonAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/mergeClasses.js';
+	import { mergeClasses } from '../utilities/common.js';
 	import { type Snippet } from 'svelte';
 
 	const {

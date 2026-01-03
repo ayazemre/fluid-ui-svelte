@@ -82,7 +82,8 @@
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4 overflow-x-auto">
+		<!-- Props -->
+		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
 			<Text type="h2" class="text-2xl font-semibold">Props</Text>
 			<Table
 				tableHeadItems={headers}

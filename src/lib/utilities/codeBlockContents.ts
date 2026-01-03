@@ -258,39 +258,31 @@ const calendarMulti = `<script>
   </Container>
 </Container>`;
 
-const carouselSlide = `<script>
+const carouselInteractive = `<script>
   import { Carousel } from 'fluid-ui-svelte/components';
-  import { Image } from 'fluid-ui-svelte/base';
-
-  const items = [
-    { src: 'https://via.placeholder.com/800x400?text=Slide+1', alt: 'Slide 1' },
-    { src: 'https://via.placeholder.com/800x400?text=Slide+2', alt: 'Slide 2' },
-    { src: 'https://via.placeholder.com/800x400?text=Slide+3', alt: 'Slide 3' }
-  ];
+  const items = [...];
 </script>
 
-<Carousel {items} type="slide" loop>
-  {#snippet children(item)}
-    <Image src={item.src} alt={item.alt} class="w-full h-64 object-cover" />
+<Carousel {items} componentId="demo-id">
+  {#snippet itemTemplate({ item })}
+    <div class="h-64 flex items-center justify-center">
+      {item.text}
+    </div>
   {/snippet}
 </Carousel>`;
 
-const carouselFade = `<script>
+const carouselUsage = `<script>
   import { Carousel } from 'fluid-ui-svelte/components';
-  import { Text } from 'fluid-ui-svelte/base';
-
-  const quotes = [
-    { text: "Innovation is key.", author: "Tech CEO" },
-    { text: "Design is intelligence made visible.", author: "Designer" },
-    { text: "Simplicity is the ultimate sophistication.", author: "Da Vinci" }
-  ];
+  const items = [...];
+  let activeIndex = $state(0);
 </script>
 
-<Carousel {items: quotes} type="fade" autoplay autoplayInterval={4000}>
-  {#snippet children(quote)}
-    <div class="h-64 flex flex-col items-center justify-center bg-neutral-100 dark:bg-neutral-800 p-8 text-center">
-      <Text type="h3" class="text-2xl font-bold mb-4">"{quote.text}"</Text>
-      <Text class="text-neutral-500">- {quote.author}</Text>
+<Carousel {items} bind:activeIndex>
+  {#snippet itemTemplate({ item, index, internalState })}
+    <div class="h-64">
+      {item.name}
+      <!-- Delta available for custom animations -->
+      <span>Delta: {internalState.movementDelta}</span>
     </div>
   {/snippet}
 </Carousel>`;
@@ -307,6 +299,6 @@ export const codeBlockContents = {
 	calendarSixMonth,
 	calendarRange,
 	calendarMulti,
-	carouselSlide,
-	carouselFade
+	carouselInteractive,
+	carouselUsage
 };
