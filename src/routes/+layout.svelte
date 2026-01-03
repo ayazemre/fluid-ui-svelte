@@ -15,8 +15,8 @@
 >
 	<Container
 		type="nav"
-		class={'z-2 flex w-full justify-between p-4' +
-			(page.url.pathname !== '/' ? ' border-b border-neutral-300 dark:border-neutral-700 ' : ' ')}
+		class={'z-2 flex w-full justify-between p-4 ' +
+			(page.url.pathname !== '/' ? ' border-b border-neutral-300 dark:border-neutral-700' : '')}
 		id="navigation-bar"
 	>
 		<Link href="/" overrideDefaultStyling={true}>

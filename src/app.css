@@ -44,17 +44,17 @@
 	--color-secondary-900: #4c1d95;
 	--color-secondary-950: #2a1065;
 
-	--color-tetriary-50: #f5f3ff;
-	--color-tetriary-100: #ede9fe;
-	--color-tetriary-200: #ddd6fe;
-	--color-tetriary-300: #c4b5fd;
-	--color-tetriary-400: #a78bfa;
-	--color-tetriary-500: #8b5cf6;
-	--color-tetriary-600: #7c3aed;
-	--color-tetriary-700: #6d28d9;
-	--color-tetriary-800: #5b21b6;
-	--color-tetriary-900: #4c1d95;
-	--color-tetriary-950: #2a1065;
+	--color-tertiary-50: #f5f3ff;
+	--color-tertiary-100: #ede9fe;
+	--color-tertiary-200: #ddd6fe;
+	--color-tertiary-300: #c4b5fd;
+	--color-tertiary-400: #a78bfa;
+	--color-tertiary-500: #8b5cf6;
+	--color-tertiary-600: #7c3aed;
+	--color-tertiary-700: #6d28d9;
+	--color-tertiary-800: #5b21b6;
+	--color-tertiary-900: #4c1d95;
+	--color-tertiary-950: #2a1065;
 
 	--color-success-50: #ecfdf5;
 	--color-success-100: #d1fae5;
@@ -168,21 +168,21 @@ main.fluid-container {
 
 /* Table --------------------------- */
 .fluid-table {
-	@apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border dark:border-neutral-300;
+	@apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border transition-all duration-500 dark:border-neutral-300;
 }
 .fluid-table-head {
-	@apply bg-neutral-200 dark:bg-neutral-800;
+	@apply bg-neutral-200 transition-all duration-500 dark:bg-neutral-800;
 }
 .fluid-table-row {
-	@apply even:bg-neutral-200 dark:even:bg-neutral-800;
+	@apply transition-all duration-500 even:bg-neutral-200 dark:even:bg-neutral-800;
 }
 .fluid-table-cell {
-	@apply border-collapse bg-clip-padding text-center;
+	@apply border-collapse bg-clip-padding text-center transition-all duration-500;
 }
 .fluid-table-body {
 }
 .fluid-table-footer {
-	@apply bg-clip-padding p-2 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+	@apply bg-clip-padding p-2 transition-all duration-500 odd:bg-neutral-100 dark:odd:bg-neutral-800;
 }
 
 /* Text ---------------------------- */
