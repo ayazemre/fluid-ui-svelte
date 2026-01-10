@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Link, Text, Button } from '$lib/base/index.js';
+	import { Container, Link, Text } from '$lib/base/index.js';
 	import { Accordion, Drawer } from '$lib/components/index.js';
 	import { globalState } from '../globalState.svelte.js';
 	import { mergeClasses } from '$lib/utilities/common.js';
@@ -37,15 +37,6 @@
 		)}
 	>
 		<Text overrideDefaultStyling>Getting Started</Text>
-	</Link>
-	<Link
-		href="/documentation/how-to"
-		class={mergeClasses(
-			page.url.pathname == '/documentation/how-to' ? 'active' : '',
-			'fluid-sidebar-link p-2'
-		)}
-	>
-		<Text overrideDefaultStyling>How To</Text>
 	</Link>
 
 	<Accordion>
@@ -89,6 +80,15 @@
 			{/each}
 		{/snippet}
 	</Accordion>
+	<Link
+		href="/documentation/how-to"
+		class={mergeClasses(
+			page.url.pathname == '/documentation/how-to' ? 'active' : '',
+			'fluid-sidebar-link p-2'
+		)}
+	>
+		<Text overrideDefaultStyling>How To</Text>
+	</Link>
 	<Link href="/llm-protocol" class={mergeClasses('', 'fluid-sidebar-link p-2')}>
 		<Text overrideDefaultStyling>LLM Guide</Text>
 	</Link>
