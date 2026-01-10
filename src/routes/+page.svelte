@@ -5,7 +5,11 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<Page class="flex-1 overflow-hidden" title="Fluid UI" description="">
+<Page
+	class="flex-1 overflow-hidden"
+	title="Fluid UI"
+	description="Fluid UI is a pragmatic Svelte component library featuring a dual-layer architecture of lightweight semantic wrappers and high-level interactive components for building beautiful, responsive interfaces."
+>
 	<Container
 		class="fixed inset-0 z-0 overflow-hidden bg-linear-to-br from-primary-50 via-white to-primary-100 transition-colors duration-500 dark:from-neutral-950 dark:via-secondary-950 dark:to-neutral-950"
 	>
