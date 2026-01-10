@@ -14,7 +14,7 @@
 	}: {
 		type?: 'ol' | 'ul';
 		items: Array<T>;
-		itemTemplate: Snippet<[T]>;
+		itemTemplate: Snippet<[T, number]>;
 		class?: string;
 		itemClass?: string;
 		overrideDefaultStyling?: boolean;
@@ -31,9 +31,9 @@
 	{...rest}
 	class={mergeClasses(className, overrideDefaultStyling ? '' : classes[type])}
 >
-	{#each items as item}
+	{#each items as item, index}
 		<li class={mergeClasses(itemClass, overrideDefaultStyling ? '' : classes[type] + '-item')}>
-			{@render itemTemplate(item)}
+			{@render itemTemplate(item, index)}
 		</li>
 	{/each}
 </svelte:element>

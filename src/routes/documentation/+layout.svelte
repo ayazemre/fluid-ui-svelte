@@ -6,29 +6,19 @@
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { fly, fade } from 'svelte/transition';
+	import { componentRegistry } from '../../documentation/registry.js';
 
 	let { children } = $props();
 
-	const base = [
-		{ name: 'Button', url: '/documentation/base/button' },
-		{ name: 'Container', url: '/documentation/base/container' },
-		{ name: 'Image', url: '/documentation/base/image' },
-		{ name: 'Input Field', url: '/documentation/base/input-field' },
-		{ name: 'Link', url: '/documentation/base/link' },
-		{ name: 'List', url: '/documentation/base/list' },
-		{ name: 'Table', url: '/documentation/base/table' },
-		{ name: 'Text', url: '/documentation/base/text' }
-	];
-	const components = [
-		{ name: 'Accordion', url: '/documentation/components/accordion' },
-		{ name: 'Calendar', url: '/documentation/components/calendar' },
-		{ name: 'Carousel', url: '/documentation/components/carousel' },
-		{ name: 'Code Block', url: '/documentation/components/code-block' },
-		{ name: 'Drawer', url: '/documentation/components/drawer' },
-		{ name: 'Image Crop', url: '/documentation/components/image-crop' },
-		{ name: 'Page', url: '/documentation/components/page' },
-		{ name: 'Switch', url: '/documentation/components/switch' }
-	];
+	const base = Object.entries(componentRegistry.base).map(([slug, data]) => ({
+		name: data.title.replace('Fluid UI - ', ''),
+		url: `/documentation/base/${slug}`
+	}));
+
+	const components = Object.entries(componentRegistry.components).map(([slug, data]) => ({
+		name: data.title.replace('Fluid UI - ', ''),
+		url: `/documentation/components/${slug}`
+	}));
 
 	// Close drawer on navigation
 	$effect(() => {
@@ -47,6 +37,15 @@
 		)}
 	>
 		<Text overrideDefaultStyling>Getting Started</Text>
+	</Link>
+	<Link
+		href="/documentation/how-to"
+		class={mergeClasses(
+			page.url.pathname == '/documentation/how-to' ? 'active' : '',
+			'fluid-sidebar-link p-2'
+		)}
+	>
+		<Text overrideDefaultStyling>How To</Text>
 	</Link>
 
 	<Accordion>
