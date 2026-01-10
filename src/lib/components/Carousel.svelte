@@ -66,7 +66,7 @@
 			}
 		: undefined}
 	class={mergeClasses(
-		`fluid-carousel-container ${swipeable ? 'touch-none' : ''} ${orientation === 'vertical' ? 'h-full flex-col overflow-y-auto' : 'flex overflow-x-auto'}`,
+		`fluid-carousel-container ${swipeable ? 'touch-none' : ''} ${orientation === 'vertical' ? 'h-full flex-col overflow-y-auto' : 'overflow-x-auto'}`,
 		variant
 	)}
 >

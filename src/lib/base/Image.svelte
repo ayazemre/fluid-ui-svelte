@@ -10,6 +10,7 @@
 		class?: string;
 		overrideDefaultStyling?: boolean;
 	} & HTMLImgAttributes = $props();
+	// TODO: This delays and causes unnecessary loading animation.	
 	let isLoaded = $state(false);
 </script>
 

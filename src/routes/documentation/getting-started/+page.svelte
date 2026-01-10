@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { codeBlockContents } from '$lib/utilities/codeBlockContents.js';
+	import { codeBlockContents } from '../../../documentation/samples/codeBlockContents.js';
 	import { CodeBlock, Page } from '$lib/components/index.js';
-	import { Text, Link, Container, List } from '$lib/base/index.js';
+	import { Text, Link, Container } from '$lib/base/index.js';
 </script>
 
 <Page
@@ -73,12 +73,13 @@
 				<Container class="flex flex-col gap-3">
 					<Text type="h3" class="font-bold">2. Configure Global Styles</Text>
 					<Text class="text-sm text-neutral-500">
-						Fluid UI does not inject styles automatically. You must include the global CSS file
-						which defines the theme variables and utility classes. Download the reference
-						<Link href="/sample-css" target="_blank" class="font-bold underline">app.css</Link>
-						and import it in your project's root layout.
+						Fluid UI does not inject styles automatically. This allows you to maintain library
+						specific styling and app specific styling separately. Download the reference
+						<Link href="/fluidui.css" target="_blank" class="font-bold underline">fluidui.css</Link>
+						file, place it in your project (e.g., <Text type="code">src/</Text>), and import it in
+						your main CSS file.
 					</Text>
-					<CodeBlock code={codeBlockContents.gettingStartedAppCss} language="typescript" />
+					<CodeBlock code={codeBlockContents.gettingStartedAppCss} language="css" />
 				</Container>
 			</Container>
 		</Container>
