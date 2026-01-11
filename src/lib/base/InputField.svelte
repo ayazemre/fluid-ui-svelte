@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 	import { mergeClasses } from '$lib/utilities/common';
 	import { applyCharacterFilter } from '$lib/utilities/inputField';
 

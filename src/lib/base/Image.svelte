@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type HTMLImgAttributes } from 'svelte/elements';
+	import type { HTMLImgAttributes } from 'svelte/elements';
 	import { mergeClasses } from '$lib/utilities/common';
 
 	const {

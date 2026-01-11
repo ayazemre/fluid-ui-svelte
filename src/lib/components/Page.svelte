@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Container } from '$lib/base';
 	import { mergeClasses } from '$lib/utilities/common';
-	import { type HTMLAttributes } from 'svelte/elements';
-	import { type Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import type { Snippet } from 'svelte';
 
 	const {
 		title = '',
@@ -97,6 +97,6 @@
 	{/if}
 </svelte:head>
 
-<Container class={mergeClasses(className, 'flex w-full flex-1 flex-col fluid-page')} type="main">
+<Container class={mergeClasses(className, 'fluid-page flex w-full flex-1 flex-col')} type="main">
 	{@render children?.()}
 </Container>

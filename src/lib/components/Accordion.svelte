@@ -2,7 +2,7 @@
 	import { Container, Button } from '$lib/base';
 	import { mergeClasses } from '$lib/utilities/common';
 	import { slide, type TransitionConfig } from 'svelte/transition';
-	import { type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	const {
 		variant = '',

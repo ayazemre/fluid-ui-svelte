@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { type HTMLAttributes } from 'svelte/elements';
+	import type { HTMLAttributes } from 'svelte/elements';
 	import { mergeClasses } from '$lib/utilities/common';
-	import { type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	const {
 		type = 'p',

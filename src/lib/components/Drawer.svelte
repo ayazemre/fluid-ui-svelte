@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Container } from '$lib/base';
 	import { mergeClasses } from '$lib/utilities/common';
-	import { type TransitionConfig } from 'svelte/transition';
-	import { type Snippet } from 'svelte';
+	import type { TransitionConfig } from 'svelte/transition';
+	import type { Snippet } from 'svelte';
 	import { positionClasses } from '$lib/utilities/drawer';
 
 	let {
@@ -58,7 +58,7 @@
 {#if isOpen}
 	<Container
 		id={componentId}
-		class={mergeClasses(variant, 'fixed inset-0 z-10 fluid-drawer-container')}
+		class={mergeClasses(variant, 'fluid-drawer-container fixed inset-0 z-10')}
 		transitionFn={backdropTransitionFn}
 		transitionParams={backdropTransitionParams}
 		onclick={async () => {
@@ -69,7 +69,7 @@
 	>
 		<Container
 			onclick={(event) => event.stopPropagation()}
-			class={mergeClasses(variant, `fixed z-20 fluid-drawer-panel ${positionClasses[position]}`)}
+			class={mergeClasses(variant, `fluid-drawer-panel fixed z-20 ${positionClasses[position]}`)}
 			{transitionFn}
 			{transitionParams}
 		>

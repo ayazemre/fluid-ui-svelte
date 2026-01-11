@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { type HTMLButtonAttributes } from 'svelte/elements';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import { mergeClasses } from '$lib/utilities/common';
-	import { type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	const {
 		onclick,
@@ -25,7 +25,7 @@
 	type="button"
 	onclick={async (event: Event) => onclick(event, buttonState)}
 	{...rest}
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'flex cursor-pointer fluid-button')}
+	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-button flex cursor-pointer')}
 >
 	{#if buttonState.inProgress && loadingPlaceholder}
 		{@render loadingPlaceholder()}
