@@ -20,8 +20,9 @@ export default defineConfig({
 						headless: true
 					},
 
+					css: true,
 					include: ['tests/**/*.svelte.{test,spec}.{js,ts}'],
-					setupFiles: ['./vitest-setup-client.ts']
+					setupFiles: ['./vitest-setup-client.ts', 'tests/setup-tests.ts']
 				}
 			}
 		]

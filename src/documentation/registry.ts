@@ -6,11 +6,14 @@ import CodeBlockSamples from './samples/CodeBlockSamples.svelte';
 import ContainerSamples from './samples/ContainerSamples.svelte';
 import DrawerSamples from './samples/DrawerSamples.svelte';
 import ImageSamples from './samples/ImageSamples.svelte';
+import ImageCropSamples from './samples/ImageCropSamples.svelte';
 import InputFieldSamples from './samples/InputFieldSamples.svelte';
 import LinkSamples from './samples/LinkSamples.svelte';
 import ListSamples from './samples/ListSamples.svelte';
 import TableSamples from './samples/TableSamples.svelte';
 import TextSamples from './samples/TextSamples.svelte';
+import PageSamples from './samples/PageSamples.svelte';
+import SwitchSamples from './samples/SwitchSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -464,9 +467,9 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'itemTemplate',
-					type: 'Snippet<[{ item: T; index: number; internalState: CarouselInternalState }]>',
+					type: 'Snippet<[T, number]>',
 					default: 'required',
-					description: 'Snippet to render each item. Provides access to data and touch state.'
+					description: 'Snippet to render each item. Provides access to item and index.'
 				},
 				{
 					prop: 'orientation',
@@ -481,10 +484,10 @@ export const componentRegistry = {
 					description: 'Whether to automatically snap to the nearest item after a swipe.'
 				},
 				{
-					prop: 'swipeable',
-					type: 'boolean',
-					default: 'true',
-					description: 'Enable or disable touch-based swiping interaction.'
+					prop: 'visibleItemCount',
+					type: 'number',
+					default: '1',
+					description: 'Number of items visible at once.'
 				},
 				{
 					prop: 'activeIndex',
@@ -521,8 +524,7 @@ export const componentRegistry = {
 		},
 		'code-block': {
 			title: 'Fluid UI - Code Block',
-			description:
-				'A component for displaying formatted code snippets with syntax highlighting.',
+			description: 'A component for displaying formatted code snippets with syntax highlighting.',
 			props: [
 				{
 					prop: 'code',
@@ -547,8 +549,7 @@ export const componentRegistry = {
 					prop: 'overrideDefaultStyling',
 					type: 'boolean',
 					default: 'false',
-					description:
-						'If true, prevents the component from applying its default styling.'
+					description: 'If true, prevents the component from applying its default styling.'
 				}
 			],
 			sampleComponent: CodeBlockSamples
@@ -614,6 +615,191 @@ export const componentRegistry = {
 				}
 			],
 			sampleComponent: DrawerSamples
+		},
+		page: {
+			title: 'Fluid UI - Page',
+			description:
+				'The Page component is a specialized wrapper for top-level pages. It handles document metadata (SEO, Open Graph, Twitter Cards) and provides a standard "main" container for content.',
+			props: [
+				{
+					prop: 'title',
+					type: 'string',
+					default: "''",
+					description: 'The title of the page (appears in browser tab and search results).'
+				},
+				{
+					prop: 'description',
+					type: 'string',
+					default: "''",
+					description: 'A brief summary of the page for search engines and social previews.'
+				},
+				{
+					prop: 'image',
+					type: 'string',
+					default: "''",
+					description: 'URL of the image used for social media previews.'
+				},
+				{
+					prop: 'imageAlt',
+					type: 'string',
+					default: "''",
+					description: 'Alt text for the social preview image.'
+				},
+				{
+					prop: 'url',
+					type: 'string',
+					default: "''",
+					description: 'The canonical URL of the page.'
+				},
+				{
+					prop: 'siteName',
+					type: 'string',
+					default: "''",
+					description: 'The name of the overall website.'
+				},
+				{
+					prop: 'type',
+					type: "'website' | 'article' | 'profile'",
+					default: "'website'",
+					description: 'The type of Open Graph object.'
+				},
+				{
+					prop: 'twitterCard',
+					type: "'summary' | 'summary_large_image'",
+					default: "'summary_large_image'",
+					description: 'The type of Twitter card to render.'
+				},
+				{
+					prop: 'themeColor',
+					type: 'string',
+					default: "''",
+					description: 'Color for the browser toolbar/address bar.'
+				},
+				{
+					prop: 'robots',
+					type: 'string',
+					default: "'index, follow'",
+					description: 'Instructions for search engine crawlers.'
+				},
+				{
+					prop: 'keywords',
+					type: 'string',
+					default: "''",
+					description: 'Comma-separated keywords for the page.'
+				},
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes to apply to the main container.'
+				}
+			],
+			sampleComponent: PageSamples
+		},
+		'image-crop': {
+			title: 'Fluid UI - Image Crop',
+			description:
+				'A canvas-based component for cropping images with zoom and pan support, providing a real-time cropped preview.',
+			props: [
+				{
+					prop: 'sourceImage',
+					type: 'ImageBitmap',
+					default: 'required',
+					description: 'The source ImageBitmap to be cropped.'
+				},
+				{
+					prop: 'aspectRatio',
+					type: '{ x: number, y: number }',
+					default: 'required',
+					description: 'Fixed aspect ratio for the crop area.'
+				},
+				{
+					prop: 'resultImage',
+					type: 'string',
+					default: 'undefined',
+					description: 'The base64 encoded cropped image result. Supports $bindable.'
+				},
+				{
+					prop: 'zoom',
+					type: 'number',
+					default: '1',
+					description: 'Zoom level for the image.'
+				},
+				{
+					prop: 'pan',
+					type: '{ x: number, y: number }',
+					default: '{ x: 0, y: 0 }',
+					description: 'Pan coordinates (x, y) for the image.'
+				},
+				{
+					prop: 'padding',
+					type: 'number',
+					default: '0',
+					description: 'Padding in pixels around the crop area within the canvas.'
+				},
+				{
+					prop: 'shape',
+					type: "'rectangle' | 'circle'",
+					default: "'rectangle'",
+					description: 'The shape of the crop area.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'undefined',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: ImageCropSamples
+		},
+		switch: {
+			title: 'Fluid UI - Switch',
+			description: 'A simple toggle switch component used for binary settings or preferences.',
+			props: [
+				{
+					prop: 'checked',
+					type: 'boolean',
+					default: 'false',
+					description: 'The current state of the switch. Supports $bindable.'
+				},
+				{
+					prop: 'onclick',
+					type: '(event: Event, checked: boolean) => Promise<void>',
+					default: 'required',
+					description: 'Async callback triggered when the switch is toggled.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, prevents user interaction.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				},
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'Additional CSS classes for the container.'
+				}
+			],
+			sampleComponent: SwitchSamples
 		}
 	}
 };

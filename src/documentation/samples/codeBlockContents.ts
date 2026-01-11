@@ -479,6 +479,165 @@ const carouselUsage = `<script>
   {/snippet}
 </Carousel>`;
 
+const imageCropBasic = `<script>
+  import { ImageCrop } from 'fluid-ui-svelte/components';
+  import { onMount } from 'svelte';
+  
+  let bitmap = $state<ImageBitmap>();
+
+  onMount(async () => {
+    const response = await fetch('https://picsum.photos/id/10/800/600');
+    const blob = await response.blob();
+    bitmap = await createImageBitmap(blob);
+  });
+</script>
+
+{#if bitmap}
+  <ImageCrop sourceImage={bitmap} aspectRatio={{ x: 16, y: 9 }} />
+{/if}`;
+
+const imageCropUpload = `<script>
+  import { ImageCrop } from 'fluid-ui-svelte/components';
+  
+  let uploadedBitmap = $state<ImageBitmap>();
+  let resultImage = $state<string>();
+
+  async function handleFileChange(event) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const blob = new Blob([file], { type: file.type });
+      uploadedBitmap = await createImageBitmap(blob);
+    }
+  }
+</script>
+
+<input type="file" accept="image/*" onchange={handleFileChange} />
+
+{#if uploadedBitmap}
+  <ImageCrop 
+    sourceImage={uploadedBitmap} 
+    aspectRatio={{ x: 16, y: 9 }} 
+    bind:resultImage 
+  />
+  
+  {#if resultImage}
+    <img src={resultImage} alt="Cropped result" />
+  {/if}
+{/if}`;
+
+const imageCropCircle = `<script>
+  import { ImageCrop } from 'fluid-ui-svelte/components';
+  import { onMount } from 'svelte';
+  
+  let bitmap = $state<ImageBitmap>();
+
+  onMount(async () => {
+    const response = await fetch('https://picsum.photos/id/64/800/800');
+    const blob = await response.blob();
+    bitmap = await createImageBitmap(blob);
+  });
+</script>
+
+{#if bitmap}
+  <ImageCrop 
+    sourceImage={bitmap} 
+    aspectRatio={{ x: 1, y: 1 }} 
+    shape="circle" 
+    padding={50}
+  />
+{/if}`;
+
+const pageBasic = `<script>
+  import { Page } from 'fluid-ui-svelte/components';
+  import { Text } from 'fluid-ui-svelte/base';
+</script>
+
+<Page 
+  title="Home" 
+  description="Welcome to my awesome website."
+>
+  <Text type="h1">Hello World</Text>
+  <Text>This content is inside a semantic main container.</Text>
+</Page>`;
+
+const pageMetadata = `<script>
+  import { Page } from 'fluid-ui-svelte/components';
+</script>
+
+<Page 
+  title="My Article" 
+  description="A deep dive into Fluid UI Svelte."
+  type="article"
+  siteName="My Blog"
+  url="https://example.com/blog/article"
+  image="https://example.com/cover.jpg"
+  imageAlt="Cover image showing Fluid UI components"
+  twitterCard="summary_large_image"
+  keywords="svelte, ui, library, framework"
+  robots="index, follow"
+>
+  <!-- Content here -->
+</Page>`;
+
+const switchBasic = `<script>
+  import { Switch } from 'fluid-ui-svelte/components';
+  let checked = $state(false);
+</script>
+
+<Switch 
+  bind:checked 
+  onclick={async () => {
+    console.log('Toggled');
+  }} 
+/>`;
+
+const switchDisabled = `<Switch disabled onclick={async () => {}} />
+<Switch checked disabled onclick={async () => {}} />`;
+
+// --- Draggable ---
+
+const draggableBasic = `<script>
+  import { Draggable } from 'fluid-ui-svelte/components';
+  import { Container } from 'fluid-ui-svelte/base';
+</script>
+
+<Draggable data={{ id: 1, name: 'Sample' }}>
+  <Container class="bg-primary-500 text-white p-4 rounded">
+    Drag Me
+  </Container>
+</Draggable>`;
+
+const draggableList = `{#each items as item}
+  <Draggable data={item}>
+    <div class="border p-2 rounded">{item}</div>
+  </Draggable>
+{/each}`;
+
+// --- Dropzone ---
+
+const dropzoneFiles = `<script>
+  import { Dropzone } from 'fluid-ui-svelte/components';
+  let files = $state([]);
+</script>
+
+<Dropzone ondrop={(result) => files = result.files}>
+  {#snippet children({ isDragOver })}
+    <p>{isDragOver ? 'Drop now!' : 'Drag files here'}</p>
+  {/snippet}
+</Dropzone>`;
+
+const dropzoneData = `<script>
+  import { Dropzone } from 'fluid-ui-svelte/components';
+  let data = $state();
+</script>
+
+<Dropzone ondrop={(result) => data = result.data}>
+  {#snippet children({ isDragOver })}
+    <p>{isDragOver ? 'Drop data!' : 'Receive Data'}</p>
+    {#if data} <p>Received: {data}</p> {/if}
+  {/snippet}
+</Dropzone>`;
+
 export const codeBlockContents = { 
   gettingStartedAppCss, 
   gettingStartedUsage,
@@ -522,5 +681,16 @@ export const codeBlockContents = {
   calendarRange,
   calendarMulti,
   carouselInteractive,
-  carouselUsage
+  carouselUsage,
+  imageCropBasic,
+  imageCropUpload,
+  imageCropCircle,
+  pageBasic,
+  pageMetadata,
+  switchBasic,
+  switchDisabled,
+  draggableBasic,
+  draggableList,
+  dropzoneFiles,
+  dropzoneData
 };

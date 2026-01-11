@@ -1,34 +1,45 @@
 <script lang="ts">
-	import { Button } from '$lib/base/index.js';
-	import type { HTMLAttributes } from 'svelte/elements';
+	import { Button, Text } from '$lib/base';
+	import { mergeClasses } from '$lib/utilities/common';
 
 	let {
-		onswitch,
+		variant = '',
+		componentId = '',
+		onclick,
 		checked = $bindable(false),
-		disabled = false,
-		class: className = '',
-		...rest
+		disabled = false
 	}: {
-		onswitch: (event: Event, checked: boolean) => Promise<void>;
+		onclick: (event: Event, checked: boolean) => Promise<unknown>;
 		checked?: boolean;
 		disabled?: boolean;
-		class?: string;
-		id?: string;
-	} & Omit<HTMLAttributes<HTMLButtonElement>, 'onclick'> = $props();
+		componentId?: string;
+		variant?: string;
+	} = $props();
 </script>
 
 <Button
 	role="switch"
 	aria-checked={checked}
-	class={'fluid-switch-button' + (checked ? ' checked' : '')}
+	id={componentId}
+	class={mergeClasses(
+		variant,
+		`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 fluid-switch-button ${checked ? 'checked' : ''}`
+	)}
 	onclick={async (event) => {
 		if (!disabled) {
-			await onswitch(event, checked);
 			checked = !checked;
+			await onclick(event, checked);
 		}
 	}}
-	{...rest}
+	{disabled}
 	overrideDefaultStyling
 >
-	<span class="fluid-switch-circle"></span>
+	<Text
+		type="span"
+		class={mergeClasses(
+			variant,
+			`fluid-switch-circle pointer-events-none inline-block h-4 w-4 transform rounded-full ring-0 transition duration-200 ease-in-out ${checked ? 'translate-x-4' : 'translate-x-0'}`
+		)}
+		overrideDefaultStyling
+	/>
 </Button>

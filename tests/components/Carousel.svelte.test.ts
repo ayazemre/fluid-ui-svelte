@@ -6,8 +6,8 @@ import { createRawSnippet } from 'svelte';
 
 describe('Carousel', () => {
 	const items = ['Item 1', 'Item 2', 'Item 3'];
-	const itemTemplate = createRawSnippet((props: any) => ({
-		render: () => `<div class="test-item">${props().item}</div>`
+	const itemTemplate = createRawSnippet((item: any, index: any) => ({
+		render: () => `<div class="test-item">${item()}</div>`
 	}));
 
 	test('Default', async () => {

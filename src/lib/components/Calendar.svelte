@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Container, Button, Text } from '$lib/base/index.js';
+	import { Container, Button, Text } from '$lib/base';
 	import {
 		applyDate,
 		generateCalendarCellStyles,
 		generateDaysOfTheMonthFromDate
-	} from '$lib/utilities/calendar.js';
-	import { mergeClasses } from '$lib/utilities/common.js';
+	} from '$lib/utilities/calendar';
+	import { mergeClasses } from '$lib/utilities/common';
 
 	let {
 		variant = '',
@@ -38,11 +38,13 @@
 	});
 </script>
 
-<Container id={componentId} class={mergeClasses('fluid-calendar-wrapper', variant)}>
-	<Container class={mergeClasses('fluid-calendar-header', variant)}>
+<Container id={componentId} class={mergeClasses(variant, 'fluid-calendar-wrapper flex flex-col')}>
+	<Container class={mergeClasses(variant, 'fluid-calendar-header flex w-full ')}>
 		<Text>{new Date(currentDate).toLocaleString('default', { month: 'long' })}</Text>
 	</Container>
-	<Container class={mergeClasses('fluid-calendar-body', variant)}>
+	<Container
+		class={mergeClasses(variant, 'fluid-calendar-body grid grid-cols-7 justify-items-center')}
+	>
 		{#each weekDays as day}
 			<Text>{day}</Text>
 		{/each}

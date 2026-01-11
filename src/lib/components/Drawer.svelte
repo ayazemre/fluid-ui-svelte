@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Container } from '$lib/base/index.js';
-	import { mergeClasses } from '$lib/utilities/common.js';
-	import { fade, fly, type TransitionConfig } from 'svelte/transition';
-	import type { Snippet } from 'svelte';
+	import { Container } from '$lib/base';
+	import { mergeClasses } from '$lib/utilities/common';
+	import { type TransitionConfig } from 'svelte/transition';
+	import { type Snippet } from 'svelte';
+	import { positionClasses } from '$lib/utilities/drawer';
 
 	let {
 		variant = '',
@@ -34,19 +35,11 @@
 		children: Snippet;
 	} = $props();
 
-	// Programmatic anchoring mapping to avoid repetitive CSS classes
-	const positionClasses: Record<string, string> = {
-		left: 'left-0 top-0 bottom-0 h-full border-r',
-		right: 'right-0 top-0 bottom-0 h-full border-l',
-		top: 'top-0 right-0 left-0 w-full border-b',
-		bottom: 'bottom-0 right-0 left-0 w-full border-t'
-	};
-
-	const handleKeyDown = (event: KeyboardEvent) => {
+	function handleKeyDown(event: KeyboardEvent) {
 		if (event.key === 'Escape' && isOpen) {
 			isOpen = false;
 		}
-	};
+	}
 
 	$effect(() => {
 		if (isOpen) {
@@ -65,22 +58,20 @@
 {#if isOpen}
 	<Container
 		id={componentId}
-		class={mergeClasses(variant, 'fluid-drawer-container')}
+		class={mergeClasses(variant, 'fixed inset-0 z-10 fluid-drawer-container')}
 		transitionFn={backdropTransitionFn}
 		transitionParams={backdropTransitionParams}
 		onclick={async () => {
 			if (closeOnBackdropClick) isOpen = false;
 		}}
-		overrideDefaultStyling
+		role="dialog"
+		aria-modal="true"
 	>
 		<Container
-			role="dialog"
-			aria-modal="true"
 			onclick={(event) => event.stopPropagation()}
-			class={mergeClasses(variant, `fluid-drawer-panel ${positionClasses[position]}`)}
+			class={mergeClasses(variant, `fixed z-20 fluid-drawer-panel ${positionClasses[position]}`)}
 			{transitionFn}
 			{transitionParams}
-			overrideDefaultStyling
 		>
 			{@render children()}
 		</Container>

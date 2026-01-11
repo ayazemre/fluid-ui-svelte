@@ -1,7 +1,7 @@
 <script lang="ts" generics="T,U,V">
-	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/common.js';
-	import type { Snippet } from 'svelte';
+	import { type HTMLAttributes } from 'svelte/elements';
+	import { mergeClasses } from '$lib/utilities/common';
+	import { type Snippet } from 'svelte';
 
 	const {
 		caption = '',

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { HTMLImgAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/common.js';
+	import { type HTMLImgAttributes } from 'svelte/elements';
+	import { mergeClasses } from '$lib/utilities/common';
 
 	const {
 		class: className = '',
@@ -10,7 +10,7 @@
 		class?: string;
 		overrideDefaultStyling?: boolean;
 	} & HTMLImgAttributes = $props();
-	// TODO: This delays and causes unnecessary loading animation.	
+	// TODO: This delays and causes unnecessary loading animation.
 	let isLoaded = $state(false);
 </script>
 
