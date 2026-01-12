@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Button, Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import Icon from '@iconify/svelte';
 	import { codeBlockContents } from './codeBlockContents.js';
 </script>
@@ -25,10 +25,7 @@
 				Primary Button
 			</Button>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.buttonPrimary}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.buttonPrimary} language="svelte" />
 	</Container>
 
 	<!-- Secondary Button -->
@@ -50,10 +47,7 @@
 				Secondary Button
 			</Button>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.buttonSecondary}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.buttonSecondary} language="svelte" />
 	</Container>
 
 	<!-- Outline Button -->
@@ -75,10 +69,7 @@
 				Outline Button
 			</Button>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.buttonOutline}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.buttonOutline} language="svelte" />
 	</Container>
 
 	<!-- Transparent Button -->
@@ -100,10 +91,7 @@
 				Transparent Button
 			</Button>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.buttonTransparent}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.buttonTransparent} language="svelte" />
 	</Container>
 
 	<!-- With Icon -->
@@ -126,9 +114,6 @@
 				<Text type="span">GitHub</Text>
 			</Button>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.buttonIcon}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.buttonIcon} language="svelte" />
 	</Container>
 </Container>

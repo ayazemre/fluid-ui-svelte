@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import Accordion from '$lib/components/Accordion.svelte';
+import { Accordion } from '$lib/components';
 import { createRawSnippet } from 'svelte';
 
 describe('Accordion', () => {

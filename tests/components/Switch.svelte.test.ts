@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import Switch from '$lib/components/Switch.svelte';
+import { Switch } from '$lib/components';
 
 describe('Switch', () => {
 	test('Default', async () => {
@@ -52,7 +52,7 @@ describe('Switch', () => {
 		// Re-render with new bound value to verify visual state
 		await rerender({ checked: isChecked });
 		await expect.element(switchButton).toHaveAttribute('aria-checked', 'true');
-		
+
 		const circle = switchButton.element().querySelector('.fluid-switch-circle');
 		expect(circle?.classList.contains('translate-x-4')).toBe(true);
 	});

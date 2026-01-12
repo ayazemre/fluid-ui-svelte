@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Accordion } from '$lib/components/index.js';
-	import { Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Accordion } from '$lib/components';
+	import { Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import Icon from '@iconify/svelte';
 	import { fade } from 'svelte/transition';
-	import { codeBlockContents } from './codeBlockContents.js';
+	import { codeBlockContents } from './codeBlockContents';
 </script>
 
 <Container class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -28,18 +28,13 @@
 				{/snippet}
 			</Accordion>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.accordionStandard}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.accordionStandard} language="svelte" />
 	</Container>
 
 	<!-- Custom Transition -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Custom Transition</Text>
-		<Text class="text-sm text-neutral-500"
-			>Using different Svelte transitions and durations.</Text
-		>
+		<Text class="text-sm text-neutral-500">Using different Svelte transitions and durations.</Text>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<Accordion transitionFunction={fade} transitionDuration={500}>
 				{#snippet header({ isExpanded })}
@@ -54,9 +49,6 @@
 				{/snippet}
 			</Accordion>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.accordionCustom}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.accordionCustom} language="svelte" />
 	</Container>
 </Container>

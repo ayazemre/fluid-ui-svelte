@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Text, Container } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Text, Container } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 </script>
 
@@ -14,10 +14,7 @@
 			<Text type="h2" class="text-xl font-semibold">Heading 2</Text>
 			<Text type="h3" class="text-lg font-medium">Heading 3</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.textHeadings}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.textHeadings} language="svelte" />
 	</Container>
 
 	<!-- Inline Styles -->
@@ -32,10 +29,7 @@
 				<Text type="mark">highlighted</Text>.
 			</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.textInline}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.textInline} language="svelte" />
 	</Container>
 
 	<!-- Code and Pre -->
@@ -53,17 +47,13 @@
 }`}
 			</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.textCode}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.textCode} language="svelte" />
 	</Container>
 
 	<!-- Semantic Extras -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Semantic Markers</Text>
-		<Text class="text-sm text-neutral-500"
-			>Support for deleted, inserted, sub and superscript.</Text
+		<Text class="text-sm text-neutral-500">Support for deleted, inserted, sub and superscript.</Text
 		>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<Text>
@@ -74,9 +64,6 @@
 				H<Text type="sub">2</Text>O and E = mc<Text type="sup">2</Text>
 			</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.textSemantic}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.textSemantic} language="svelte" />
 	</Container>
 </Container>

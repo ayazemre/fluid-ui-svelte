@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test, beforeAll } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import ImageCrop from '$lib/components/ImageCrop.svelte';
+import { ImageCrop } from '$lib/components';
 
 describe('ImageCrop', () => {
 	let mockImageBitmap: ImageBitmap;

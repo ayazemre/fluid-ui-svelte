@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import Drawer from '$lib/components/Drawer.svelte';
+import { Drawer } from '$lib/components';
 import { createRawSnippet } from 'svelte';
 
 describe('Drawer', () => {

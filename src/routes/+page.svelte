@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Container, Button, Text } from '$lib/base/index.js';
-	import { Page } from '$lib/components/index.js';
+	import { Container, Button, Text } from '$lib/base';
+	import { Page } from '$lib/components';
 	import Icon from '@iconify/svelte';
 	import { goto } from '$app/navigation';
 </script>

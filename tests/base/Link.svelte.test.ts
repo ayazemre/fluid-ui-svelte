@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import Link from '$lib/base/Link.svelte';
+import { Link } from '$lib/base';
 import { createRawSnippet } from 'svelte';
 
 describe('Link', () => {

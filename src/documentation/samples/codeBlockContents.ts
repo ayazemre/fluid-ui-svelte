@@ -196,6 +196,13 @@ const inputError = `<InputField
   bind:value={errorValue}
 />`;
 
+const inputTextArea = `<InputField
+  type="textarea"
+  placeholder="Enter your message..."
+  bind:value={textAreaValue}
+  class="w-full h-32"
+/>`;
+
 // --- CodeBlock ---
 
 const codeBlockExample = `<script lang="ts">
@@ -278,10 +285,10 @@ const drawerFlyAnimation = `<script>
   Fly Content
 </Drawer>`;
 
-// --- Calendar ---
+// --- DatePicker ---
 
-const calendarSingle = `<script>
-  import { Calendar } from 'fluid-ui-svelte/components';
+const datePickerSingle = `<script>
+  import { DatePicker } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let currentDate = $state(new Date().toISOString());
@@ -298,11 +305,11 @@ const calendarSingle = `<script>
     <Button onclick={() => changeMonth(-1)}>Prev</Button>
     <Button onclick={() => changeMonth(1)}>Next</Button>
   </Container>
-  <Calendar bind:currentDate componentId="calendar-single" />
+  <DatePicker bind:currentDate componentId="calendar-single" />
 </Container>`;
 
-const calendarDual = `<script>
-  import { Calendar } from 'fluid-ui-svelte/components';
+const datePickerDual = `<script>
+  import { DatePicker } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString());
@@ -327,13 +334,13 @@ const calendarDual = `<script>
     <Button onclick={() => changeMonth(1)}>Next</Button>
   </Container>
   <Container class="flex gap-8 flex-wrap">
-    <Calendar currentDate={baseDate} componentId="cal-1" />
-    <Calendar currentDate={getOffsetDate(1)} componentId="cal-2" />
+    <DatePicker currentDate={baseDate} componentId="cal-1" />
+    <DatePicker currentDate={getOffsetDate(1)} componentId="cal-2" />
   </Container>
 </Container>`;
 
-const calendarSixMonth = `<script>
-  import { Calendar } from 'fluid-ui-svelte/components';
+const datePickerSixMonth = `<script>
+  import { DatePicker } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString());
@@ -358,13 +365,13 @@ const calendarSixMonth = `<script>
   </Container>
   <Container class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {#each Array(6) as _, i}
-      <Calendar currentDate={getOffsetDate(i)} componentId="cal-{i}" />
+      <DatePicker currentDate={getOffsetDate(i)} componentId="cal-{i}" />
     {/each}
   </Container>
 </Container>`;
 
-const calendarRange = `<script>
-  import { Calendar } from 'fluid-ui-svelte/components';
+const datePickerRange = `<script>
+  import { DatePicker } from 'fluid-ui-svelte/components';
   import { Button, Container, Text } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString());
@@ -396,13 +403,13 @@ const calendarRange = `<script>
   </Container>
 
   <Container class="flex gap-8 flex-wrap">
-    <Calendar 
+    <DatePicker 
       currentDate={baseDate} 
       bind:startDate 
       bind:endDate 
       componentId="cal-range-1" 
     />
-    <Calendar 
+    <DatePicker 
       currentDate={getOffsetDate(1)} 
       bind:startDate 
       bind:endDate 
@@ -411,8 +418,8 @@ const calendarRange = `<script>
   </Container>
 </Container>`;
 
-const calendarMulti = `<script>
-  import { Calendar } from 'fluid-ui-svelte/components';
+const datePickerMulti = `<script>
+  import { DatePicker } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   const multiCalendarState = $state({
@@ -435,12 +442,12 @@ const calendarMulti = `<script>
   </Container>
 
   <Container class="flex gap-8 flex-wrap">
-    <Calendar 
+    <DatePicker 
       bind:currentDate={multiCalendarState.currentDate} 
       bind:startDate={multiCalendarState.startDate} 
       bind:endDate={multiCalendarState.endDate} 
     />
-    <Calendar 
+    <DatePicker 
       currentDate={new Date(new Date(multiCalendarState.currentDate).setMonth(new Date(multiCalendarState.currentDate).getMonth() + 1)).toISOString()} 
       bind:startDate={multiCalendarState.startDate} 
       bind:endDate={multiCalendarState.endDate} 
@@ -598,99 +605,198 @@ const switchDisabled = `<Switch disabled onclick={async () => {}} />
 
 const draggableBasic = `<script>
   import { Draggable } from 'fluid-ui-svelte/components';
-  import { Container } from 'fluid-ui-svelte/base';
 </script>
 
-<Draggable data={{ id: 1, name: 'Sample' }}>
-  <Container class="bg-primary-500 text-white p-4 rounded">
-    Drag Me
-  </Container>
+<Draggable ondragstart={(e) => e.dataTransfer.setData('text/plain', 'Data')}>
+  <div>Drag me</div>
 </Draggable>`;
-
-const draggableList = `{#each items as item}
-  <Draggable data={item}>
-    <div class="border p-2 rounded">{item}</div>
-  </Draggable>
-{/each}`;
 
 // --- Dropzone ---
 
-const dropzoneFiles = `<script>
+const dropzoneFile = `<script>
   import { Dropzone } from 'fluid-ui-svelte/components';
-  let files = $state([]);
+  
+  let droppedFiles = $state<File[]>([]);
 </script>
 
-<Dropzone ondrop={(result) => files = result.files}>
+<Dropzone bind:data={droppedFiles} mode="file" dropEffect="copy">
   {#snippet children({ isDragOver })}
-    <p>{isDragOver ? 'Drop now!' : 'Drag files here'}</p>
+    <div class="flex flex-col items-center gap-2">
+      <p class="font-medium">
+        {isDragOver ? 'Drop Files Now' : 'Drag & Drop Files Here'}
+      </p>
+      
+      {#if droppedFiles.length > 0}
+        <div class="mt-4 w-full text-left text-sm bg-neutral-100 p-2 rounded">
+          <p class="font-bold mb-1">Dropped Files:</p>
+          <ul class="list-disc pl-4">
+            {#each droppedFiles as file}
+              <li>{file.name} ({Math.round(file.size / 1024)} KB)</li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+    </div>
   {/snippet}
 </Dropzone>`;
 
 const dropzoneData = `<script>
   import { Dropzone } from 'fluid-ui-svelte/components';
-  let data = $state();
+  
+  let droppedData = $state('');
 </script>
 
-<Dropzone ondrop={(result) => data = result.data}>
+<Dropzone bind:data={droppedData} mode="text" dropEffect="move">
   {#snippet children({ isDragOver })}
-    <p>{isDragOver ? 'Drop data!' : 'Receive Data'}</p>
-    {#if data} <p>Received: {data}</p> {/if}
+    <div class="flex flex-col items-center gap-2">
+      <p class="font-medium">
+        {isDragOver ? 'Drop Data Now' : 'Drag Text/Data Here'}
+      </p>
+      
+      {#if droppedData}
+        <div class="mt-4 w-full text-left text-sm bg-neutral-100 p-2 rounded border border-neutral-200">
+          <p class="font-bold mb-1 text-primary-600">Captured Data:</p>
+          <pre class="whitespace-pre-wrap">{droppedData}</pre>
+        </div>
+      {/if}
+    </div>
   {/snippet}
 </Dropzone>`;
 
+// --- Form ---
+
+
+
+const formBasic = `<script>
+  import { Form, InputField, Button } from 'fluid-ui-svelte/base';
+  let username = $state('');
+</script>
+
+<Form
+  onsubmit={async (event, state) => {
+    state.inProgress = true;
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    state.inProgress = false;
+    alert(\`Submitted: \${username}\`);
+  }}
+  class="gap-4"
+>
+  <InputField bind:value={username} placeholder="Username" />
+  <Button type="submit" class="fluid-button-primary">Submit</Button>
+</Form>`;
+
+
+
 export const codeBlockContents = { 
+
   gettingStartedAppCss, 
+
   gettingStartedUsage,
+
   buttonPrimary,
+
   buttonSecondary,
+
   buttonOutline,
+
   buttonTransparent,
+
   buttonIcon,
+
   accordionStandard,
+
   accordionCustom,
+
   containerHeader,
+
   containerNav,
+
   containerSection,
+
   containerFooter,
+
   imageStandard,
+
   imageLoading,
+
   linkStandard,
+
   linkCustom,
+
   listUnordered,
+
   listOrdered,
+
   listItemStyling,
+
   listComplex,
+
   tableStandard,
+
   tableStyled,
+
   textHeadings,
+
   textInline,
+
   textCode,
+
   textSemantic,
+
   inputBasic,
+
   inputPassword,
+
   inputNumeric,
+
   inputError,
+
+  inputTextArea,
+
+  formBasic,
+
   codeBlockExample,
+
   drawerBasicUsage,
+
   drawerPositions,
+
   drawerAnimated,
+
   drawerFlyAnimation,
+
   calendarSingle,
+
   calendarDual,
+
   calendarSixMonth,
+
   calendarRange,
+
   calendarMulti,
+
   carouselInteractive,
+
   carouselUsage,
+
   imageCropBasic,
+
   imageCropUpload,
+
   imageCropCircle,
+
   pageBasic,
+
   pageMetadata,
+
   switchBasic,
+
   switchDisabled,
+
   draggableBasic,
-  draggableList,
-  dropzoneFiles,
+
+  dropzoneFile,
+
   dropzoneData
+
 };

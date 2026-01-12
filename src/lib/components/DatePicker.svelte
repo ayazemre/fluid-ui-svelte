@@ -4,7 +4,7 @@
 		applyDate,
 		generateCalendarCellStyles,
 		generateDaysOfTheMonthFromDate
-	} from '$lib/utilities/calendar';
+	} from '$lib/utilities/datePicker';
 	import { mergeClasses } from '$lib/utilities/common';
 
 	let {

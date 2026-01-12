@@ -14,7 +14,7 @@
 	}: {
 		variant?: string;
 		componentId?: string;
-		header: Snippet<[options: { isExpanded: boolean }]>;
+		header: Snippet<[{ isExpanded: boolean }]>;
 		body: Snippet;
 		transitionFunction?: (node: Element, params?: any) => TransitionConfig;
 		transitionDuration?: number;

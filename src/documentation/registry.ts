@@ -1,10 +1,12 @@
 import AccordionSamples from './samples/AccordionSamples.svelte';
 import ButtonSamples from './samples/ButtonSamples.svelte';
+import DatePickerSamples from './samples/DatePickerSamples.svelte';
 import CalendarSamples from './samples/CalendarSamples.svelte';
 import CarouselSamples from './samples/CarouselSamples.svelte';
 import CodeBlockSamples from './samples/CodeBlockSamples.svelte';
 import ContainerSamples from './samples/ContainerSamples.svelte';
 import DrawerSamples from './samples/DrawerSamples.svelte';
+import FormSamples from './samples/FormSamples.svelte';
 import ImageSamples from './samples/ImageSamples.svelte';
 import ImageCropSamples from './samples/ImageCropSamples.svelte';
 import InputFieldSamples from './samples/InputFieldSamples.svelte';
@@ -14,6 +16,8 @@ import TableSamples from './samples/TableSamples.svelte';
 import TextSamples from './samples/TextSamples.svelte';
 import PageSamples from './samples/PageSamples.svelte';
 import SwitchSamples from './samples/SwitchSamples.svelte';
+import DraggableSamples from './samples/DraggableSamples.svelte';
+import DropzoneSamples from './samples/DropzoneSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -99,6 +103,38 @@ export const componentRegistry = {
 			],
 			sampleComponent: ContainerSamples
 		},
+		form: {
+			title: 'Fluid UI - Form',
+			description:
+				'The Form component is a thin wrapper around the HTML <form> element, providing easy access to submission state and preventing default browser behavior.',
+			props: [
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes to apply to the form.'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes the base fluid-form class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content of the form.'
+				},
+				{
+					prop: '...rest',
+					type: 'HTMLFormAttributes',
+					default: '—',
+					description: 'Standard HTML form attributes.'
+				}
+			],
+			sampleComponent: FormSamples
+		},
 		image: {
 			title: 'Fluid UI - Image',
 			description:
@@ -150,7 +186,7 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'type',
-					type: "'text' | 'password'",
+					type: "'text' | 'password' | 'textarea'",
 					default: "'text'",
 					description: 'The type of the input field.'
 				},
@@ -238,9 +274,9 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'itemTemplate',
-					type: 'Snippet<[T]>',
+					type: 'Snippet<[T, number]>',
 					default: 'required',
-					description: 'A Svelte snippet used to render each item.'
+					description: 'A Svelte snippet used to render each item. Receives item and index.'
 				},
 				{
 					prop: 'class',
@@ -315,6 +351,48 @@ export const componentRegistry = {
 					type: 'Snippet<[V]>',
 					default: 'required',
 					description: 'Snippet for rendering footer cells.'
+				},
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the table element.'
+				},
+				{
+					prop: 'captionClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the caption element.'
+				},
+				{
+					prop: 'headClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the thead element.'
+				},
+				{
+					prop: 'bodyClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the tbody element.'
+				},
+				{
+					prop: 'rowClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for tr elements.'
+				},
+				{
+					prop: 'cellClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for th and td elements.'
+				},
+				{
+					prop: 'footerClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the tfoot element.'
 				},
 				{
 					prop: 'overrideDefaultStyling',
@@ -403,8 +481,8 @@ export const componentRegistry = {
 			],
 			sampleComponent: AccordionSamples
 		},
-		calendar: {
-			title: 'Fluid UI - Calendar',
+		'date-picker': {
+			title: 'Fluid UI - Date Picker',
 			description:
 				'A highly flexible, headless-inspired calendar component. It renders a month view based on a provided date, giving you full control over navigation and layout.',
 			props: [
@@ -452,7 +530,7 @@ export const componentRegistry = {
 					description: 'Whether to hide days from previous/next months.'
 				}
 			],
-			sampleComponent: CalendarSamples
+			sampleComponent: DatePickerSamples
 		},
 		carousel: {
 			title: 'Fluid UI - Carousel',
@@ -578,12 +656,6 @@ export const componentRegistry = {
 					description: 'The side of the screen from which the drawer appears.'
 				},
 				{
-					prop: 'backdrop',
-					type: 'boolean',
-					default: 'true',
-					description: 'Whether to show a semi-transparent overlay behind the drawer.'
-				},
-				{
 					prop: 'closeOnBackdropClick',
 					type: 'boolean',
 					default: 'true',
@@ -603,15 +675,27 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'transitionFn',
-					type: '(node: Element, params?: any) => TransitionConfig',
+					type: 'function',
 					default: '() => {}',
-					description: 'The transition function for the drawer panel.'
+					description: 'Transition function for the drawer panel.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: '{}',
+					description: 'Parameters for the panel transition.'
 				},
 				{
 					prop: 'backdropTransitionFn',
-					type: '(node: Element, params?: any) => TransitionConfig',
+					type: 'function',
 					default: '() => {}',
-					description: 'The transition function for the backdrop.'
+					description: 'Transition function for the backdrop.'
+				},
+				{
+					prop: 'backdropTransitionParams',
+					type: 'object',
+					default: 'undefined',
+					description: 'Parameters for the backdrop transition.'
 				}
 			],
 			sampleComponent: DrawerSamples
@@ -744,6 +828,12 @@ export const componentRegistry = {
 					description: 'The shape of the crop area.'
 				},
 				{
+					prop: 'overlayColor',
+					type: 'string',
+					default: "'rgba(0, 0, 0, 0.5)'",
+					description: 'The color of the overlay around the crop area.'
+				},
+				{
 					prop: 'variant',
 					type: 'string',
 					default: "''",
@@ -791,15 +881,84 @@ export const componentRegistry = {
 					type: 'string',
 					default: "''",
 					description: 'The unique identifier for the component element.'
-				},
-				{
-					prop: 'class',
-					type: 'string',
-					default: "''",
-					description: 'Additional CSS classes for the container.'
 				}
 			],
 			sampleComponent: SwitchSamples
+		},
+		draggable: {
+			title: 'Fluid UI - Draggable',
+			description:
+				'A barebone wrapper component that enables native HTML5 drag operations for its content.',
+			props: [
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content to be made draggable.'
+				},
+				{
+					prop: 'ondragstart',
+					type: '(event: DragEvent) => void',
+					default: 'undefined',
+					description: 'Callback triggered when dragging starts. Use this to set dataTransfer.'
+				}
+			],
+			sampleComponent: DraggableSamples
+		},
+		dropzone: {
+			title: 'Fluid UI - Dropzone',
+			description: 'A barebone area for receiving files or data via drag and drop events.',
+			props: [
+				{
+					prop: 'data',
+					type: 'File[] | string',
+					default: 'undefined',
+					description: 'The dropped data (files or text). Supports $bindable.'
+				},
+				{
+					prop: 'mode',
+					type: "'file' | 'text'",
+					default: "'file'",
+					description: 'Specifies the type of data the dropzone accepts.'
+				},
+				{
+					prop: 'dropEffect',
+					type: "'copy' | 'move' | 'link' | 'none'",
+					default: "'copy'",
+					description: 'The visual feedback during the drag operation.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>',
+					default: 'required',
+					description: 'Snippet for the dropzone content. Receives drag state.'
+				}
+			],
+			sampleComponent: DropzoneSamples
 		}
 	}
 };

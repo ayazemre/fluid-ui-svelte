@@ -137,6 +137,11 @@ main.fluid-container {
 	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
 }
 
+/* Form ---------------------------- */
+.fluid-form {
+	@apply flex-col;
+}
+
 /* Image --------------------------- */
 .fluid-image {
 	@apply object-contain;
@@ -267,10 +272,13 @@ main.fluid-container {
 
 /* Dropzone ------------------------ */
 .fluid-dropzone {
-	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all dark:border-neutral-700 dark:bg-neutral-900;
+	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
 }
 .fluid-dropzone.drag-over {
 	@apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
+}
+.fluid-dropzone.drag-invalid {
+	@apply border-error-500 bg-error-50 dark:bg-error-950/20;
 }
 
 /* Page ---------------------------- */

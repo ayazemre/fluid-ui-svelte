@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements';
 	import { mergeClasses } from '$lib/utilities/common';
 	import { applyCharacterFilter } from '$lib/utilities/inputField';
 
@@ -13,21 +13,37 @@
 		...rest
 	}: {
 		class?: string;
-		type?: 'text' | 'password';
+		type?: 'text' | 'password' | 'textarea';
+		value: string;
 		characterFilter?: Array<string>;
 		overrideDefaultStyling?: boolean;
-	} & HTMLInputAttributes = $props();
+	} & Omit<HTMLInputAttributes, 'value' | 'type'> &
+		Omit<HTMLTextareaAttributes, 'value'> = $props();
 </script>
 
-<input
-	bind:value
-	{type}
-	oninput={(e) => {
-		if (characterFilter) {
-			value = applyCharacterFilter(characterFilter, value);
-		}
-		oninput?.(e as any);
-	}}
-	{...rest}
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-input-field')}
-/>
+{#if type === 'textarea'}
+	<textarea
+		bind:value
+		oninput={(e) => {
+			if (characterFilter) {
+				value = applyCharacterFilter(characterFilter, value);
+			}
+			oninput?.(e as any);
+		}}
+		{...rest as any}
+		class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-input-field')}
+	></textarea>
+{:else}
+	<input
+		bind:value
+		{type}
+		oninput={(e) => {
+			if (characterFilter) {
+				value = applyCharacterFilter(characterFilter, value);
+			}
+			oninput?.(e as any);
+		}}
+		{...rest as any}
+		class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-input-field')}
+	/>
+{/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Calendar, CodeBlock } from '$lib/components/index.js';
-	import { Container, Text, Button } from '$lib/base/index.js';
+	import { DatePicker, CodeBlock } from '$lib/components';
+	import { Container, Text, Button } from '$lib/base';
 	import { codeBlockContents } from './codeBlockContents.js';
 
 	// Example 1 State
@@ -38,10 +38,10 @@
 				<Button class="fluid-button-secondary" onclick={async () => changeMonth1(1)}>Next</Button>
 			</Container>
 			<Container class="max-w-sm rounded border p-4 dark:border-neutral-800">
-				<Calendar currentDate={date1} componentId="calendar-single" />
+				<DatePicker currentDate={date1} componentId="calendar-single" />
 			</Container>
 		</Container>
-		<CodeBlock code={codeBlockContents.calendarSingle} language="svelte" />
+		<CodeBlock code={codeBlockContents.datePickerSingle} language="svelte" />
 	</Container>
 
 	<!-- 2. Multi Calendar -->
@@ -59,7 +59,7 @@
 			</Container>
 			<Container class="flex flex-wrap gap-8">
 				<Container class="max-w-sm rounded border p-4 dark:border-neutral-800">
-					<Calendar
+					<DatePicker
 						currentDate={multiCalendarState.currentDate}
 						bind:startDate={multiCalendarState.startDate}
 						bind:endDate={multiCalendarState.endDate}
@@ -67,7 +67,7 @@
 					/>
 				</Container>
 				<Container class="max-w-sm rounded border p-4 dark:border-neutral-800">
-					<Calendar
+					<DatePicker
 						currentDate={new Date(
 							new Date(multiCalendarState.currentDate).setMonth(
 								new Date(multiCalendarState.currentDate).getMonth() + 1
@@ -80,6 +80,6 @@
 				</Container>
 			</Container>
 		</Container>
-		<CodeBlock code={codeBlockContents.calendarMulti} language="svelte" />
+		<CodeBlock code={codeBlockContents.datePickerMulti} language="svelte" />
 	</Container>
 </Container>

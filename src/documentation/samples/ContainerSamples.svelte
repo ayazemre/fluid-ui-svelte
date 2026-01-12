@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 </script>
 
@@ -17,10 +17,7 @@
 				<Text type="h3" class="text-primary-900 dark:text-primary-100">Header Content</Text>
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.containerHeader}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.containerHeader} language="svelte" />
 	</Container>
 
 	<!-- Nav Container -->
@@ -35,10 +32,7 @@
 				<Text class="text-secondary-900 dark:text-secondary-100">Navigation Content</Text>
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.containerNav}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.containerNav} language="svelte" />
 	</Container>
 
 	<!-- Section Container -->
@@ -53,10 +47,7 @@
 				<Text class="text-info-900 dark:text-info-100">Section Content</Text>
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.containerSection}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.containerSection} language="svelte" />
 	</Container>
 
 	<!-- Footer Container -->
@@ -71,9 +62,6 @@
 				<Text class="text-warning-900 dark:text-warning-100">Footer Content</Text>
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.containerFooter}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.containerFooter} language="svelte" />
 	</Container>
 </Container>

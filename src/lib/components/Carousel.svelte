@@ -25,7 +25,7 @@
 		autoplayDuration?: number;
 		visibleItemCount?: number;
 		items: Array<T>;
-		itemTemplate: Snippet<[T, number]>;
+		itemTemplate: Snippet<[{ item: T; index: number }]>;
 	} = $props();
 
 	$effect(() => {
@@ -61,7 +61,7 @@
 			class={mergeClasses(variant, `fluid-carousel-item shrink-0 ${snapItems ? 'snap-start' : ''}`)}
 			style="flex-basis: calc(100% / {visibleItemCount})"
 		>
-			{@render itemTemplate(item, index)}
+			{@render itemTemplate({ item, index })}
 		</Container>
 	{/each}
 </Container>

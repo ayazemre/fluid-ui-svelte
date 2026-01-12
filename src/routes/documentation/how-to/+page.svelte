@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Page } from '$lib/components/index.js';
-	import { Text, Container } from '$lib/base/index.js';
+	import { Page } from '$lib/components';
+	import { Text, Container } from '$lib/base';
 </script>
 
 <Page
@@ -18,8 +18,8 @@
 		<Container class="flex flex-col gap-4">
 			<Text type="h2" class="text-xl font-semibold">Placeholder</Text>
 			<Text>
-				Content for this section is currently being prepared. Check back soon for guides on
-				theming, custom implementations, and more.
+				Content for this section is currently being prepared. Check back soon for guides on theming,
+				custom implementations, and more.
 			</Text>
 		</Container>
 	</Container>

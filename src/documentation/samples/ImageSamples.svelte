@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Image, Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Image, Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 
 	let delayedSrc = $state('');
@@ -28,10 +28,7 @@
 				/>
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.imageStandard}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.imageStandard} language="svelte" />
 	</Container>
 
 	<!-- Placeholder / Loading Example -->
@@ -42,16 +39,9 @@
 		>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<Container class="h-48 w-full overflow-hidden rounded-lg">
-				<Image
-					src={delayedSrc}
-					alt="Delayed loading example"
-					class="h-full w-full object-cover!"
-				/>
+				<Image src={delayedSrc} alt="Delayed loading example" class="h-full w-full object-cover!" />
 			</Container>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.imageLoading}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.imageLoading} language="svelte" />
 	</Container>
 </Container>

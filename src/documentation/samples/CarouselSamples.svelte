@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Carousel } from '$lib/components/index.js';
-	import { Container, Text, Button } from '$lib/base/index.js';
+	import { Carousel } from '$lib/components';
+	import { Container, Text, Button } from '$lib/base';
 
 	const items = [
 		{ color: 'bg-primary-500', text: '1' },

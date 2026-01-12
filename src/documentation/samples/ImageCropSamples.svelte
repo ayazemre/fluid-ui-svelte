@@ -82,7 +82,7 @@
 				<Text class="text-xs font-medium uppercase text-neutral-500"
 					>{isCircle ? 'Circle' : 'Rectangle'}</Text
 				>
-				<Switch bind:checked={isCircle} onswitch={async () => {}} />
+				<Switch bind:checked={isCircle} onclick={async () => {}} />
 			</Container>
 		</Container>
 
@@ -206,7 +206,7 @@
 				<Text class="text-xs font-medium uppercase text-neutral-500"
 					>{uploadIsCircle ? 'Circle' : 'Rectangle'}</Text
 				>
-				<Switch bind:checked={uploadIsCircle} onswitch={async () => {}} />
+				<Switch bind:checked={uploadIsCircle} onclick={async () => {}} />
 			</Container>
 		</Container>
 
