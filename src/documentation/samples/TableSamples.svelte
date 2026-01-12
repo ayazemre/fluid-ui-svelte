@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Table, Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { Table, Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 
 	interface User {
@@ -41,17 +41,13 @@
 				{/snippet}
 			</Table>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.tableStandard}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.tableStandard} language="svelte" />
 	</Container>
 
 	<!-- Custom Styled -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Styled Table</Text>
-		<Text class="text-sm text-neutral-500"
-			>Applying custom classes to specific table sections.</Text
+		<Text class="text-sm text-neutral-500">Applying custom classes to specific table sections.</Text
 		>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<Table
@@ -73,9 +69,6 @@
 				{/snippet}
 			</Table>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.tableStyled}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.tableStyled} language="svelte" />
 	</Container>
 </Container>

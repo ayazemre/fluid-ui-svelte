@@ -112,7 +112,7 @@
 
 /* Button -------------------------- */
 .fluid-button {
-	@apply flex cursor-pointer items-center gap-1 rounded-md p-2 transition-all duration-500;
+	@apply items-center gap-1 rounded-md p-2 transition-all duration-500;
 }
 .fluid-button-primary {
 	@apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
@@ -135,6 +135,11 @@
 section,
 main.fluid-container {
 	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
+}
+
+/* Form ---------------------------- */
+.fluid-form {
+	@apply flex-col;
 }
 
 /* Image --------------------------- */
@@ -200,26 +205,22 @@ main.fluid-container {
 	@apply flex-col;
 }
 .fluid-accordion-header {
-	@apply flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+	@apply items-center rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
 }
 .fluid-accordion-body {
 	@apply flex w-full flex-col gap-1 p-2;
 }
 
 /* Calendar ------------------------ */
-.fluid-calendar {
-}
-.fluid-calendar-container {
-	@apply flex flex-wrap;
-}
+
 .fluid-calendar-wrapper {
-	@apply flex flex-col items-center gap-1 p-2;
+	@apply items-center gap-1 p-2;
 }
 .fluid-calendar-header {
-	@apply flex w-full justify-center;
+	@apply justify-center;
 }
 .fluid-calendar-body {
-	@apply grid grid-cols-7 justify-items-center gap-4;
+	@apply gap-4;
 }
 .fluid-calendar-cell {
 	@apply dark:text-neutral-50;
@@ -236,49 +237,147 @@ main.fluid-container {
 
 /* Carousel ------------------------ */
 .fluid-carousel-container {
-	@apply relative flex scroll-smooth [scrollbar-width:none] md:touch-auto [&::-webkit-scrollbar]:hidden;
+	@apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 .fluid-carousel-item {
-	@apply size-full shrink-0 snap-center;
+	@apply p-2;
 }
 
 /* Code Block ---------------------- */
 .fluid-code-block-container {
-	@apply flex flex-col overflow-scroll rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
+	@apply rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
 }
 .fluid-code-block-row {
-	@apply flex items-start gap-0;
+	@apply gap-2;
 }
 .fluid-code-block-index {
-	@apply sticky left-0 z-1 min-w-10 border-r border-neutral-500 bg-neutral-200 px-2 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
+	@apply border-r border-neutral-500 bg-neutral-200 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
 }
 .fluid-code-block-content {
-	@apply flex flex-1 flex-col px-4;
+	@apply px-4;
 }
 
 /* Drawer -------------------------- */
 .fluid-drawer-container {
-	@apply fixed inset-0 z-10 bg-black/30 backdrop-blur-sm;
+	@apply bg-black/30 backdrop-blur-sm;
 }
 .fluid-drawer-panel {
-	@apply fixed z-20 bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
+	@apply bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
+}
+
+/* Draggable ----------------------- */
+.fluid-draggable {
+	@apply rounded-md border bg-white p-4 shadow-sm transition-all dark:border-neutral-700 dark:bg-neutral-800;
+}
+
+/* Dropzone ------------------------ */
+.fluid-dropzone {
+	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
+}
+.fluid-dropzone.drag-over {
+	@apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
+}
+.fluid-dropzone.drag-invalid {
+	@apply border-error-500 bg-error-50 dark:bg-error-950/20;
 }
 
 /* Page ---------------------------- */
 .fluid-page {
-	@apply flex w-full flex-1 flex-col p-8 md:p-16;
+	@apply p-8 md:p-16;
+}
+
+/* Image Crop ---------------------- */
+.fluid-image-crop-wrapper {
+	@apply flex size-full flex-col justify-center;
+}
+.fluid-image-cropper-canvas {
+	@apply block max-w-full;
 }
 
 /* Switch -------------------------- */
 .fluid-switch-button {
-	@apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-neutral-200 transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+	@apply bg-neutral-200;
 }
 .fluid-switch-circle {
-	@apply pointer-events-none inline-block h-4 w-4 translate-x-0 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out checked:translate-x-4;
+	@apply bg-white shadow;
 }
 .fluid-switch-button.checked {
 	@apply bg-primary-600;
 }
-.fluid-switch-button.checked .fluid-switch-circle {
-	@apply translate-x-4;
+
+/* Popover ------------------------- */
+.fluid-popover-container {
+	@apply relative inline-block;
+}
+.fluid-popover-content {
+	@apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+}
+.fluid-popover-top {
+	@apply bottom-full left-1/2 mb-2 -translate-x-1/2;
+}
+.fluid-popover-bottom {
+	@apply left-1/2 top-full mt-2 -translate-x-1/2;
+}
+.fluid-popover-left {
+	@apply right-full top-1/2 mr-2 -translate-y-1/2;
+}
+.fluid-popover-right {
+	@apply left-full top-1/2 ml-2 -translate-y-1/2;
+}
+
+/* Modal --------------------------- */
+.fluid-modal-container {
+	@apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
+}
+.fluid-modal-panel {
+	@apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
+}
+
+/* Breadcrumb ---------------------- */
+.fluid-breadcrumb-container {
+	@apply flex items-center gap-2 text-sm;
+}
+.fluid-breadcrumb-list {
+	@apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
+}
+.fluid-breadcrumb-item {
+	@apply flex items-center gap-2;
+}
+.fluid-breadcrumb-separator {
+	@apply text-neutral-400 select-none;
+}
+
+/* Pagination ---------------------- */
+.fluid-pagination-container {
+	@apply flex items-center gap-1;
+}
+.fluid-pagination-button {
+	@apply min-w-[2.5rem] h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.fluid-pagination-button-active {
+	@apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+}
+
+/* Notification Area --------------- */
+.fluid-notification-area {
+	@apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
+}
+.fluid-notification-area-top-right { @apply top-0 right-0; }
+.fluid-notification-area-top-left { @apply top-0 left-0; }
+.fluid-notification-area-bottom-right { @apply bottom-0 right-0 flex-col-reverse; }
+.fluid-notification-area-bottom-left { @apply bottom-0 left-0 flex-col-reverse; }
+
+.fluid-notification {
+	@apply pointer-events-auto min-w-[300px] max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
+}
+.fluid-notification-success { @apply border-l-4 border-l-success-500; }
+.fluid-notification-error { @apply border-l-4 border-l-error-500; }
+.fluid-notification-warning { @apply border-l-4 border-l-warning-500; }
+.fluid-notification-info { @apply border-l-4 border-l-info-500; }
+
+.fluid-notification-content {
+	@apply flex-1;
+}
+.fluid-notification-close {
+	@apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
 }

@@ -1,67 +1,143 @@
 <script lang="ts">
-	import { Carousel, CodeBlock } from '$lib/components/index.js';
-	import { Container, Text, Button } from '$lib/base/index.js';
-	import { codeBlockContents } from './codeBlockContents.js';
+	import { Carousel } from '$lib/components';
+	import { Container, Text, Button } from '$lib/base';
 
 	const items = [
-		{ color: 'bg-primary-500', text: 'Slide 1' },
-		{ color: 'bg-secondary-500', text: 'Slide 2' },
-		{ color: 'bg-success-500', text: 'Slide 3' },
-		{ color: 'bg-warning-500', text: 'Slide 4' }
+		{ color: 'bg-primary-500', text: '1' },
+		{ color: 'bg-secondary-500', text: '2' },
+		{ color: 'bg-success-500', text: '3' },
+		{ color: 'bg-warning-500', text: '4' },
+		{ color: 'bg-error-500', text: '5' },
+		{ color: 'bg-info-500', text: '6' },
+		{ color: 'bg-neutral-500', text: '7' },
+		{ color: 'bg-primary-700', text: '8' }
 	];
 
-	let activeIndex = $state(0);
-	const next = () => (activeIndex = (activeIndex + 1) % items.length);
-	const prev = () => (activeIndex = (activeIndex - 1 + items.length) % items.length);
+	// Horizontal Control State
+	let h_multi_index = $state(0);
+	let h_multi_count = $state(2);
+
+	// Vertical Control State
+	let v_multi_index = $state(0);
+	let v_multi_count = $state(2);
+
+	const scroll = (dir: 'next' | 'prev', idx: number, setIdx: (n: number) => void, len: number) => {
+		const newIdx = dir === 'next' ? (idx + 1) % len : (idx - 1 + len) % len;
+		setIdx(newIdx);
+	};
 </script>
 
 <Container class="flex flex-col gap-10">
-	<!-- 1. Interactive Swiping -->
-	<Container class="flex flex-col gap-4">
-		<Text type="h3" class="text-xl font-bold">Interactive Swiping</Text>
-		<Text class="text-neutral-500">
-			The carousel follows your finger exactly during touch moves and snaps to the nearest item on
-			release.
-		</Text>
-		<Container
-			class="rounded-md border-l-4 border-primary-500 bg-neutral-100 p-4 dark:bg-neutral-800"
-		>
-			<Text class="text-sm">
-				<Text type="strong" class="text-primary-600 dark:text-primary-400">Note:</Text> To test touch
-				interactions on a desktop, please use your browser's responsive design mode or test on a physical
-				mobile device.
-			</Text>
-		</Container>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container class="max-w-md overflow-hidden rounded-lg">
-				<Carousel {items} componentId="carousel-swipe-demo">
-					{#snippet itemTemplate({ item })}
-						<Container class="flex h-64 w-full items-center justify-center {item.color} text-white">
-							<Text type="h2" class="text-4xl font-bold">Swipe Me</Text>
-						</Container>
-					{/snippet}
-				</Carousel>
-			</Container>
-		</Container>
-		<CodeBlock language="svelte" code={codeBlockContents.carouselInteractive} />
+	<Container class="flex flex-col gap-2">
+		<Text type="h1">Horizontal Examples</Text>
+		<Text class="text-neutral-500">Standard horizontal scrolling behavior.</Text>
 	</Container>
 
-	<!-- 2. Manual Navigation -->
+	<!-- 1. Horizontal - Default (1 Item) -->
 	<Container class="flex flex-col gap-4">
-		<Text type="h3" class="text-xl font-bold">Manual Navigation</Text>
-		<Text class="text-neutral-500">
-			Bind to <Text type="code">activeIndex</Text> to programmatically control the carousel.
-		</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container class="mb-4 flex gap-2">
-				<Button class="fluid-button-secondary" onclick={async () => prev()}>Prev</Button>
-				<Button class="fluid-button-secondary" onclick={async () => next()}>Next</Button>
-				<Text class="flex items-center font-mono">Index: {activeIndex}</Text>
+		<Text type="h3" class="text-xl font-bold">1. Default (1 Item)</Text>
+		<Text class="text-neutral-500">Standard full-width carousel with snapping.</Text>
+		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
+			<Container
+				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel {items} componentId="h-1-default" visibleItemCount={1}>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
 			</Container>
-			<Container class="max-w-md overflow-hidden rounded-lg">
-				<Carousel {items} bind:activeIndex componentId="carousel-manual-demo">
-					{#snippet itemTemplate({ item, index })}
-						<Container class="flex h-64 w-full items-center justify-center {item.color} text-white">
+		</Container>
+	</Container>
+
+	<!-- 2. Horizontal - Multiple Items (Controlled) -->
+	<Container class="flex flex-col gap-4">
+		<Text type="h3" class="text-xl font-bold">2. Multiple Items (Controlled)</Text>
+		<Text class="text-neutral-500">Carousel with multiple visible items and external controls.</Text
+		>
+
+		<Container class="flex flex-wrap gap-4">
+			<Button
+				class="fluid-button-primary"
+				onclick={async () =>
+					scroll('prev', h_multi_index, (n) => (h_multi_index = n), items.length)}>Prev</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () =>
+					scroll('next', h_multi_index, (n) => (h_multi_index = n), items.length)}>Next</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () => (h_multi_count = Math.max(1, h_multi_count - 1))}>Less Items</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () => (h_multi_count = Math.min(6, h_multi_count + 1))}>More Items</Button
+			>
+			<Text>Visible: {h_multi_count}</Text>
+		</Container>
+
+		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
+			<Container
+				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel
+					{items}
+					componentId="h-multi-controlled"
+					bind:activeIndex={h_multi_index}
+					visibleItemCount={h_multi_count}
+					snapItems={true}
+				>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
+			</Container>
+		</Container>
+	</Container>
+
+	<!-- 3. Horizontal - Free Scroll (No Snap) -->
+	<Container class="flex flex-col gap-4">
+		<Text type="h3" class="text-xl font-bold">3. Free Scroll (No Snap)</Text>
+		<Text class="text-neutral-500">Snapping disabled for smooth free scrolling.</Text>
+		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
+			<Container
+				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel {items} componentId="h-free-scroll" visibleItemCount={2.5} snapItems={false}>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
+			</Container>
+		</Container>
+	</Container>
+
+	<Container class="h-px w-full bg-neutral-200 dark:bg-neutral-800"></Container>
+
+	<Container class="flex flex-col gap-2">
+		<Text type="h1">Vertical Examples</Text>
+		<Text class="text-neutral-500"
+			>Vertical scrolling behavior (requires fixed height on container).</Text
+		>
+	</Container>
+
+	<!-- 4. Vertical - Default (1 Item) -->
+	<Container class="flex flex-col gap-4">
+		<Text type="h3" class="text-xl font-bold">4. Vertical Default (1 Item)</Text>
+		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+			<Container
+				class="h-64 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel {items} orientation="vertical" componentId="v-1-default" visibleItemCount={1}>
+					{#snippet itemTemplate({ item })}
+						<Container
+							class="flex h-full w-full items-center justify-center {item.color} text-white"
+						>
 							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
 						</Container>
 					{/snippet}
@@ -70,18 +146,76 @@
 		</Container>
 	</Container>
 
-	<!-- 3. Vertical & Free Scroll -->
+	<!-- 5. Vertical - Multiple Items (Controlled) -->
 	<Container class="flex flex-col gap-4">
-		<Text type="h3" class="text-xl font-bold">Vertical & Free Scroll</Text>
-		<Text class="text-neutral-500">
-			Disable <Text type="code">snapItems</Text> to allow the carousel to stay at any scroll position.
-		</Text>
+		<Text type="h3" class="text-xl font-bold">5. Vertical Multiple (Controlled)</Text>
+
+		<Container class="flex flex-wrap gap-4">
+			<Button
+				class="fluid-button-primary"
+				onclick={async () =>
+					scroll('prev', v_multi_index, (n) => (v_multi_index = n), items.length)}>Up</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () =>
+					scroll('next', v_multi_index, (n) => (v_multi_index = n), items.length)}>Down</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () => (v_multi_count = Math.max(1, v_multi_count - 1))}>Less Items</Button
+			>
+			<Button
+				class="fluid-button-primary"
+				onclick={async () => (v_multi_count = Math.min(6, v_multi_count + 1))}>More Items</Button
+			>
+			<Text>Visible: {v_multi_count}</Text>
+			<Text>Active: {v_multi_index}</Text>
+		</Container>
+
 		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container class="h-64 max-w-md overflow-hidden rounded-lg">
-				<Carousel {items} orientation="vertical" snapItems={false} componentId="carousel-free-demo">
-					{#snippet itemTemplate({ item, index })}
-						<Container class="flex h-64 w-full items-center justify-center {item.color} text-white">
-							<Text type="h2" class="text-4xl font-bold">Slide {index + 1}</Text>
+			<Container
+				class="h-96 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel
+					{items}
+					orientation="vertical"
+					componentId="v-multi-controlled"
+					bind:activeIndex={v_multi_index}
+					visibleItemCount={v_multi_count}
+					snapItems={true}
+				>
+					{#snippet itemTemplate({ item })}
+						<Container
+							class="flex h-full w-full items-center justify-center {item.color} text-white"
+						>
+							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+						</Container>
+					{/snippet}
+				</Carousel>
+			</Container>
+		</Container>
+	</Container>
+
+	<!-- 6. Vertical - Free Scroll (No Snap) -->
+	<Container class="flex flex-col gap-4">
+		<Text type="h3" class="text-xl font-bold">6. Vertical Free Scroll (No Snap)</Text>
+		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+			<Container
+				class="h-80 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+			>
+				<Carousel
+					{items}
+					orientation="vertical"
+					componentId="v-free-scroll"
+					visibleItemCount={2.5}
+					snapItems={false}
+				>
+					{#snippet itemTemplate({ item })}
+						<Container
+							class="flex h-full w-full items-center justify-center {item.color} text-white"
+						>
+							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
 						</Container>
 					{/snippet}
 				</Carousel>

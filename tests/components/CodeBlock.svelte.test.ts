@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import CodeBlock from '$lib/components/CodeBlock.svelte';
+import { CodeBlock } from '$lib/components';
 
 describe('CodeBlock', () => {
 	test('Default', async () => {

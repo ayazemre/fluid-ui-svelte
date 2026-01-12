@@ -19,9 +19,10 @@ export default defineConfig({
 						locators: { testIdAttribute: 'id' },
 						headless: true
 					},
-
+					testTimeout: 2000,
+					css: true,
 					include: ['tests/**/*.svelte.{test,spec}.{js,ts}'],
-					setupFiles: ['./vitest-setup-client.ts']
+					setupFiles: ['./vitest-setup-client.ts', 'tests/setup-tests.ts']
 				}
 			}
 		]

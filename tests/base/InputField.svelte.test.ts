@@ -1,7 +1,7 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import InputField from '$lib/base/InputField.svelte';
+import { InputField } from '$lib/base';
 
 describe('Input Field', () => {
 	test('Default', async () => {
@@ -25,7 +25,7 @@ describe('Input Field', () => {
 	});
 
 	test('Types', async () => {
-		for (const inputFieldType of ['text', 'password']) {
+		for (const inputFieldType of ['text', 'password', 'textarea']) {
 			render(InputField, {
 				id: 'input-field-' + inputFieldType,
 				'aria-label': 'input',
@@ -35,7 +35,12 @@ describe('Input Field', () => {
 			// Polymorphism Check
 			const input = page.getByTestId('input-field-' + inputFieldType);
 			await expect.element(input).toBeInTheDocument();
-			expect(input.element().attributes.getNamedItem('type')!.value).toBe(inputFieldType);
+			if (inputFieldType === 'textarea') {
+				expect(input.element().tagName).toBe('TEXTAREA');
+			} else {
+				expect(input.element().tagName).toBe('INPUT');
+				expect(input.element().attributes.getNamedItem('type')!.value).toBe(inputFieldType);
+			}
 		}
 	});
 

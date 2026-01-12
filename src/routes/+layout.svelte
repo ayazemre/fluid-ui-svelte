@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../documentation.css';
-	import { Container, Text, Link, Button } from '$lib/base/index.js';
+	import { Container, Text, Link, Button } from '$lib/base';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { globalState } from './globalState.svelte.js';

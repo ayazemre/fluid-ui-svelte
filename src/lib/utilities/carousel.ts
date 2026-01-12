@@ -1,75 +1,63 @@
-export type CarouselInternalState = {
-	touchStart: number;
-	initialScroll: number;
-	movementDelta: number;
-};
-
+/**
+ * Programmatically scrolls the carousel to a specific item index.
+ */
 export function scrollToIndex(
 	componentId: string,
 	activeIndex: number,
-	totalItems: number,
 	orientation: 'horizontal' | 'vertical' = 'horizontal'
 ): void {
 	const element = document.getElementById(componentId);
-	if (!element || totalItems <= 0) return;
+	if (!element || !element.children[activeIndex]) return;
 
-	const scrollWidth = orientation === 'horizontal' ? element.scrollWidth : element.scrollHeight;
-	const itemWidth = scrollWidth / totalItems;
-	const targetPosition = activeIndex * itemWidth;
+	const targetChild = element.children[activeIndex] as HTMLElement;
+	const targetPosition =
+		orientation === 'horizontal' ? targetChild.offsetLeft : targetChild.offsetTop;
+
+	// Check current position to avoid redundant scrolling
+	const currentPosition = orientation === 'horizontal' ? element.scrollLeft : element.scrollTop;
+	if (Math.abs(currentPosition - targetPosition) < 2) return;
 
 	element.scrollTo({
 		left: orientation === 'horizontal' ? targetPosition : 0,
-		top: orientation === 'vertical' ? targetPosition : 0
+		top: orientation === 'vertical' ? targetPosition : 0,
+		behavior: 'smooth'
 	});
 }
 
-export function handleTouchStart(
-	e: TouchEvent,
-	orientation: 'horizontal' | 'vertical',
-	internalState: CarouselInternalState
-) {
-	e.stopPropagation();
-	const element = e.currentTarget as HTMLElement;
-	internalState.touchStart =
-		orientation === 'vertical' ? e.touches[0].clientY : e.touches[0].clientX;
-	internalState.initialScroll = orientation === 'vertical' ? element.scrollTop : element.scrollLeft;
-	internalState.movementDelta = 0;
-}
-
-export function handleTouchMove(
-	e: TouchEvent,
-	orientation: 'horizontal' | 'vertical',
-	internalState: CarouselInternalState
-) {
-	const element = e.currentTarget as HTMLElement;
-	const currentTouch = orientation === 'vertical' ? e.touches[0].clientY : e.touches[0].clientX;
-	internalState.movementDelta = internalState.touchStart - currentTouch;
-
-	element.scrollTo({
-		left:
-			orientation === 'vertical' ? 0 : internalState.initialScroll + internalState.movementDelta,
-		top: orientation === 'vertical' ? internalState.initialScroll + internalState.movementDelta : 0,
-		behavior: 'instant'
-	});
-}
-
-export function handleTouchEnd(
-	snapItems: boolean,
-	activeIndex: number,
-	totalItems: number,
-	internalState: CarouselInternalState
+/**
+ * Calculates the current active index based on scroll position.
+ * Returns the index of the child closest to the start of the container.
+ */
+export function calculateIndexFromScroll(
+	element: HTMLElement,
+	orientation: 'horizontal' | 'vertical' = 'horizontal'
 ): number {
-	if (!snapItems) return activeIndex;
+	const scrollPos = orientation === 'horizontal' ? element.scrollLeft : element.scrollTop;
+	const children = Array.from(element.children) as HTMLElement[];
 
-	const threshold = 50;
-	let newIndex = activeIndex;
+	let closestIndex = 0;
+	let minDistance = Infinity;
 
-	if (internalState.movementDelta > threshold && activeIndex < totalItems - 1) {
-		newIndex = activeIndex + 1;
-	} else if (internalState.movementDelta < -threshold && activeIndex > 0) {
-		newIndex = activeIndex - 1;
+	children.forEach((child, index) => {
+		const childPos = orientation === 'horizontal' ? child.offsetLeft : child.offsetTop;
+		const distance = Math.abs(childPos - scrollPos);
+		if (distance < minDistance) {
+			minDistance = distance;
+			closestIndex = index;
+		}
+	});
+
+	return closestIndex;
+}
+
+export function handleScrollEnd(
+	event: Event,
+	orientation: 'horizontal' | 'vertical',
+	activeIndex: number
+) {
+	const target = event.target as HTMLElement;
+	const newIndex = calculateIndexFromScroll(target, orientation);
+	if (newIndex !== activeIndex) {
+		activeIndex = newIndex;
 	}
-
-	internalState.movementDelta = 0;
-	return newIndex;
 }

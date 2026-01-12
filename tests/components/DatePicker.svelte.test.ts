@@ -1,11 +1,11 @@
 import { page } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import Calendar from '$lib/components/Calendar.svelte';
+import { DatePicker } from '$lib/components';
 
-describe('Calendar', () => {
+describe('Date Picker', () => {
 	test('Default', async () => {
-		render(Calendar, { componentId: 'calendar-default' });
+		render(DatePicker, { componentId: 'calendar-default' });
 
 		const wrapper = page.getByTestId('calendar-default');
 		await expect.element(wrapper).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('Calendar', () => {
 	});
 
 	test('Interaction', async () => {
-		render(Calendar, { componentId: 'calendar-interaction' });
+		render(DatePicker, { componentId: 'calendar-interaction' });
 
 		const wrapper = page.getByTestId('calendar-interaction');
 
@@ -54,7 +54,7 @@ describe('Calendar', () => {
 	});
 
 	test('Variant', async () => {
-		render(Calendar, {
+		render(DatePicker, {
 			componentId: 'calendar-variant',
 			variant: 'variant-primary'
 		});
@@ -75,7 +75,7 @@ describe('Calendar', () => {
 
 	test('Hide Rolling Days', async () => {
 		// Render with rolling days HIDDEN
-		render(Calendar, {
+		render(DatePicker, {
 			componentId: 'calendar-rolling',
 			hideRollingDays: true,
 			currentDate: '2024-01-01T00:00:00.000Z' // Fixed date where we know rolling days exist
@@ -111,7 +111,7 @@ describe('Calendar', () => {
 
 	test('Custom Weekdays', async () => {
 		const customDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-		render(Calendar, {
+		render(DatePicker, {
 			componentId: 'calendar-weekdays',
 			weekDays: customDays
 		});
@@ -134,7 +134,7 @@ describe('Calendar', () => {
 		const start = new Date(year, month, 10).toISOString();
 		const end = new Date(year, month, 15).toISOString();
 
-		render(Calendar, {
+		render(DatePicker, {
 			componentId: 'calendar-initial',
 			currentDate: current,
 			startDate: start,

@@ -1,16 +1,27 @@
 import AccordionSamples from './samples/AccordionSamples.svelte';
 import ButtonSamples from './samples/ButtonSamples.svelte';
-import CalendarSamples from './samples/CalendarSamples.svelte';
+import DatePickerSamples from './samples/DatePickerSamples.svelte';
 import CarouselSamples from './samples/CarouselSamples.svelte';
 import CodeBlockSamples from './samples/CodeBlockSamples.svelte';
 import ContainerSamples from './samples/ContainerSamples.svelte';
 import DrawerSamples from './samples/DrawerSamples.svelte';
+import FormSamples from './samples/FormSamples.svelte';
 import ImageSamples from './samples/ImageSamples.svelte';
+import ImageCropSamples from './samples/ImageCropSamples.svelte';
 import InputFieldSamples from './samples/InputFieldSamples.svelte';
 import LinkSamples from './samples/LinkSamples.svelte';
 import ListSamples from './samples/ListSamples.svelte';
 import TableSamples from './samples/TableSamples.svelte';
 import TextSamples from './samples/TextSamples.svelte';
+import PageSamples from './samples/PageSamples.svelte';
+import SwitchSamples from './samples/SwitchSamples.svelte';
+import DraggableSamples from './samples/DraggableSamples.svelte';
+import DropzoneSamples from './samples/DropzoneSamples.svelte';
+import PopoverSamples from './samples/PopoverSamples.svelte';
+import ModalSamples from './samples/ModalSamples.svelte';
+import BreadcrumbSamples from './samples/BreadcrumbSamples.svelte';
+import PaginationSamples from './samples/PaginationSamples.svelte';
+import NotificationSamples from './samples/NotificationSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -96,6 +107,38 @@ export const componentRegistry = {
 			],
 			sampleComponent: ContainerSamples
 		},
+		form: {
+			title: 'Fluid UI - Form',
+			description:
+				'The Form component is a thin wrapper around the HTML <form> element that automatically prevents default browser submission behavior.',
+			props: [
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes to apply to the form.'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes the base fluid-form class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content of the form.'
+				},
+				{
+					prop: '...rest',
+					type: 'HTMLFormAttributes',
+					default: '—',
+					description: 'Standard HTML form attributes.'
+				}
+			],
+			sampleComponent: FormSamples
+		},
 		image: {
 			title: 'Fluid UI - Image',
 			description:
@@ -147,7 +190,7 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'type',
-					type: "'text' | 'password'",
+					type: "'text' | 'password' | 'textarea'",
 					default: "'text'",
 					description: 'The type of the input field.'
 				},
@@ -235,9 +278,9 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'itemTemplate',
-					type: 'Snippet<[T]>',
+					type: 'Snippet<[T, number]>',
 					default: 'required',
-					description: 'A Svelte snippet used to render each item.'
+					description: 'A Svelte snippet used to render each item. Receives item and index.'
 				},
 				{
 					prop: 'class',
@@ -312,6 +355,48 @@ export const componentRegistry = {
 					type: 'Snippet<[V]>',
 					default: 'required',
 					description: 'Snippet for rendering footer cells.'
+				},
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the table element.'
+				},
+				{
+					prop: 'captionClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the caption element.'
+				},
+				{
+					prop: 'headClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the thead element.'
+				},
+				{
+					prop: 'bodyClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the tbody element.'
+				},
+				{
+					prop: 'rowClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for tr elements.'
+				},
+				{
+					prop: 'cellClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for th and td elements.'
+				},
+				{
+					prop: 'footerClass',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes for the tfoot element.'
 				},
 				{
 					prop: 'overrideDefaultStyling',
@@ -400,8 +485,8 @@ export const componentRegistry = {
 			],
 			sampleComponent: AccordionSamples
 		},
-		calendar: {
-			title: 'Fluid UI - Calendar',
+		'date-picker': {
+			title: 'Fluid UI - Date Picker',
 			description:
 				'A highly flexible, headless-inspired calendar component. It renders a month view based on a provided date, giving you full control over navigation and layout.',
 			props: [
@@ -449,7 +534,7 @@ export const componentRegistry = {
 					description: 'Whether to hide days from previous/next months.'
 				}
 			],
-			sampleComponent: CalendarSamples
+			sampleComponent: DatePickerSamples
 		},
 		carousel: {
 			title: 'Fluid UI - Carousel',
@@ -464,9 +549,9 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'itemTemplate',
-					type: 'Snippet<[{ item: T; index: number; internalState: CarouselInternalState }]>',
+					type: 'Snippet<[T, number]>',
 					default: 'required',
-					description: 'Snippet to render each item. Provides access to data and touch state.'
+					description: 'Snippet to render each item. Provides access to item and index.'
 				},
 				{
 					prop: 'orientation',
@@ -481,10 +566,10 @@ export const componentRegistry = {
 					description: 'Whether to automatically snap to the nearest item after a swipe.'
 				},
 				{
-					prop: 'swipeable',
-					type: 'boolean',
-					default: 'true',
-					description: 'Enable or disable touch-based swiping interaction.'
+					prop: 'visibleItemCount',
+					type: 'number',
+					default: '1',
+					description: 'Number of items visible at once.'
 				},
 				{
 					prop: 'activeIndex',
@@ -521,8 +606,7 @@ export const componentRegistry = {
 		},
 		'code-block': {
 			title: 'Fluid UI - Code Block',
-			description:
-				'A component for displaying formatted code snippets with syntax highlighting.',
+			description: 'A component for displaying formatted code snippets with syntax highlighting.',
 			props: [
 				{
 					prop: 'code',
@@ -547,8 +631,7 @@ export const componentRegistry = {
 					prop: 'overrideDefaultStyling',
 					type: 'boolean',
 					default: 'false',
-					description:
-						'If true, prevents the component from applying its default styling.'
+					description: 'If true, prevents the component from applying its default styling.'
 				}
 			],
 			sampleComponent: CodeBlockSamples
@@ -577,12 +660,6 @@ export const componentRegistry = {
 					description: 'The side of the screen from which the drawer appears.'
 				},
 				{
-					prop: 'backdrop',
-					type: 'boolean',
-					default: 'true',
-					description: 'Whether to show a semi-transparent overlay behind the drawer.'
-				},
-				{
 					prop: 'closeOnBackdropClick',
 					type: 'boolean',
 					default: 'true',
@@ -602,18 +679,510 @@ export const componentRegistry = {
 				},
 				{
 					prop: 'transitionFn',
-					type: '(node: Element, params?: any) => TransitionConfig',
+					type: 'function',
 					default: '() => {}',
-					description: 'The transition function for the drawer panel.'
+					description: 'Transition function for the drawer panel.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: '{}',
+					description: 'Parameters for the panel transition.'
 				},
 				{
 					prop: 'backdropTransitionFn',
-					type: '(node: Element, params?: any) => TransitionConfig',
+					type: 'function',
 					default: '() => {}',
-					description: 'The transition function for the backdrop.'
+					description: 'Transition function for the backdrop.'
+				},
+				{
+					prop: 'backdropTransitionParams',
+					type: 'object',
+					default: 'undefined',
+					description: 'Parameters for the backdrop transition.'
 				}
 			],
 			sampleComponent: DrawerSamples
+		},
+		page: {
+			title: 'Fluid UI - Page',
+			description:
+				'The Page component is a specialized wrapper for top-level pages. It handles document metadata (SEO, Open Graph, Twitter Cards) and provides a standard "main" container for content.',
+			props: [
+				{
+					prop: 'title',
+					type: 'string',
+					default: "''",
+					description: 'The title of the page (appears in browser tab and search results).'
+				},
+				{
+					prop: 'description',
+					type: 'string',
+					default: "''",
+					description: 'A brief summary of the page for search engines and social previews.'
+				},
+				{
+					prop: 'image',
+					type: 'string',
+					default: "''",
+					description: 'URL of the image used for social media previews.'
+				},
+				{
+					prop: 'imageAlt',
+					type: 'string',
+					default: "''",
+					description: 'Alt text for the social preview image.'
+				},
+				{
+					prop: 'url',
+					type: 'string',
+					default: "''",
+					description: 'The canonical URL of the page.'
+				},
+				{
+					prop: 'siteName',
+					type: 'string',
+					default: "''",
+					description: 'The name of the overall website.'
+				},
+				{
+					prop: 'type',
+					type: "'website' | 'article' | 'profile'",
+					default: "'website'",
+					description: 'The type of Open Graph object.'
+				},
+				{
+					prop: 'twitterCard',
+					type: "'summary' | 'summary_large_image'",
+					default: "'summary_large_image'",
+					description: 'The type of Twitter card to render.'
+				},
+				{
+					prop: 'themeColor',
+					type: 'string',
+					default: "''",
+					description: 'Color for the browser toolbar/address bar.'
+				},
+				{
+					prop: 'robots',
+					type: 'string',
+					default: "'index, follow'",
+					description: 'Instructions for search engine crawlers.'
+				},
+				{
+					prop: 'keywords',
+					type: 'string',
+					default: "''",
+					description: 'Comma-separated keywords for the page.'
+				},
+				{
+					prop: 'class',
+					type: 'string',
+					default: "''",
+					description: 'CSS classes to apply to the main container.'
+				}
+			],
+			sampleComponent: PageSamples
+		},
+		'image-crop': {
+			title: 'Fluid UI - Image Crop',
+			description:
+				'A canvas-based component for cropping images with zoom and pan support, providing a real-time cropped preview.',
+			props: [
+				{
+					prop: 'sourceImage',
+					type: 'ImageBitmap',
+					default: 'required',
+					description: 'The source ImageBitmap to be cropped.'
+				},
+				{
+					prop: 'aspectRatio',
+					type: '{ x: number, y: number }',
+					default: 'required',
+					description: 'Fixed aspect ratio for the crop area.'
+				},
+				{
+					prop: 'resultImage',
+					type: 'string',
+					default: 'undefined',
+					description: 'The base64 encoded cropped image result. Supports $bindable.'
+				},
+				{
+					prop: 'zoom',
+					type: 'number',
+					default: '1',
+					description: 'Zoom level for the image.'
+				},
+				{
+					prop: 'pan',
+					type: '{ x: number, y: number }',
+					default: '{ x: 0, y: 0 }',
+					description: 'Pan coordinates (x, y) for the image.'
+				},
+				{
+					prop: 'padding',
+					type: 'number',
+					default: '0',
+					description: 'Padding in pixels around the crop area within the canvas.'
+				},
+				{
+					prop: 'shape',
+					type: "'rectangle' | 'circle'",
+					default: "'rectangle'",
+					description: 'The shape of the crop area.'
+				},
+				{
+					prop: 'overlayColor',
+					type: 'string',
+					default: "'rgba(0, 0, 0, 0.5)'",
+					description: 'The color of the overlay around the crop area.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'undefined',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: ImageCropSamples
+		},
+		switch: {
+			title: 'Fluid UI - Switch',
+			description: 'A simple toggle switch component used for binary settings or preferences.',
+			props: [
+				{
+					prop: 'checked',
+					type: 'boolean',
+					default: 'false',
+					description: 'The current state of the switch. Supports $bindable.'
+				},
+				{
+					prop: 'onclick',
+					type: '(event: Event, checked: boolean) => Promise<void>',
+					default: 'required',
+					description: 'Async callback triggered when the switch is toggled.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, prevents user interaction.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				}
+			],
+			sampleComponent: SwitchSamples
+		},
+		draggable: {
+			title: 'Fluid UI - Draggable',
+			description:
+				'A barebone wrapper component that enables native HTML5 drag operations for its content.',
+			props: [
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content to be made draggable.'
+				},
+				{
+					prop: 'ondragstart',
+					type: '(event: DragEvent) => void',
+					default: 'undefined',
+					description: 'Callback triggered when dragging starts. Use this to set dataTransfer.'
+				}
+			],
+			sampleComponent: DraggableSamples
+		},
+		dropzone: {
+			title: 'Fluid UI - Dropzone',
+			description: 'A barebone area for receiving files or data via drag and drop events.',
+			props: [
+				{
+					prop: 'data',
+					type: 'File[] | string',
+					default: 'undefined',
+					description: 'The dropped data (files or text). Supports $bindable.'
+				},
+				{
+					prop: 'mode',
+					type: "'file' | 'text'",
+					default: "'file'",
+					description: 'Specifies the type of data the dropzone accepts.'
+				},
+				{
+					prop: 'dropEffect',
+					type: "'copy' | 'move' | 'link' | 'none'",
+					default: "'copy'",
+					description: 'The visual feedback during the drag operation.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: "''",
+					description: 'The unique identifier for the component element.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom CSS variant class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>',
+					default: 'required',
+					description: 'Snippet for the dropzone content. Receives drag state.'
+				}
+			],
+			sampleComponent: DropzoneSamples
+		},
+		popover: {
+			title: 'Fluid UI - Popover',
+			description:
+				'A dynamic and flexible popover component used for dropdowns, tooltips, and contextual menus.',
+			props: [
+				{
+					prop: 'trigger',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Snippet for the element that triggers the popover.'
+				},
+				{
+					prop: 'content',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Snippet for the content displayed inside the popover.'
+				},
+				{
+					prop: 'isOpen',
+					type: 'boolean',
+					default: 'false',
+					description: 'Controls the visibility of the popover. Supports $bindable.'
+				},
+				{
+					prop: 'position',
+					type: "'top' | 'bottom' | 'left' | 'right'",
+					default: "'bottom'",
+					description: 'The preferred position of the popover relative to the trigger.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				},
+				{
+					prop: 'transitionFn',
+					type: 'function',
+					default: 'fade',
+					description: 'Svelte transition function for the popover content.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: '{ duration: 150 }',
+					description: 'Parameters for the transition function.'
+				}
+			],
+			sampleComponent: PopoverSamples
+		},
+		modal: {
+			title: 'Fluid UI - Modal',
+			description:
+				'A barebone centered modal component for critical actions or information.',
+			props: [
+				{
+					prop: 'isOpen',
+					type: 'boolean',
+					default: 'false',
+					description: 'Controls the visibility of the modal. Supports $bindable.'
+				},
+				{
+					prop: 'closeOnBackdropClick',
+					type: 'boolean',
+					default: 'true',
+					description: 'Whether clicking the backdrop closes the modal.'
+				},
+				{
+					prop: 'scrollLock',
+					type: 'boolean',
+					default: 'true',
+					description: 'Whether to lock body scroll when the modal is open.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				},
+				{
+					prop: 'transitionFn',
+					type: 'function',
+					default: 'scale',
+					description: 'Svelte transition function for the modal panel.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: "{ duration: 200, start: 0.95 }",
+					description: 'Parameters for the panel transition.'
+				},
+				{
+					prop: 'backdropTransitionFn',
+					type: 'function',
+					default: 'fade',
+					description: 'Svelte transition function for the backdrop.'
+				},
+				{
+					prop: 'backdropTransitionParams',
+					type: 'object',
+					default: "{ duration: 200 }",
+					description: 'Parameters for the backdrop transition.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content of the modal.'
+				}
+			],
+			sampleComponent: ModalSamples
+		},
+		breadcrumb: {
+			title: 'Fluid UI - Breadcrumb',
+			description:
+				'A navigation aid that allows users to keep track of their location within programs, documents, or websites.',
+			props: [
+				{
+					prop: 'items',
+					type: 'Array<{ label: string; href: string }>',
+					default: '[]',
+					description: 'An array of breadcrumb items.'
+				},
+				{
+					prop: 'separator',
+					type: 'string | Snippet',
+					default: "'/'",
+					description: 'The separator element between items.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: BreadcrumbSamples
+		},
+		pagination: {
+			title: 'Fluid UI - Pagination',
+			description:
+				'A component for navigating through a series of related content across multiple pages.',
+			props: [
+				{
+					prop: 'currentPage',
+					type: 'number',
+					default: '1',
+					description: 'The currently active page. Supports $bindable.'
+				},
+				{
+					prop: 'totalPages',
+					type: 'number',
+					default: '1',
+					description: 'The total number of pages.'
+				},
+				{
+					prop: 'onPageChange',
+					type: '(page: number) => Promise<void>',
+					default: 'undefined',
+					description: 'Async callback triggered when the page changes.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: PaginationSamples
+		},
+		'notification-area': {
+			title: 'Fluid UI - Notification Area',
+			description:
+				'A fixed area for displaying non-intrusive notifications and alerts.',
+			props: [
+				{
+					prop: 'items',
+					type: 'Notification[]',
+					default: '[]',
+					description: 'A bindable array of notification items.'
+				},
+				{
+					prop: 'position',
+					type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'",
+					default: "'top-right'",
+					description: 'The corner of the screen where notifications appear.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: NotificationSamples
 		}
 	}
 };

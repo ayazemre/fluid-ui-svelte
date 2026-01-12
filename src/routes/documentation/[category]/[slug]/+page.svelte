@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { componentRegistry } from '../../../../documentation/registry.js';
-	import { Container, Text, Table } from '$lib/base/index.js';
-	import { Page } from '$lib/components/index.js';
+	import { Container, Text, Table } from '$lib/base';
+	import { Page } from '$lib/components';
 
 	let { data } = $props();
 

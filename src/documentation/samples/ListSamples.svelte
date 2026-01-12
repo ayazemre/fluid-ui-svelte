@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { List, Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { List, Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 
 	const fruitItems = ['Apple', 'Banana', 'Orange'];
@@ -24,10 +24,7 @@
 				{/snippet}
 			</List>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.listUnordered}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.listUnordered} language="svelte" />
 	</Container>
 
 	<!-- Ordered -->
@@ -41,18 +38,13 @@
 				{/snippet}
 			</List>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.listOrdered}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.listOrdered} language="svelte" />
 	</Container>
 
 	<!-- Item Styling -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Item Styling</Text>
-		<Text class="text-sm text-neutral-500"
-			>Styling individual items using the itemClass prop.</Text
-		>
+		<Text class="text-sm text-neutral-500">Styling individual items using the itemClass prop.</Text>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<List
 				items={fruitItems}
@@ -63,17 +55,13 @@
 				{/snippet}
 			</List>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.listItemStyling}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.listItemStyling} language="svelte" />
 	</Container>
 
 	<!-- Complex Objects -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Complex Objects</Text>
-		<Text class="text-sm text-neutral-500"
-			>Rendering objects with custom logic in the snippet.</Text
+		<Text class="text-sm text-neutral-500">Rendering objects with custom logic in the snippet.</Text
 		>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<List items={tasks}>
@@ -84,9 +72,6 @@
 				{/snippet}
 			</List>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.listComplex}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.listComplex} language="svelte" />
 	</Container>
 </Container>

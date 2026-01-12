@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Drawer, CodeBlock } from '$lib/components/index.js';
-	import { Container, Text, Button } from '$lib/base/index.js';
+	import { Drawer, CodeBlock } from '$lib/components';
+	import { Container, Text, Button } from '$lib/base';
 	import { codeBlockContents } from './codeBlockContents.js';
 	import { fade, fly } from 'svelte/transition';
 

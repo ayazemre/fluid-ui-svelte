@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { codeBlockContents } from '../../../documentation/samples/codeBlockContents.js';
-	import { CodeBlock, Page } from '$lib/components/index.js';
-	import { Text, Link, Container } from '$lib/base/index.js';
+	import { CodeBlock, Page } from '$lib/components';
+	import { Text, Link, Container } from '$lib/base';
 </script>
 
 <Page

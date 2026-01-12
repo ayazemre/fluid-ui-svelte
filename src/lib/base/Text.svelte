@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '../utilities/common.js';
+	import { mergeClasses } from '$lib/utilities/common';
 	import type { Snippet } from 'svelte';
 
 	const {

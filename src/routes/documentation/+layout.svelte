@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { Container, Link, Text } from '$lib/base/index.js';
-	import { Accordion, Drawer } from '$lib/components/index.js';
-	import { globalState } from '../globalState.svelte.js';
-	import { mergeClasses } from '$lib/utilities/common.js';
+	import { Container, Link, Text } from '$lib/base';
+	import { Accordion, Drawer } from '$lib/components';
+	import { globalState } from '../globalState.svelte';
+	import { mergeClasses } from '$lib/utilities/common';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { fly, fade } from 'svelte/transition';
-	import { componentRegistry } from '../../documentation/registry.js';
+	import { componentRegistry } from '../../documentation/registry';
 
 	let { children } = $props();
 
 	const base = Object.entries(componentRegistry.base).map(([slug, data]) => ({
 		name: data.title.replace('Fluid UI - ', ''),
 		url: `/documentation/base/${slug}`
-	}));
+	})).sort((a, b) => a.name.localeCompare(b.name));
 
 	const components = Object.entries(componentRegistry.components).map(([slug, data]) => ({
 		name: data.title.replace('Fluid UI - ', ''),
 		url: `/documentation/components/${slug}`
-	}));
+	})).sort((a, b) => a.name.localeCompare(b.name));
 
 	// Close drawer on navigation
 	$effect(() => {
@@ -46,7 +46,7 @@
 		{/snippet}
 
 		{#snippet body()}
-			{#each base.sort((a, b) => a.name.localeCompare(b.name)) as element}
+			{#each base as element}
 				<Link
 					href={element.url}
 					class={mergeClasses(

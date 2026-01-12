@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { InputField, Container, Text } from '$lib/base/index.js';
-	import { CodeBlock } from '$lib/components/index.js';
+	import { InputField, Container, Text } from '$lib/base';
+	import { CodeBlock } from '$lib/components';
 	import { codeBlockContents } from './codeBlockContents.js';
 
 	let textValue = $state('');
 	let passwordValue = $state('');
 	let numericValue = $state('');
+	let textAreaValue = $state('');
 	let errorValue = $state('invalid-email@');
 </script>
 
@@ -18,18 +19,13 @@
 			<InputField placeholder="Enter your name" bind:value={textValue} class="w-full" />
 			<Text class="mt-2 text-sm text-neutral-500">Value: {textValue}</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.inputBasic}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.inputBasic} language="svelte" />
 	</Container>
 
 	<!-- Password -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Password</Text>
-		<Text class="text-sm text-neutral-500"
-			>Secure entry for passwords and sensitive data.</Text
-		>
+		<Text class="text-sm text-neutral-500">Secure entry for passwords and sensitive data.</Text>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<InputField
 				type="password"
@@ -39,18 +35,29 @@
 			/>
 			<Text class="mt-2 text-sm text-neutral-500">Value: {passwordValue}</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.inputPassword}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.inputPassword} language="svelte" />
+	</Container>
+
+	<!-- Textarea -->
+	<Container class="flex flex-col gap-2">
+		<Text type="h3" class="text-lg font-semibold">Textarea</Text>
+		<Text class="text-sm text-neutral-500">Multiline text input for longer messages.</Text>
+		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+			<InputField
+				type="textarea"
+				placeholder="Enter your message..."
+				bind:value={textAreaValue}
+				class="h-32 w-full"
+			/>
+			<Text class="mt-2 text-sm text-neutral-500">Value: {textAreaValue}</Text>
+		</Container>
+		<CodeBlock code={codeBlockContents.inputTextArea} language="svelte" />
 	</Container>
 
 	<!-- Numeric Filter -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Numeric Only</Text>
-		<Text class="text-sm text-neutral-500"
-			>Using characterFilter to restrict input to digits.</Text
-		>
+		<Text class="text-sm text-neutral-500">Using characterFilter to restrict input to digits.</Text>
 		<Container class="rounded-lg border p-6 dark:border-neutral-700">
 			<InputField
 				placeholder="Numbers only..."
@@ -60,10 +67,7 @@
 			/>
 			<Text class="mt-2 text-sm text-neutral-500">Value: {numericValue}</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.inputNumeric}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.inputNumeric} language="svelte" />
 	</Container>
 
 	<!-- Error State -->
@@ -80,9 +84,6 @@
 			/>
 			<Text class="mt-2 text-sm text-neutral-500">Value: {errorValue}</Text>
 		</Container>
-		<CodeBlock
-			code={codeBlockContents.inputError}
-			language="svelte"
-		/>
+		<CodeBlock code={codeBlockContents.inputError} language="svelte" />
 	</Container>
 </Container>
