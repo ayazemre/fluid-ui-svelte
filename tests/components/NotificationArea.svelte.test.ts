@@ -17,8 +17,4 @@ describe('Notification Area', () => {
 		await expect.element(page.getByText('Message 1')).toBeInTheDocument();
 		await expect.element(page.getByText('Message 2')).toBeInTheDocument();
 	});
-
-	test('Removal', async () => {});
-
-	test('Auto-dismiss', async () => {});
 });
