@@ -203,6 +203,35 @@ const inputTextArea = `<InputField
   class="w-full h-32"
 />`;
 
+// --- Form ---
+
+const formBasic = `<script>
+  import { Form, InputField, Button, Container, Text } from 'fluid-ui-svelte/base';
+  let username = $state('');
+<\/script>
+
+<Form class="gap-4">
+  <Container class="flex flex-col gap-2">
+    <Text type="span" class="text-sm font-medium">Username</Text>
+    <InputField bind:value={username} placeholder="Enter username" />
+  </Container>
+
+  <Button
+    type="submit"
+    class="fluid-button-primary"
+    onclick={async (event, buttonState) => {
+      buttonState.inProgress = true;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      buttonState.inProgress = false;
+    }}
+  >
+    {#snippet loadingPlaceholder()}
+      <span>Submitting...</span>
+    {/snippet}
+    Submit
+  </Button>
+</Form>`;
+
 // --- CodeBlock ---
 
 const codeBlockExample = `<script lang="ts">
@@ -218,7 +247,7 @@ const drawerBasicUsage = `<script>
   import { Button, Text } from 'fluid-ui-svelte/base';
 
   let isBasicDrawerOpen = $state(false);
-</script>
+<\/script>
 
 <Button onclick={async () => isBasicDrawerOpen = true}>Open Drawer</Button>
 
@@ -236,7 +265,7 @@ const drawerPositions = `<script>
   let right = $state(false);
   let top = $state(false);
   let bottom = $state(false);
-</script>
+<\/script>
 
 <Button onclick={async () => left = true}>Left</Button>
 <Button onclick={async () => right = true}>Right</Button>
@@ -253,7 +282,7 @@ const drawerAnimated = `<script>
   import { fly, fade } from 'svelte/transition';
   
   let isAnimatedDrawerOpen = $state(false);
-</script>
+<\/script>
 
 <Button onclick={async () => isAnimatedDrawerOpen = true}>Open Animated</Button>
 
@@ -272,7 +301,7 @@ const drawerFlyAnimation = `<script>
   import { fly } from 'svelte/transition';
   
   let isFlyDrawerOpen = $state(false);
-</script>
+<\/script>
 
 <Button onclick={async () => isFlyDrawerOpen = true}>Open Fly Drawer</Button>
 
@@ -298,7 +327,7 @@ const datePickerSingle = `<script>
     date.setMonth(date.getMonth() + increment);
     currentDate = date.toISOString();
   };
-</script>
+<\/script>
 
 <Container class="flex flex-col gap-4">
   <Container class="flex gap-2">
@@ -326,7 +355,7 @@ const datePickerDual = `<script>
     d.setMonth(d.getMonth() + increment);
     baseDate = d.toISOString();
   };
-</script>
+<\/script>
 
 <Container class="flex flex-col gap-4">
   <Container class="flex gap-2">
@@ -356,7 +385,7 @@ const datePickerSixMonth = `<script>
     d.setMonth(d.getMonth() + increment);
     baseDate = d.toISOString();
   };
-</script>
+<\/script>
 
 <Container class="flex flex-col gap-4">
   <Container class="flex gap-2">
@@ -389,7 +418,7 @@ const datePickerRange = `<script>
     d.setMonth(d.getMonth() + inc);
     baseDate = d.toISOString();
   };
-</script>
+<\/script>
 
 <Container class="flex flex-col gap-4">
   <Container class="flex justify-between items-center">
@@ -433,7 +462,7 @@ const datePickerMulti = `<script>
     d.setMonth(d.getMonth() + inc);
     multiCalendarState.currentDate = d.toISOString();
   };
-</script>
+<\/script>
 
 <Container class="flex flex-col gap-4">
   <Container class="flex gap-2">
@@ -460,7 +489,7 @@ const datePickerMulti = `<script>
 const carouselInteractive = `<script>
   import { Carousel } from 'fluid-ui-svelte/components';
   const items = [...];
-</script>
+<\/script>
 
 <Carousel {items} componentId="demo-id">
   {#snippet itemTemplate({ item })}
@@ -474,7 +503,7 @@ const carouselUsage = `<script>
   import { Carousel } from 'fluid-ui-svelte/components';
   const items = [...];
   let activeIndex = $state(0);
-</script>
+<\/script>
 
 <Carousel {items} bind:activeIndex>
   {#snippet itemTemplate({ item, index, internalState })}
@@ -497,7 +526,7 @@ const imageCropBasic = `<script>
     const blob = await response.blob();
     bitmap = await createImageBitmap(blob);
   });
-</script>
+<\/script>
 
 {#if bitmap}
   <ImageCrop sourceImage={bitmap} aspectRatio={{ x: 16, y: 9 }} />
@@ -516,7 +545,7 @@ const imageCropUpload = `<script>
       uploadedBitmap = await createImageBitmap(blob);
     }
   }
-</script>
+<\/script>
 
 <input type="file" accept="image/*" onchange={handleFileChange} />
 
@@ -543,7 +572,7 @@ const imageCropCircle = `<script>
     const blob = await response.blob();
     bitmap = await createImageBitmap(blob);
   });
-</script>
+<\/script>
 
 {#if bitmap}
   <ImageCrop 
@@ -557,7 +586,7 @@ const imageCropCircle = `<script>
 const pageBasic = `<script>
   import { Page } from 'fluid-ui-svelte/components';
   import { Text } from 'fluid-ui-svelte/base';
-</script>
+<\/script>
 
 <Page 
   title="Home" 
@@ -569,7 +598,7 @@ const pageBasic = `<script>
 
 const pageMetadata = `<script>
   import { Page } from 'fluid-ui-svelte/components';
-</script>
+<\/script>
 
 <Page 
   title="My Article" 
@@ -589,7 +618,7 @@ const pageMetadata = `<script>
 const switchBasic = `<script>
   import { Switch } from 'fluid-ui-svelte/components';
   let checked = $state(false);
-</script>
+<\/script>
 
 <Switch 
   bind:checked 
@@ -605,9 +634,9 @@ const switchDisabled = `<Switch disabled onclick={async () => {}} />
 
 const draggableBasic = `<script>
   import { Draggable } from 'fluid-ui-svelte/components';
-</script>
+<\/script>
 
-<Draggable ondragstart={(e) => e.dataTransfer.setData('text/plain', 'Data')}>
+<Draggable ondragstart={(e) => e.dataTransfer.setData('text/plain', 'Data')}> 
   <div>Drag me</div>
 </Draggable>`;
 
@@ -617,7 +646,7 @@ const dropzoneFile = `<script>
   import { Dropzone } from 'fluid-ui-svelte/components';
   
   let droppedFiles = $state<File[]>([]);
-</script>
+<\/script>
 
 <Dropzone bind:data={droppedFiles} mode="file" dropEffect="copy">
   {#snippet children({ isDragOver })}
@@ -644,7 +673,7 @@ const dropzoneData = `<script>
   import { Dropzone } from 'fluid-ui-svelte/components';
   
   let droppedData = $state('');
-</script>
+<\/script>
 
 <Dropzone bind:data={droppedData} mode="text" dropEffect="move">
   {#snippet children({ isDragOver })}
@@ -663,29 +692,123 @@ const dropzoneData = `<script>
   {/snippet}
 </Dropzone>`;
 
-// --- Form ---
+// --- Popover ---
 
+const popoverBasic = `<script>
+  import { Popover } from 'fluid-ui-svelte/components';
+  import { Text } from 'fluid-ui-svelte/base';
+<\/script>
 
+<Popover>
+  {#snippet trigger()}
+    <Text class="bg-primary-500 text-white p-2 rounded-md">Click Me</Text>
+  {/snippet}
+  {#snippet content()}
+    <Text>This is a popover content!</Text>
+  {/snippet}
+</Popover>`;
 
-const formBasic = `<script>
-  import { Form, InputField, Button } from 'fluid-ui-svelte/base';
-  let username = $state('');
-</script>
+const popoverPositions = `<script>
+  import { Popover } from 'fluid-ui-svelte/components';
+  import { Text } from 'fluid-ui-svelte/base';
+<\/script>
 
-<Form
-  onsubmit={async (event, state) => {
-    state.inProgress = true;
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    state.inProgress = false;
-    alert(\`Submitted: \${username}\`);
+<Popover position="top">
+  {#snippet trigger()}
+    <Text class="border border-primary-500 text-primary-500 p-2 rounded-md">Top Popover</Text>
+  {/snippet}
+  {#snippet content()}
+    <Text>Content on top</Text>
+  {/snippet}
+</Popover>
+
+<Popover position="right">
+  {#snippet trigger()}
+    <Text class="border border-primary-500 text-primary-500 p-2 rounded-md">Right Popover</Text>
+  {/snippet}
+  {#snippet content()}
+    <Text>Content on right</Text>
+  {/snippet}
+</Popover>`;
+
+// --- Modal ---
+
+const modalBasic = `<script>
+  import { Modal } from 'fluid-ui-svelte/components';
+  import { Button, Text, Container } from 'fluid-ui-svelte/base';
+
+  let isModalOpen = $state(false);
+<\/script>
+
+<Button onclick={async () => isModalOpen = true}>Open Modal</Button>
+
+<Modal bind:isOpen={isModalOpen}>
+  <Container class="p-6 flex flex-col gap-4">
+    <Text type="h2">Modal Title</Text>
+    <Text>This is a barebone modal component.</Text>
+    <Button onclick={async () => isModalOpen = false}>Close</Button>
+  </Container>
+</Modal>`;
+
+// --- Breadcrumb ---
+
+const breadcrumbBasic = `<script>
+  import { Breadcrumb } from 'fluid-ui-svelte/components';
+
+  const items = [
+    { label: 'Home', href: '/' },
+    { label: 'Components', href: '/documentation/components' },
+    { label: 'Breadcrumb', href: '/documentation/components/breadcrumb' }
+  ];
+<\/script>
+
+<Breadcrumb {items} />`;
+
+const breadcrumbSeparator = `<script>
+  import { Breadcrumb } from 'fluid-ui-svelte/components';
+<\/script>
+
+<Breadcrumb 
+  {items} 
+  separator=">" 
+/>`;
+
+// --- Pagination ---
+
+const paginationBasic = `<script>
+  import { Pagination } from 'fluid-ui-svelte/components';
+
+  let currentPage = $state(1);
+<\/script>
+
+<Pagination 
+  bind:currentPage 
+  totalPages={10} 
+  onPageChange={async (page) => {
+    console.log('Page changed to:', page);
   }}
-  class="gap-4"
->
-  <InputField bind:value={username} placeholder="Username" />
-  <Button type="submit" class="fluid-button-primary">Submit</Button>
-</Form>`;
+/>`;
 
+// --- Notification Area ---
 
+const notificationBasic = `<script>
+  import { NotificationArea } from 'fluid-ui-svelte/components';
+  import { Button } from 'fluid-ui-svelte/base';
+
+  let notifications = $state([]);
+
+  function add() {
+    notifications = [...notifications, {
+      id: Date.now(),
+      message: 'New Notification!',
+      type: 'success',
+      duration: 3000
+    }];
+  }
+<\/script>
+
+<Button onclick={async () => add()}>Notify</Button>
+<NotificationArea bind:items={notifications} position="top-right" />`;
 
 export const codeBlockContents = {
 	gettingStartedAppCss,
@@ -742,5 +865,12 @@ export const codeBlockContents = {
 	switchDisabled,
 	draggableBasic,
 	dropzoneFile,
-	dropzoneData
+	dropzoneData,
+	popoverBasic,
+	popoverPositions,
+	modalBasic,
+	breadcrumbBasic,
+	breadcrumbSeparator,
+	paginationBasic,
+	notificationBasic
 };

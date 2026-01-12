@@ -17,6 +17,11 @@ import PageSamples from './samples/PageSamples.svelte';
 import SwitchSamples from './samples/SwitchSamples.svelte';
 import DraggableSamples from './samples/DraggableSamples.svelte';
 import DropzoneSamples from './samples/DropzoneSamples.svelte';
+import PopoverSamples from './samples/PopoverSamples.svelte';
+import ModalSamples from './samples/ModalSamples.svelte';
+import BreadcrumbSamples from './samples/BreadcrumbSamples.svelte';
+import PaginationSamples from './samples/PaginationSamples.svelte';
+import NotificationSamples from './samples/NotificationSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -105,7 +110,7 @@ export const componentRegistry = {
 		form: {
 			title: 'Fluid UI - Form',
 			description:
-				'The Form component is a thin wrapper around the HTML <form> element, providing easy access to submission state and preventing default browser behavior.',
+				'The Form component is a thin wrapper around the HTML <form> element that automatically prevents default browser submission behavior.',
 			props: [
 				{
 					prop: 'class',
@@ -958,6 +963,226 @@ export const componentRegistry = {
 				}
 			],
 			sampleComponent: DropzoneSamples
+		},
+		popover: {
+			title: 'Fluid UI - Popover',
+			description:
+				'A dynamic and flexible popover component used for dropdowns, tooltips, and contextual menus.',
+			props: [
+				{
+					prop: 'trigger',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Snippet for the element that triggers the popover.'
+				},
+				{
+					prop: 'content',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Snippet for the content displayed inside the popover.'
+				},
+				{
+					prop: 'isOpen',
+					type: 'boolean',
+					default: 'false',
+					description: 'Controls the visibility of the popover. Supports $bindable.'
+				},
+				{
+					prop: 'position',
+					type: "'top' | 'bottom' | 'left' | 'right'",
+					default: "'bottom'",
+					description: 'The preferred position of the popover relative to the trigger.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				},
+				{
+					prop: 'transitionFn',
+					type: 'function',
+					default: 'fade',
+					description: 'Svelte transition function for the popover content.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: '{ duration: 150 }',
+					description: 'Parameters for the transition function.'
+				}
+			],
+			sampleComponent: PopoverSamples
+		},
+		modal: {
+			title: 'Fluid UI - Modal',
+			description:
+				'A barebone centered modal component for critical actions or information.',
+			props: [
+				{
+					prop: 'isOpen',
+					type: 'boolean',
+					default: 'false',
+					description: 'Controls the visibility of the modal. Supports $bindable.'
+				},
+				{
+					prop: 'closeOnBackdropClick',
+					type: 'boolean',
+					default: 'true',
+					description: 'Whether clicking the backdrop closes the modal.'
+				},
+				{
+					prop: 'scrollLock',
+					type: 'boolean',
+					default: 'true',
+					description: 'Whether to lock body scroll when the modal is open.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				},
+				{
+					prop: 'transitionFn',
+					type: 'function',
+					default: 'scale',
+					description: 'Svelte transition function for the modal panel.'
+				},
+				{
+					prop: 'transitionParams',
+					type: 'object',
+					default: "{ duration: 200, start: 0.95 }",
+					description: 'Parameters for the panel transition.'
+				},
+				{
+					prop: 'backdropTransitionFn',
+					type: 'function',
+					default: 'fade',
+					description: 'Svelte transition function for the backdrop.'
+				},
+				{
+					prop: 'backdropTransitionParams',
+					type: 'object',
+					default: "{ duration: 200 }",
+					description: 'Parameters for the backdrop transition.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'required',
+					description: 'The content of the modal.'
+				}
+			],
+			sampleComponent: ModalSamples
+		},
+		breadcrumb: {
+			title: 'Fluid UI - Breadcrumb',
+			description:
+				'A navigation aid that allows users to keep track of their location within programs, documents, or websites.',
+			props: [
+				{
+					prop: 'items',
+					type: 'Array<{ label: string; href: string }>',
+					default: '[]',
+					description: 'An array of breadcrumb items.'
+				},
+				{
+					prop: 'separator',
+					type: 'string | Snippet',
+					default: "'/'",
+					description: 'The separator element between items.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: BreadcrumbSamples
+		},
+		pagination: {
+			title: 'Fluid UI - Pagination',
+			description:
+				'A component for navigating through a series of related content across multiple pages.',
+			props: [
+				{
+					prop: 'currentPage',
+					type: 'number',
+					default: '1',
+					description: 'The currently active page. Supports $bindable.'
+				},
+				{
+					prop: 'totalPages',
+					type: 'number',
+					default: '1',
+					description: 'The total number of pages.'
+				},
+				{
+					prop: 'onPageChange',
+					type: '(page: number) => Promise<void>',
+					default: 'undefined',
+					description: 'Async callback triggered when the page changes.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: PaginationSamples
+		},
+		'notification-area': {
+			title: 'Fluid UI - Notification Area',
+			description:
+				'A fixed area for displaying non-intrusive notifications and alerts.',
+			props: [
+				{
+					prop: 'items',
+					type: 'Notification[]',
+					default: '[]',
+					description: 'A bindable array of notification items.'
+				},
+				{
+					prop: 'position',
+					type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'",
+					default: "'top-right'",
+					description: 'The corner of the screen where notifications appear.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: NotificationSamples
 		}
 	}
 };

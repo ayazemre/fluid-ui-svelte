@@ -301,6 +301,46 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 | `variant`      | `string`                                                 | `''`    | Applied as `fluid-dropzone-{variant}`.           |
 | `componentId`  | `string`                                                 | `''`    | ID applied to the main container.                |
 
+#### `Popover`
+
+**Description**: A dynamic and flexible popover component used for dropdowns, tooltips, and contextual menus.
+
+**Import Path**: `import { Popover } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop               | Type                                     | Default               | Description                                                  |
+| :----------------- | :--------------------------------------- | :-------------------- | :----------------------------------------------------------- |
+| `trigger`          | `Snippet`                                | **Required**          | Snippet for the element that triggers the popover.           |
+| `content`          | `Snippet`                                | **Required**          | Snippet for the content displayed inside the popover.        |
+| `isOpen`           | `boolean`                                | `false`               | Controls the visibility of the popover (bindable).           |
+| `position`         | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`            | The preferred position of the popover relative to the trigger.|
+| `variant`          | `string`                                 | `''`                  | Applied as `fluid-popover-{variant}`.                        |
+| `componentId`      | `string`                                 | `crypto.randomUUID()` | Unique ID for the component.                                 |
+| `transitionFn`     | `function`                               | `fade`                | Svelte transition function for the popover content.          |
+| `transitionParams` | `object`                                 | `{ duration: 150 }`   | Parameters for the transition function.                      |
+
+#### `Modal`
+
+**Description**: A barebone centered modal component for critical actions or information.
+
+**Import Path**: `import { Modal } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop                       | Type                                                | Default                    | Description                                           |
+| :------------------------- | :-------------------------------------------------- | :------------------------- | :---------------------------------------------------- |
+| `isOpen`                   | `boolean`                                           | `false`                    | Controls the visibility of the modal (bindable).      |
+| `closeOnBackdropClick`     | `boolean`                                           | `true`                     | Whether clicking the backdrop closes the modal.       |
+| `scrollLock`               | `boolean`                                           | `true`                     | Whether to lock body scroll when the modal is open.   |
+| `variant`                  | `string`                                            | `''`                       | Applied as `fluid-modal-{variant}`.                   |
+| `componentId`              | `string`                                            | `crypto.randomUUID()`      | Unique ID for the component.                          |
+| `transitionFn`             | `(node: Element, params?: any) => TransitionConfig` | `scale`                    | Svelte transition function for the modal panel.       |
+| `transitionParams`         | `object`                                            | `{duration: 200, start: 0.95}` | Parameters for the panel transition.                  |
+| `backdropTransitionFn`     | `(node: Element, params?: any) => TransitionConfig` | `fade`                     | Svelte transition function for the backdrop.          |
+| `backdropTransitionParams` | `object`                                            | `{duration: 200}`          | Parameters for the backdrop transition.               |
+| `children`                 | `Snippet`                                           | **Required**               | The content of the modal.                             |
+
 #### `ImageCrop`
 
 **Description**: A component for cropping images with zoom and pan support.

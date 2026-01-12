@@ -99,7 +99,7 @@
 				GitHub
 			</Button>
 		</Container>
-		<Text class="absolute bottom-4 text-sm text-neutral-400"
+		<Text class="absolute bottom-4 text-sm text-neutral-400!"
 			>{'© Fluid UI ' + new Date().getFullYear()}</Text
 		>
 	</Container>

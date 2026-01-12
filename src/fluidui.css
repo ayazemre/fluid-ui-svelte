@@ -304,3 +304,80 @@ main.fluid-container {
 .fluid-switch-button.checked {
 	@apply bg-primary-600;
 }
+
+/* Popover ------------------------- */
+.fluid-popover-container {
+	@apply relative inline-block;
+}
+.fluid-popover-content {
+	@apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+}
+.fluid-popover-top {
+	@apply bottom-full left-1/2 mb-2 -translate-x-1/2;
+}
+.fluid-popover-bottom {
+	@apply left-1/2 top-full mt-2 -translate-x-1/2;
+}
+.fluid-popover-left {
+	@apply right-full top-1/2 mr-2 -translate-y-1/2;
+}
+.fluid-popover-right {
+	@apply left-full top-1/2 ml-2 -translate-y-1/2;
+}
+
+/* Modal --------------------------- */
+.fluid-modal-container {
+	@apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
+}
+.fluid-modal-panel {
+	@apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
+}
+
+/* Breadcrumb ---------------------- */
+.fluid-breadcrumb-container {
+	@apply flex items-center gap-2 text-sm;
+}
+.fluid-breadcrumb-list {
+	@apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
+}
+.fluid-breadcrumb-item {
+	@apply flex items-center gap-2;
+}
+.fluid-breadcrumb-separator {
+	@apply text-neutral-400 select-none;
+}
+
+/* Pagination ---------------------- */
+.fluid-pagination-container {
+	@apply flex items-center gap-1;
+}
+.fluid-pagination-button {
+	@apply min-w-[2.5rem] h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.fluid-pagination-button-active {
+	@apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+}
+
+/* Notification Area --------------- */
+.fluid-notification-area {
+	@apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
+}
+.fluid-notification-area-top-right { @apply top-0 right-0; }
+.fluid-notification-area-top-left { @apply top-0 left-0; }
+.fluid-notification-area-bottom-right { @apply bottom-0 right-0 flex-col-reverse; }
+.fluid-notification-area-bottom-left { @apply bottom-0 left-0 flex-col-reverse; }
+
+.fluid-notification {
+	@apply pointer-events-auto min-w-[300px] max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
+}
+.fluid-notification-success { @apply border-l-4 border-l-success-500; }
+.fluid-notification-error { @apply border-l-4 border-l-error-500; }
+.fluid-notification-warning { @apply border-l-4 border-l-warning-500; }
+.fluid-notification-info { @apply border-l-4 border-l-info-500; }
+
+.fluid-notification-content {
+	@apply flex-1;
+}
+.fluid-notification-close {
+	@apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
+}
