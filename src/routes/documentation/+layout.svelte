@@ -10,15 +10,19 @@
 
 	let { children } = $props();
 
-	const base = Object.entries(componentRegistry.base).map(([slug, data]) => ({
-		name: data.title.replace('Fluid UI - ', ''),
-		url: `/documentation/base/${slug}`
-	})).sort((a, b) => a.name.localeCompare(b.name));
+	const base = Object.entries(componentRegistry.base)
+		.map(([slug, data]) => ({
+			name: data.title.replace('Fluid UI - ', ''),
+			url: `/documentation/base/${slug}`
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 
-	const components = Object.entries(componentRegistry.components).map(([slug, data]) => ({
-		name: data.title.replace('Fluid UI - ', ''),
-		url: `/documentation/components/${slug}`
-	})).sort((a, b) => a.name.localeCompare(b.name));
+	const components = Object.entries(componentRegistry.components)
+		.map(([slug, data]) => ({
+			name: data.title.replace('Fluid UI - ', ''),
+			url: `/documentation/components/${slug}`
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 
 	// Close drawer on navigation
 	$effect(() => {
@@ -49,6 +53,7 @@
 			{#each base as element}
 				<Link
 					href={element.url}
+					overrideDefaultStyling
 					class={mergeClasses(
 						page.url.pathname == element.url ? 'active' : '',
 						'fluid-sidebar-link p-2 text-left'
