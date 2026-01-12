@@ -42,12 +42,11 @@
 				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
 			>
 				<Carousel {items} componentId="h-1-default" visibleItemCount={1}>
-					{#snippet itemTemplate(item)}
-						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-						</Container>
-					{/snippet}
-				</Carousel>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -91,12 +90,11 @@
 					visibleItemCount={h_multi_count}
 					snapItems={true}
 				>
-					{#snippet itemTemplate(item)}
-						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-						</Container>
-					{/snippet}
-				</Carousel>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -110,12 +108,11 @@
 				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
 			>
 				<Carousel {items} componentId="h-free-scroll" visibleItemCount={2.5} snapItems={false}>
-					{#snippet itemTemplate(item)}
-						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-						</Container>
-					{/snippet}
-				</Carousel>
+					                    {#snippet itemTemplate({ item })}
+					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+					                        </Container>
+					                    {/snippet}				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -137,7 +134,7 @@
 				class="h-64 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
 			>
 				<Carousel {items} orientation="vertical" componentId="v-1-default" visibleItemCount={1}>
-					{#snippet itemTemplate(item)}
+					{#snippet itemTemplate({ item })}
 						<Container
 							class="flex h-full w-full items-center justify-center {item.color} text-white"
 						>
@@ -188,7 +185,7 @@
 					visibleItemCount={v_multi_count}
 					snapItems={true}
 				>
-					{#snippet itemTemplate(item)}
+					{#snippet itemTemplate({ item })}
 						<Container
 							class="flex h-full w-full items-center justify-center {item.color} text-white"
 						>
@@ -214,7 +211,7 @@
 					visibleItemCount={2.5}
 					snapItems={false}
 				>
-					{#snippet itemTemplate(item)}
+					{#snippet itemTemplate({ item })}
 						<Container
 							class="flex h-full w-full items-center justify-center {item.color} text-white"
 						>

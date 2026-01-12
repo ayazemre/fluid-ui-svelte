@@ -687,116 +687,60 @@ const formBasic = `<script>
 
 
 
-export const codeBlockContents = { 
-
-  gettingStartedAppCss, 
-
-  gettingStartedUsage,
-
-  buttonPrimary,
-
-  buttonSecondary,
-
-  buttonOutline,
-
-  buttonTransparent,
-
-  buttonIcon,
-
-  accordionStandard,
-
-  accordionCustom,
-
-  containerHeader,
-
-  containerNav,
-
-  containerSection,
-
-  containerFooter,
-
-  imageStandard,
-
-  imageLoading,
-
-  linkStandard,
-
-  linkCustom,
-
-  listUnordered,
-
-  listOrdered,
-
-  listItemStyling,
-
-  listComplex,
-
-  tableStandard,
-
-  tableStyled,
-
-  textHeadings,
-
-  textInline,
-
-  textCode,
-
-  textSemantic,
-
-  inputBasic,
-
-  inputPassword,
-
-  inputNumeric,
-
-  inputError,
-
-  inputTextArea,
-
-  formBasic,
-
-  codeBlockExample,
-
-  drawerBasicUsage,
-
-  drawerPositions,
-
-  drawerAnimated,
-
-  drawerFlyAnimation,
-
-  calendarSingle,
-
-  calendarDual,
-
-  calendarSixMonth,
-
-  calendarRange,
-
-  calendarMulti,
-
-  carouselInteractive,
-
-  carouselUsage,
-
-  imageCropBasic,
-
-  imageCropUpload,
-
-  imageCropCircle,
-
-  pageBasic,
-
-  pageMetadata,
-
-  switchBasic,
-
-  switchDisabled,
-
-  draggableBasic,
-
-  dropzoneFile,
-
-  dropzoneData
-
+export const codeBlockContents = {
+	gettingStartedAppCss,
+	gettingStartedUsage,
+	buttonPrimary,
+	buttonSecondary,
+	buttonOutline,
+	buttonTransparent,
+	buttonIcon,
+	accordionStandard,
+	accordionCustom,
+	containerHeader,
+	containerNav,
+	containerSection,
+	containerFooter,
+	imageStandard,
+	imageLoading,
+	linkStandard,
+	linkCustom,
+	listUnordered,
+	listOrdered,
+	listItemStyling,
+	listComplex,
+	tableStandard,
+	tableStyled,
+	textHeadings,
+	textInline,
+	textCode,
+	textSemantic,
+	inputBasic,
+	inputPassword,
+	inputNumeric,
+	inputError,
+	inputTextArea,
+	formBasic,
+	codeBlockExample,
+	drawerBasicUsage,
+	drawerPositions,
+	drawerAnimated,
+	drawerFlyAnimation,
+	datePickerSingle,
+	datePickerDual,
+	datePickerSixMonth,
+	datePickerRange,
+	datePickerMulti,
+	carouselInteractive,
+	carouselUsage,
+	imageCropBasic,
+	imageCropUpload,
+	imageCropCircle,
+	pageBasic,
+	pageMetadata,
+	switchBasic,
+	switchDisabled,
+	draggableBasic,
+	dropzoneFile,
+	dropzoneData
 };

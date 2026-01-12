@@ -1,7 +1,6 @@
 import AccordionSamples from './samples/AccordionSamples.svelte';
 import ButtonSamples from './samples/ButtonSamples.svelte';
 import DatePickerSamples from './samples/DatePickerSamples.svelte';
-import CalendarSamples from './samples/CalendarSamples.svelte';
 import CarouselSamples from './samples/CarouselSamples.svelte';
 import CodeBlockSamples from './samples/CodeBlockSamples.svelte';
 import ContainerSamples from './samples/ContainerSamples.svelte';

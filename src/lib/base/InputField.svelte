@@ -14,7 +14,7 @@
 	}: {
 		class?: string;
 		type?: 'text' | 'password' | 'textarea';
-		value: string;
+		value?: string;
 		characterFilter?: Array<string>;
 		overrideDefaultStyling?: boolean;
 	} & Omit<HTMLInputAttributes, 'value' | 'type'> &
