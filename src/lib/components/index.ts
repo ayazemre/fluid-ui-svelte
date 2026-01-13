@@ -13,3 +13,4 @@ export { default as Modal } from './Modal.svelte';
 export { default as Breadcrumb } from './Breadcrumb.svelte';
 export { default as Pagination } from './Pagination.svelte';
 export { default as NotificationArea } from './NotificationArea.svelte';
+export { default as Skeleton } from './Skeleton.svelte';

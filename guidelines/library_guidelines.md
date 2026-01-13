@@ -67,11 +67,11 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                     | Type                   | Default      | Description                                            |
-| :----------------------- | :--------------------- | :----------- | :----------------------------------------------------- |
-| `children`               | `Snippet`              | **Required** | The form content.                                      |
-| `overrideDefaultStyling` | `boolean`              | `false`      | If `true`, removes the base `fluid-form` class.        |
-| `...rest`                | `HTMLFormAttributes`   | `—`          | All other standard `<form>` attributes passed through. |
+| Prop                     | Type                 | Default      | Description                                            |
+| :----------------------- | :------------------- | :----------- | :----------------------------------------------------- |
+| `children`               | `Snippet`            | **Required** | The form content.                                      |
+| `overrideDefaultStyling` | `boolean`            | `false`      | If `true`, removes the base `fluid-form` class.        |
+| `...rest`                | `HTMLFormAttributes` | `—`          | All other standard `<form>` attributes passed through. |
 
 #### `Image`
 
@@ -96,14 +96,14 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                     | Type                               | Default     | Description                                                           |
-| :----------------------- | :--------------------------------- | :---------- | :-------------------------------------------------------------------- |
-| `value`                  | `string`                           | `''`        | The input field value (bindable).                                     |
+| Prop                     | Type                                 | Default     | Description                                                           |
+| :----------------------- | :----------------------------------- | :---------- | :-------------------------------------------------------------------- |
+| `value`                  | `string`                             | `''`        | The input field value (bindable).                                     |
 | `type`                   | `'text' \| 'password' \| 'textarea'` | `'text'`    | The input field type.                                                 |
-| `characterFilter`        | `Array<string>`                    | `undefined` | Array of characters to allow. Filters input to only these characters. |
-| `overrideDefaultStyling` | `boolean`                          | `false`     | If `true`, removes the base `fluid-input-field` class.                |
-| `oninput`                | `(event) => void`                  | `undefined` | Custom input event handler.                                           |
-| `...rest`                | `HTMLInputAttributes`               | `—`         | All other standard `<input>` attributes are passed through.           |
+| `characterFilter`        | `Array<string>`                      | `undefined` | Array of characters to allow. Filters input to only these characters. |
+| `overrideDefaultStyling` | `boolean`                            | `false`     | If `true`, removes the base `fluid-input-field` class.                |
+| `oninput`                | `(event) => void`                    | `undefined` | Custom input event handler.                                           |
+| `...rest`                | `HTMLInputAttributes`                | `—`         | All other standard `<input>` attributes are passed through.           |
 
 #### `Link`
 
@@ -128,14 +128,14 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                     | Type                 | Default      | Description                                            |
-| :----------------------- | :------------------- | :----------- | :----------------------------------------------------- |
-| `type`                   | `'ul' \| 'ol'`       | `'ul'`       | The list element type.                                 |
-| `items`                  | `Array<T>`           | `[]`         | Data array to iterate over.                            |
-| `itemTemplate`           | `Snippet<[T, number]>` | **Required** | Svelte Snippet to render for each item. Receives index.|
-| `itemClass`              | `string`             | `''`         | CSS class applied to individual `<li>` elements.       |
-| `overrideDefaultStyling` | `boolean`            | `false`      | If `true`, removes the base `fluid-*` classes.         |
-| `...rest`                | `HTMLListAttributes` | `—`          | All other standard list attributes are passed through. |
+| Prop                     | Type                   | Default      | Description                                             |
+| :----------------------- | :--------------------- | :----------- | :------------------------------------------------------ |
+| `type`                   | `'ul' \| 'ol'`         | `'ul'`       | The list element type.                                  |
+| `items`                  | `Array<T>`             | `[]`         | Data array to iterate over.                             |
+| `itemTemplate`           | `Snippet<[T, number]>` | **Required** | Svelte Snippet to render for each item. Receives index. |
+| `itemClass`              | `string`               | `''`         | CSS class applied to individual `<li>` elements.        |
+| `overrideDefaultStyling` | `boolean`              | `false`      | If `true`, removes the base `fluid-*` classes.          |
+| `...rest`                | `HTMLListAttributes`   | `—`          | All other standard list attributes are passed through.  |
 
 #### `Table`
 
@@ -145,22 +145,22 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                     | Type                 | Default      | Description                                            |
-| :----------------------- | :------------------- | :----------- | :----------------------------------------------------- |
-| `caption`                | `string`             | `''`         | Optional table caption.                                |
-| `tableHeadItems`         | `Array<T>`           | **Required** | Data for the header row.                               |
-| `tableRowItems`          | `Array<Array<U>>`    | **Required** | Data for the body rows.                                |
-| `tableFooterItems`       | `Array<V>`           | **Required** | Data for the footer row.                               |
-| `headTemplate`           | `Snippet<[T]>`       | **Required** | Snippet for header cells.                              |
-| `bodyTemplate`           | `Snippet<[U]>`       | **Required** | Snippet for body cells.                                |
-| `footerTemplate`         | `Snippet<[V]>`       | **Required** | Snippet for footer cells.                              |
-| `captionClass`           | `string`             | `''`         | CSS class for caption.                                 |
-| `headClass`              | `string`             | `''`         | CSS class for thead.                                   |
-| `bodyClass`              | `string`             | `''`         | CSS class for tbody.                                   |
-| `rowClass`               | `string`             | `''`         | CSS class for tr.                                      |
-| `cellClass`              | `string`             | `''`         | CSS class for th/td.                                   |
-| `footerClass`            | `string`             | `''`         | CSS class for tfoot.                                   |
-| `overrideDefaultStyling` | `boolean`            | `false`      | If `true`, removes the base `fluid-table` classes.     |
+| Prop                     | Type              | Default      | Description                                        |
+| :----------------------- | :---------------- | :----------- | :------------------------------------------------- |
+| `caption`                | `string`          | `''`         | Optional table caption.                            |
+| `tableHeadItems`         | `Array<T>`        | **Required** | Data for the header row.                           |
+| `tableRowItems`          | `Array<Array<U>>` | **Required** | Data for the body rows.                            |
+| `tableFooterItems`       | `Array<V>`        | **Required** | Data for the footer row.                           |
+| `headTemplate`           | `Snippet<[T]>`    | **Required** | Snippet for header cells.                          |
+| `bodyTemplate`           | `Snippet<[U]>`    | **Required** | Snippet for body cells.                            |
+| `footerTemplate`         | `Snippet<[V]>`    | **Required** | Snippet for footer cells.                          |
+| `captionClass`           | `string`          | `''`         | CSS class for caption.                             |
+| `headClass`              | `string`          | `''`         | CSS class for thead.                               |
+| `bodyClass`              | `string`          | `''`         | CSS class for tbody.                               |
+| `rowClass`               | `string`          | `''`         | CSS class for tr.                                  |
+| `cellClass`              | `string`          | `''`         | CSS class for th/td.                               |
+| `footerClass`            | `string`          | `''`         | CSS class for tfoot.                               |
+| `overrideDefaultStyling` | `boolean`         | `false`      | If `true`, removes the base `fluid-table` classes. |
 
 #### `Text`
 
@@ -204,15 +204,15 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop              | Type       | Default                    | Description                                      |
-| :---------------- | :--------- | :------------------------- | :----------------------------------------------- |
-| `variant`         | `string`   | `''`                       | Applied as `fluid-calendar-{variant}`.           |
-| `componentId`     | `string`   | `undefined`                | ID applied to the main container.                |
-| `currentDate`     | `string`   | Current date in ISO format | The date to display (ISO 8601 string).           |
-| `startDate`       | `string`   | `undefined`                | Selected start date (bindable).                  |
-| `endDate`         | `string`   | `undefined`                | Selected end date (bindable).                    |
-| `weekDays`        | `string[]` | `['Mon', 'Tue', ...]`      | Array of week day names to display in the header.|
-| `hideRollingDays` | `boolean`  | `false`                    | If `true`, hides days from previous/next months. |
+| Prop              | Type       | Default                    | Description                                       |
+| :---------------- | :--------- | :------------------------- | :------------------------------------------------ |
+| `variant`         | `string`   | `''`                       | Applied as `fluid-calendar-{variant}`.            |
+| `componentId`     | `string`   | `undefined`                | ID applied to the main container.                 |
+| `currentDate`     | `string`   | Current date in ISO format | The date to display (ISO 8601 string).            |
+| `startDate`       | `string`   | `undefined`                | Selected start date (bindable).                   |
+| `endDate`         | `string`   | `undefined`                | Selected end date (bindable).                     |
+| `weekDays`        | `string[]` | `['Mon', 'Tue', ...]`      | Array of week day names to display in the header. |
+| `hideRollingDays` | `boolean`  | `false`                    | If `true`, hides days from previous/next months.  |
 
 #### `Carousel`
 
@@ -222,18 +222,18 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop               | Type                                     | Default               | Description                                                                 |
-| :----------------- | :--------------------------------------- | :-------------------- | :-------------------------------------------------------------------------- |
-| `componentId`      | `string`                                 | `crypto.randomUUID()` | Unique ID for the carousel (required for internal logic).                   |
-| `variant`          | `string`                                 | `''`                  | Applied as `fluid-carousel-{variant}`.                                      |
-| `orientation`      | `'horizontal' \| 'vertical'`             | `'horizontal'`        | Scroll direction.                                                           |
-| `snapItems`        | `boolean`                                | `true`                | If `true`, snaps items to center/start on scroll end.                       |
-| `activeIndex`      | `number`                                 | `0`                   | Index of the currently visible item (bindable).                             |
-| `autoplay`         | `boolean`                                | `false`               | Enables automatic scrolling.                                                |
-| `autoplayDuration` | `number`                                 | `1000`                | Duration in ms between autoplay slides.                                     |
-| `visibleItemCount` | `number`                                 | `1`                   | Number of items visible at once.                                            |
-| `items`            | `Array<T>`                               | **Required**          | Array of data items to render.                                              |
-| `itemTemplate`     | `Snippet<[{ item: T; index: number }]>`  | **Required**          | Snippet for rendering each item. Receives `{ item, index }`.                |
+| Prop               | Type                                    | Default               | Description                                                  |
+| :----------------- | :-------------------------------------- | :-------------------- | :----------------------------------------------------------- |
+| `componentId`      | `string`                                | `crypto.randomUUID()` | Unique ID for the carousel (required for internal logic).    |
+| `variant`          | `string`                                | `''`                  | Applied as `fluid-carousel-{variant}`.                       |
+| `orientation`      | `'horizontal' \| 'vertical'`            | `'horizontal'`        | Scroll direction.                                            |
+| `snapItems`        | `boolean`                               | `true`                | If `true`, snaps items to center/start on scroll end.        |
+| `activeIndex`      | `number`                                | `0`                   | Index of the currently visible item (bindable).              |
+| `autoplay`         | `boolean`                               | `false`               | Enables automatic scrolling.                                 |
+| `autoplayDuration` | `number`                                | `1000`                | Duration in ms between autoplay slides.                      |
+| `visibleItemCount` | `number`                                | `1`                   | Number of items visible at once.                             |
+| `items`            | `Array<T>`                              | **Required**          | Array of data items to render.                               |
+| `itemTemplate`     | `Snippet<[{ item: T; index: number }]>` | **Required**          | Snippet for rendering each item. Receives `{ item, index }`. |
 
 #### `CodeBlock`
 
@@ -259,12 +259,12 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop           | Type                        | Default | Description                                      |
-| :------------- | :-------------------------- | :------ | :----------------------------------------------- |
-| `children`     | `Snippet`                   | **Req** | Content to make draggable.                       |
-| `ondragstart`  | `(event: DragEvent) => void`| `—`     | Callback when dragging starts.                   |
-| `variant`      | `string`                    | `''`    | Applied as `fluid-draggable-{variant}`.          |
-| `componentId`  | `string`                    | `''`    | ID applied to the main container.                |
+| Prop          | Type                         | Default | Description                             |
+| :------------ | :--------------------------- | :------ | :-------------------------------------- |
+| `children`    | `Snippet`                    | **Req** | Content to make draggable.              |
+| `ondragstart` | `(event: DragEvent) => void` | `—`     | Callback when dragging starts.          |
+| `variant`     | `string`                     | `''`    | Applied as `fluid-draggable-{variant}`. |
+| `componentId` | `string`                     | `''`    | ID applied to the main container.       |
 
 #### `Drawer`
 
@@ -292,14 +292,14 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop           | Type                                                     | Default | Description                                      |
-| :------------- | :------------------------------------------------------- | :------ | :----------------------------------------------- |
-| `data`         | `File[] \| string`                                       | `—`     | Dropped data result (bindable).                  |
-| `children`     | `Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>` | **Req** | Content to render inside the zone.               |
-| `mode`         | `'file' \| 'text'`                                       | `'file'`| Accept mode.                                     |
-| `dropEffect`   | `'copy' \| 'move' \| 'link' \| 'none'`                   | `'copy'`| Visual feedback for drag operation.              |
-| `variant`      | `string`                                                 | `''`    | Applied as `fluid-dropzone-{variant}`.           |
-| `componentId`  | `string`                                                 | `''`    | ID applied to the main container.                |
+| Prop          | Type                                                     | Default  | Description                            |
+| :------------ | :------------------------------------------------------- | :------- | :------------------------------------- |
+| `data`        | `File[] \| string`                                       | `—`      | Dropped data result (bindable).        |
+| `children`    | `Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>` | **Req**  | Content to render inside the zone.     |
+| `mode`        | `'file' \| 'text'`                                       | `'file'` | Accept mode.                           |
+| `dropEffect`  | `'copy' \| 'move' \| 'link' \| 'none'`                   | `'copy'` | Visual feedback for drag operation.    |
+| `variant`     | `string`                                                 | `''`     | Applied as `fluid-dropzone-{variant}`. |
+| `componentId` | `string`                                                 | `''`     | ID applied to the main container.      |
 
 #### `Popover`
 
@@ -309,16 +309,16 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop               | Type                                     | Default               | Description                                                  |
-| :----------------- | :--------------------------------------- | :-------------------- | :----------------------------------------------------------- |
-| `trigger`          | `Snippet`                                | **Required**          | Snippet for the element that triggers the popover.           |
-| `content`          | `Snippet`                                | **Required**          | Snippet for the content displayed inside the popover.        |
-| `isOpen`           | `boolean`                                | `false`               | Controls the visibility of the popover (bindable).           |
-| `position`         | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`            | The preferred position of the popover relative to the trigger.|
-| `variant`          | `string`                                 | `''`                  | Applied as `fluid-popover-{variant}`.                        |
-| `componentId`      | `string`                                 | `crypto.randomUUID()` | Unique ID for the component.                                 |
-| `transitionFn`     | `function`                               | `fade`                | Svelte transition function for the popover content.          |
-| `transitionParams` | `object`                                 | `{ duration: 150 }`   | Parameters for the transition function.                      |
+| Prop               | Type                                     | Default               | Description                                                    |
+| :----------------- | :--------------------------------------- | :-------------------- | :------------------------------------------------------------- |
+| `trigger`          | `Snippet`                                | **Required**          | Snippet for the element that triggers the popover.             |
+| `content`          | `Snippet`                                | **Required**          | Snippet for the content displayed inside the popover.          |
+| `isOpen`           | `boolean`                                | `false`               | Controls the visibility of the popover (bindable).             |
+| `position`         | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`            | The preferred position of the popover relative to the trigger. |
+| `variant`          | `string`                                 | `''`                  | Applied as `fluid-popover-{variant}`.                          |
+| `componentId`      | `string`                                 | `crypto.randomUUID()` | Unique ID for the component.                                   |
+| `transitionFn`     | `function`                               | `fade`                | Svelte transition function for the popover content.            |
+| `transitionParams` | `object`                                 | `{ duration: 150 }`   | Parameters for the transition function.                        |
 
 #### `Modal`
 
@@ -328,18 +328,18 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop                       | Type                                                | Default                    | Description                                           |
-| :------------------------- | :-------------------------------------------------- | :------------------------- | :---------------------------------------------------- |
-| `isOpen`                   | `boolean`                                           | `false`                    | Controls the visibility of the modal (bindable).      |
-| `closeOnBackdropClick`     | `boolean`                                           | `true`                     | Whether clicking the backdrop closes the modal.       |
-| `scrollLock`               | `boolean`                                           | `true`                     | Whether to lock body scroll when the modal is open.   |
-| `variant`                  | `string`                                            | `''`                       | Applied as `fluid-modal-{variant}`.                   |
-| `componentId`              | `string`                                            | `crypto.randomUUID()`      | Unique ID for the component.                          |
-| `transitionFn`             | `(node: Element, params?: any) => TransitionConfig` | `scale`                    | Svelte transition function for the modal panel.       |
-| `transitionParams`         | `object`                                            | `{duration: 200, start: 0.95}` | Parameters for the panel transition.                  |
-| `backdropTransitionFn`     | `(node: Element, params?: any) => TransitionConfig` | `fade`                     | Svelte transition function for the backdrop.          |
-| `backdropTransitionParams` | `object`                                            | `{duration: 200}`          | Parameters for the backdrop transition.               |
-| `children`                 | `Snippet`                                           | **Required**               | The content of the modal.                             |
+| Prop                       | Type                                                | Default                        | Description                                         |
+| :------------------------- | :-------------------------------------------------- | :----------------------------- | :-------------------------------------------------- |
+| `isOpen`                   | `boolean`                                           | `false`                        | Controls the visibility of the modal (bindable).    |
+| `closeOnBackdropClick`     | `boolean`                                           | `true`                         | Whether clicking the backdrop closes the modal.     |
+| `scrollLock`               | `boolean`                                           | `true`                         | Whether to lock body scroll when the modal is open. |
+| `variant`                  | `string`                                            | `''`                           | Applied as `fluid-modal-{variant}`.                 |
+| `componentId`              | `string`                                            | `crypto.randomUUID()`          | Unique ID for the component.                        |
+| `transitionFn`             | `(node: Element, params?: any) => TransitionConfig` | `scale`                        | Svelte transition function for the modal panel.     |
+| `transitionParams`         | `object`                                            | `{duration: 200, start: 0.95}` | Parameters for the panel transition.                |
+| `backdropTransitionFn`     | `(node: Element, params?: any) => TransitionConfig` | `fade`                         | Svelte transition function for the backdrop.        |
+| `backdropTransitionParams` | `object`                                            | `{duration: 200}`              | Parameters for the backdrop transition.             |
+| `children`                 | `Snippet`                                           | **Required**                   | The content of the modal.                           |
 
 #### `ImageCrop`
 
@@ -349,17 +349,17 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop           | Type                        | Default | Description                                      |
-| :------------- | :-------------------------- | :------ | :----------------------------------------------- |
-| `sourceImage`  | `ImageBitmap`               | **Req** | Image to crop.                                   |
-| `aspectRatio`  | `{ x: number; y: number }`  | **Req** | Target aspect ratio.                             |
-| `resultImage`  | `string`                    | `—`     | Base64 result of crop (bindable).                |
-| `zoom`         | `number`                    | `1`     | Zoom level.                                      |
-| `pan`          | `{ x: number; y: number }`  | `{0,0}` | Pan offset.                                      |
-| `padding`      | `number`                    | `50`    | Padding around crop area.                        |
-| `shape`        | `'rectangle' \| 'circle'`   | `'rect'`| Crop area shape.                                 |
-| `variant`      | `string`                    | `''`    | Applied as `fluid-image-crop-{variant}`.         |
-| `componentId`  | `string`                    | `—`     | ID applied to the main container.                |
+| Prop          | Type                       | Default  | Description                              |
+| :------------ | :------------------------- | :------- | :--------------------------------------- |
+| `sourceImage` | `ImageBitmap`              | **Req**  | Image to crop.                           |
+| `aspectRatio` | `{ x: number; y: number }` | **Req**  | Target aspect ratio.                     |
+| `resultImage` | `string`                   | `—`      | Base64 result of crop (bindable).        |
+| `zoom`        | `number`                   | `1`      | Zoom level.                              |
+| `pan`         | `{ x: number; y: number }` | `{0,0}`  | Pan offset.                              |
+| `padding`     | `number`                   | `50`     | Padding around crop area.                |
+| `shape`       | `'rectangle' \| 'circle'`  | `'rect'` | Crop area shape.                         |
+| `variant`     | `string`                   | `''`     | Applied as `fluid-image-crop-{variant}`. |
+| `componentId` | `string`                   | `—`      | ID applied to the main container.        |
 
 #### `Page`
 
@@ -369,15 +369,15 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop           | Type                                     | Default | Description                                      |
-| :------------- | :--------------------------------------- | :------ | :----------------------------------------------- |
-| `title`        | `string`                                 | **Req** | Page title.                                      |
-| `description`  | `string`                                 | **Req** | Meta description.                                |
-| `image`        | `string`                                 | `''`    | OG image URL.                                    |
-| `siteName`     | `string`                                 | `''`    | OG site name.                                    |
-| `url`          | `string`                                 | `''`    | Canonical URL.                                   |
-| `keywords`     | `string`                                 | `''`    | Meta keywords.                                   |
-| `children`     | `Snippet`                                | `—`     | Main page content.                               |
+| Prop          | Type      | Default | Description        |
+| :------------ | :-------- | :------ | :----------------- |
+| `title`       | `string`  | **Req** | Page title.        |
+| `description` | `string`  | **Req** | Meta description.  |
+| `image`       | `string`  | `''`    | OG image URL.      |
+| `siteName`    | `string`  | `''`    | OG site name.      |
+| `url`         | `string`  | `''`    | Canonical URL.     |
+| `keywords`    | `string`  | `''`    | Meta keywords.     |
+| `children`    | `Snippet` | `—`     | Main page content. |
 
 #### `Switch`
 
@@ -387,13 +387,33 @@ Base Layer components are functional wrappers around HTML elements. Use them for
 
 **Props**:
 
-| Prop           | Type                                     | Default | Description                                      |
-| :------------- | :--------------------------------------- | :------ | :----------------------------------------------- |
-| `onclick`      | `(event, checked) => Promise<void>`      | **Req** | Async toggle handler.                            |
-| `checked`      | `boolean`                                | `false` | Toggle state (bindable).                         |
-| `disabled`     | `boolean`                                | `false` | Disable interactions.                            |
-| `variant`      | `string`                                 | `''`    | Applied as `fluid-switch-{variant}`.             |
-| `componentId`  | `string`                                 | `''`    | ID applied to the main container.                |
+| Prop          | Type                                | Default | Description                          |
+| :------------ | :---------------------------------- | :------ | :----------------------------------- |
+| `onclick`     | `(event, checked) => Promise<void>` | **Req** | Async toggle handler.                |
+| `checked`     | `boolean`                           | `false` | Toggle state (bindable).             |
+| `disabled`    | `boolean`                           | `false` | Disable interactions.                |
+| `variant`     | `string`                            | `''`    | Applied as `fluid-switch-{variant}`. |
+| `componentId` | `string`                            | `''`    | ID applied to the main container.    |
+
+#### `Skeleton`
+
+**Description**: A Suspense-like loading placeholder. Shows skeleton when `loading=true`, shows `children` when `loading=false`.
+
+**Import Path**: `import { Skeleton } from 'fluid-ui-svelte/components';`
+
+**Props**:
+
+| Prop          | Type                                | Default       | Description                                     |
+| :------------ | :---------------------------------- | :------------ | :---------------------------------------------- |
+| `loading`     | `boolean`                           | `true`        | When true shows skeleton, false shows children. |
+| `placeholder` | `Snippet`                           | `undefined`   | Custom skeleton layout snippet.                 |
+| `children`    | `Snippet`                           | `undefined`   | Content shown when loading is false.            |
+| `shape`       | `'rectangle' \| 'circle' \| 'text'` | `'rectangle'` | Default skeleton shape.                         |
+| `width`       | `string`                            | `'100%'`      | CSS width (e.g., `'200px'`, `'50%'`).           |
+| `height`      | `string`                            | `'1rem'`      | CSS height of the skeleton.                     |
+| `lines`       | `number`                            | `1`           | Number of lines (for `text` shape).             |
+| `animated`    | `boolean`                           | `true`        | Enable shimmer animation.                       |
+| `variant`     | `string`                            | `''`          | Applied as `fluid-skeleton-{variant}`.          |
 
 ---
 

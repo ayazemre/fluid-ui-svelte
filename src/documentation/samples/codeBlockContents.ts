@@ -810,6 +810,76 @@ const notificationBasic = `<script>
 <Button onclick={async () => add()}>Notify</Button>
 <NotificationArea bind:items={notifications} position="top-right" />`;
 
+// --- Skeleton ---
+
+const skeletonBasic = `<script>
+  import { Skeleton } from 'fluid-ui-svelte/components';
+<\/script>
+
+<div class="flex items-center gap-4">
+  <Skeleton shape="circle" height="48px" />
+  <div class="flex flex-col gap-2">
+    <Skeleton shape="rectangle" width="60%" height="16px" />
+    <Skeleton shape="rectangle" width="40%" height="12px" />
+  </div>
+</div>`;
+
+const skeletonText = `<script>
+  import { Skeleton } from 'fluid-ui-svelte/components';
+<\/script>
+
+<Skeleton shape="text" lines={4} height="14px" />`;
+
+const skeletonCard = `<script>
+  import { Skeleton } from 'fluid-ui-svelte/components';
+<\/script>
+
+<div class="flex flex-col gap-4">
+  <Skeleton shape="rectangle" width="100%" height="200px" />
+  <Skeleton shape="rectangle" width="70%" height="24px" />
+  <Skeleton shape="text" lines={3} height="14px" />
+</div>`;
+
+const skeletonSuspense = `<script>
+  import { Skeleton } from 'fluid-ui-svelte/components';
+  
+  let isLoading = $state(true);
+  
+  async function loadData() {
+    isLoading = true;
+    await fetch('/api/data');
+    isLoading = false;
+  }
+<\/script>
+
+<Skeleton loading={isLoading} shape="text" lines={3}>
+  <p>This content appears after loading is complete.</p>
+</Skeleton>`;
+
+const skeletonPlaceholder = `<script>
+  import { Skeleton } from 'fluid-ui-svelte/components';
+  
+  let cardLoading = $state(true);
+<\/script>
+
+<Skeleton loading={cardLoading}>
+  {#snippet placeholder()}
+    <!-- Custom skeleton layout -->
+    <div class="flex flex-col gap-4">
+      <Skeleton shape="rectangle" height="200px" />
+      <Skeleton shape="rectangle" width="70%" height="24px" />
+      <Skeleton shape="text" lines={3} />
+    </div>
+  {/snippet}
+  
+  <!-- Real content when loaded -->
+  <div class="flex flex-col gap-4">
+    <img src="/card-image.jpg" alt="Card" />
+    <h4>Card Title</h4>
+    <p>Card description text...</p>
+  </div>
+</Skeleton>`;
+
 export const codeBlockContents = {
 	gettingStartedAppCss,
 	gettingStartedUsage,
@@ -872,5 +942,9 @@ export const codeBlockContents = {
 	breadcrumbBasic,
 	breadcrumbSeparator,
 	paginationBasic,
-	notificationBasic
+	notificationBasic,
+	skeletonBasic,
+	skeletonText,
+	skeletonSuspense,
+	skeletonPlaceholder
 };

@@ -22,6 +22,7 @@ import ModalSamples from './samples/ModalSamples.svelte';
 import BreadcrumbSamples from './samples/BreadcrumbSamples.svelte';
 import PaginationSamples from './samples/PaginationSamples.svelte';
 import NotificationSamples from './samples/NotificationSamples.svelte';
+import SkeletonSamples from './samples/SkeletonSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -1022,8 +1023,7 @@ export const componentRegistry = {
 		},
 		modal: {
 			title: 'Fluid UI - Modal',
-			description:
-				'A barebone centered modal component for critical actions or information.',
+			description: 'A barebone centered modal component for critical actions or information.',
 			props: [
 				{
 					prop: 'isOpen',
@@ -1064,7 +1064,7 @@ export const componentRegistry = {
 				{
 					prop: 'transitionParams',
 					type: 'object',
-					default: "{ duration: 200, start: 0.95 }",
+					default: '{ duration: 200, start: 0.95 }',
 					description: 'Parameters for the panel transition.'
 				},
 				{
@@ -1076,7 +1076,7 @@ export const componentRegistry = {
 				{
 					prop: 'backdropTransitionParams',
 					type: 'object',
-					default: "{ duration: 200 }",
+					default: '{ duration: 200 }',
 					description: 'Parameters for the backdrop transition.'
 				},
 				{
@@ -1160,8 +1160,7 @@ export const componentRegistry = {
 		},
 		'notification-area': {
 			title: 'Fluid UI - Notification Area',
-			description:
-				'A fixed area for displaying non-intrusive notifications and alerts.',
+			description: 'A fixed area for displaying non-intrusive notifications and alerts.',
 			props: [
 				{
 					prop: 'items',
@@ -1183,6 +1182,69 @@ export const componentRegistry = {
 				}
 			],
 			sampleComponent: NotificationSamples
+		},
+		skeleton: {
+			title: 'Fluid UI - Skeleton',
+			description:
+				'A Suspense-like loading placeholder component. When loading=true, shows skeleton or custom placeholder. When loading=false, shows children content.',
+			props: [
+				{
+					prop: 'loading',
+					type: 'boolean',
+					default: 'true',
+					description:
+						'Controls loading state. When true shows skeleton, when false shows children.'
+				},
+				{
+					prop: 'placeholder',
+					type: 'Snippet',
+					default: 'undefined',
+					description: 'Custom skeleton layout snippet. If not provided, uses default skeleton.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: 'undefined',
+					description: 'Content to show when loading is false.'
+				},
+				{
+					prop: 'shape',
+					type: "'rectangle' | 'circle' | 'text'",
+					default: "'rectangle'",
+					description: 'Shape of default skeleton (when no placeholder provided).'
+				},
+				{
+					prop: 'width',
+					type: 'string',
+					default: "'100%'",
+					description: 'CSS width of the skeleton.'
+				},
+				{
+					prop: 'height',
+					type: 'string',
+					default: "'1rem'",
+					description: 'CSS height of the skeleton.'
+				},
+				{
+					prop: 'lines',
+					type: 'number',
+					default: '1',
+					description: 'Number of lines (for text shape).'
+				},
+				{
+					prop: 'animated',
+					type: 'boolean',
+					default: 'true',
+					description: 'Whether to show shimmer animation.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: SkeletonSamples
 		}
 	}
 };
