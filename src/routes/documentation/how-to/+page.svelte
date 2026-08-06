@@ -1,25 +1,28 @@
 <script lang="ts">
 	import { Page } from '$lib/components';
-	import { Text, Container } from '$lib/base';
+	import { Text, Container, Link } from '$lib/base';
 </script>
 
 <Page
+	class="documentation-page"
 	title="Fluid UI - How To"
-	description="Advanced guides and recipes for using Fluid UI Svelte."
+	description="Recipes for theming, composition and custom implementations with Fluid UI."
 >
-	<Container class="flex flex-col gap-10">
-		<Container class="flex flex-col gap-4 border-b pb-8 dark:border-neutral-800">
-			<Text type="h1" class="text-3xl font-bold">How To</Text>
-			<Text class="text-neutral-600 dark:text-neutral-400">
-				Detailed guides and best practices for building applications with Fluid UI.
+	<Container class="documentation-stack">
+		<Container class="documentation-block">
+			<Text class="documentation-label">Guides</Text>
+			<Text type="h1" class="documentation-page-title">How to</Text>
+			<Text class="documentation-lede">
+				Recipes for theming, composition and custom implementations.
 			</Text>
 		</Container>
 
-		<Container class="flex flex-col gap-4">
-			<Text type="h2" class="text-xl font-semibold">Placeholder</Text>
-			<Text>
-				Content for this section is currently being prepared. Check back soon for guides on theming,
-				custom implementations, and more.
+		<Container class="documentation-notice">
+			<Text type="h2" class="documentation-subtitle">No recipes published yet</Text>
+			<Text class="documentation-body">
+				Until these land, the component pages carry a working example for every prop, and
+				<Link href="/documentation/getting-started">Getting started</Link> covers installation and theming
+				through the stylesheet.
 			</Text>
 		</Container>
 	</Container>

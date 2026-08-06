@@ -1,26 +1,43 @@
 <script lang="ts">
 	import { Container, Link, Text } from '$lib/base';
-	import { Accordion, Drawer } from '$lib/components';
+	import Icon from '@iconify/svelte';
+	import { Drawer } from '$lib/components';
 	import { globalState } from '../globalState.svelte';
 	import { mergeClasses } from '$lib/utilities/common';
-	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { fly, fade } from 'svelte/transition';
 	import { componentRegistry } from '../../documentation/registry';
 
 	let { children } = $props();
 
-	const base = Object.entries(componentRegistry.base).map(([slug, data]) => ({
-		name: data.title.replace('Fluid UI - ', ''),
-		url: `/documentation/base/${slug}`
-	})).sort((a, b) => a.name.localeCompare(b.name));
+	type NavigationEntry = { name: string; url: string; isExternal?: boolean };
 
-	const components = Object.entries(componentRegistry.components).map(([slug, data]) => ({
-		name: data.title.replace('Fluid UI - ', ''),
-		url: `/documentation/components/${slug}`
-	})).sort((a, b) => a.name.localeCompare(b.name));
+	const toNavigationEntries = (
+		registryGroup: Record<string, { title: string }>,
+		category: string
+	): NavigationEntry[] =>
+		Object.entries(registryGroup)
+			.map(([slug, registryEntry]) => ({
+				name: registryEntry.title.replace('Fluid UI - ', ''),
+				url: `/documentation/${category}/${slug}`
+			}))
+			.sort((first, second) => first.name.localeCompare(second.name));
 
-	// Close drawer on navigation
+	const guideEntries: NavigationEntry[] = [
+		{ name: 'Getting started', url: '/documentation/getting-started' },
+		{ name: 'How to', url: '/documentation/how-to' },
+		{ name: 'LLM guide', url: '/llm-protocol', isExternal: true }
+	];
+
+	const navigationSections = [
+		{ label: 'Guides', entries: guideEntries },
+		{ label: 'base', entries: toNavigationEntries(componentRegistry.base, 'base') },
+		{
+			label: 'components',
+			entries: toNavigationEntries(componentRegistry.components, 'components')
+		}
+	];
+
 	$effect(() => {
 		if (page.url.pathname) {
 			globalState.isDocumentationDrawerOpen = false;
@@ -29,104 +46,58 @@
 </script>
 
 {#snippet navigationContent()}
-	<Link
-		href="/documentation/getting-started"
-		class={mergeClasses(
-			page.url.pathname == '/documentation/getting-started' ? 'active' : '',
-			'fluid-sidebar-link p-2'
-		)}
-	>
-		<Text overrideDefaultStyling>Getting Started</Text>
-	</Link>
-
-	<Accordion>
-		{#snippet header(options)}
-			<Text>Base</Text>
-			<Icon icon={options.isExpanded ? 'raphael:arrowdown' : 'raphael:arrowright'}></Icon>
-		{/snippet}
-
-		{#snippet body()}
-			{#each base as element}
+	{#each navigationSections as navigationSection (navigationSection.label)}
+		<Text class="documentation-sidebar-section">{navigationSection.label}</Text>
+		<Container class="documentation-sidebar-group">
+			{#each navigationSection.entries as navigationEntry (navigationEntry.url)}
 				<Link
-					href={element.url}
-					class={mergeClasses(
-						page.url.pathname == element.url ? 'active' : '',
-						'fluid-sidebar-link p-2 text-left'
-					)}
-				>
-					{element.name}
-				</Link>
-			{/each}
-		{/snippet}
-	</Accordion>
-	<Accordion>
-		{#snippet header(options)}
-			<Text>Components</Text>
-			<Icon icon={options.isExpanded ? 'raphael:arrowdown' : 'raphael:arrowright'}></Icon>
-		{/snippet}
-
-		{#snippet body()}
-			{#each components as element}
-				<Link
-					href={element.url}
+					href={navigationEntry.url}
 					overrideDefaultStyling
+					target={navigationEntry.isExternal ? '_blank' : undefined}
+					rel={navigationEntry.isExternal ? 'noopener noreferrer' : undefined}
 					class={mergeClasses(
-						page.url.pathname == element.url ? 'active' : '',
-						'fluid-sidebar-link p-2 text-left'
+						page.url.pathname === navigationEntry.url ? 'active' : '',
+						'fluid-sidebar-link'
 					)}
+					aria-current={page.url.pathname === navigationEntry.url ? 'page' : undefined}
 				>
-					{element.name}
+					{navigationEntry.name}
+					{#if navigationEntry.isExternal}
+						<Icon icon="ph:arrow-up-right" class="documentation-external-mark" aria-hidden="true" />
+					{/if}
 				</Link>
 			{/each}
-		{/snippet}
-	</Accordion>
-	<Link
-		href="/documentation/how-to"
-		class={mergeClasses(
-			page.url.pathname == '/documentation/how-to' ? 'active' : '',
-			'fluid-sidebar-link p-2'
-		)}
-	>
-		<Text overrideDefaultStyling>How To</Text>
-	</Link>
-	<Link href="/llm-protocol" class={mergeClasses('', 'fluid-sidebar-link p-2')}>
-		<Text overrideDefaultStyling>LLM Guide</Text>
-	</Link>
+		</Container>
+	{/each}
 {/snippet}
 
-<Container
-	class="flex flex-1 flex-col bg-neutral-50 dark:bg-neutral-900"
-	id="documentation-page-layout"
->
+<Container class="documentation-shell" id="documentation-page-layout">
 	<!-- Mobile Drawer -->
 	<Drawer
 		bind:isOpen={globalState.isDocumentationDrawerOpen}
 		position="left"
 		transitionFn={fly}
-		transitionParams={{ x: -300, duration: 300 }}
+		transitionParams={{ x: -300, duration: 250 }}
 		backdropTransitionFn={fade}
-		backdropTransitionParams={{ duration: 300 }}
+		backdropTransitionParams={{ duration: 250 }}
 	>
-		<Container
-			class="flex h-full w-64 flex-col gap-2 overflow-y-auto bg-neutral-50 p-4 dark:bg-neutral-900"
-		>
-			<Text type="h2" class="mb-4 text-xl font-bold">Menu</Text>
+		<Container class="documentation-drawer-panel documentation-scroll">
 			{@render navigationContent()}
 		</Container>
 	</Drawer>
 
-	<Container class="flex min-w-0 flex-1 opacity-100" id="documentation-page-two-row">
+	<Container class="documentation-columns" id="documentation-page-two-row">
 		<!-- Desktop Sidebar -->
 		<Container
 			type="aside"
-			class="hidden min-w-64 flex-col gap-2 border-r border-neutral-300 px-4 py-8 md:flex dark:border-neutral-700"
+			class="documentation-sidebar documentation-scroll"
 			id="documentation-page-sidebar"
 		>
 			{@render navigationContent()}
 		</Container>
 
 		<!-- Content Area -->
-		<Container class="w-full min-w-0 overflow-x-hidden">
+		<Container class="documentation-content">
 			{@render children()}
 		</Container>
 	</Container>

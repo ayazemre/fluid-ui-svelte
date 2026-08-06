@@ -1,11 +1,38 @@
 <script lang="ts">
 	import { componentRegistry } from '../../../../documentation/registry.js';
-	import { Container, Text, Table } from '$lib/base';
+	import { Container, Text, Table, Link } from '$lib/base';
 	import { Page } from '$lib/components';
+	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
 
-	// Retrieve the non-serializable sample component from the registry
+	const toRegistryEntries = (registryGroup: Record<string, { title: string }>, category: string) =>
+		Object.entries(registryGroup)
+			.map(([slug, registryEntry]) => ({
+				name: registryEntry.title.replace('Fluid UI - ', ''),
+				category,
+				url: `/documentation/${category}/${slug}`
+			}))
+			.sort((first, second) => first.name.localeCompare(second.name));
+
+	const registryOrder = [
+		...toRegistryEntries(componentRegistry.base, 'base'),
+		...toRegistryEntries(componentRegistry.components, 'components')
+	];
+
+	const currentPosition = $derived(
+		registryOrder.findIndex(
+			(registryEntry) => registryEntry.url === `/documentation/${data.category}/${data.slug}`
+		)
+	);
+	const previousEntry = $derived(
+		currentPosition > 0 ? registryOrder[currentPosition - 1] : undefined
+	);
+	const nextEntry = $derived(
+		currentPosition >= 0 && currentPosition < registryOrder.length - 1
+			? registryOrder[currentPosition + 1]
+			: undefined
+	);
 
 	let SampleComponent = $derived(
 		// @ts-ignore
@@ -14,52 +41,46 @@
 
 	const headers = ['Prop', 'Type', 'Default', 'Description'];
 
-	// Prepare the rows for the props table
 	const tableRows = $derived(
-		data.props.map((p: any) => [
-			{ value: p.prop, col: 'prop' },
-			{ value: p.type, col: 'type' },
-			{ value: p.default, col: 'default' },
-			{ value: p.description, col: 'desc' }
+		data.props.map((property: any) => [
+			{ value: property.prop, column: 'prop' },
+			{ value: property.type, column: 'type' },
+			{ value: property.default, column: 'default' },
+			{ value: property.description, column: 'description' }
 		])
 	);
 </script>
 
-<Page title={data.title} description={data.description}>
-	<Container class="flex flex-col gap-8">
+<Page class="documentation-page" title={data.title} description={data.description}>
+	<Container class="documentation-stack">
 		<!-- Header -->
-		<Container class="flex flex-col gap-4">
-			<Text type="h1" class="text-4xl font-bold">{data.title.replace('Fluid UI - ', '')}</Text>
-			<Text>
+		<Container class="documentation-block">
+			<Text class="documentation-label">{data.category}</Text>
+			<Text type="h1" class="documentation-page-title">{data.title.replace('Fluid UI - ', '')}</Text
+			>
+			<Text class="documentation-lede">
 				{data.description}
 			</Text>
 		</Container>
 
 		<!-- Props Table -->
-		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
-			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Table
-				tableHeadItems={headers}
-				tableRowItems={tableRows}
-				tableFooterItems={[]}
-				class="w-full text-left"
-			>
+		<Container class="documentation-properties">
+			<Text type="h2" class="documentation-subtitle">Props</Text>
+			<Table tableHeadItems={headers} tableRowItems={tableRows} tableFooterItems={[]}>
 				{#snippet headTemplate(item)}
-					<Text class="p-2 font-bold">{item}</Text>
+					<Text class="documentation-table-heading">{item}</Text>
 				{/snippet}
 
-				{#snippet bodyTemplate(item: { value: string; col: string })}
-					<Container overrideDefaultStyling={true} class="p-2">
-						{#if item.col === 'prop'}
-							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
-						{:else if item.col === 'type'}
-							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
-								>{item.value}</Text
-							>
-						{:else if item.col === 'default'}
-							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
+				{#snippet bodyTemplate(item: { value: string; column: string })}
+					<Container overrideDefaultStyling={true} class="documentation-table-cell">
+						{#if item.column === 'prop'}
+							<Text type="code" class="documentation-property-name">{item.value}</Text>
+						{:else if item.column === 'type'}
+							<Text type="code" class="documentation-property-type">{item.value}</Text>
+						{:else if item.column === 'default'}
+							<Text type="code" class="documentation-property-default">{item.value}</Text>
 						{:else}
-							<Text class="text-sm">{item.value}</Text>
+							<Text class="documentation-property-description">{item.value}</Text>
 						{/if}
 					</Container>
 				{/snippet}
@@ -71,9 +92,38 @@
 		</Container>
 
 		<!-- Samples -->
-		<Container class="flex flex-col gap-4">
-			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
+		<Container class="documentation-samples">
+			<Text type="h2" class="documentation-subtitle">Samples</Text>
 			<SampleComponent />
+		</Container>
+
+		<!-- Pager -->
+		<Container type="nav" aria-label="Component" class="documentation-pager-grid">
+			{#if previousEntry}
+				<Link href={previousEntry.url} overrideDefaultStyling class="documentation-pager">
+					<Text class="documentation-label documentation-pager-label">
+						<Icon icon="ph:arrow-left" class="documentation-icon-tiny" aria-hidden="true" />
+						Previous
+					</Text>
+					<Text class="documentation-pager-name">{previousEntry.name}</Text>
+				</Link>
+			{:else}
+				<Container class="documentation-pager-spacer"></Container>
+			{/if}
+
+			{#if nextEntry}
+				<Link
+					href={nextEntry.url}
+					overrideDefaultStyling
+					class="documentation-pager documentation-pager-next"
+				>
+					<Text class="documentation-label documentation-pager-label">
+						Next
+						<Icon icon="ph:arrow-right" class="documentation-icon-tiny" aria-hidden="true" />
+					</Text>
+					<Text class="documentation-pager-name">{nextEntry.name}</Text>
+				</Link>
+			{/if}
 		</Container>
 	</Container>
 </Page>

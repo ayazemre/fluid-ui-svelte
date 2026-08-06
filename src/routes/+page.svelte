@@ -1,106 +1,214 @@
 <script lang="ts">
-	import { Container, Button, Text } from '$lib/base';
+	import { Container, Button, Text, Link } from '$lib/base';
 	import { Page } from '$lib/components';
 	import Icon from '@iconify/svelte';
-	import { goto } from '$app/navigation';
+	import { componentRegistry } from '../documentation/registry';
+
+	const toRegistryEntries = (registryGroup: Record<string, { title: string }>, category: string) =>
+		Object.entries(registryGroup)
+			.map(([slug, registryEntry]) => ({
+				name: registryEntry.title.replace('Fluid UI - ', ''),
+				url: `/documentation/${category}/${slug}`
+			}))
+			.sort((first, second) => first.name.localeCompare(second.name));
+
+	const baseEntries = toRegistryEntries(componentRegistry.base, 'base');
+	const componentEntries = toRegistryEntries(componentRegistry.components, 'components');
+
+	const braces = { open: '{', close: '}' };
+	const backgroundSwatches = ['#2f5bff', '#0f9d76', '#d24b2e', '#7c3aed', '#0c0e14'];
+	const installCommand = 'npm install fluid-ui-svelte';
+
+	let backgroundColor = $state('#2f5bff');
+	let borderRadius = $state(6);
+	let isInstallCommandCopied = $state(false);
+
+	async function copyInstallCommand() {
+		await navigator.clipboard.writeText(installCommand);
+		isInstallCommandCopied = true;
+		setTimeout(() => (isInstallCommandCopied = false), 2000);
+	}
 </script>
 
 <Page
-	class="flex-1 overflow-hidden"
+	class="documentation-landing"
 	title="Fluid UI"
-	description="Fluid UI is a pragmatic Svelte component library featuring a dual-layer architecture of lightweight semantic wrappers and high-level interactive components for building beautiful, responsive interfaces."
+	description="Fluid UI is a Svelte 5 component library that ships components, not a theme. One stylesheet lives in your project — edit it and every component follows."
 >
-	<Container
-		class="fixed inset-0 z-0 overflow-hidden bg-linear-to-br from-primary-50 via-white to-primary-100 transition-colors duration-500 dark:from-neutral-950 dark:via-secondary-950 dark:to-neutral-950"
-	>
-		<Container
-			class="absolute top-[10%] right-[15%] h-125 w-125 animate-pulse rounded-full bg-linear-to-br from-primary-600/20 via-primary-600/10 to-transparent blur-3xl [animation-duration:8s] dark:from-primary-600/30 dark:via-primary-600/15 dark:to-transparent"
-		></Container>
-		<Container
-			class="absolute bottom-[5%] left-[10%] h-150 w-150 animate-pulse rounded-full bg-linear-to-tr from-info-400/20 via-info-400/10 to-transparent blur-3xl [animation-delay:2s] [animation-duration:10s] dark:from-info-400/30 dark:via-info-400/15 dark:to-transparent"
-		></Container>
-		<Container
-			class="absolute top-[45%] left-[40%] h-87.5 w-87.5 animate-pulse rounded-full bg-linear-to-bl from-primary-600/15 via-info-400/10 to-transparent blur-3xl [animation-delay:4s] [animation-duration:12s] dark:from-primary-600/25 dark:via-info-400/15 dark:to-transparent"
-		></Container>
+	<!-- Hero -->
+	<Container class="documentation-hero">
+		<Container class="documentation-hero-grid">
+			<Container class="documentation-hero-column">
+				<Text type="h1" class="documentation-hero-title">
+					The styles live<br />in your repo.
+				</Text>
+				<Text class="documentation-hero-lede">
+					Fluid UI ships components, not a theme. One stylesheet goes into your project — edit it
+					there and every component follows. Nothing is injected at runtime.
+				</Text>
 
-		<Container
-			class="absolute top-[20%] left-[25%] h-32 w-32 animate-bounce rounded-full bg-linear-to-br from-primary-600 to-primary-600/50 opacity-[0.08] [animation-duration:6s] dark:opacity-[0.15]"
-		></Container>
-		<Container
-			class="absolute right-[30%] bottom-[25%] h-40 w-40 animate-bounce rounded-full bg-linear-to-tl from-info-400 to-info-400/50 opacity-[0.08] [animation-delay:1s] [animation-duration:7s] dark:opacity-[0.15]"
-		></Container>
-		<Container
-			class="absolute top-[60%] left-[15%] h-24 w-24 animate-bounce rounded-full bg-linear-to-br from-neutral-950 to-neutral-950/50 opacity-[0.05] [animation-delay:2s] [animation-duration:8s] dark:opacity-[0.10]"
-		></Container>
+				<Container class="documentation-install">
+					<Text class="documentation-label">Install</Text>
+					<Container class="documentation-install-command">
+						<Text type="span" class="documentation-label">$</Text>
+						<Text type="code" class="documentation-strong documentation-monospace"
+							>{installCommand}</Text
+						>
+						<Button
+							aria-label="Copy the install command"
+							onclick={async () => await copyInstallCommand()}
+							class="documentation-icon-button"
+						>
+							<Icon
+								icon={isInstallCommandCopied ? 'ph:check-bold' : 'ph:copy'}
+								class="documentation-icon-small"
+							/>
+						</Button>
+					</Container>
+				</Container>
 
-		<Container
-			class="absolute top-[30%] right-[25%] h-3 w-3 animate-ping rounded-full bg-primary-600 opacity-30 [animation-duration:3s] dark:opacity-40"
-		></Container>
-		<Container
-			class="absolute top-[50%] right-[20%] h-2 w-2 animate-ping rounded-full bg-info-400 opacity-40 [animation-delay:1s] [animation-duration:4s] dark:opacity-50"
-		></Container>
-		<Container
-			class="absolute bottom-[40%] left-[30%] h-3 w-3 animate-ping rounded-full bg-primary-600 opacity-25 [animation-delay:2s] [animation-duration:5s] dark:opacity-35"
-		></Container>
-		<Container
-			class="absolute top-[70%] right-[40%] h-2 w-2 animate-ping rounded-full bg-neutral-950 opacity-20 [animation-delay:1.5s] [animation-duration:4.5s] dark:opacity-30"
-		></Container>
-		<Container
-			class="absolute top-[35%] left-[45%] h-2 w-2 animate-ping rounded-full bg-info-400 opacity-35 [animation-delay:0.5s] [animation-duration:3.5s] dark:opacity-45"
-		></Container>
+				<Container class="documentation-hero-actions">
+					<Link href="/documentation/getting-started" class="documentation-hero-action">
+						Read the documentation
+						<Icon icon="ph:arrow-right" class="documentation-arrow" />
+					</Link>
+					<Link
+						href="https://github.com/ayazemre/fluid-ui-svelte"
+						target="_blank"
+						class="documentation-hero-action"
+					>
+						<Icon icon="akar-icons:github-fill" class="documentation-icon-small" />
+						Source
+					</Link>
+				</Container>
+			</Container>
 
-		<Container
-			class="absolute top-[25%] right-[35%] h-20 w-20 animate-spin rounded-full border-2 border-primary-600 opacity-[0.12] [animation-duration:20s] dark:opacity-[0.20]"
-		></Container>
-		<Container
-			class="absolute bottom-[35%] left-[25%] h-28 w-28 animate-spin rounded-full border-2 border-info-400 opacity-[0.12] [animation-direction:reverse] [animation-duration:25s] dark:opacity-[0.20]"
-		></Container>
+			<!-- Editable stylesheet -->
+			<Container class="documentation-stylesheet">
+				<Container class="documentation-stylesheet-header">
+					<Text type="span" class="documentation-label documentation-strong">fluidui.css</Text>
+					<Text type="span" class="documentation-label">yours to edit</Text>
+				</Container>
+
+				<Container class="documentation-stylesheet-body">
+					<Text type="span" class="documentation-strong documentation-monospace"
+						>.fluid-button-primary <Text type="span" class="documentation-monospace"
+							>{braces.open}</Text
+						></Text
+					>
+
+					<Container class="documentation-declaration">
+						<Text type="span" class="documentation-monospace"
+							>background: <Text type="span" class="documentation-editable documentation-monospace"
+								>{backgroundColor}</Text
+							>;</Text
+						>
+						<Container class="documentation-swatches">
+							{#each backgroundSwatches as swatch (swatch)}
+								<Button
+									overrideDefaultStyling
+									aria-label={'Set background to ' + swatch}
+									aria-pressed={backgroundColor === swatch}
+									onclick={async () => {
+										backgroundColor = swatch;
+									}}
+									class={'documentation-swatch' + (backgroundColor === swatch ? ' selected' : '')}
+									style={'background:' + swatch}
+								>
+									<Text type="span" class="sr-only">{swatch}</Text>
+								</Button>
+							{/each}
+						</Container>
+					</Container>
+
+					<Container class="documentation-declaration">
+						<Text type="span" class="documentation-monospace"
+							>border-radius: <Text
+								type="span"
+								class="documentation-editable documentation-monospace">{borderRadius}px</Text
+							>;</Text
+						>
+						<input
+							type="range"
+							min="0"
+							max="20"
+							bind:value={borderRadius}
+							aria-label="Border radius in pixels"
+							class="documentation-range"
+						/>
+					</Container>
+
+					<Text type="span" class="documentation-monospace">{braces.close}</Text>
+				</Container>
+
+				<Container class="documentation-stylesheet-preview">
+					<Button
+						onclick={async () => {}}
+						class="documentation-live-button"
+						style={'background:' + backgroundColor + '; border-radius:' + borderRadius + 'px'}
+					>
+						Primary button
+					</Button>
+					<Text class="documentation-label">every component follows the file</Text>
+				</Container>
+			</Container>
+		</Container>
 	</Container>
 
-	<Container
-		class="z-10 flex flex-1 flex-col items-center justify-center gap-6 bg-transparent px-4 py-16 md:p-16"
-	>
-		<Container class="flex text-center">
-			<Text
-				type="h1"
-				class="text-4xl font-bold text-neutral-950 sm:text-5xl md:text-6xl dark:text-neutral-50"
-				>Build with <Text
-					type="span"
-					class="bg-linear-to-r from-primary-600 to-secondary-300 bg-clip-text text-transparent"
-					>Fluid UI</Text
-				></Text
-			>
+	<!-- Two layers -->
+	<Container class="documentation-section">
+		<Container class="documentation-section-inner">
+			<Text type="h2" class="documentation-section-title">Two layers, two imports.</Text>
+
+			<Container class="documentation-layers">
+				<Container class="documentation-layer">
+					<Text type="code" class="documentation-inline-code documentation-layer-import"
+						>fluid-ui-svelte/base</Text
+					>
+					<Text class="documentation-body">
+						Thin wrappers over HTML elements. They keep markup semantic and accessible and hand
+						every styling decision back to you.
+					</Text>
+					<Container class="documentation-index">
+						{#each baseEntries as registryEntry (registryEntry.url)}
+							<Link
+								href={registryEntry.url}
+								class="documentation-index-link documentation-monospace">{registryEntry.name}</Link
+							>
+						{/each}
+					</Container>
+				</Container>
+
+				<Container class="documentation-layer">
+					<Text type="code" class="documentation-inline-code documentation-layer-import"
+						>fluid-ui-svelte/components</Text
+					>
+					<Text class="documentation-body">
+						Interactive elements composed from the base layer. Keyboard handling, focus and state
+						are solved; the appearance still comes from your stylesheet.
+					</Text>
+					<Container class="documentation-index">
+						{#each componentEntries as registryEntry (registryEntry.url)}
+							<Link
+								href={registryEntry.url}
+								class="documentation-index-link documentation-monospace">{registryEntry.name}</Link
+							>
+						{/each}
+					</Container>
+				</Container>
+			</Container>
 		</Container>
-		<Container class="flex">
-			<Text
-				class="text-center text-lg text-neutral-950 opacity-70 transition-colors sm:text-xl dark:text-neutral-50 dark:opacity-80"
-				>A modern Svelte component library for building beautiful, responsive interfaces.</Text
-			>
+	</Container>
+
+	<!-- Footer -->
+	<Container type="footer" class="documentation-footer">
+		<Container class="documentation-footer-inner">
+			<Text class="documentation-label">{'Fluid UI · MIT · ' + new Date().getFullYear()}</Text>
+			<Container class="documentation-footer-links">
+				<Link href="/documentation/getting-started">Documentation</Link>
+				<Link href="/fluidui.css" target="_blank">fluidui.css</Link>
+				<Link href="https://github.com/ayazemre/fluid-ui-svelte" target="_blank">GitHub</Link>
+			</Container>
 		</Container>
-		<Container
-			class="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
-			overrideDefaultStyling
-		>
-			<Button
-				onclick={async () => {
-					await goto('/documentation/getting-started');
-				}}
-				class="fluid-button-primary w-full max-w-xs justify-center px-8! py-3! font-semibold sm:w-auto"
-			>
-				Get Started
-			</Button>
-			<Button
-				onclick={async () => {
-					window.open('https://github.com/ayazemre/fluid-ui-svelte', '_blank');
-				}}
-				class="fluid-button-outline flex w-full max-w-xs items-center justify-center gap-2 px-8! py-3! font-semibold sm:w-auto"
-			>
-				<Icon icon="akar-icons:github-fill"></Icon>
-				GitHub
-			</Button>
-		</Container>
-		<Text class="absolute bottom-4 text-sm text-neutral-400!"
-			>{'© Fluid UI ' + new Date().getFullYear()}</Text
-		>
 	</Container>
 </Page>
