@@ -9,7 +9,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Semantic Headings</Text>
 		<Text class="text-sm text-neutral-500">Render various heading levels using the type prop.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Text type="h1" class="text-2xl font-bold">Heading 1</Text>
 			<Text type="h2" class="text-xl font-semibold">Heading 2</Text>
 			<Text type="h3" class="text-lg font-medium">Heading 3</Text>
@@ -23,7 +23,7 @@
 		<Text class="text-sm text-neutral-500"
 			>Use semantic tags for bold, italic, or highlighted text.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Text>
 				This is <Text type="strong">bold</Text>, <Text type="em">italic</Text>, and
 				<Text type="mark">highlighted</Text>.
@@ -38,7 +38,7 @@
 		<Text class="text-sm text-neutral-500"
 			>Perfect for technical documentation or data display.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Text type="code">const fluid = 'awesome';</Text>
 			<Text type="pre" class="mt-2 text-xs">
 				{`{
@@ -55,7 +55,7 @@
 		<Text type="h3" class="text-lg font-semibold">Semantic Markers</Text>
 		<Text class="text-sm text-neutral-500">Support for deleted, inserted, sub and superscript.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Text>
 				<Text type="del">Old price</Text>
 				<Text type="ins">New price</Text>

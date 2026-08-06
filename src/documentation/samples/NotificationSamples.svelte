@@ -32,7 +32,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">1. Interactive Demo</Text>
 		<Text class="text-neutral-500">Click buttons to spawn notifications in the area.</Text>
-		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview w-full">
 			<Container class="flex flex-wrap gap-4">
 				<Button onclick={async () => addNotification('info')} class="bg-info-500 text-white"
 					>Info</Button

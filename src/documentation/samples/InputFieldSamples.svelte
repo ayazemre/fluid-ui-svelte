@@ -15,7 +15,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Basic Text</Text>
 		<Text class="text-sm text-neutral-500">Standard text input with reactive binding.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<InputField placeholder="Enter your name" bind:value={textValue} class="w-full" />
 			<Text class="mt-2 text-sm text-neutral-500">Value: {textValue}</Text>
 		</Container>
@@ -26,7 +26,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Password</Text>
 		<Text class="text-sm text-neutral-500">Secure entry for passwords and sensitive data.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<InputField
 				type="password"
 				placeholder="Enter password"
@@ -42,7 +42,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Textarea</Text>
 		<Text class="text-sm text-neutral-500">Multiline text input for longer messages.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<InputField
 				type="textarea"
 				placeholder="Enter your message..."
@@ -58,7 +58,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Numeric Only</Text>
 		<Text class="text-sm text-neutral-500">Using characterFilter to restrict input to digits.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<InputField
 				placeholder="Numbers only..."
 				bind:value={numericValue}
@@ -76,7 +76,7 @@
 		<Text class="text-sm text-neutral-500"
 			>Applying custom error styling for validation feedback.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<InputField
 				class="fluid-input-field-error w-full"
 				placeholder="Error styling"

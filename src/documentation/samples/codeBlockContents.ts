@@ -757,7 +757,7 @@ const breadcrumbBasic = `<script>
 
   const items = [
     { label: 'Home', href: '/' },
-    { label: 'Components', href: '/documentation/components' },
+    { label: 'Components', href: '/documentation/getting-started' },
     { label: 'Breadcrumb', href: '/documentation/components/breadcrumb' }
   ];
 <\/script>

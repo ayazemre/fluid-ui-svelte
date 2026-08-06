@@ -12,7 +12,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Standard Accordion</Text>
 		<Text class="text-sm text-neutral-500">The default look with chevron indicators.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Accordion>
 				{#snippet header({ isExpanded })}
 					<Container class="flex w-full items-center justify-between p-2">
@@ -35,7 +35,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Custom Transition</Text>
 		<Text class="text-sm text-neutral-500">Using different Svelte transitions and durations.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Accordion transitionFunction={fade} transitionDuration={500}>
 				{#snippet header({ isExpanded })}
 					<Container class="flex w-full items-center gap-2 p-2">

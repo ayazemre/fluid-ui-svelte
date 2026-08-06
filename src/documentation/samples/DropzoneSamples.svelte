@@ -18,7 +18,7 @@
 			Optimized for file uploads. The cursor indicates a "Copy" operation.
 		</Text>
 
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Dropzone bind:data={droppedFiles} mode="file" dropEffect="copy">
 				{#snippet children({ isDragOver, isInvalid })}
 					<Container class="flex flex-col items-center gap-2">
@@ -66,9 +66,7 @@
 			operation. This dropzone strictly rejects files.
 		</Text>
 
-		<Container
-			class="rounded-lg border bg-neutral-50 p-6 dark:border-neutral-700 dark:bg-neutral-900/50"
-		>
+		<Container class="documentation-preview">
 			<Container class="mb-6 flex gap-4">
 				<Draggable
 					variant="primary"

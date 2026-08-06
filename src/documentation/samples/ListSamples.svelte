@@ -17,7 +17,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Unordered List</Text>
 		<Text class="text-sm text-neutral-500">A basic unordered list with default markers.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<List items={fruitItems}>
 				{#snippet itemTemplate(item: string)}
 					{item}
@@ -31,7 +31,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Ordered List</Text>
 		<Text class="text-sm text-neutral-500">A numbered list using the "ol" type prop.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<List items={numberItems} type="ol">
 				{#snippet itemTemplate(item: number)}
 					Step {item}
@@ -45,7 +45,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Item Styling</Text>
 		<Text class="text-sm text-neutral-500">Styling individual items using the itemClass prop.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<List
 				items={fruitItems}
 				itemClass="mb-2 last:mb-0 p-2 bg-neutral-100 dark:bg-neutral-800 rounded list-none"
@@ -63,7 +63,7 @@
 		<Text type="h3" class="text-lg font-semibold">Complex Objects</Text>
 		<Text class="text-sm text-neutral-500">Rendering objects with custom logic in the snippet.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<List items={tasks}>
 				{#snippet itemTemplate(item)}
 					<Text class={item.completed ? 'text-neutral-500 line-through' : ''}>

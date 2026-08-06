@@ -8,7 +8,7 @@
 	<!-- Header Container -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Header</Text>
-		<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex flex-col gap-4">
 			<Container
 				type="header"
 				overrideDefaultStyling
@@ -23,7 +23,7 @@
 	<!-- Nav Container -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Navigation</Text>
-		<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex flex-col gap-4">
 			<Container
 				type="nav"
 				overrideDefaultStyling
@@ -38,7 +38,7 @@
 	<!-- Section Container -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Section</Text>
-		<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex flex-col gap-4">
 			<Container
 				type="section"
 				overrideDefaultStyling
@@ -53,7 +53,7 @@
 	<!-- Footer Container -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Footer</Text>
-		<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex flex-col gap-4">
 			<Container
 				type="footer"
 				overrideDefaultStyling

@@ -10,18 +10,16 @@
 	<!-- Example 1: Basic Switch -->
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-lg font-semibold">Basic Usage</Text>
-		<Text class="text-sm text-neutral-500">
-			A standard toggle switch for boolean states.
-		</Text>
+		<Text class="text-sm text-neutral-500">A standard toggle switch for boolean states.</Text>
 
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Switch
 				bind:checked={isChecked}
 				onclick={async () => {
 					console.log('Switch toggled to:', isChecked);
 				}}
 			/>
-			<Text class="text-sm font-medium uppercase text-neutral-500">
+			<Text class="text-sm font-medium text-neutral-500 uppercase">
 				Status: {isChecked ? 'Enabled' : 'Disabled'}
 			</Text>
 		</Container>
@@ -36,14 +34,14 @@
 			The switch can be disabled to prevent user interaction.
 		</Text>
 
-		<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex flex-col gap-4">
 			<Container class="flex items-center gap-4">
 				<Switch checked={false} disabled onclick={async () => {}} />
-				<Text class="text-xs font-medium uppercase text-neutral-400">Off & Disabled</Text>
+				<Text class="text-xs font-medium text-neutral-400 uppercase">Off & Disabled</Text>
 			</Container>
 			<Container class="flex items-center gap-4">
 				<Switch checked={true} disabled onclick={async () => {}} />
-				<Text class="text-xs font-medium uppercase text-neutral-400">On & Disabled</Text>
+				<Text class="text-xs font-medium text-neutral-400 uppercase">On & Disabled</Text>
 			</Container>
 		</Container>
 

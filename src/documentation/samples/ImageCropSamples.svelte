@@ -79,14 +79,14 @@
 				</Text>
 			</Container>
 			<Container class="flex items-center gap-3">
-				<Text class="text-xs font-medium uppercase text-neutral-500"
+				<Text class="text-xs font-medium text-neutral-500 uppercase"
 					>{isCircle ? 'Circle' : 'Rectangle'}</Text
 				>
 				<Switch bind:checked={isCircle} onclick={async () => {}} />
 			</Container>
 		</Container>
 
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			{#if imageBitmap}
 				<Container class="flex flex-col gap-8">
 					<!-- Preview Row -->
@@ -141,37 +141,65 @@
 					<Container class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Zoom ({zoom.toFixed(2)})</Text
 								>
-								<input type="range" min="0.1" max="5" step="0.01" bind:value={zoom} class="w-full" />
+								<input
+									type="range"
+									min="0.1"
+									max="5"
+									step="0.01"
+									bind:value={zoom}
+									class="w-full"
+								/>
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Padding ({padding}px)</Text
 								>
-								<input type="range" min="0" max="200" step="1" bind:value={padding} class="w-full" />
+								<input
+									type="range"
+									min="0"
+									max="200"
+									step="1"
+									bind:value={padding}
+									class="w-full"
+								/>
 							</Container>
 						</Container>
 
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500">Pan X ({panX}px)</Text>
-								<input type="range" min="-400" max="400" step="1" bind:value={panX} class="w-full" />
+								<Text class="text-xs font-medium text-neutral-500 uppercase">Pan X ({panX}px)</Text>
+								<input
+									type="range"
+									min="-400"
+									max="400"
+									step="1"
+									bind:value={panX}
+									class="w-full"
+								/>
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500">Pan Y ({panY}px)</Text>
-								<input type="range" min="-400" max="400" step="1" bind:value={panY} class="w-full" />
+								<Text class="text-xs font-medium text-neutral-500 uppercase">Pan Y ({panY}px)</Text>
+								<input
+									type="range"
+									min="-400"
+									max="400"
+									step="1"
+									bind:value={panY}
+									class="w-full"
+								/>
 							</Container>
 						</Container>
 
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500">Color</Text>
+								<Text class="text-xs font-medium text-neutral-500 uppercase">Color</Text>
 								<input type="color" bind:value={overlayHex} class="h-8 w-full" />
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Opacity ({overlayOpacity})</Text
 								>
 								<input
@@ -203,14 +231,14 @@
 				</Text>
 			</Container>
 			<Container class="flex items-center gap-3">
-				<Text class="text-xs font-medium uppercase text-neutral-500"
+				<Text class="text-xs font-medium text-neutral-500 uppercase"
 					>{uploadIsCircle ? 'Circle' : 'Rectangle'}</Text
 				>
 				<Switch bind:checked={uploadIsCircle} onclick={async () => {}} />
 			</Container>
 		</Container>
 
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Container class="mb-6">
 				<input
 					type="file"
@@ -274,7 +302,7 @@
 					<Container class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Zoom ({uploadZoom.toFixed(2)})</Text
 								>
 								<input
@@ -287,7 +315,7 @@
 								/>
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Padding ({uploadPadding}px)</Text
 								>
 								<input
@@ -303,7 +331,7 @@
 
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Pan X ({uploadPanX}px)</Text
 								>
 								<input
@@ -316,7 +344,7 @@
 								/>
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Pan Y ({uploadPanY}px)</Text
 								>
 								<input
@@ -332,11 +360,11 @@
 
 						<Container class="flex flex-col gap-4">
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500">Color</Text>
+								<Text class="text-xs font-medium text-neutral-500 uppercase">Color</Text>
 								<input type="color" bind:value={uploadOverlayHex} class="h-8 w-full" />
 							</Container>
 							<Container class="flex flex-col gap-2">
-								<Text class="text-xs font-medium uppercase text-neutral-500"
+								<Text class="text-xs font-medium text-neutral-500 uppercase"
 									>Opacity ({uploadOverlayOpacity})</Text
 								>
 								<input

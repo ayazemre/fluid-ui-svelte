@@ -21,7 +21,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">Basic Usage</Text>
 		<Text class="text-neutral-500">A standard drawer anchored to the left.</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Button
 				class="fluid-button-primary"
 				onclick={async () => {
@@ -56,7 +56,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">Anchoring Positions</Text>
 		<Text class="text-neutral-500">Toggle drawers from all four directions.</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Container class="flex flex-wrap gap-4">
 				<Button
 					class="fluid-button-secondary"
@@ -105,7 +105,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">Custom Animations</Text>
 		<Text class="text-neutral-500">Pass standard Svelte transitions or custom ones.</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Button
 				class="fluid-button-primary"
 				onclick={async () => {
@@ -143,7 +143,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">Fly Transition</Text>
 		<Text class="text-neutral-500">Using the fly transition for a sliding effect.</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Button
 				class="fluid-button-primary"
 				onclick={async () => {

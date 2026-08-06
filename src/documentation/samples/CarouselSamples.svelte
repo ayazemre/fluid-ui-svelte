@@ -37,16 +37,15 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">1. Default (1 Item)</Text>
 		<Text class="text-neutral-500">Standard full-width carousel with snapping.</Text>
-		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview w-full">
+			<Container class="documentation-preview w-full overflow-hidden">
 				<Carousel {items} componentId="h-1-default" visibleItemCount={1}>
-					                    {#snippet itemTemplate({ item })}
-					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-					                        </Container>
-					                    {/snippet}				</Carousel>
+					{#snippet itemTemplate({ item })}
+						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+						</Container>
+					{/snippet}
+				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -79,10 +78,8 @@
 			<Text>Visible: {h_multi_count}</Text>
 		</Container>
 
-		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview w-full">
+			<Container class="documentation-preview w-full overflow-hidden">
 				<Carousel
 					{items}
 					componentId="h-multi-controlled"
@@ -90,11 +87,12 @@
 					visibleItemCount={h_multi_count}
 					snapItems={true}
 				>
-					                    {#snippet itemTemplate({ item })}
-					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-					                        </Container>
-					                    {/snippet}				</Carousel>
+					{#snippet itemTemplate({ item })}
+						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+						</Container>
+					{/snippet}
+				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -103,16 +101,15 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">3. Free Scroll (No Snap)</Text>
 		<Text class="text-neutral-500">Snapping disabled for smooth free scrolling.</Text>
-		<Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview w-full">
+			<Container class="documentation-preview w-full overflow-hidden">
 				<Carousel {items} componentId="h-free-scroll" visibleItemCount={2.5} snapItems={false}>
-					                    {#snippet itemTemplate({ item })}
-					                        <Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
-					                            <Text type="h2" class="text-4xl font-bold">{item.text}</Text>
-					                        </Container>
-					                    {/snippet}				</Carousel>
+					{#snippet itemTemplate({ item })}
+						<Container class="flex h-40 w-full items-center justify-center {item.color} text-white">
+							<Text type="h2" class="text-4xl font-bold">{item.text}</Text>
+						</Container>
+					{/snippet}
+				</Carousel>
 			</Container>
 		</Container>
 	</Container>
@@ -129,10 +126,8 @@
 	<!-- 4. Vertical - Default (1 Item) -->
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">4. Vertical Default (1 Item)</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="h-64 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview">
+			<Container class="documentation-preview h-64 w-full overflow-hidden">
 				<Carousel {items} orientation="vertical" componentId="v-1-default" visibleItemCount={1}>
 					{#snippet itemTemplate({ item })}
 						<Container
@@ -173,10 +168,8 @@
 			<Text>Active: {v_multi_index}</Text>
 		</Container>
 
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="h-96 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview">
+			<Container class="documentation-preview h-96 w-full overflow-hidden">
 				<Carousel
 					{items}
 					orientation="vertical"
@@ -200,10 +193,8 @@
 	<!-- 6. Vertical - Free Scroll (No Snap) -->
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">6. Vertical Free Scroll (No Snap)</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
-			<Container
-				class="h-80 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
-			>
+		<Container class="documentation-preview">
+			<Container class="documentation-preview h-80 w-full overflow-hidden">
 				<Carousel
 					{items}
 					orientation="vertical"

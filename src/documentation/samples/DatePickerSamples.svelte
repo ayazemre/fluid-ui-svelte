@@ -32,7 +32,7 @@
 		<Text class="text-neutral-500">
 			Control the displayed month by updating the <Text type="code">currentDate</Text> prop from outside.
 		</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Container class="mb-4 flex gap-2">
 				<Button class="fluid-button-secondary" onclick={async () => changeMonth1(-1)}>Prev</Button>
 				<Button class="fluid-button-secondary" onclick={async () => changeMonth1(1)}>Next</Button>
@@ -48,7 +48,7 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-xl font-bold">2. Multi Calendar</Text>
 		<Text class="text-neutral-500">Connect multiple calendars to the same state variables.</Text>
-		<Container class="rounded-xl border p-6 dark:border-neutral-800">
+		<Container class="documentation-preview">
 			<Container class="mb-4 flex gap-2">
 				<Button class="fluid-button-secondary" onclick={async () => changeMonthMulti(-1)}
 					>Prev</Button

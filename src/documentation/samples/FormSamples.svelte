@@ -11,11 +11,10 @@
 	<Container class="flex flex-col gap-4">
 		<Text type="h3" class="text-lg font-semibold">Basic Form</Text>
 		<Text class="text-sm text-neutral-500">
-			A standard form wrapper that automatically handles <Text type="code">preventDefault</Text> on
-			submission.
+			A standard form wrapper that automatically handles <Text type="code">preventDefault</Text> on submission.
 		</Text>
 
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Form class="gap-4">
 				<Container class="flex flex-col gap-2">
 					<Text type="span" class="text-sm font-medium">Username</Text>

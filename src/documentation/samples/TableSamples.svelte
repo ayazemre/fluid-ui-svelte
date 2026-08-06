@@ -23,7 +23,7 @@
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Standard Table</Text>
 		<Text class="text-sm text-neutral-500">A basic table with header, body, and footer.</Text>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Table
 				caption="User Directory"
 				tableHeadItems={headers}
@@ -49,7 +49,7 @@
 		<Text type="h3" class="text-lg font-semibold">Styled Table</Text>
 		<Text class="text-sm text-neutral-500">Applying custom classes to specific table sections.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Table
 				tableHeadItems={headers}
 				tableRowItems={users}

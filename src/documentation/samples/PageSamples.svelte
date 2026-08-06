@@ -21,7 +21,7 @@
 
 		<Container class="grid grid-cols-1 gap-8 lg:grid-cols-2">
 			<!-- Controls -->
-			<Container class="flex flex-col gap-4 rounded-lg border p-6 dark:border-neutral-700">
+			<Container class="documentation-preview flex flex-col gap-4">
 				<Container class="flex flex-col gap-2">
 					<Text class="text-xs font-medium text-neutral-500 uppercase">Preview Title</Text>
 					<InputField bind:value={previewTitle} class="w-full" />
@@ -43,9 +43,7 @@
 			<!-- Visual Preview -->
 			<Container class="flex flex-col justify-center gap-4">
 				<Text class="text-xs font-medium text-neutral-400 uppercase">Mock Link Preview</Text>
-				<Container
-					class="overflow-hidden rounded-lg border bg-neutral-50 shadow-sm dark:border-neutral-700 dark:bg-neutral-800"
-				>
+				<Container class="documentation-preview overflow-hidden">
 					{#if previewImage}
 						<Container
 							class="aspect-[1.91/1] w-full overflow-hidden border-b dark:border-neutral-700"
@@ -72,9 +70,7 @@
 			head.
 		</Text>
 
-		<Container
-			class="rounded-lg border bg-neutral-50 p-6 dark:border-neutral-700 dark:bg-neutral-900"
-		>
+		<Container class="documentation-preview">
 			<Text class="text-center text-neutral-500 italic">
 				(This documentation page itself is wrapped in a Page component. Check the browser tab title
 				or inspect the HTML source to see the metadata in action.)

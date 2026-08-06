@@ -9,7 +9,7 @@
 	<!-- Primary Button -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Primary</Text>
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Button
 				class="fluid-button-primary"
 				onclick={async (event, buttonState) => {
@@ -31,7 +31,7 @@
 	<!-- Secondary Button -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Secondary</Text>
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Button
 				class="fluid-button-secondary"
 				onclick={async (event, buttonState) => {
@@ -53,7 +53,7 @@
 	<!-- Outline Button -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Outline</Text>
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Button
 				class="fluid-button-outline"
 				onclick={async (event, buttonState) => {
@@ -75,7 +75,7 @@
 	<!-- Transparent Button -->
 	<Container class="flex flex-col gap-2">
 		<Text type="h3" class="text-lg font-semibold">Transparent</Text>
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Button
 				class="fluid-button-transparent"
 				onclick={async (event, buttonState) => {
@@ -97,7 +97,7 @@
 	<!-- With Icon -->
 	<Container class="flex flex-col gap-2 md:col-span-2">
 		<Text type="h3" class="text-lg font-semibold">With Icon</Text>
-		<Container class="flex items-center gap-4 rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview flex items-center gap-4">
 			<Button
 				class="fluid-button-primary"
 				onclick={async (event, buttonState) => {

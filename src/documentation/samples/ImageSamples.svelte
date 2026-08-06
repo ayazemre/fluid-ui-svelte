@@ -19,7 +19,7 @@
 		<Text class="text-sm text-neutral-500"
 			>Renders a standard image immediately without any artificial delay applied.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Container class="h-48 w-full overflow-hidden rounded-lg">
 				<Image
 					src="https://picsum.photos/id/1018/500/300"
@@ -37,7 +37,7 @@
 		<Text class="text-sm text-neutral-500"
 			>This example has a manual 3-second delay to showcase the skeleton effect.</Text
 		>
-		<Container class="rounded-lg border p-6 dark:border-neutral-700">
+		<Container class="documentation-preview">
 			<Container class="h-48 w-full overflow-hidden rounded-lg">
 				<Image src={delayedSrc} alt="Delayed loading example" class="h-full w-full object-cover!" />
 			</Container>
