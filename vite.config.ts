@@ -1,30 +1,54 @@
-import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vitest/config';
-import { sveltekit } from '@sveltejs/kit/vite';
+import adapter from "@sveltejs/adapter-node";
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit()],
-	test: {
-		expect: { requireAssertions: true },
-		projects: [
-			{
-				extends: './vite.config.ts',
-				test: {
-					name: 'client',
-					environment: 'browser',
-					browser: {
-						enabled: true,
-						provider: 'playwright',
-						instances: [{ browser: 'chromium' }],
-						locators: { testIdAttribute: 'id' },
-						headless: true
-					},
-					testTimeout: 2000,
-					css: true,
-					include: ['tests/**/*.svelte.{test,spec}.{js,ts}'],
-					setupFiles: ['./vitest-setup-client.ts', 'tests/setup-tests.ts']
-				}
-			}
-		]
-	}
+  plugins: [
+    sveltekit({
+      adapter: adapter(),
+      compilerOptions: {},
+      typescript: {
+        config: () => {
+          return {
+            compilerOptions: {
+              exclude: [
+                "../node_modules/**",
+                "../src/service-worker.js",
+                "../src/service-worker/**/*.js",
+                "../src/service-worker.ts",
+                "../src/service-worker/**/*.ts",
+                "../src/service-worker.d.ts",
+                "../src/service-worker/**/*.d.ts",
+              ],
+              include: [
+                "ambient.d.ts",
+                "env.d.ts",
+                "non-ambient.d.ts",
+                "./types/**/$types.d.ts",
+                "../vite.config.js",
+                "../vite.config.ts",
+                "../src/**/*.js",
+                "../src/**/*.ts",
+                "../src/**/*.svelte",
+                "../test/**/*.js",
+                "../test/**/*.ts",
+                "../test/**/*.svelte",
+                "../tests/**/*.js",
+                "../tests/**/*.ts",
+                "../tests/**/*.svelte",
+              ],
+              isolatedModules: true,
+              lib: ["esnext", "DOM", "DOM.Iterable"],
+              module: "esnext",
+              moduleResolution: "bundler",
+              noEmit: true,
+              rootDirs: ["..", "./types"],
+              target: "esnext",
+              verbatimModuleSyntax: true,
+            },
+          };
+        },
+      },
+    }),
+  ],
 });
