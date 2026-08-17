@@ -2,7 +2,8 @@
 .vscode
 .DS_Store
 .env
-node_modules
+build
 dist
+node_modules
 coverage
 temporary

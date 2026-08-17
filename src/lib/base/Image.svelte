@@ -1,0 +1,22 @@
+<script lang="ts">
+  import { mergeClasses } from "#src/lib/utilities/common.ts";
+
+  import type { HTMLImgAttributes } from "svelte/elements";
+
+  const {
+    class: className = "",
+    overrideDefaultStyling = false,
+    ...rest
+  }: {
+    class?: string;
+    overrideDefaultStyling?: boolean;
+  } & HTMLImgAttributes = $props();
+  // TODO: This delays and causes unnecessary loading animation.
+  let isLoaded = $state(false);
+</script>
+
+<img
+  onload={() => (isLoaded = true)}
+  {...rest}
+  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-image") + (isLoaded ? "" : " fluid-image-loading")}
+/>
