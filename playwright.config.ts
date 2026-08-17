@@ -1,28 +1,21 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "tests",
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  reporter: "html",
-
-  use: {
-    baseURL: "http://localhost:4173",
-    trace: "on-first-retry",
-  },
-
-  // Automatically builds & runs your SvelteKit app before running E2E tests
-  webServer: {
-    command: "npm run build && npm run preview",
-    port: 4173,
-    reuseExistingServer: !process.env.CI,
-  },
-
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "components",
+      testDir: "./tests/components",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "http://localhost:5173/playwright/gallery/index.html",
+        reuseContext: true,
+        serviceWorkers: "block",
+      },
     },
   ],
+  webServer: {
+    command: "npm run dev",
+    reuseExistingServer: !process.env.CI,
+    url: "http://localhost:5173/playwright/gallery/index.html",
+  },
 });
