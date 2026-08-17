@@ -1,8 +1,9 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { Container, Button, Text } from "$lib/base";
-  import { Page } from "$lib/components";
   import Icon from "@iconify/svelte";
+
+  import { Container, Button, Text } from "#src/lib/base/index.ts";
+  import { Page } from "#src/lib/components/index.ts";
 </script>
 
 <Page

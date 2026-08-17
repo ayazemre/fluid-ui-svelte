@@ -955,7 +955,7 @@ export const componentRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: NotificationSamples,
+      sampleComponent: "",
       title: "Fluid UI - Notification Area",
     },
     page: {

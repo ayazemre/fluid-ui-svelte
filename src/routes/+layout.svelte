@@ -1,10 +1,11 @@
 <script lang="ts">
   import "../documentation.css";
   import { page } from "$app/state";
-  import { Container, Text, Link, Button } from "$lib/base";
   import Icon from "@iconify/svelte";
 
-  import { globalState } from "./globalState.svelte.js";
+  import { Container, Text, Link, Button } from "#src/lib/base/index.ts";
+
+  import { globalState } from "./globalState.svelte.ts";
 
   let { children } = $props();
 </script>
