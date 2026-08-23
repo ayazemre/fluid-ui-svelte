@@ -1,29 +1,31 @@
-import AccordionSamples from "./samples/AccordionSamples.svelte";
-import BreadcrumbSamples from "./samples/BreadcrumbSamples.svelte";
-import ButtonSamples from "./samples/ButtonSamples.svelte";
-import CarouselSamples from "./samples/CarouselSamples.svelte";
-import CodeBlockSamples from "./samples/CodeBlockSamples.svelte";
-import ContainerSamples from "./samples/ContainerSamples.svelte";
-import DatePickerSamples from "./samples/DatePickerSamples.svelte";
-import DraggableSamples from "./samples/DraggableSamples.svelte";
-import DrawerSamples from "./samples/DrawerSamples.svelte";
-import DropzoneSamples from "./samples/DropzoneSamples.svelte";
-import FormSamples from "./samples/FormSamples.svelte";
-import ImageCropSamples from "./samples/ImageCropSamples.svelte";
-import ImageSamples from "./samples/ImageSamples.svelte";
-import InputFieldSamples from "./samples/InputFieldSamples.svelte";
-import LinkSamples from "./samples/LinkSamples.svelte";
-import ListSamples from "./samples/ListSamples.svelte";
-import ModalSamples from "./samples/ModalSamples.svelte";
-import NotificationSamples from "./samples/NotificationSamples.svelte";
-import PageSamples from "./samples/PageSamples.svelte";
-import PaginationSamples from "./samples/PaginationSamples.svelte";
-import PopoverSamples from "./samples/PopoverSamples.svelte";
-import SwitchSamples from "./samples/SwitchSamples.svelte";
-import TableSamples from "./samples/TableSamples.svelte";
-import TextSamples from "./samples/TextSamples.svelte";
+import {
+  AccordionSamples,
+  BreadcrumbSamples,
+  ButtonSamples,
+  CarouselSamples,
+  CodeBlockSamples,
+  ContainerSamples,
+  DatePickerSamples,
+  DraggableSamples,
+  DrawerSamples,
+  DropzoneSamples,
+  FormSamples,
+  ImageCropSamples,
+  ImageSamples,
+  InputFieldSamples,
+  LinkSamples,
+  ListSamples,
+  ModalSamples,
+  NotificationSamples,
+  PageSamples,
+  PaginationSamples,
+  PopoverSamples,
+  SwitchSamples,
+  TableSamples,
+  TextSamples,
+} from "./samples/index.ts";
 
-export const componentRegistry = {
+export const documentationRegistry = {
   base: {
     button: {
       description:
@@ -955,7 +957,7 @@ export const componentRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: "",
+      sampleComponent: NotificationSamples,
       title: "Fluid UI - Notification Area",
     },
     page: {

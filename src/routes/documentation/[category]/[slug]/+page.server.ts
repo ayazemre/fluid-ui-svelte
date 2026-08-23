@@ -1,12 +1,12 @@
 import { error } from "@sveltejs/kit";
 
-import { componentRegistry } from "../../../../documentation/registry.js";
+import { documentationRegistry } from "#src/documentation/documentation.ts";
 
 export function load({ params }) {
   const { category, slug } = params;
 
   // @ts-ignore
-  const categoryRegistry = componentRegistry[category];
+  const categoryRegistry = documentationRegistry[category];
 
   if (!categoryRegistry) {
     throw error(404, "Category not found");

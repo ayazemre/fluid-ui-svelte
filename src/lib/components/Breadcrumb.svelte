@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Container, Link } from "#src/lib/base/index.ts";
+  import { Container, Link, Text } from "#src/lib/base/index.ts";
   import { mergeClasses } from "#src/lib/utilities/common.ts";
 
   import type { Snippet } from "svelte";
@@ -24,15 +24,15 @@
         <li class="fluid-breadcrumb-item">
           {#if index < items.length - 1}
             <Link href={item.href}>{item.label}</Link>
-            <span class="fluid-breadcrumb-separator" aria-hidden="true">
+            <Text class="fluid-breadcrumb-separator" aria-hidden="true">
               {#if typeof separator === "string"}
                 {separator}
               {:else}
                 {@render separator()}
               {/if}
-            </span>
+            </Text>
           {:else}
-            <span class="fluid-breadcrumb-current font-bold" aria-current="page">{item.label}</span>
+            <Text class="fluid-breadcrumb-current font-bold" aria-current="page">{item.label}</Text>
           {/if}
         </li>
       {/each}

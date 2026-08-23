@@ -1,4 +1,4 @@
-import { componentRegistry } from "../../documentation/registry.js";
+import { documentationRegistry } from "#src/documentation/documentation.ts";
 
 const lastmod = new Date().toISOString().split("T")[0];
 
@@ -8,7 +8,7 @@ export async function GET() {
   const pages = ["", "documentation/getting-started", "documentation/how-to", "llm-protocol"];
 
   const componentUrls = [];
-  for (const [category, items] of Object.entries(componentRegistry)) {
+  for (const [category, items] of Object.entries(documentationRegistry)) {
     for (const slug of Object.keys(items)) {
       componentUrls.push(`documentation/${category}/${slug}`);
     }

@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { documentationRegistry } from "#src/documentation/documentation.ts";
   import { Container, Text, Table } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
-
-  import { componentRegistry } from "../../../../documentation/registry.js";
 
   let { data } = $props();
 
@@ -10,7 +9,7 @@
 
   let SampleComponent = $derived(
     // @ts-ignore
-    componentRegistry[data.category][data.slug].sampleComponent,
+    documentationRegistry[data.category][data.slug].sampleComponent,
   );
 
   const headers = ["Prop", "Type", "Default", "Description"];

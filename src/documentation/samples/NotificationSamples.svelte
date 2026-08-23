@@ -2,8 +2,6 @@
   import { Container, Text, Button } from "#src/lib/base/index.ts";
   import { NotificationArea, CodeBlock } from "#src/lib/components/index.ts";
 
-  import type { NotificationArea } from "#src/lib/components/index.ts";
-
   import { codeBlockContents } from "./codeBlockContents.ts";
 
   let notifications = $state<Notification[]>([]);

@@ -4,22 +4,22 @@
   import Icon from "@iconify/svelte";
   import { fly, fade } from "svelte/transition";
 
+  import { documentationRegistry } from "#src/documentation/documentation.ts";
   import { Container, Link, Text } from "#src/lib/base/index.ts";
   import { Accordion, Drawer } from "#src/lib/components/index.ts";
 
-  import { componentRegistry } from "../../documentation/registry";
   import { globalState } from "../globalState.svelte";
 
   let { children } = $props();
 
-  const base = Object.entries(componentRegistry.base)
+  const base = Object.entries(documentationRegistry.base)
     .map(([slug, data]) => ({
       name: data.title.replace("Fluid UI - ", ""),
       url: `/documentation/base/${slug}`,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  const components = Object.entries(componentRegistry.components)
+  const components = Object.entries(documentationRegistry.components)
     .map(([slug, data]) => ({
       name: data.title.replace("Fluid UI - ", ""),
       url: `/documentation/components/${slug}`,
