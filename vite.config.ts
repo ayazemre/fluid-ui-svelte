@@ -18,7 +18,6 @@ export default defineConfig({
               module: "esnext",
               moduleResolution: "bundler",
               noEmit: true,
-              resolveJsonModule: true,
               rootDirs: ["..", "./types"],
               skipLibCheck: true,
               sourceMap: true,

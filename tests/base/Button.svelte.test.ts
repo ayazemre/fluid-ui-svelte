@@ -1,7 +1,6 @@
-import { page } from "@vitest/browser/context";
 import { createRawSnippet } from "svelte";
-import { describe, expect, test } from "vitest";
-import { render } from "vitest-browser-svelte";
+
+import { test, describe } from "node:test";
 
 import { Button } from "#src/lib/base/index.ts";
 

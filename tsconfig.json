@@ -1,10 +1,4 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
-  "compilerOptions": {
-    "allowArbitraryExtensions": true,
-    "allowJs": true,
-    "checkJs": true
-  },
-
-  "include": ["./src/**/*", "./tests/**/*", "ambient.d.ts", "env.d.ts", "non-ambient.d.ts"]
+  "include": ["./src/**/*", "./tests/**/*"]
 }
