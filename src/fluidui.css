@@ -286,6 +286,72 @@ main.fluid-container {
 	@apply text-content transition-all duration-500;
 }
 
+/* Badge --------------------------- */
+.fluid-badge {
+	@apply inline-flex items-center gap-1 rounded-full bg-surface-sunken px-2.5 py-0.5 text-xs font-semibold text-content transition-colors;
+}
+.fluid-badge-primary {
+	@apply bg-primary-500 text-on-primary;
+}
+.fluid-badge-secondary {
+	@apply bg-secondary-500 text-on-secondary;
+}
+.fluid-badge-success {
+	@apply bg-success-500 text-on-success;
+}
+.fluid-badge-warning {
+	@apply bg-warning-500 text-on-warning;
+}
+.fluid-badge-error {
+	@apply bg-error-500 text-on-error;
+}
+.fluid-badge-info {
+	@apply bg-info-500 text-on-info;
+}
+.fluid-badge-outline {
+	@apply border border-border bg-transparent text-content;
+}
+
+/* Checkbox ------------------------ */
+.fluid-checkbox-input {
+	@apply h-4 w-4 cursor-pointer rounded border-border text-primary-500 accent-primary-500 transition-all focus:ring-2 focus:ring-primary-500 focus:ring-offset-1;
+}
+.fluid-checkbox-label {
+	@apply text-content;
+}
+
+/* Radio --------------------------- */
+.fluid-radio-input {
+	@apply h-4 w-4 cursor-pointer rounded-full border-border text-primary-500 accent-primary-500 transition-all focus:ring-2 focus:ring-primary-500 focus:ring-offset-1;
+}
+.fluid-radio-label {
+	@apply text-content;
+}
+
+/* Divider ------------------------- */
+.fluid-divider {
+	@apply border-border;
+}
+.fluid-divider-horizontal {
+	@apply border-border;
+}
+.fluid-divider-vertical {
+	@apply border-border;
+}
+.fluid-divider-label {
+	@apply font-medium text-content-subtle;
+}
+
+/* Select -------------------------- */
+.fluid-select {
+	@apply cursor-pointer rounded-md bg-surface-raised p-2 text-content outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+/* Kbd ----------------------------- */
+.fluid-kbd {
+	@apply inline-flex items-center justify-center rounded border border-border bg-surface-sunken px-1.5 py-0.5 font-mono text-xs font-semibold text-content shadow-xs;
+}
+
 /* ==========================================================================
    COMPONENT LAYER STYLES
    Complex UI elements composed from the Base Layer.
@@ -487,4 +553,134 @@ main.fluid-container {
 }
 .fluid-notification-close {
 	@apply text-content-subtle transition-colors hover:text-content;
+}
+
+/* Tabs ---------------------------- */
+.fluid-tabs-container {
+	@apply w-full;
+}
+.fluid-tabs-list {
+	@apply gap-1 border-border;
+}
+.fluid-tabs-tab {
+	@apply rounded-t-md text-content-muted hover:bg-surface-hover hover:text-content;
+}
+.fluid-tabs-tab-active {
+	@apply border-b-2 border-primary-700 bg-surface-raised text-primary-700 dark:border-primary-300 dark:text-primary-300;
+}
+.fluid-tabs-panel {
+	@apply pt-4 text-content focus:outline-none;
+}
+
+/* Tooltip ------------------------- */
+.fluid-tooltip-content {
+	@apply rounded-md bg-neutral-900 px-2.5 py-1 text-xs text-neutral-100 shadow-md backdrop-blur-sm dark:bg-neutral-100 dark:text-neutral-900;
+}
+
+/* Alert --------------------------- */
+.fluid-alert-container {
+	@apply transition-all;
+}
+.fluid-alert-info {
+	@apply border-info-200 bg-info-50 text-info-900 dark:border-info-900 dark:bg-info-950 dark:text-info-100;
+}
+.fluid-alert-success {
+	@apply border-success-200 bg-success-50 text-success-900 dark:border-success-900 dark:bg-success-950 dark:text-success-100;
+}
+.fluid-alert-warning {
+	@apply border-warning-200 bg-warning-50 text-warning-900 dark:border-warning-900 dark:bg-warning-950 dark:text-warning-100;
+}
+.fluid-alert-error {
+	@apply border-error-200 bg-error-50 text-error-900 dark:border-error-900 dark:bg-error-950 dark:text-error-100;
+}
+
+/* Progress ------------------------ */
+.fluid-progress-track {
+	@apply bg-surface-sunken;
+}
+.fluid-progress-bar {
+	@apply bg-primary-500;
+}
+.fluid-progress-indeterminate {
+	@apply animate-pulse bg-primary-500;
+}
+
+/* Avatar -------------------------- */
+.fluid-avatar-container {
+	@apply bg-surface-sunken;
+}
+.fluid-avatar-fallback {
+	@apply bg-surface-sunken font-medium text-content;
+}
+.fluid-avatar-status {
+	@apply ring-2 ring-surface-raised;
+}
+.fluid-avatar-status-online {
+	@apply bg-success-500;
+}
+.fluid-avatar-status-offline {
+	@apply bg-content-subtle;
+}
+.fluid-avatar-status-busy {
+	@apply bg-error-500;
+}
+.fluid-avatar-status-away {
+	@apply bg-warning-500;
+}
+
+/* Combobox ------------------------ */
+.fluid-combobox-container {
+	@apply w-full;
+}
+.fluid-combobox-trigger {
+	@apply cursor-pointer;
+}
+.fluid-combobox-dropdown {
+	@apply z-50;
+}
+.fluid-combobox-item {
+	@apply cursor-pointer;
+}
+.fluid-combobox-item-selected {
+	@apply font-semibold;
+}
+
+/* Slider -------------------------- */
+.fluid-slider-container {
+	@apply w-full;
+}
+.fluid-slider-track {
+	@apply cursor-pointer;
+}
+.fluid-slider-fill {
+	@apply bg-primary-500;
+}
+.fluid-slider-thumb {
+	@apply border-surface-raised bg-primary-500;
+}
+
+/* Context Menu -------------------- */
+.fluid-context-menu-wrapper {
+	@apply inline-block;
+}
+.fluid-context-menu-panel {
+	@apply z-50;
+}
+
+/* Skeleton ------------------------ */
+.fluid-skeleton {
+	@apply animate-pulse bg-surface-sunken;
+}
+
+/* Spinner ------------------------- */
+.fluid-spinner {
+	@apply inline-block animate-spin rounded-full border-solid border-current border-t-transparent text-primary-500;
+}
+
+/* PinInput ------------------------ */
+.fluid-pin-input-container {
+	@apply flex items-center gap-2;
+}
+.fluid-pin-input-cell {
+	@apply h-11 w-11 rounded-md border border-border bg-surface-raised text-center font-mono text-lg font-semibold text-content shadow-xs transition-all focus:border-primary-500 focus:outline-2 focus:outline-primary-500 disabled:cursor-not-allowed;
 }

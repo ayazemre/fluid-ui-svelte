@@ -22,6 +22,23 @@ import ModalSamples from './samples/ModalSamples.svelte';
 import BreadcrumbSamples from './samples/BreadcrumbSamples.svelte';
 import PaginationSamples from './samples/PaginationSamples.svelte';
 import NotificationSamples from './samples/NotificationSamples.svelte';
+import BadgeSamples from './samples/BadgeSamples.svelte';
+import CheckboxSamples from './samples/CheckboxSamples.svelte';
+import RadioSamples from './samples/RadioSamples.svelte';
+import DividerSamples from './samples/DividerSamples.svelte';
+import TabsSamples from './samples/TabsSamples.svelte';
+import TooltipSamples from './samples/TooltipSamples.svelte';
+import AlertSamples from './samples/AlertSamples.svelte';
+import ProgressSamples from './samples/ProgressSamples.svelte';
+import AvatarSamples from './samples/AvatarSamples.svelte';
+import SelectSamples from './samples/SelectSamples.svelte';
+import ComboboxSamples from './samples/ComboboxSamples.svelte';
+import SliderSamples from './samples/SliderSamples.svelte';
+import ContextMenuSamples from './samples/ContextMenuSamples.svelte';
+import KbdSamples from './samples/KbdSamples.svelte';
+import SkeletonSamples from './samples/SkeletonSamples.svelte';
+import SpinnerSamples from './samples/SpinnerSamples.svelte';
+import PinInputSamples from './samples/PinInputSamples.svelte';
 
 export const componentRegistry = {
 	base: {
@@ -444,6 +461,202 @@ export const componentRegistry = {
 				}
 			],
 			sampleComponent: TextSamples
+		},
+		badge: {
+			title: 'Fluid UI - Badge',
+			description: 'A small visual label used to convey status, metadata, or numerical counts.',
+			props: [
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description:
+						'Visual style variant (primary, secondary, success, warning, error, info, outline).'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes the base fluid-badge class.'
+				},
+				{
+					prop: 'children',
+					type: 'Snippet',
+					default: '—',
+					description: 'The content to render inside the badge.'
+				},
+				{
+					prop: '...rest',
+					type: 'HTMLAttributes<HTMLSpanElement>',
+					default: '—',
+					description: 'Standard HTML span attributes.'
+				}
+			],
+			sampleComponent: BadgeSamples
+		},
+		checkbox: {
+			title: 'Fluid UI - Checkbox',
+			description:
+				'An accessible form input that allows selecting binary states or indeterminate values.',
+			props: [
+				{
+					prop: 'checked',
+					type: 'boolean',
+					default: 'false',
+					description: 'The checked state of the checkbox. Supports $bindable.'
+				},
+				{
+					prop: 'indeterminate',
+					type: 'boolean',
+					default: 'false',
+					description: 'Whether the checkbox is in an indeterminate (partially checked) state.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, disables interaction.'
+				},
+				{
+					prop: 'label',
+					type: 'string | Snippet',
+					default: 'undefined',
+					description: 'Optional label displayed alongside the checkbox.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom styling variant class.'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes default fluid-checkbox styling.'
+				},
+				{
+					prop: 'onclick',
+					type: '(event: Event, checked: boolean) => Promise<unknown> | void',
+					default: 'undefined',
+					description: 'Async click handler callback.'
+				}
+			],
+			sampleComponent: CheckboxSamples
+		},
+		radio: {
+			title: 'Fluid UI - Radio',
+			description: 'An accessible radio button input for single-choice option sets within forms.',
+			props: [
+				{
+					prop: 'value',
+					type: 'string',
+					default: 'required',
+					description: 'The value represented by this radio option.'
+				},
+				{
+					prop: 'group',
+					type: 'string',
+					default: "''",
+					description: 'Bound group selection value. Supports $bindable.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, disables interaction.'
+				},
+				{
+					prop: 'label',
+					type: 'string | Snippet',
+					default: 'undefined',
+					description: 'Optional label displayed alongside the radio button.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom styling variant class.'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes default fluid-radio styling.'
+				}
+			],
+			sampleComponent: RadioSamples
+		},
+		divider: {
+			title: 'Fluid UI - Divider',
+			description: 'A visual separator line used to segment and structure page layout sections.',
+			props: [
+				{
+					prop: 'orientation',
+					type: "'horizontal' | 'vertical'",
+					default: "'horizontal'",
+					description: 'The axis orientation of the divider.'
+				},
+				{
+					prop: 'label',
+					type: 'string | Snippet',
+					default: 'undefined',
+					description: 'Optional centered text label (horizontal mode only).'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes default fluid-divider styling.'
+				}
+			],
+			sampleComponent: DividerSamples
+		},
+		select: {
+			title: 'Fluid UI - Select',
+			description:
+				'A native HTML select input wrapper supporting option lists, snippets, and value binding.',
+			props: [
+				{
+					prop: 'value',
+					type: 'string',
+					default: "''",
+					description: 'The bound selected string value.'
+				},
+				{
+					prop: 'options',
+					type: 'Array<{ value: string; label: string; disabled?: boolean }>',
+					default: '[]',
+					description: 'The options list to render inside the select element.'
+				},
+				{
+					prop: 'placeholder',
+					type: 'string',
+					default: 'undefined',
+					description: 'Optional placeholder option shown when no value is selected.'
+				},
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes default fluid-select styling.'
+				}
+			],
+			sampleComponent: SelectSamples
+		},
+		kbd: {
+			title: 'Fluid UI - Kbd',
+			description:
+				'A semantic keyboard key indicator used to display keyboard shortcuts and hotkeys.',
+			props: [
+				{
+					prop: 'overrideDefaultStyling',
+					type: 'boolean',
+					default: 'false',
+					description: 'If true, removes default fluid-kbd styling.'
+				}
+			],
+			sampleComponent: KbdSamples
 		}
 	},
 	components: {
@@ -1022,8 +1235,7 @@ export const componentRegistry = {
 		},
 		modal: {
 			title: 'Fluid UI - Modal',
-			description:
-				'A barebone centered modal component for critical actions or information.',
+			description: 'A barebone centered modal component for critical actions or information.',
 			props: [
 				{
 					prop: 'isOpen',
@@ -1064,7 +1276,7 @@ export const componentRegistry = {
 				{
 					prop: 'transitionParams',
 					type: 'object',
-					default: "{ duration: 200, start: 0.95 }",
+					default: '{ duration: 200, start: 0.95 }',
 					description: 'Parameters for the panel transition.'
 				},
 				{
@@ -1076,7 +1288,7 @@ export const componentRegistry = {
 				{
 					prop: 'backdropTransitionParams',
 					type: 'object',
-					default: "{ duration: 200 }",
+					default: '{ duration: 200 }',
 					description: 'Parameters for the backdrop transition.'
 				},
 				{
@@ -1160,8 +1372,7 @@ export const componentRegistry = {
 		},
 		'notification-area': {
 			title: 'Fluid UI - Notification Area',
-			description:
-				'A fixed area for displaying non-intrusive notifications and alerts.',
+			description: 'A fixed area for displaying non-intrusive notifications and alerts.',
 			props: [
 				{
 					prop: 'items',
@@ -1183,6 +1394,423 @@ export const componentRegistry = {
 				}
 			],
 			sampleComponent: NotificationSamples
+		},
+		tabs: {
+			title: 'Fluid UI - Tabs',
+			description:
+				'An accessible tabbed navigation interface with animated panel selection and keyboard arrow controls.',
+			props: [
+				{
+					prop: 'items',
+					type: 'Array<TabItem>',
+					default: '[]',
+					description: 'Array of tab items with id, label, and optional content snippets.'
+				},
+				{
+					prop: 'activeTabId',
+					type: 'string',
+					default: "''",
+					description: 'The id of the currently active tab. Supports $bindable.'
+				},
+				{
+					prop: 'orientation',
+					type: "'horizontal' | 'vertical'",
+					default: "'horizontal'",
+					description: 'Layout axis orientation for the tab list.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				},
+				{
+					prop: 'componentId',
+					type: 'string',
+					default: 'crypto.randomUUID()',
+					description: 'The unique identifier for the component wrapper.'
+				}
+			],
+			sampleComponent: TabsSamples
+		},
+		tooltip: {
+			title: 'Fluid UI - Tooltip',
+			description: 'A contextual popup hint displayed upon hovering or focusing a trigger element.',
+			props: [
+				{
+					prop: 'trigger',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Snippet for the target anchor element.'
+				},
+				{
+					prop: 'text',
+					type: 'string',
+					default: 'undefined',
+					description: 'Text string content displayed inside the tooltip.'
+				},
+				{
+					prop: 'content',
+					type: 'Snippet',
+					default: 'undefined',
+					description: 'Custom snippet content displayed inside the tooltip.'
+				},
+				{
+					prop: 'position',
+					type: "'top' | 'bottom' | 'left' | 'right'",
+					default: "'top'",
+					description: 'Placement of the tooltip relative to the trigger element.'
+				},
+				{
+					prop: 'delay',
+					type: 'number',
+					default: '200',
+					description: 'Delay in milliseconds before the tooltip appears.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: TooltipSamples
+		},
+		alert: {
+			title: 'Fluid UI - Alert',
+			description:
+				'A prominent banner used to communicate system feedback, warnings, and confirmations.',
+			props: [
+				{
+					prop: 'type',
+					type: "'info' | 'success' | 'warning' | 'error'",
+					default: "'info'",
+					description: 'The semantic status type of the alert.'
+				},
+				{
+					prop: 'title',
+					type: 'string',
+					default: 'undefined',
+					description: 'Bold title header for the alert message.'
+				},
+				{
+					prop: 'description',
+					type: 'string',
+					default: 'undefined',
+					description: 'Body message for the alert.'
+				},
+				{
+					prop: 'dismissible',
+					type: 'boolean',
+					default: 'false',
+					description: 'Whether to show a close dismiss button.'
+				},
+				{
+					prop: 'ondismiss',
+					type: '(event: Event) => Promise<unknown> | void',
+					default: 'undefined',
+					description: 'Async callback triggered when the alert is dismissed.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: AlertSamples
+		},
+		progress: {
+			title: 'Fluid UI - Progress',
+			description:
+				'An accessible progress bar for displaying determinate percentages or indeterminate loading states.',
+			props: [
+				{
+					prop: 'value',
+					type: 'number',
+					default: 'undefined',
+					description: 'Current progress value (0 to max). Omit for indeterminate mode.'
+				},
+				{
+					prop: 'max',
+					type: 'number',
+					default: '100',
+					description: 'Maximum progress value.'
+				},
+				{
+					prop: 'showValue',
+					type: 'boolean',
+					default: 'false',
+					description: 'Whether to display the numerical percentage value.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: ProgressSamples
+		},
+		avatar: {
+			title: 'Fluid UI - Avatar',
+			description:
+				'An avatar element displaying a user photo, automatic initials fallback, and status dot.',
+			props: [
+				{
+					prop: 'src',
+					type: 'string',
+					default: 'undefined',
+					description: 'Image URL for the avatar.'
+				},
+				{
+					prop: 'name',
+					type: 'string',
+					default: "''",
+					description: 'User display name used to compute initials fallback.'
+				},
+				{
+					prop: 'size',
+					type: "'sm' | 'md' | 'lg' | 'xl'",
+					default: "'md'",
+					description: 'Size diameter of the avatar.'
+				},
+				{
+					prop: 'status',
+					type: "'online' | 'offline' | 'busy' | 'away'",
+					default: 'undefined',
+					description: 'Presence status indicator dot.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: AvatarSamples
+		},
+		combobox: {
+			title: 'Fluid UI - Combobox',
+			description:
+				'A searchable dropdown select component supporting single and multi-select modes, search filtering, and custom snippets.',
+			props: [
+				{
+					prop: 'options',
+					type: 'Array<{ value: string; label: string; disabled?: boolean }>',
+					default: '[]',
+					description: 'List of selectable option items.'
+				},
+				{
+					prop: 'value',
+					type: 'string | string[]',
+					default: "''",
+					description: 'Bound selected value (string or array of strings for multi-select).'
+				},
+				{
+					prop: 'multiple',
+					type: 'boolean',
+					default: 'false',
+					description: 'Allows multiple option selection if true.'
+				},
+				{
+					prop: 'placeholder',
+					type: 'string',
+					default: "'Select option...'",
+					description: 'Placeholder label when nothing is selected.'
+				},
+				{
+					prop: 'searchPlaceholder',
+					type: 'string',
+					default: "'Search...'",
+					description: 'Search input placeholder inside dropdown.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'Disables combobox trigger.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: ComboboxSamples
+		},
+		slider: {
+			title: 'Fluid UI - Slider',
+			description:
+				'An accessible range slider input supporting drag interaction, step increments, and keyboard navigation.',
+			props: [
+				{
+					prop: 'value',
+					type: 'number',
+					default: '0',
+					description: 'Bound numerical value.'
+				},
+				{
+					prop: 'min',
+					type: 'number',
+					default: '0',
+					description: 'Minimum allowed value.'
+				},
+				{
+					prop: 'max',
+					type: 'number',
+					default: '100',
+					description: 'Maximum allowed value.'
+				},
+				{
+					prop: 'step',
+					type: 'number',
+					default: '1',
+					description: 'Step increment value.'
+				},
+				{
+					prop: 'showValue',
+					type: 'boolean',
+					default: 'false',
+					description: 'Displays current numeric value header.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'Disables slider interaction.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: SliderSamples
+		},
+		'context-menu': {
+			title: 'Fluid UI - ContextMenu',
+			description:
+				'A desktop-grade contextual menu that opens at pointer coordinates upon right-click with automatic screen boundary clamping.',
+			props: [
+				{
+					prop: 'trigger',
+					type: 'Snippet',
+					default: 'required',
+					description: 'Trigger area snippet listening for contextmenu events.'
+				},
+				{
+					prop: 'menu',
+					type: 'Snippet<[{ close: () => void }]>',
+					default: 'required',
+					description: 'Floating contextual menu panel snippet.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: ContextMenuSamples
+		},
+		skeleton: {
+			title: 'Fluid UI - Skeleton',
+			description:
+				'An animated shimmer placeholder used to indicate loading content and prevent layout shift.',
+			props: [
+				{
+					prop: 'shape',
+					type: "'rectangle' | 'circle' | 'text'",
+					default: "'rectangle'",
+					description: 'Visual geometry of the placeholder.'
+				},
+				{
+					prop: 'width',
+					type: 'string',
+					default: 'undefined',
+					description: 'Explicit width CSS string.'
+				},
+				{
+					prop: 'height',
+					type: 'string',
+					default: 'undefined',
+					description: 'Explicit height CSS string.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: SkeletonSamples
+		},
+		spinner: {
+			title: 'Fluid UI - Spinner',
+			description:
+				'A circular animated loading spinner icon for inline actions and loading states.',
+			props: [
+				{
+					prop: 'size',
+					type: "'sm' | 'md' | 'lg' | 'xl'",
+					default: "'md'",
+					description: 'Diameter preset size.'
+				},
+				{
+					prop: 'label',
+					type: 'string',
+					default: "'Loading...'",
+					description: 'Accessible screen reader label.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: SpinnerSamples
+		},
+		'pin-input': {
+			title: 'Fluid UI - PinInput',
+			description:
+				'A multi-box verification code input for OTP and 2FA authentication with auto-focus advancing and paste support.',
+			props: [
+				{
+					prop: 'length',
+					type: 'number',
+					default: '6',
+					description: 'Total number of digit cells.'
+				},
+				{
+					prop: 'value',
+					type: 'string',
+					default: "''",
+					description: 'Bound combined code string.'
+				},
+				{
+					prop: 'type',
+					type: "'number' | 'text' | 'password'",
+					default: "'number'",
+					description: 'Input character type.'
+				},
+				{
+					prop: 'disabled',
+					type: 'boolean',
+					default: 'false',
+					description: 'Disables all input cells.'
+				},
+				{
+					prop: 'variant',
+					type: 'string',
+					default: "''",
+					description: 'Custom variant class for theming.'
+				}
+			],
+			sampleComponent: PinInputSamples
 		}
 	}
 };

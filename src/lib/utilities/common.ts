@@ -1,3 +1,7 @@
-export function mergeClasses(classA: string, classB: string) {
-	return [...new Set([...classA.split(' '), ...classB.split(' ')])].join(' ').trim();
+export function mergeClasses(...classes: (string | undefined | false | null)[]) {
+	const classList = classes
+		.filter(Boolean)
+		.flatMap((className) => (className as string).split(' '))
+		.filter((className) => className.trim().length > 0);
+	return [...new Set(classList)].join(' ').trim();
 }

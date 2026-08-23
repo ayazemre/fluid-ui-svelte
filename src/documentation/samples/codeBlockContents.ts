@@ -810,6 +810,222 @@ const notificationBasic = `<script>
 <Button onclick={async () => add()}>Notify</Button>
 <NotificationArea bind:items={notifications} position="top-right" />`;
 
+// --- Badge ---
+const badgeBasic = `<Badge>Default</Badge>
+<Badge variant="primary">Primary</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="error">Error</Badge>
+<Badge variant="info">Info</Badge>`;
+
+const badgeVariants = `<Badge variant="outline">Outline</Badge>`;
+
+// --- Checkbox ---
+const checkboxBasic = `<script>
+  let isChecked = $state(false);
+</script>
+
+<Checkbox bind:checked={isChecked} label="Accept Terms and Conditions" />`;
+
+const checkboxIndeterminate = `<Checkbox indeterminate={true} label="Partially Selected" />`;
+
+// --- Radio ---
+const radioBasic = `<script>
+  let selectedOption = $state('email');
+</script>
+
+<Radio name="contact" value="email" bind:group={selectedOption} label="Email" />
+<Radio name="contact" value="phone" bind:group={selectedOption} label="Phone" />
+<Radio name="contact" value="sms" bind:group={selectedOption} label="SMS" />`;
+
+// --- Divider ---
+const dividerBasic = `<Divider />`;
+
+const dividerWithLabel = `<Divider label="OR CONTINUE WITH" />
+<Divider orientation="vertical" />`;
+
+// --- Tabs ---
+const tabsBasic = `<script>
+  let activeTabId = $state('account');
+
+  const tabItems = [
+    {
+      id: 'account',
+      label: 'Account',
+      content: accountSnippet
+    },
+    {
+      id: 'security',
+      label: 'Security',
+      content: securitySnippet
+    }
+  ];
+</script>
+
+<Tabs items={tabItems} bind:activeTabId />`;
+
+const tabsVertical = `<Tabs items={tabItems} orientation="vertical" />`;
+
+// --- Tooltip ---
+const tooltipBasic = `<Tooltip text="Save your current progress">
+  {#snippet trigger()}
+    <Button onclick={async () => {}}>Hover me</Button>
+  {/snippet}
+</Tooltip>`;
+
+const tooltipPositions = `<Tooltip text="Top tooltip" position="top">
+  {#snippet trigger()}
+    <Button onclick={async () => {}}>Top</Button>
+  {/snippet}
+</Tooltip>
+<Tooltip text="Bottom tooltip" position="bottom">
+  {#snippet trigger()}
+    <Button onclick={async () => {}}>Bottom</Button>
+  {/snippet}
+</Tooltip>`;
+
+// --- Alert ---
+const alertBasic = `<Alert
+  type="info"
+  title="Information"
+  description="Your account details were updated successfully."
+/>`;
+
+const alertVariants = `<Alert
+  type="success"
+  title="Payment Received"
+  description="Your order #12345 has been confirmed."
+  dismissible
+/>
+<Alert
+  type="warning"
+  title="Approaching Storage Limit"
+  description="You have used 85% of your available storage."
+/>
+<Alert
+  type="error"
+  title="Failed to Connect"
+  description="Could not establish connection to the remote server."
+/>`;
+
+// --- Progress ---
+const progressBasic = `<Progress value={65} max={100} showValue />`;
+
+const progressIndeterminate = `<Progress />`;
+
+// --- Avatar ---
+const avatarBasic = `<Avatar src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Sarah Connor" />`;
+
+const avatarInitials = `<Avatar name="Emre Ayaz" size="lg" />
+<Avatar name="Alex" size="md" />`;
+
+const avatarStatus = `<Avatar name="John Doe" status="online" />
+<Avatar name="Jane Smith" status="away" />
+<Avatar name="Bob Wilson" status="busy" />`;
+
+// --- Select ---
+const selectBasic = `<script>
+  let selectedCountry = $state('us');
+
+  const countryOptions = [
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'uk', label: 'United Kingdom' }
+  ];
+</script>
+
+<Select bind:value={selectedCountry} options={countryOptions} />`;
+
+// --- Combobox ---
+const comboboxBasic = `<script>
+  let selectedFramework = $state('');
+
+  const frameworkOptions = [
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue' }
+  ];
+</script>
+
+<Combobox bind:value={selectedFramework} options={frameworkOptions} />`;
+
+const comboboxMultiple = `<script>
+  let selectedTags = $state(['frontend', 'design']);
+
+  const tagOptions = [
+    { value: 'frontend', label: 'Frontend' },
+    { value: 'backend', label: 'Backend' },
+    { value: 'design', label: 'Design' }
+  ];
+</script>
+
+<Combobox bind:value={selectedTags} options={tagOptions} multiple />`;
+
+// --- Slider ---
+const sliderBasic = `<script>
+  let volume = $state(50);
+</script>
+
+<Slider bind:value={volume} min={0} max={100} showValue />`;
+
+const sliderStep = `<Slider bind:value={rating} min={1} max={5} step={0.5} showValue />`;
+
+// --- Context Menu ---
+const contextMenuBasic = `<ContextMenu>
+  {#snippet trigger()}
+    <Container class="p-8 border rounded-md text-center">
+      <Text>Right click anywhere in this area</Text>
+    </Container>
+  {/snippet}
+  {#snippet menu({ close })}
+    <Container class="flex flex-col gap-1">
+      <Button onclick={async () => close()}>Edit</Button>
+      <Button onclick={async () => close()}>Duplicate</Button>
+      <Button onclick={async () => close()}>Delete</Button>
+    </Container>
+  {/snippet}
+</ContextMenu>`;
+
+// --- Kbd ---
+const kbdBasic = `<Container class="flex items-center gap-2">
+  <Text>Press</Text>
+  <Kbd>⌘</Kbd>
+  <Kbd>K</Kbd>
+  <Text>to open spotlight</Text>
+</Container>`;
+
+// --- Skeleton ---
+const skeletonBasic = `<Skeleton shape="text" />
+<Skeleton shape="rectangle" height="8rem" />
+<Skeleton shape="circle" width="3rem" height="3rem" />`;
+
+const skeletonCard = `<Container class="flex items-center gap-4 p-4 border rounded-md">
+  <Skeleton shape="circle" width="3rem" height="3rem" />
+  <Container class="flex flex-col gap-2 flex-1">
+    <Skeleton shape="text" width="60%" />
+    <Skeleton shape="text" width="40%" />
+  </Container>
+</Container>`;
+
+// --- Spinner ---
+const spinnerBasic = `<Spinner size="md" />`;
+
+const spinnerSizes = `<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size="xl" />`;
+
+// --- PinInput ---
+const pinInputBasic = `<script>
+  let pinCode = $state('');
+</script>
+
+<PinInput
+  bind:value={pinCode}
+  length={6}
+  onComplete={(code) => console.log('Entered code:', code)}
+/>`;
+
 export const codeBlockContents = {
 	gettingStartedAppCss,
 	gettingStartedUsage,
@@ -872,5 +1088,35 @@ export const codeBlockContents = {
 	breadcrumbBasic,
 	breadcrumbSeparator,
 	paginationBasic,
-	notificationBasic
+	notificationBasic,
+	badgeBasic,
+	badgeVariants,
+	checkboxBasic,
+	checkboxIndeterminate,
+	radioBasic,
+	dividerBasic,
+	dividerWithLabel,
+	tabsBasic,
+	tabsVertical,
+	tooltipBasic,
+	tooltipPositions,
+	alertBasic,
+	alertVariants,
+	progressBasic,
+	progressIndeterminate,
+	avatarBasic,
+	avatarInitials,
+	avatarStatus,
+	selectBasic,
+	comboboxBasic,
+	comboboxMultiple,
+	sliderBasic,
+	sliderStep,
+	contextMenuBasic,
+	kbdBasic,
+	skeletonBasic,
+	skeletonCard,
+	spinnerBasic,
+	spinnerSizes,
+	pinInputBasic
 };
