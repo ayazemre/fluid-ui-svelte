@@ -26,6 +26,7 @@
 	const guideEntries: NavigationEntry[] = [
 		{ name: 'Getting started', url: '/documentation/getting-started' },
 		{ name: 'How to', url: '/documentation/how-to' },
+		{ name: 'Theme editor', url: '/documentation/theme' },
 		{ name: 'LLM guide', url: '/llm-protocol', isExternal: true }
 	];
 

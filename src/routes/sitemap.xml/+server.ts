@@ -4,13 +4,8 @@ const lastmod = new Date().toISOString().split('T')[0];
 
 export async function GET() {
 	const site = 'https://fluidui.io';
-	
-	const pages = [
-		'',
-		'documentation/getting-started',
-		'documentation/how-to',
-		'llm-protocol'
-	];
+
+	const pages = ['', 'documentation/getting-started', 'documentation/how-to', 'llm-protocol'];
 
 	const componentUrls = [];
 	for (const [category, items] of Object.entries(componentRegistry)) {

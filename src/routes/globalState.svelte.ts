@@ -1,4 +1,4 @@
-export const globalState = $state({ 
-    darkMode: true,
-    isDocumentationDrawerOpen: false
+export const globalState = $state({
+	darkMode: true,
+	isDocumentationDrawerOpen: false
 });

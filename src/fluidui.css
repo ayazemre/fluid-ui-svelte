@@ -8,101 +8,192 @@
 	--color-white: #fff;
 	--color-black: #000;
 
-	--color-neutral-50: #fafafa;
-	--color-neutral-100: #f4f4f5;
-	--color-neutral-200: #e4e4e7;
-	--color-neutral-300: #dedee1;
-	--color-neutral-400: #a1a1aa;
-	--color-neutral-500: #71717a;
-	--color-neutral-600: #52525b;
-	--color-neutral-700: #3f3f46;
-	--color-neutral-800: #27272a;
-	--color-neutral-900: #18181b;
-	--color-neutral-950: #09090b;
+	/* Fluid's defaults use the same 500-stop anchors and perceptual ramp
+	   generator as the theme editor. */
+	--color-neutral-50: oklch(0.9849 0.0017 285.94);
+	--color-neutral-100: oklch(0.9668 0.003 285.94);
+	--color-neutral-200: oklch(0.9196 0.0058 285.94);
+	--color-neutral-300: oklch(0.8693 0.0091 285.94);
+	--color-neutral-400: oklch(0.7035 0.0122 285.94);
+	--color-neutral-500: oklch(0.5517 0.0138 285.94);
+	--color-neutral-600: oklch(0.4401 0.0135 285.94);
+	--color-neutral-700: oklch(0.3684 0.0122 285.94);
+	--color-neutral-800: oklch(0.2728 0.0105 285.94);
+	--color-neutral-900: oklch(0.2091 0.0091 285.94);
+	--color-neutral-950: oklch(0.1404 0.0061 285.94);
 
-	--color-primary-50: #eff4ff;
-	--color-primary-100: #dce6fd;
-	--color-primary-200: #c0d4fd;
-	--color-primary-300: #95bafb;
-	--color-primary-400: #6295f8;
-	--color-primary-500: #3e6ff3;
-	--color-primary-600: #284fe8;
-	--color-primary-700: #203bd5;
-	--color-primary-800: #2032ad;
-	--color-primary-900: #203088;
-	--color-primary-950: #182053;
+	--color-primary-50: oklch(0.9668 0.0156 265.13);
+	--color-primary-100: oklch(0.9266 0.035 265.13);
+	--color-primary-200: oklch(0.8682 0.0643 265.13);
+	--color-primary-300: oklch(0.7799 0.1111 265.13);
+	--color-primary-400: oklch(0.6607 0.1795 265.13);
+	--color-primary-500: oklch(0.5839 0.2054 265.13);
+	--color-primary-600: oklch(0.5289 0.2013 265.13);
+	--color-primary-700: oklch(0.4629 0.1808 265.13);
+	--color-primary-800: oklch(0.406 0.1561 265.13);
+	--color-primary-900: oklch(0.363 0.1356 265.13);
+	--color-primary-950: oklch(0.2365 0.0904 265.13);
 
-	--color-secondary-50: #f5f3ff;
-	--color-secondary-100: #ede9fe;
-	--color-secondary-200: #ddd6fe;
-	--color-secondary-300: #c4b5fd;
-	--color-secondary-400: #a78bfa;
-	--color-secondary-500: #8b5cf6;
-	--color-secondary-600: #7c3aed;
-	--color-secondary-700: #6d28d9;
-	--color-secondary-800: #5b21b6;
-	--color-secondary-900: #4c1d95;
-	--color-secondary-950: #2a1065;
+	--color-secondary-50: oklch(0.9685 0.0163 292.72);
+	--color-secondary-100: oklch(0.9305 0.0365 292.72);
+	--color-secondary-200: oklch(0.8751 0.067 292.72);
+	--color-secondary-300: oklch(0.7914 0.1159 292.72);
+	--color-secondary-400: oklch(0.6784 0.1873 292.72);
+	--color-secondary-500: oklch(0.6056 0.2189 292.72);
+	--color-secondary-600: oklch(0.5486 0.2145 292.72);
+	--color-secondary-700: oklch(0.4801 0.1926 292.72);
+	--color-secondary-800: oklch(0.4212 0.1664 292.72);
+	--color-secondary-900: oklch(0.3765 0.1445 292.72);
+	--color-secondary-950: oklch(0.2453 0.0963 292.72);
 
-	--color-tertiary-50: #f5f3ff;
-	--color-tertiary-100: #ede9fe;
-	--color-tertiary-200: #ddd6fe;
-	--color-tertiary-300: #c4b5fd;
-	--color-tertiary-400: #a78bfa;
-	--color-tertiary-500: #8b5cf6;
-	--color-tertiary-600: #7c3aed;
-	--color-tertiary-700: #6d28d9;
-	--color-tertiary-800: #5b21b6;
-	--color-tertiary-900: #4c1d95;
-	--color-tertiary-950: #2a1065;
+	--color-tertiary-50: oklch(0.9748 0.0137 237.32);
+	--color-tertiary-100: oklch(0.9444 0.0305 237.32);
+	--color-tertiary-200: oklch(0.9001 0.0557 237.32);
+	--color-tertiary-300: oklch(0.8332 0.0953 237.32);
+	--color-tertiary-400: oklch(0.7429 0.1301 237.32);
+	--color-tertiary-500: oklch(0.6847 0.1479 237.32);
+	--color-tertiary-600: oklch(0.6202 0.1361 237.32);
+	--color-tertiary-700: oklch(0.5428 0.1192 237.32);
+	--color-tertiary-800: oklch(0.4762 0.1046 237.32);
+	--color-tertiary-900: oklch(0.4256 0.0935 237.32);
+	--color-tertiary-950: oklch(0.2773 0.0612 237.32);
 
-	--color-success-50: #ecfdf5;
-	--color-success-100: #d1fae5;
-	--color-success-200: #a7f3d0;
-	--color-success-300: #6ee7b7;
-	--color-success-400: #34d399;
-	--color-success-500: #10b981;
-	--color-success-600: #059669;
-	--color-success-700: #0f766e;
-	--color-success-800: #065f46;
-	--color-success-900: #064e3b;
-	--color-success-950: #022c22;
+	--color-success-50: oklch(0.9757 0.0179 162.48);
+	--color-success-100: oklch(0.9464 0.0328 162.48);
+	--color-success-200: oklch(0.9037 0.0626 162.48);
+	--color-success-300: oklch(0.8391 0.0984 162.48);
+	--color-success-400: oklch(0.752 0.1312 162.48);
+	--color-success-500: oklch(0.6959 0.1491 162.48);
+	--color-success-600: oklch(0.6303 0.1373 162.48);
+	--color-success-700: oklch(0.5517 0.1202 162.48);
+	--color-success-800: oklch(0.4839 0.1055 162.48);
+	--color-success-900: oklch(0.4326 0.0943 162.48);
+	--color-success-950: oklch(0.2818 0.0617 162.48);
 
-	--color-warning-50: #fffbeb;
-	--color-warning-100: #fef3c7;
-	--color-warning-200: #fde68a;
-	--color-warning-300: #fcd34d;
-	--color-warning-400: #fbbf24;
-	--color-warning-500: #f59e0b;
-	--color-warning-600: #d97706;
-	--color-warning-700: #b45309;
-	--color-warning-800: #92400e;
-	--color-warning-900: #78350f;
-	--color-warning-950: #451a03;
+	--color-warning-50: oklch(0.9815 0.0133 70.08);
+	--color-warning-100: oklch(0.9592 0.0297 70.08);
+	--color-warning-200: oklch(0.9267 0.0545 70.08);
+	--color-warning-300: oklch(0.8776 0.0941 70.08);
+	--color-warning-400: oklch(0.8113 0.1449 70.08);
+	--color-warning-500: oklch(0.7686 0.1647 70.08);
+	--color-warning-600: oklch(0.6962 0.1508 70.08);
+	--color-warning-700: oklch(0.6093 0.132 70.08);
+	--color-warning-800: oklch(0.5345 0.1158 70.08);
+	--color-warning-900: oklch(0.4778 0.1036 70.08);
+	--color-warning-950: oklch(0.3113 0.0677 70.08);
 
-	--color-info-50: #f0f9ff;
-	--color-info-100: #e0f2fe;
-	--color-info-200: #bae6fd;
-	--color-info-300: #7dd3fc;
-	--color-info-400: #38bdf8;
-	--color-info-500: #0ea5e9;
-	--color-info-600: #0284c7;
-	--color-info-700: #0369a1;
-	--color-info-800: #075985;
-	--color-info-900: #0c4a6e;
-	--color-info-950: #082f49;
+	--color-info-50: oklch(0.9748 0.0137 237.32);
+	--color-info-100: oklch(0.9444 0.0305 237.32);
+	--color-info-200: oklch(0.9001 0.0557 237.32);
+	--color-info-300: oklch(0.8332 0.0953 237.32);
+	--color-info-400: oklch(0.7429 0.1301 237.32);
+	--color-info-500: oklch(0.6847 0.1479 237.32);
+	--color-info-600: oklch(0.6202 0.1361 237.32);
+	--color-info-700: oklch(0.5428 0.1192 237.32);
+	--color-info-800: oklch(0.4762 0.1046 237.32);
+	--color-info-900: oklch(0.4256 0.0935 237.32);
+	--color-info-950: oklch(0.2773 0.0612 237.32);
 
-	--color-error-50: #fef2f2;
-	--color-error-100: #fee2e2;
-	--color-error-200: #fecaca;
-	--color-error-300: #fca5a5;
-	--color-error-400: #f87171;
-	--color-error-500: #ef4444;
-	--color-error-600: #dc2626;
-	--color-error-700: #b91c1c;
-	--color-error-800: #991b1b;
-	--color-error-900: #7f1d1d;
-	--color-error-950: #450a0a;
+	--color-error-50: oklch(0.971 0.0142 25.33);
+	--color-error-100: oklch(0.936 0.0322 25.33);
+	--color-error-200: oklch(0.8849 0.0606 25.33);
+	--color-error-300: oklch(0.8079 0.109 25.33);
+	--color-error-400: oklch(0.7039 0.1829 25.33);
+	--color-error-500: oklch(0.6368 0.2078 25.33);
+	--color-error-600: oklch(0.5768 0.2037 25.33);
+	--color-error-700: oklch(0.5049 0.1829 25.33);
+	--color-error-800: oklch(0.4429 0.158 25.33);
+	--color-error-900: oklch(0.3959 0.1372 25.33);
+	--color-error-950: oklch(0.2579 0.0915 25.33);
+
+	--radius-sm: 0.2475rem;
+	--radius-md: 0.375rem;
+	--radius-lg: 0.4988rem;
+	--radius-xl: 0.75rem;
+}
+
+/* ==========================================================================
+   SEMANTIC LAYER
+   Roles, not colours. Components only ever reference these, so a theme can
+   retune light and dark independently without touching a single component
+   rule. Declared inline so utilities compile to var() indirections that
+   :root and .dark can override at runtime.
+   ========================================================================== */
+
+@theme inline {
+	--color-surface: var(--surface);
+	--color-surface-raised: var(--surface-raised);
+	--color-surface-sunken: var(--surface-sunken);
+	--color-surface-hover: var(--surface-hover);
+	--color-content: var(--content);
+	--color-content-muted: var(--content-muted);
+	--color-content-subtle: var(--content-subtle);
+	--color-border: var(--border);
+	--color-border-strong: var(--border-strong);
+	--color-overlay: var(--overlay);
+	--color-on-accent: var(--on-accent);
+	--color-on-primary: var(--on-primary);
+	--color-on-secondary: var(--on-secondary);
+	--color-on-tertiary: var(--on-tertiary);
+	--color-on-success: var(--on-success);
+	--color-on-warning: var(--on-warning);
+	--color-on-info: var(--on-info);
+	--color-on-error: var(--on-error);
+	--color-accent-soft: var(--accent-soft);
+	--color-accent-hover: var(--accent-hover);
+	--color-error-soft: var(--error-soft);
+	--color-control-track: var(--control-track);
+	--color-control-knob: var(--control-knob);
+}
+
+:root {
+	--on-primary: var(--color-neutral-950);
+	--on-secondary: var(--color-neutral-950);
+	--on-tertiary: var(--color-neutral-950);
+	--on-success: var(--color-neutral-950);
+	--on-warning: var(--color-neutral-950);
+	--on-info: var(--color-neutral-950);
+	--on-error: var(--color-neutral-950);
+	--on-accent: var(--on-primary);
+}
+
+/* .light and .dark may be nested at any depth: every component style below
+   resolves through these properties, so an island inherits its own mode. */
+:root,
+:where(.light) {
+	--surface: var(--color-neutral-50);
+	--surface-raised: var(--color-white);
+	--surface-sunken: var(--color-neutral-200);
+	--surface-hover: var(--color-neutral-100);
+	--content: var(--color-neutral-950);
+	--content-muted: var(--color-neutral-700);
+	--content-subtle: var(--color-neutral-400);
+	--border: var(--color-neutral-200);
+	--border-strong: var(--color-neutral-300);
+	--overlay: rgb(0 0 0 / 0.3);
+	--accent-soft: color-mix(in oklab, var(--color-primary-500) 10%, var(--surface));
+	--accent-hover: var(--color-primary-700);
+	--error-soft: color-mix(in oklab, var(--color-error-500) 10%, var(--surface));
+	--control-track: var(--color-neutral-200);
+	--control-knob: var(--color-white);
+}
+
+:where(.dark) {
+	--surface: var(--color-neutral-900);
+	--surface-raised: var(--color-neutral-800);
+	--surface-sunken: var(--color-neutral-950);
+	--surface-hover: var(--color-neutral-800);
+	--content: var(--color-neutral-50);
+	--content-muted: var(--color-neutral-300);
+	--content-subtle: var(--color-neutral-500);
+	--border: var(--color-neutral-700);
+	--border-strong: var(--color-neutral-600);
+	--overlay: rgb(0 0 0 / 0.5);
+	--accent-soft: color-mix(in oklab, var(--color-primary-500) 22%, var(--surface));
+	--accent-hover: var(--color-primary-300);
+	--error-soft: color-mix(in oklab, var(--color-error-500) 22%, var(--surface));
+	--control-track: var(--color-neutral-700);
+	--control-knob: var(--color-neutral-50);
 }
 
 /* ==========================================================================
@@ -112,19 +203,19 @@
 
 /* Button -------------------------- */
 .fluid-button {
-	@apply items-center gap-1 rounded-md p-2 transition-all duration-500;
+	@apply inline-flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50;
 }
 .fluid-button-primary {
-	@apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
+	@apply bg-primary-500 text-on-primary hover:opacity-90;
 }
 .fluid-button-secondary {
-	@apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
+	@apply bg-secondary-500 text-on-secondary hover:opacity-90;
 }
 .fluid-button-outline {
-	@apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
+	@apply border border-primary-500 bg-transparent text-primary-500 hover:bg-primary-500 hover:text-on-primary;
 }
 .fluid-button-transparent {
-	@apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
+	@apply bg-transparent text-primary-500 hover:bg-surface-hover hover:text-accent-hover;
 }
 
 /* Container ----------------------- */
@@ -134,7 +225,7 @@
 
 section,
 main.fluid-container {
-	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
+	@apply min-w-0 bg-surface transition-all duration-500;
 }
 
 /* Form ---------------------------- */
@@ -152,7 +243,7 @@ main.fluid-container {
 
 /* Input Field --------------------- */
 .fluid-input-field {
-	@apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
+	@apply rounded-md bg-surface-raised p-1 text-content outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500;
 }
 .fluid-input-field-error {
 	@apply outline-2 outline-error-500;
@@ -160,26 +251,26 @@ main.fluid-container {
 
 /* Link ---------------------------- */
 .fluid-link {
-	@apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
+	@apply text-content transition-all visited:text-primary-700 hover:text-content-muted dark:visited:text-primary-300;
 }
 
 /* List ---------------------------- */
 .fluid-unordered-list {
-	@apply list-disc text-neutral-950 dark:text-neutral-50;
+	@apply list-disc text-content;
 }
 .fluid-ordered-list {
-	@apply list-decimal text-neutral-950 dark:text-neutral-50;
+	@apply list-decimal text-content;
 }
 
 /* Table --------------------------- */
 .fluid-table {
-	@apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border transition-all duration-500 dark:border-neutral-300;
+	@apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border border-border transition-all duration-500;
 }
 .fluid-table-head {
-	@apply bg-neutral-200 transition-all duration-500 dark:bg-neutral-800;
+	@apply bg-surface-sunken transition-all duration-500;
 }
 .fluid-table-row {
-	@apply transition-all duration-500 even:bg-neutral-200 dark:even:bg-neutral-800;
+	@apply transition-all duration-500 even:bg-surface-sunken;
 }
 .fluid-table-cell {
 	@apply border-collapse bg-clip-padding text-center transition-all duration-500;
@@ -187,12 +278,12 @@ main.fluid-container {
 .fluid-table-body {
 }
 .fluid-table-footer {
-	@apply bg-clip-padding p-2 transition-all duration-500 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+	@apply bg-clip-padding p-2 transition-all duration-500 odd:bg-surface-hover;
 }
 
 /* Text ---------------------------- */
 .fluid-text {
-	@apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
+	@apply text-content transition-all duration-500;
 }
 
 /* ==========================================================================
@@ -205,7 +296,7 @@ main.fluid-container {
 	@apply flex-col;
 }
 .fluid-accordion-header {
-	@apply items-center rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+	@apply items-center rounded-md p-2 text-content transition-all hover:bg-surface-hover;
 }
 .fluid-accordion-body {
 	@apply flex w-full flex-col gap-1 p-2;
@@ -223,13 +314,13 @@ main.fluid-container {
 	@apply gap-4;
 }
 .fluid-calendar-cell {
-	@apply dark:text-neutral-50;
+	@apply text-content;
 }
 .fluid-calendar-cell-selected {
-	@apply bg-primary-600 text-neutral-50;
+	@apply bg-primary-500 text-on-primary;
 }
 .fluid-calendar-cell-in-range {
-	@apply bg-primary-400 text-neutral-50;
+	@apply bg-accent-soft text-content;
 }
 .fluid-calendar-cell-rolling-day {
 	@apply opacity-25;
@@ -245,13 +336,13 @@ main.fluid-container {
 
 /* Code Block ---------------------- */
 .fluid-code-block-container {
-	@apply rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
+	@apply rounded-md bg-surface-sunken py-2 font-mono text-sm text-content-muted;
 }
 .fluid-code-block-row {
 	@apply gap-2;
 }
 .fluid-code-block-index {
-	@apply border-r border-neutral-500 bg-neutral-200 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
+	@apply border-r border-border bg-surface-sunken text-right text-content-subtle select-none;
 }
 .fluid-code-block-content {
 	@apply px-4;
@@ -259,26 +350,26 @@ main.fluid-container {
 
 /* Drawer -------------------------- */
 .fluid-drawer-container {
-	@apply bg-black/30 backdrop-blur-sm;
+	@apply bg-overlay backdrop-blur-sm;
 }
 .fluid-drawer-panel {
-	@apply bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
+	@apply bg-surface-raised p-6 shadow-xl transition-all;
 }
 
 /* Draggable ----------------------- */
 .fluid-draggable {
-	@apply rounded-md border bg-white p-4 shadow-sm transition-all dark:border-neutral-700 dark:bg-neutral-800;
+	@apply rounded-md border border-border bg-surface-raised p-4 shadow-sm transition-all;
 }
 
 /* Dropzone ------------------------ */
 .fluid-dropzone {
-	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
+	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border-strong bg-surface p-12 transition-all duration-200;
 }
 .fluid-dropzone.drag-over {
-	@apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
+	@apply border-primary-500 bg-accent-soft;
 }
 .fluid-dropzone.drag-invalid {
-	@apply border-error-500 bg-error-50 dark:bg-error-950/20;
+	@apply border-error-500 bg-error-soft;
 }
 
 /* Page ---------------------------- */
@@ -296,10 +387,10 @@ main.fluid-container {
 
 /* Switch -------------------------- */
 .fluid-switch-button {
-	@apply bg-neutral-200;
+	@apply bg-control-track;
 }
 .fluid-switch-circle {
-	@apply bg-white shadow;
+	@apply bg-control-knob shadow;
 }
 .fluid-switch-button.checked {
 	@apply bg-primary-600;
@@ -310,27 +401,27 @@ main.fluid-container {
 	@apply relative inline-block;
 }
 .fluid-popover-content {
-	@apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+	@apply absolute z-50 rounded-md border border-border bg-surface-raised p-4 shadow-xl;
 }
 .fluid-popover-top {
 	@apply bottom-full left-1/2 mb-2 -translate-x-1/2;
 }
 .fluid-popover-bottom {
-	@apply left-1/2 top-full mt-2 -translate-x-1/2;
+	@apply top-full left-1/2 mt-2 -translate-x-1/2;
 }
 .fluid-popover-left {
-	@apply right-full top-1/2 mr-2 -translate-y-1/2;
+	@apply top-1/2 right-full mr-2 -translate-y-1/2;
 }
 .fluid-popover-right {
-	@apply left-full top-1/2 ml-2 -translate-y-1/2;
+	@apply top-1/2 left-full ml-2 -translate-y-1/2;
 }
 
 /* Modal --------------------------- */
 .fluid-modal-container {
-	@apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
+	@apply fixed inset-0 z-50 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm;
 }
 .fluid-modal-panel {
-	@apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
+	@apply w-full max-w-lg overflow-hidden rounded-lg bg-surface-raised shadow-xl transition-all;
 }
 
 /* Breadcrumb ---------------------- */
@@ -338,13 +429,13 @@ main.fluid-container {
 	@apply flex items-center gap-2 text-sm;
 }
 .fluid-breadcrumb-list {
-	@apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
+	@apply m-0 flex list-none flex-wrap items-center gap-2 p-0;
 }
 .fluid-breadcrumb-item {
 	@apply flex items-center gap-2;
 }
 .fluid-breadcrumb-separator {
-	@apply text-neutral-400 select-none;
+	@apply text-content-subtle select-none;
 }
 
 /* Pagination ---------------------- */
@@ -352,32 +443,48 @@ main.fluid-container {
 	@apply flex items-center gap-1;
 }
 .fluid-pagination-button {
-	@apply min-w-[2.5rem] h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+	@apply flex h-10 min-w-[2.5rem] items-center justify-center rounded-md border border-border px-2 text-content transition-colors hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-50;
 }
 .fluid-pagination-button-active {
-	@apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+	@apply border-primary-500 bg-primary-500 text-on-primary hover:opacity-90;
 }
 
 /* Notification Area --------------- */
 .fluid-notification-area {
-	@apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
+	@apply pointer-events-none fixed z-[100] flex flex-col gap-2 p-4;
 }
-.fluid-notification-area-top-right { @apply top-0 right-0; }
-.fluid-notification-area-top-left { @apply top-0 left-0; }
-.fluid-notification-area-bottom-right { @apply bottom-0 right-0 flex-col-reverse; }
-.fluid-notification-area-bottom-left { @apply bottom-0 left-0 flex-col-reverse; }
+.fluid-notification-area-top-right {
+	@apply top-0 right-0;
+}
+.fluid-notification-area-top-left {
+	@apply top-0 left-0;
+}
+.fluid-notification-area-bottom-right {
+	@apply right-0 bottom-0 flex-col-reverse;
+}
+.fluid-notification-area-bottom-left {
+	@apply bottom-0 left-0 flex-col-reverse;
+}
 
 .fluid-notification {
-	@apply pointer-events-auto min-w-[300px] max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
+	@apply pointer-events-auto flex max-w-md min-w-[300px] items-start gap-3 rounded-lg border border-border bg-surface-raised p-4 text-content shadow-lg transition-all;
 }
-.fluid-notification-success { @apply border-l-4 border-l-success-500; }
-.fluid-notification-error { @apply border-l-4 border-l-error-500; }
-.fluid-notification-warning { @apply border-l-4 border-l-warning-500; }
-.fluid-notification-info { @apply border-l-4 border-l-info-500; }
+.fluid-notification-success {
+	@apply border-l-4 border-l-success-500;
+}
+.fluid-notification-error {
+	@apply border-l-4 border-l-error-500;
+}
+.fluid-notification-warning {
+	@apply border-l-4 border-l-warning-500;
+}
+.fluid-notification-info {
+	@apply border-l-4 border-l-info-500;
+}
 
 .fluid-notification-content {
 	@apply flex-1;
 }
 .fluid-notification-close {
-	@apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
+	@apply text-content-subtle transition-colors hover:text-content;
 }

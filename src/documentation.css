@@ -9,19 +9,23 @@
 	--font-display: 'Bricolage Grotesque', 'IBM Plex Sans', sans-serif;
 	--font-sans: 'IBM Plex Sans', system-ui, sans-serif;
 	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+}
 
-	--color-paper: #fafafb;
-	--color-paper-raised: #ffffff;
-	--color-ink: #0c0e14;
-	--color-ink-raised: #14171f;
-	--color-signal: #2f5bff;
-	--color-signal-soft: #8aa6ff;
-	--color-graphite: #383e4d;
-	--color-slate: #a6aec2;
-	--color-rule: #e3e5ec;
-	--color-rule-dark: #262a35;
-	--color-amber: #b26a00;
-	--color-amber-soft: #e8a33d;
+/* Keep the documentation's visual vocabulary while connecting every role to
+   the same runtime ramps as the component library. */
+@theme inline {
+	--color-paper: var(--color-neutral-50);
+	--color-paper-raised: color-mix(in oklab, var(--color-neutral-50) 18%, var(--color-white));
+	--color-ink: var(--color-neutral-950);
+	--color-ink-raised: color-mix(in oklab, var(--color-neutral-950) 68%, var(--color-neutral-900));
+	--color-signal: var(--color-primary-700);
+	--color-signal-soft: var(--color-primary-300);
+	--color-graphite: var(--color-neutral-700);
+	--color-slate: var(--color-neutral-400);
+	--color-rule: var(--color-neutral-200);
+	--color-rule-dark: var(--color-neutral-800);
+	--color-amber: var(--color-warning-700);
+	--color-amber-soft: var(--color-warning-400);
 }
 
 html {
@@ -62,10 +66,20 @@ body {
 	#global-layout *::after {
 		border-color: var(--color-rule);
 	}
+	#global-layout .documentation-preview *,
+	#global-layout .documentation-preview *::before,
+	#global-layout .documentation-preview *::after {
+		border-color: revert-layer;
+	}
 	#global-layout.dark *,
 	#global-layout.dark *::before,
 	#global-layout.dark *::after {
 		border-color: var(--color-rule-dark);
+	}
+	#global-layout.dark .documentation-preview *,
+	#global-layout.dark .documentation-preview *::before,
+	#global-layout.dark .documentation-preview *::after {
+		border-color: revert-layer;
 	}
 }
 
@@ -76,8 +90,8 @@ body {
 
 /* Surfaces ------------------------ */
 #global-layout,
-#global-layout section,
-#global-layout main.fluid-container {
+#global-layout section:not(.documentation-preview *),
+#global-layout main.fluid-container:not(.documentation-preview *) {
 	@apply bg-paper text-graphite dark:bg-ink dark:text-slate;
 }
 
@@ -574,4 +588,243 @@ body {
 }
 #global-layout .fluid-table-cell:not(.documentation-preview *) {
 	@apply border-t border-rule text-left align-top dark:border-rule-dark;
+}
+
+/* ==========================================================================
+   THEME EDITOR
+   ========================================================================== */
+
+.theme-editor-grid {
+	@apply flex flex-col gap-10;
+}
+
+.theme-preset-row {
+	@apply flex flex-wrap gap-3;
+}
+#global-layout .theme-preset {
+	@apply flex cursor-pointer items-center gap-3 rounded-lg border border-rule bg-paper-raised px-4 py-3 transition-all hover:border-signal dark:border-rule-dark dark:bg-ink-raised;
+}
+#global-layout .theme-preset.active {
+	@apply border-signal outline-1 outline-signal;
+}
+.theme-preset-swatches {
+	@apply flex items-center;
+}
+.theme-preset-swatch {
+	@apply -ml-1.5 size-4 rounded-full border border-paper-raised first:ml-0 dark:border-ink-raised;
+}
+.theme-preset-name {
+	@apply text-sm font-medium text-graphite dark:text-slate;
+}
+
+.theme-role-list {
+	@apply grid grid-cols-1 gap-5 sm:grid-cols-2;
+}
+.theme-role {
+	@apply flex flex-col gap-2;
+}
+.theme-role-label {
+	@apply text-sm font-medium text-graphite dark:text-slate;
+}
+.theme-role-controls {
+	@apply flex items-center gap-2;
+}
+.theme-color-picker-swatch {
+	@apply block size-8 shrink-0 cursor-pointer rounded-md border border-rule transition-transform hover:scale-105 dark:border-rule-dark;
+}
+.theme-dock-color .theme-color-picker-swatch {
+	@apply size-5 rounded;
+}
+.theme-color-picker-panel {
+	@apply flex w-56 flex-col gap-2;
+}
+.theme-color-picker-control {
+	@apply flex flex-col gap-1;
+}
+.theme-color-picker-label {
+	@apply font-mono text-xs text-graphite/70 dark:text-slate/70;
+}
+.theme-color-picker-range {
+	@apply h-6 w-full cursor-pointer appearance-none bg-transparent;
+}
+.theme-color-picker-range::-webkit-slider-runnable-track {
+	height: 0.375rem;
+	border-radius: 9999px;
+	background: var(--picker-track);
+}
+.theme-color-picker-range::-webkit-slider-thumb {
+	width: 1rem;
+	height: 1rem;
+	margin-top: -0.3125rem;
+	appearance: none;
+	border: 2px solid var(--color-paper-raised);
+	border-radius: 9999px;
+	background: var(--picker-thumb);
+}
+.theme-color-picker-range::-moz-range-track {
+	height: 0.375rem;
+	border-radius: 9999px;
+	background: var(--picker-track);
+}
+.theme-color-picker-range::-moz-range-thumb {
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid var(--color-paper-raised);
+	border-radius: 9999px;
+	background: var(--picker-thumb);
+}
+.theme-color-picker-hex {
+	@apply font-mono text-xs;
+}
+.theme-ramp {
+	@apply flex h-6 overflow-hidden rounded-md border border-rule dark:border-rule-dark;
+}
+.theme-ramp-stop {
+	@apply flex-1;
+}
+
+.theme-radius-row {
+	@apply flex flex-wrap gap-3;
+}
+#global-layout .theme-radius {
+	@apply flex cursor-pointer items-center gap-2 rounded-lg border border-rule bg-paper-raised px-4 py-3 text-sm text-graphite transition-all hover:border-signal dark:border-rule-dark dark:bg-ink-raised dark:text-slate;
+}
+#global-layout .theme-radius.active {
+	@apply border-signal outline-1 outline-signal;
+}
+.theme-radius-sample {
+	@apply size-5 border-2 border-signal;
+}
+
+.theme-preview {
+	@apply flex flex-col gap-6;
+}
+.theme-preview-row {
+	@apply flex flex-wrap items-center gap-4;
+}
+.theme-status {
+	@apply rounded-md px-3 py-1 text-sm font-medium;
+}
+.theme-status-success {
+	@apply bg-success-100 text-success-800;
+}
+.theme-status-warning {
+	@apply bg-warning-100 text-warning-800;
+}
+.theme-status-info {
+	@apply bg-info-100 text-info-800;
+}
+.theme-status-error {
+	@apply bg-error-100 text-error-800;
+}
+
+.theme-export-options {
+	@apply grid grid-cols-1 gap-3 md:grid-cols-2;
+}
+#global-layout .theme-export-option {
+	@apply flex min-h-20 cursor-pointer flex-col items-start gap-1 rounded-lg border border-rule bg-paper-raised px-4 py-3 text-left text-graphite transition-all hover:border-signal dark:border-rule-dark dark:bg-ink-raised dark:text-slate;
+}
+#global-layout .theme-export-option[aria-pressed='true'] {
+	@apply border-signal bg-primary-50 outline-1 outline-signal dark:bg-primary-950;
+}
+.theme-export-option-title {
+	@apply font-semibold text-ink dark:text-paper;
+}
+.theme-export-option-detail {
+	@apply font-mono text-xs leading-relaxed text-graphite/70 dark:text-slate/70;
+}
+.theme-export-guidance {
+	@apply border-l-2 border-signal pl-3;
+}
+
+.theme-export-actions {
+	@apply flex flex-wrap items-center gap-3;
+}
+.theme-export-code {
+	@apply h-[36rem] min-h-64 w-full resize-y overflow-auto rounded-md border border-rule bg-paper-raised p-4 text-[0.8125rem] leading-relaxed text-ink outline-none focus:border-signal focus:ring-1 focus:ring-signal dark:border-rule-dark dark:bg-ink-raised dark:text-paper;
+	font-family: var(--font-mono);
+	white-space: pre;
+	tab-size: 2;
+}
+
+/* ==========================================================================
+   THEME DOCK
+   ========================================================================== */
+
+.theme-dock {
+	@apply pointer-events-none fixed right-4 bottom-4 z-[90] flex flex-col items-end gap-2;
+}
+#global-layout .theme-dock-toggle {
+	@apply pointer-events-auto flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-raised px-4 py-2.5 text-graphite shadow-lg transition-all hover:border-signal dark:border-rule-dark dark:bg-ink-raised dark:text-slate;
+}
+.theme-dock-toggle-label {
+	@apply text-sm font-medium;
+}
+
+.theme-dock-panel {
+	@apply pointer-events-auto flex w-72 flex-col gap-4 rounded-xl border border-rule bg-paper-raised p-4 shadow-xl dark:border-rule-dark dark:bg-ink-raised;
+}
+.theme-dock-header {
+	@apply flex items-center justify-between;
+}
+.theme-dock-title {
+	@apply font-display text-base font-semibold text-ink dark:text-paper;
+}
+.theme-dock-section {
+	@apply flex flex-col gap-2;
+}
+.theme-dock-label {
+	@apply text-xs font-medium tracking-wide text-slate uppercase;
+}
+
+.theme-dock-presets {
+	@apply flex flex-wrap gap-2;
+}
+#global-layout .theme-dock-preset {
+	@apply cursor-pointer rounded-full border-2 border-transparent p-0.5 transition-all;
+}
+#global-layout .theme-dock-preset.active {
+	@apply border-signal;
+}
+.theme-dock-preset-swatch {
+	@apply block size-6 rounded-full;
+}
+
+.theme-dock-colors {
+	@apply grid grid-cols-2 gap-x-3 gap-y-2;
+}
+.theme-dock-color {
+	@apply flex cursor-pointer items-center gap-2;
+}
+.theme-dock-color-name {
+	@apply truncate text-xs text-graphite dark:text-slate;
+}
+
+.theme-dock-radii {
+	@apply flex gap-2;
+}
+#global-layout .theme-dock-radius {
+	@apply flex cursor-pointer items-center justify-center rounded-md border border-rule p-1.5 transition-all dark:border-rule-dark;
+}
+#global-layout .theme-dock-radius.active {
+	@apply border-signal outline-1 outline-signal;
+}
+.theme-dock-radius-sample {
+	@apply block size-4 border-2 border-signal;
+}
+
+.theme-dock-footer {
+	@apply flex items-center justify-between border-t border-rule pt-3 dark:border-rule-dark;
+}
+.theme-dock-link {
+	@apply flex items-center gap-1 text-sm font-medium text-signal hover:underline;
+}
+#global-layout .theme-dock-reset {
+	@apply cursor-pointer rounded-md px-2 py-1 text-sm text-graphite transition-all hover:text-signal dark:text-slate;
+}
+
+@media (max-width: 640px) {
+	.theme-dock-panel {
+		@apply w-[calc(100vw-2rem)];
+	}
 }

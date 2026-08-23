@@ -4,11 +4,20 @@
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/state';
 	import { globalState } from './globalState.svelte.js';
+	import { themeStore } from '../documentation/theme/themeState.svelte';
+	import { onMount } from 'svelte';
+	import ThemeDock from '../documentation/theme/ThemeDock.svelte';
 
 	let { children } = $props();
 
+	onMount(() => themeStore.load());
+
+	/** The editor page has the full controls already, so the dock stands down there. */
+	const showThemeDock = $derived(page.url.pathname !== '/documentation/theme');
+
 	const navigationLinks = [
 		{ label: 'Documentation', href: '/documentation/getting-started', isExternal: false },
+		{ label: 'Theme', href: '/documentation/theme', isExternal: false },
 		{ label: 'LLM guide', href: '/llm-protocol', isExternal: true }
 	];
 
@@ -20,7 +29,7 @@
 
 <Container
 	type="section"
-	class={'flex min-h-screen w-full flex-col' + (globalState.darkMode ? ' dark' : '')}
+	class={`flex min-h-screen w-full flex-col ${globalState.darkMode ? 'dark' : 'light'}`}
 	id="global-layout"
 >
 	<Container type="nav" class="documentation-navbar" id="navigation-bar">
@@ -95,4 +104,8 @@
 		</Container>
 	</Container>
 	{@render children()}
+
+	{#if showThemeDock}
+		<ThemeDock />
+	{/if}
 </Container>
