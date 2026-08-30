@@ -1,11 +1,12 @@
 import {
   AccordionSamples,
+  AnchoredOverlaySamples,
   BreadcrumbSamples,
   ButtonSamples,
+  CalendarGridSamples,
   CarouselSamples,
   CodeBlockSamples,
   ContainerSamples,
-  DatePickerSamples,
   DraggableSamples,
   DrawerSamples,
   DropzoneSamples,
@@ -13,16 +14,18 @@ import {
   ImageCropSamples,
   ImageSamples,
   InputFieldSamples,
+  InternationalInputSamples,
+  LabelSamples,
   LinkSamples,
   ListSamples,
   ModalSamples,
   NotificationSamples,
   PageSamples,
   PaginationSamples,
-  PopoverSamples,
   SwitchSamples,
   TableSamples,
   TextSamples,
+  TimePickerSamples,
 } from "./samples/index.ts";
 
 export const documentationRegistry = {
@@ -73,6 +76,12 @@ export const documentationRegistry = {
           description: "The HTML element tag to render.",
           prop: "type",
           type: "'div' | 'nav' | 'section' | 'main' | 'header' | 'footer' | 'aside' | 'article'",
+        },
+        {
+          default: "undefined",
+          description: "Direct reference to the underlying rendered DOM element. Supports $bindable.",
+          prop: "element",
+          type: "HTMLElement",
         },
         {
           default: "''",
@@ -220,6 +229,37 @@ export const documentationRegistry = {
       ],
       sampleComponent: InputFieldSamples,
       title: "Fluid UI - Input Field",
+    },
+    label: {
+      description: "A lightweight, accessible label wrapper for form controls with built-in dark mode support.",
+      props: [
+        {
+          default: "undefined",
+          description: "The content to be rendered inside the label.",
+          prop: "children",
+          type: "Snippet",
+        },
+        {
+          default: "''",
+          description: "CSS classes to apply to the label.",
+          prop: "class",
+          type: "string",
+        },
+        {
+          default: "false",
+          description: "If true, removes the base fluid-label class.",
+          prop: "overrideDefaultStyling",
+          type: "boolean",
+        },
+        {
+          default: "—",
+          description: "Standard HTML <label> attributes (e.g. for).",
+          prop: "...rest",
+          type: "HTMLLabelAttributes",
+        },
+      ],
+      sampleComponent: LabelSamples,
+      title: "Fluid UI - Label",
     },
     link: {
       description: "A standard anchor wrapper styled for Fluid UI, supporting client-side navigation in SvelteKit.",
@@ -481,20 +521,100 @@ export const documentationRegistry = {
       sampleComponent: AccordionSamples,
       title: "Fluid UI - Accordion",
     },
-    breadcrumb: {
-      description: "A navigation aid that allows users to keep track of their location within programs, documents, or websites.",
+    "anchored-overlay": {
+      description: "A foundational positioning primitive that anchors a floating overlay to a trigger element.",
       props: [
         {
-          default: "[]",
-          description: "An array of breadcrumb items.",
-          prop: "items",
-          type: "Array<{ label: string; href: string }>",
+          default: "required",
+          description: "The unique identifier for the component container.",
+          prop: "componentId",
+          type: "string",
         },
         {
-          default: "'/'",
-          description: "The separator element between items.",
-          prop: "separator",
-          type: "string | Snippet",
+          default: "required",
+          description: "Snippet for the anchor trigger element. Receives { isOpen, open, close, toggle }.",
+          prop: "anchor",
+          type: "Snippet<[{ close, isOpen, open, toggle }]>",
+        },
+        {
+          default: "required",
+          description: "Snippet for the floating overlay content. Receives { close }.",
+          prop: "overlay",
+          type: "Snippet<[{ close }]>",
+        },
+        {
+          default: "false",
+          description: "Controls the visibility of the floating overlay. Supports $bindable.",
+          prop: "isOpen",
+          type: "boolean",
+        },
+        {
+          default: "'bottom-start'",
+          description: "The placement position of the overlay relative to the anchor.",
+          prop: "position",
+          type: "AnchoredOverlayPosition",
+        },
+        {
+          default: "true",
+          description: "Whether to automatically flip overlay placement if it would collide with viewport edges.",
+          prop: "autoFlip",
+          type: "boolean",
+        },
+        {
+          default: "'click'",
+          description: "Interaction mode that triggers overlay opening ('click', 'hover', 'focus', 'manual').",
+          prop: "triggerMode",
+          type: "'click' | 'hover' | 'focus' | 'manual'",
+        },
+        {
+          default: "true",
+          description: "Whether clicking outside the overlay automatically closes it.",
+          prop: "closeOnClickOutside",
+          type: "boolean",
+        },
+        {
+          default: "true",
+          description: "Whether pressing Escape automatically closes the overlay.",
+          prop: "closeOnEscape",
+          type: "boolean",
+        },
+        {
+          default: "fade",
+          description: "Svelte transition function for the floating overlay.",
+          prop: "transitionFn",
+          type: "function",
+        },
+        {
+          default: "{ duration: 150 }",
+          description: "Parameters for the transition function.",
+          prop: "transitionParams",
+          type: "object",
+        },
+        {
+          default: "''",
+          description: "Custom variant class for theming the container.",
+          prop: "variant",
+          type: "string",
+        },
+        {
+          default: "''",
+          description: "Custom CSS classes for the floating overlay panel.",
+          prop: "overlayClass",
+          type: "string",
+        },
+      ],
+      sampleComponent: AnchoredOverlaySamples,
+      title: "Fluid UI - Anchored Overlay",
+    },
+    "calendar-grid": {
+      description:
+        "A monthly calendar grid primitive powered by the Temporal API. It renders a month view based on a provided ISO date without internal year or navigation controls, ideal for composable date pickers and multi-month blocks.",
+      props: [
+        {
+          default: "undefined",
+          description: "The unique identifier for the component wrapper.",
+          prop: "componentId",
+          type: "string",
         },
         {
           default: "''",
@@ -503,14 +623,38 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "crypto.randomUUID()",
-          description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          default: "Temporal.Now.plainDateISO().toString()",
+          description: "ISO 8601 formatted date string (YYYY-MM-DD) that determines the displayed month. Supports $bindable.",
+          prop: "currentDate",
           type: "string",
         },
+        {
+          default: "undefined",
+          description: "Selected start date (YYYY-MM-DD). Supports $bindable.",
+          prop: "startDate",
+          type: "string",
+        },
+        {
+          default: "undefined",
+          description: "Selected end date (YYYY-MM-DD). Supports $bindable.",
+          prop: "endDate",
+          type: "string",
+        },
+        {
+          default: "['Mon', 'Tue', ...]",
+          description: "Array of week day names to display in the header.",
+          prop: "weekDays",
+          type: "string[]",
+        },
+        {
+          default: "false",
+          description: "Whether to hide days from previous/next months.",
+          prop: "hideRollingDays",
+          type: "boolean",
+        },
       ],
-      sampleComponent: BreadcrumbSamples,
-      title: "Fluid UI - Breadcrumb",
+      sampleComponent: CalendarGridSamples,
+      title: "Fluid UI - Calendar Grid",
     },
     carousel: {
       description: "A high-performance carousel with custom JS-based snapping and smooth touch interactions.",
@@ -525,7 +669,7 @@ export const documentationRegistry = {
           default: "required",
           description: "Snippet to render each item. Provides access to item and index.",
           prop: "itemTemplate",
-          type: "Snippet<[T, number]>",
+          type: "Snippet<[{ item: T; index: number }]>",
         },
         {
           default: "'horizontal'",
@@ -552,6 +696,12 @@ export const documentationRegistry = {
           type: "number",
         },
         {
+          default: "0",
+          description: "The scroll progress percentage from 0 to 100. Supports $bindable.",
+          prop: "scrollPercentage",
+          type: "number",
+        },
+        {
           default: "false",
           description: "Whether to automatically cycle through items.",
           prop: "autoplay",
@@ -574,6 +724,18 @@ export const documentationRegistry = {
           description: "Custom variant class for theming.",
           prop: "variant",
           type: "string",
+        },
+        {
+          default: "undefined",
+          description: "Callback fired on scroll with activeIndex and scrollPercentage.",
+          prop: "onscroll",
+          type: "(event, metrics) => void",
+        },
+        {
+          default: "undefined",
+          description: "Callback fired when scrolling finishes with activeIndex and scrollPercentage.",
+          prop: "onscrollend",
+          type: "(event, metrics) => void",
         },
       ],
       sampleComponent: CarouselSamples,
@@ -610,61 +772,11 @@ export const documentationRegistry = {
       sampleComponent: CodeBlockSamples,
       title: "Fluid UI - Code Block",
     },
-    "date-picker": {
-      description:
-        "A highly flexible, headless-inspired calendar component. It renders a month view based on a provided date, giving you full control over navigation and layout.",
-      props: [
-        {
-          default: "undefined",
-          description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
-          type: "string",
-        },
-        {
-          default: "''",
-          description: "Custom variant class for theming.",
-          prop: "variant",
-          type: "string",
-        },
-        {
-          default: "new Date().toISOString()",
-          description: "ISO 8601 formatted date string that determines the displayed month. Supports $bindable.",
-          prop: "currentDate",
-          type: "string",
-        },
-        {
-          default: "undefined",
-          description: "Selected start date (ISO 8601). Supports $bindable.",
-          prop: "startDate",
-          type: "string",
-        },
-        {
-          default: "undefined",
-          description: "Selected end date (ISO 8601). Supports $bindable.",
-          prop: "endDate",
-          type: "string",
-        },
-        {
-          default: "['Mon', 'Tue', ...]",
-          description: "Array of week day names to display in the header.",
-          prop: "weekDays",
-          type: "string[]",
-        },
-        {
-          default: "false",
-          description: "Whether to hide days from previous/next months.",
-          prop: "hideRollingDays",
-          type: "boolean",
-        },
-      ],
-      sampleComponent: DatePickerSamples,
-      title: "Fluid UI - Date Picker",
-    },
     draggable: {
-      description: "A barebone wrapper component that enables native HTML5 drag operations for its content.",
+      description: "A flexible wrapper component that enables native HTML5 drag operations for its content with lifecycle callbacks.",
       props: [
         {
-          default: "''",
+          default: "required",
           description: "The unique identifier for the component element.",
           prop: "componentId",
           type: "string",
@@ -676,15 +788,33 @@ export const documentationRegistry = {
           type: "string",
         },
         {
+          default: "false",
+          description: "If true, prevents drag interactions.",
+          prop: "disabled",
+          type: "boolean",
+        },
+        {
           default: "required",
-          description: "The content to be made draggable.",
+          description: "The content to be made draggable. Provides isDragging parameter.",
           prop: "children",
-          type: "Snippet",
+          type: "Snippet<[{ isDragging: boolean }]>",
         },
         {
           default: "undefined",
           description: "Callback triggered when dragging starts. Use this to set dataTransfer.",
           prop: "ondragstart",
+          type: "(event: DragEvent) => void",
+        },
+        {
+          default: "undefined",
+          description: "Callback triggered continuously while dragging.",
+          prop: "ondrag",
+          type: "(event: DragEvent) => void",
+        },
+        {
+          default: "undefined",
+          description: "Callback triggered when dragging finishes.",
+          prop: "ondragend",
           type: "(event: DragEvent) => void",
         },
       ],
@@ -701,7 +831,7 @@ export const documentationRegistry = {
           type: "boolean",
         },
         {
-          default: "undefined",
+          default: "required",
           description: "The unique identifier for the component wrapper.",
           prop: "componentId",
           type: "string",
@@ -780,7 +910,7 @@ export const documentationRegistry = {
           type: "'copy' | 'move' | 'link' | 'none'",
         },
         {
-          default: "''",
+          default: "required",
           description: "The unique identifier for the component element.",
           prop: "componentId",
           type: "string",
@@ -859,7 +989,7 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "undefined",
+          default: "required",
           description: "The unique identifier for the component wrapper.",
           prop: "componentId",
           type: "string",
@@ -896,7 +1026,7 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "crypto.randomUUID()",
+          default: "required",
           description: "The unique identifier for the component wrapper.",
           prop: "componentId",
           type: "string",
@@ -935,35 +1065,17 @@ export const documentationRegistry = {
       sampleComponent: ModalSamples,
       title: "Fluid UI - Modal",
     },
-    "notification-area": {
-      description: "A fixed area for displaying non-intrusive notifications and alerts.",
-      props: [
-        {
-          default: "[]",
-          description: "A bindable array of notification items.",
-          prop: "items",
-          type: "Notification[]",
-        },
-        {
-          default: "'top-right'",
-          description: "The corner of the screen where notifications appear.",
-          prop: "position",
-          type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'",
-        },
-        {
-          default: "''",
-          description: "Custom variant class for theming.",
-          prop: "variant",
-          type: "string",
-        },
-      ],
-      sampleComponent: NotificationSamples,
-      title: "Fluid UI - Notification Area",
-    },
+
     page: {
       description:
-        'The Page component is a specialized wrapper for top-level pages. It handles document metadata (SEO, Open Graph, Twitter Cards) and provides a standard "main" container for content.',
+        'The Page component is a specialized wrapper for top-level pages. It handles document metadata (SEO, Open Graph, Twitter Cards, JSON-LD schema) and renders a semantic "main" container for content.',
       props: [
+        {
+          default: "required",
+          description: "The unique identifier for the main page element.",
+          prop: "componentId",
+          type: "string",
+        },
         {
           default: "''",
           description: "The title of the page (appears in browser tab and search results).",
@@ -1004,13 +1116,37 @@ export const documentationRegistry = {
           default: "'website'",
           description: "The type of Open Graph object.",
           prop: "type",
-          type: "'website' | 'article' | 'profile'",
+          type: "'website' | 'article' | 'profile' | 'book'",
         },
         {
           default: "'summary_large_image'",
           description: "The type of Twitter card to render.",
           prop: "twitterCard",
-          type: "'summary' | 'summary_large_image'",
+          type: "'summary' | 'summary_large_image' | 'app' | 'player'",
+        },
+        {
+          default: "''",
+          description: "Twitter handle of the website/organization (@username).",
+          prop: "twitterSite",
+          type: "string",
+        },
+        {
+          default: "''",
+          description: "Twitter handle of the content creator/author (@username).",
+          prop: "twitterCreator",
+          type: "string",
+        },
+        {
+          default: "''",
+          description: "The locale of the content (e.g. 'en_US').",
+          prop: "locale",
+          type: "string",
+        },
+        {
+          default: "''",
+          description: "Author name of the page content.",
+          prop: "author",
+          type: "string",
         },
         {
           default: "''",
@@ -1031,6 +1167,12 @@ export const documentationRegistry = {
           type: "string",
         },
         {
+          default: "undefined",
+          description: "JSON-LD structured data object or array for rich schema.org search snippets.",
+          prop: "structuredData",
+          type: "Record<string, unknown> | Array<Record<string, unknown>>",
+        },
+        {
           default: "''",
           description: "CSS classes to apply to the main container.",
           prop: "class",
@@ -1044,6 +1186,12 @@ export const documentationRegistry = {
       description: "A component for navigating through a series of related content across multiple pages.",
       props: [
         {
+          default: "required",
+          description: "The unique identifier for the pagination navigation element.",
+          prop: "componentId",
+          type: "string",
+        },
+        {
           default: "1",
           description: "The currently active page. Supports $bindable.",
           prop: "currentPage",
@@ -1053,6 +1201,18 @@ export const documentationRegistry = {
           default: "1",
           description: "The total number of pages.",
           prop: "totalPages",
+          type: "number",
+        },
+        {
+          default: "1",
+          description: "Number of always-visible pages before and after the current page.",
+          prop: "siblingCount",
+          type: "number",
+        },
+        {
+          default: "1",
+          description: "Number of always-visible pages at the beginning and end boundaries.",
+          prop: "boundaryCount",
           type: "number",
         },
         {
@@ -1068,69 +1228,26 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "crypto.randomUUID()",
-          description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
-          type: "string",
+          default: "undefined",
+          description: "Optional custom snippet for rendering the Previous button content.",
+          prop: "previousSnippet",
+          type: "Snippet",
+        },
+        {
+          default: "undefined",
+          description: "Optional custom snippet for rendering the Next button content.",
+          prop: "nextSnippet",
+          type: "Snippet",
+        },
+        {
+          default: "undefined",
+          description: "Optional custom snippet for rendering ellipsis items.",
+          prop: "ellipsisSnippet",
+          type: "Snippet",
         },
       ],
       sampleComponent: PaginationSamples,
       title: "Fluid UI - Pagination",
-    },
-    popover: {
-      description: "A dynamic and flexible popover component used for dropdowns, tooltips, and contextual menus.",
-      props: [
-        {
-          default: "required",
-          description: "Snippet for the element that triggers the popover.",
-          prop: "trigger",
-          type: "Snippet",
-        },
-        {
-          default: "required",
-          description: "Snippet for the content displayed inside the popover.",
-          prop: "content",
-          type: "Snippet",
-        },
-        {
-          default: "false",
-          description: "Controls the visibility of the popover. Supports $bindable.",
-          prop: "isOpen",
-          type: "boolean",
-        },
-        {
-          default: "'bottom'",
-          description: "The preferred position of the popover relative to the trigger.",
-          prop: "position",
-          type: "'top' | 'bottom' | 'left' | 'right'",
-        },
-        {
-          default: "''",
-          description: "Custom variant class for theming.",
-          prop: "variant",
-          type: "string",
-        },
-        {
-          default: "crypto.randomUUID()",
-          description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
-          type: "string",
-        },
-        {
-          default: "fade",
-          description: "Svelte transition function for the popover content.",
-          prop: "transitionFn",
-          type: "function",
-        },
-        {
-          default: "{ duration: 150 }",
-          description: "Parameters for the transition function.",
-          prop: "transitionParams",
-          type: "object",
-        },
-      ],
-      sampleComponent: PopoverSamples,
-      title: "Fluid UI - Popover",
     },
     switch: {
       description: "A simple toggle switch component used for binary settings or preferences.",
@@ -1168,6 +1285,195 @@ export const documentationRegistry = {
       ],
       sampleComponent: SwitchSamples,
       title: "Fluid UI - Switch",
+    },
+    "time-picker": {
+      description:
+        "A focused time picker component with scrollable hour and minute columns in 12-hour or 24-hour formats, designed to complement CalendarGrid for full date-time selection.",
+      props: [
+        {
+          default: "required",
+          description: "The unique identifier for the component container.",
+          prop: "componentId",
+          type: "string",
+        },
+        {
+          default: "'minute'",
+          description: "Time selection granularity mode ('hour', 'minute', or 'second').",
+          prop: "mode",
+          type: "'hour' | 'minute' | 'second'",
+        },
+        {
+          default: "'12:00'",
+          description: "The selected time string value. Supports $bindable.",
+          prop: "selectedTime",
+          type: "string",
+        },
+        {
+          default: "'24h'",
+          description: "Time format standard ('12h' or '24h').",
+          prop: "format",
+          type: "'12h' | '24h'",
+        },
+        {
+          default: "5",
+          description: "Step minute interval increment (e.g., 1, 5, 10, 15, 30).",
+          prop: "stepMinuteInterval",
+          type: "number",
+        },
+        {
+          default: "5",
+          description: "Step second interval increment when mode is 'second'.",
+          prop: "stepSecondInterval",
+          type: "number",
+        },
+        {
+          default: "true",
+          description: "Whether to display the header with the active time preview.",
+          prop: "showHeader",
+          type: "boolean",
+        },
+        {
+          default: "''",
+          description: "Custom CSS variant class.",
+          prop: "variant",
+          type: "string",
+        },
+      ],
+      sampleComponent: TimePickerSamples,
+      title: "Fluid UI - Time Picker",
+    },
+  },
+  prebuilt: {
+    breadcrumb: {
+      description: "A navigation aid that allows users to keep track of their location within programs, documents, or websites.",
+      props: [
+        {
+          default: "[]",
+          description: "An array of breadcrumb items.",
+          prop: "items",
+          type: "Array<{ label: string; href: string }>",
+        },
+        {
+          default: "'/'",
+          description: "The separator element between items.",
+          prop: "separator",
+          type: "string | Snippet",
+        },
+        {
+          default: "''",
+          description: "Custom variant class for theming.",
+          prop: "variant",
+          type: "string",
+        },
+        {
+          default: "crypto.randomUUID()",
+          description: "The unique identifier for the component wrapper.",
+          prop: "componentId",
+          type: "string",
+        },
+      ],
+      sampleComponent: BreadcrumbSamples,
+      title: "Fluid UI - Breadcrumb",
+    },
+    "international-input": {
+      description:
+        "A universal international input component featuring a country flag dropdown and mode-based format placeholders for phone numbers, timezones, country codes, and currencies.",
+      props: [
+        {
+          default: "required",
+          description: "The unique identifier for the component wrapper.",
+          prop: "componentId",
+          type: "string",
+        },
+        {
+          default: "'phone'",
+          description: "The input mode: 'phone' | 'country' | 'timezone' | 'currency' | 'dialCode'.",
+          prop: "mode",
+          type: "InternationalInputMode",
+        },
+        {
+          default: "'US'",
+          description: "The selected ISO country code. Supports $bindable.",
+          prop: "selectedCountry",
+          type: "string",
+        },
+        {
+          default: "'+1'",
+          description: "The selected international dial code. Supports $bindable.",
+          prop: "dialCode",
+          type: "string",
+        },
+        {
+          default: "''",
+          description: "The input text/phone value. Supports $bindable.",
+          prop: "value",
+          type: "string",
+        },
+        {
+          default: "undefined",
+          description: "Custom placeholder. If omitted, uses the country's example format for the current mode.",
+          prop: "placeholder",
+          type: "string",
+        },
+        {
+          default: "'Search country...'",
+          description: "Placeholder text for the country search input.",
+          prop: "searchPlaceholder",
+          type: "string",
+        },
+        {
+          default: "false",
+          description: "Whether the input is disabled.",
+          prop: "disabled",
+          type: "boolean",
+        },
+        {
+          default: "''",
+          description: "Custom variant class for theming.",
+          prop: "variant",
+          type: "string",
+        },
+      ],
+      sampleComponent: InternationalInputSamples,
+      title: "Fluid UI - International Input",
+    },
+    "notification-area": {
+      description:
+        "A generic fixed viewport container managing lifecycle timers, screen edge positioning, and animations, rendering custom user snippets for each notification item.",
+      props: [
+        {
+          default: "required",
+          description: "The unique identifier for the notification area element.",
+          prop: "componentId",
+          type: "string",
+        },
+        {
+          default: "[]",
+          description: "Bindable generic array of items extending { id: string | number; duration?: number }.",
+          prop: "items",
+          type: "T[]",
+        },
+        {
+          default: "'top-right'",
+          description: "The fixed screen edge zone where notifications are positioned.",
+          prop: "position",
+          type: "'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'",
+        },
+        {
+          default: "''",
+          description: "Custom variant class for theming.",
+          prop: "variant",
+          type: "string",
+        },
+        {
+          default: "required",
+          description: "Generic snippet function receiving (item: T, dismiss: () => void).",
+          prop: "itemSnippet",
+          type: "Snippet<[item: T, dismiss: () => void]>",
+        },
+      ],
+      sampleComponent: NotificationSamples,
+      title: "Fluid UI - Notification Area",
     },
   },
 };

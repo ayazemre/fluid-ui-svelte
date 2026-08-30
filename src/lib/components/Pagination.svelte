@@ -1,40 +1,114 @@
 <script lang="ts">
-  import { Container, Button } from "#src/lib/base/index.ts";
+  import { Button, Container } from "#src/lib/base/index.ts";
+
+  import type { Snippet } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
+
+  import { calculatePaginationRange, isValidPageNavigation } from "./pagination.ts";
 
   let {
-    variant = "",
-    componentId = crypto.randomUUID(),
+    componentId,
     currentPage = $bindable(1),
     totalPages = 1,
+    siblingCount = 1,
+    boundaryCount = 1,
+    variant = "",
     onPageChange,
+    previousSnippet,
+    nextSnippet,
+    ellipsisSnippet,
   }: {
-    variant?: string;
-    componentId?: string;
+    componentId: string;
     currentPage: number;
     totalPages: number;
+    siblingCount?: number;
+    boundaryCount?: number;
+    variant?: string;
     onPageChange?: (page: number) => Promise<void>;
+    previousSnippet?: Snippet;
+    nextSnippet?: Snippet;
+    ellipsisSnippet?: Snippet;
   } = $props();
 
-  async function goToPage(page: number) {
-    if (page < 1 || page > totalPages || page === currentPage) return;
-    currentPage = page;
-    if (onPageChange) {
-      await onPageChange(page);
-    }
-  }
+  const paginationItems = $derived(
+    calculatePaginationRange({
+      boundaryCount,
+      currentPage,
+      siblingCount,
+      totalPages,
+    }),
+  );
 </script>
 
-<Container id={componentId} class={[variant, "fluid-pagination-container"].join(" ")}>
-  <Button onclick={async () => goToPage(currentPage - 1)} disabled={currentPage === 1} class="fluid-pagination-button">Previous</Button>
+<Container id={componentId} type="nav" aria-label="Pagination" class={["fluid-pagination-container", variant].join(" ")}>
+  <Button
+    onclick={async () => {
+      if (isValidPageNavigation(currentPage - 1, currentPage, totalPages)) {
+        currentPage -= 1;
+        if (onPageChange) {
+          await onPageChange(currentPage);
+        }
+      }
+    }}
+    disabled={currentPage <= 1}
+    aria-label="Go to previous page"
+    class={["fluid-pagination-button", variant].join(" ")}
+  >
+    {#if previousSnippet}
+      {@render previousSnippet()}
+    {:else}
+      Previous
+    {/if}
+  </Button>
 
-  {#each Array.from({ length: totalPages }, (_, i) => i + 1) as page}
-    <Button
-      onclick={async () => goToPage(page)}
-      class={[variant, "fluid-pagination-button", page === currentPage ? "fluid-pagination-button-active" : ""].join(" ")}
-    >
-      {page}
-    </Button>
+  {#each paginationItems as item (item.key)}
+    {#if item.type === "page"}
+      <Button
+        onclick={async () => {
+          if (isValidPageNavigation(item.page, currentPage, totalPages)) {
+            currentPage = item.page;
+            if (onPageChange) {
+              await onPageChange(item.page);
+            }
+          }
+        }}
+        aria-label={`Go to page ${item.page}`}
+        aria-current={item.page === currentPage ? "page" : undefined}
+        class={["fluid-pagination-button", item.page === currentPage ? "fluid-pagination-button-active" : "", variant].join(" ")}
+      >
+        {item.page}
+      </Button>
+    {:else}
+      {#if ellipsisSnippet}
+        {@render ellipsisSnippet()}
+      {:else}
+        <span
+          aria-hidden="true"
+          class={["fluid-pagination-ellipsis flex min-w-[2.5rem] h-10 items-center justify-center text-neutral-400 select-none", variant].join(" ")}
+        >
+          &hellip;
+        </span>
+      {/if}
+    {/if}
   {/each}
 
-  <Button onclick={async () => goToPage(currentPage + 1)} disabled={currentPage === totalPages} class="fluid-pagination-button">Next</Button>
+  <Button
+    onclick={async () => {
+      if (isValidPageNavigation(currentPage + 1, currentPage, totalPages)) {
+        currentPage += 1;
+        if (onPageChange) {
+          await onPageChange(currentPage);
+        }
+      }
+    }}
+    disabled={currentPage >= totalPages}
+    aria-label="Go to next page"
+    class={["fluid-pagination-button", variant].join(" ")}
+  >
+    {#if nextSnippet}
+      {@render nextSnippet()}
+    {:else}
+      Next
+    {/if}
+  </Button>
 </Container>

@@ -5,9 +5,11 @@
 
   import type { Snippet } from "svelte";
 
+  import { setupModalLifecycle } from "./modal.ts";
+
   let {
+    componentId,
     variant = "",
-    componentId = crypto.randomUUID(),
     isOpen = $bindable(false),
     closeOnBackdropClick = true,
     scrollLock = true,
@@ -17,39 +19,22 @@
     backdropTransitionParams = { duration: 200 },
     children,
   }: {
+    componentId: string;
+    variant?: string;
     isOpen?: boolean;
     closeOnBackdropClick?: boolean;
     scrollLock?: boolean;
-    variant?: string;
-    componentId?: string;
-    transitionFn?: (node: Element, params?: any) => TransitionConfig;
-    transitionParams?: any;
-    backdropTransitionFn?: (node: Element, params?: any) => TransitionConfig;
-    backdropTransitionParams?: any;
+    transitionFn?: (node: Element, parameters?: any) => TransitionConfig;
+    transitionParams?: Record<string, unknown>;
+    backdropTransitionFn?: (node: Element, parameters?: any) => TransitionConfig;
+    backdropTransitionParams?: Record<string, unknown>;
     children: Snippet;
   } = $props();
 
-  function close() {
-    isOpen = false;
-  }
-
-  function handleKeydown(event: KeyboardEvent) {
-    if (event.key === "Escape" && isOpen) {
-      close();
-    }
-  }
-
   $effect(() => {
-    if (isOpen) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
-      if (scrollLock) document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeydown);
-
-      return () => {
-        if (scrollLock) document.body.style.overflow = originalStyle;
-        window.removeEventListener("keydown", handleKeydown);
-      };
-    }
+    return setupModalLifecycle(isOpen, scrollLock, () => {
+      isOpen = false;
+    });
   });
 </script>
 
@@ -59,16 +44,18 @@
     class={[variant, "fluid-modal-container"].join(" ")}
     transitionFn={backdropTransitionFn}
     transitionParams={backdropTransitionParams}
-    onclick={async () => {
-      if (closeOnBackdropClick) close();
+    onclick={() => {
+      if (closeOnBackdropClick) {
+        isOpen = false;
+      }
     }}
     role="dialog"
     aria-modal="true"
   >
     <div
       id="{componentId}-panel"
-      onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
+      onclick={(event: MouseEvent) => event.stopPropagation()}
+      onkeydown={(event: KeyboardEvent) => event.stopPropagation()}
       role="presentation"
       class={[variant, "fluid-modal-panel"].join(" ")}
       transition:transitionFn={transitionParams}

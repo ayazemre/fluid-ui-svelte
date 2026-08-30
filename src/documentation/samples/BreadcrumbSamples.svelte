@@ -1,13 +1,14 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib/base/index.ts";
-  import { Breadcrumb, CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { Breadcrumb } from "#src/lib/prebuilt/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
 
   const items = [
     { href: "/", label: "Home" },
-    { href: "/documentation/components", label: "Components" },
-    { href: "/documentation/components/breadcrumb", label: "Breadcrumb" },
+    { href: "/documentation/prebuilt", label: "Prebuilt" },
+    { href: "/documentation/prebuilt/breadcrumb", label: "Breadcrumb" },
   ];
 </script>
 

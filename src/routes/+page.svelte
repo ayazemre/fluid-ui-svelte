@@ -7,6 +7,7 @@
 </script>
 
 <Page
+  componentId="home-page"
   class="flex-1 overflow-hidden"
   title="Fluid UI"
   description="Fluid UI is a pragmatic Svelte component library featuring a dual-layer architecture of lightweight semantic wrappers and high-level interactive components for building beautiful, responsive interfaces."

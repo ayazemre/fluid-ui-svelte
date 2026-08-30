@@ -158,6 +158,11 @@ main.fluid-container {
   @apply outline-2 outline-error-500;
 }
 
+/* Label --------------------------- */
+.fluid-label {
+  @apply text-sm font-medium text-neutral-950 transition-all duration-500 select-none dark:text-neutral-50;
+}
+
 /* Link ---------------------------- */
 .fluid-link {
   @apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
@@ -305,24 +310,54 @@ main.fluid-container {
   @apply bg-primary-600;
 }
 
-/* Popover ------------------------- */
+/* Anchored Overlay & Popover ------------------------- */
+.fluid-anchored-overlay-container,
 .fluid-popover-container {
   @apply relative inline-block;
 }
+.fluid-anchored-overlay-float,
 .fluid-popover-content {
   @apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
 }
+.fluid-anchored-overlay-top,
 .fluid-popover-top {
   @apply bottom-full left-1/2 mb-2 -translate-x-1/2;
 }
+.fluid-anchored-overlay-top-start {
+  @apply bottom-full left-0 mb-2;
+}
+.fluid-anchored-overlay-top-end {
+  @apply bottom-full right-0 mb-2;
+}
+.fluid-anchored-overlay-bottom,
 .fluid-popover-bottom {
   @apply left-1/2 top-full mt-2 -translate-x-1/2;
 }
+.fluid-anchored-overlay-bottom-start {
+  @apply left-0 top-full mt-2;
+}
+.fluid-anchored-overlay-bottom-end {
+  @apply right-0 top-full mt-2;
+}
+.fluid-anchored-overlay-left,
 .fluid-popover-left {
   @apply right-full top-1/2 mr-2 -translate-y-1/2;
 }
+.fluid-anchored-overlay-left-start {
+  @apply right-full top-0 mr-2;
+}
+.fluid-anchored-overlay-left-end {
+  @apply bottom-0 right-full mr-2;
+}
+.fluid-anchored-overlay-right,
 .fluid-popover-right {
   @apply left-full top-1/2 ml-2 -translate-y-1/2;
+}
+.fluid-anchored-overlay-right-start {
+  @apply left-full top-0 ml-2;
+}
+.fluid-anchored-overlay-right-end {
+  @apply bottom-0 left-full ml-2;
 }
 
 /* Modal --------------------------- */
@@ -362,17 +397,29 @@ main.fluid-container {
 .fluid-notification-area {
   @apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
 }
-.fluid-notification-area-top-right {
-  @apply top-0 right-0;
-}
 .fluid-notification-area-top-left {
-  @apply top-0 left-0;
+  @apply top-0 left-0 items-start;
 }
-.fluid-notification-area-bottom-right {
-  @apply bottom-0 right-0 flex-col-reverse;
+.fluid-notification-area-top-center {
+  @apply top-0 left-1/2 -translate-x-1/2 items-center;
+}
+.fluid-notification-area-top-right {
+  @apply top-0 right-0 items-end;
+}
+.fluid-notification-area-center-left {
+  @apply top-1/2 left-0 -translate-y-1/2 items-start;
+}
+.fluid-notification-area-center-right {
+  @apply top-1/2 right-0 -translate-y-1/2 items-end;
 }
 .fluid-notification-area-bottom-left {
-  @apply bottom-0 left-0 flex-col-reverse;
+  @apply bottom-0 left-0 flex-col-reverse items-start;
+}
+.fluid-notification-area-bottom-center {
+  @apply bottom-0 left-1/2 -translate-x-1/2 flex-col-reverse items-center;
+}
+.fluid-notification-area-bottom-right {
+  @apply bottom-0 right-0 flex-col-reverse items-end;
 }
 
 .fluid-notification {

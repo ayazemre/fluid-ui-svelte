@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import Icon from "@iconify/svelte";
-  import { fly, fade } from "svelte/transition";
+  import { fade, fly } from "svelte/transition";
 
   import { documentationRegistry } from "#src/documentation/documentation.ts";
   import { Container, Link, Text } from "#src/lib/base/index.ts";
@@ -22,6 +22,13 @@
     .map(([slug, data]) => ({
       name: data.title.replace("Fluid UI - ", ""),
       url: `/documentation/components/${slug}`,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const prebuilt = Object.entries(documentationRegistry.prebuilt)
+    .map(([slug, data]) => ({
+      name: data.title.replace("Fluid UI - ", ""),
+      url: `/documentation/prebuilt/${slug}`,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -77,6 +84,24 @@
       {/each}
     {/snippet}
   </Accordion>
+  <Accordion>
+    {#snippet header(options)}
+      <Text>Prebuilt</Text>
+      <Icon icon={options.isExpanded ? "raphael:arrowdown" : "raphael:arrowright"}></Icon>
+    {/snippet}
+
+    {#snippet body()}
+      {#each prebuilt as element}
+        <Link
+          href={element.url}
+          overrideDefaultStyling
+          class={[page.url.pathname === element.url ? "active" : "", "fluid-sidebar-link", "p-2", "text-left"].join(" ")}
+        >
+          {element.name}
+        </Link>
+      {/each}
+    {/snippet}
+  </Accordion>
   <Link href="/documentation/how-to" class={[page.url.pathname === "/documentation/how-to" ? "active" : "", "fluid-sidebar-link", "p-2"].join(" ")}>
     <Text overrideDefaultStyling>How To</Text>
   </Link>
@@ -88,6 +113,7 @@
 <Container class="flex flex-1 flex-col bg-neutral-50 dark:bg-neutral-900" id="documentation-page-layout">
   <!-- Mobile Drawer -->
   <Drawer
+    componentId="documentation-mobile-drawer"
     bind:isOpen={globalState.isDocumentationDrawerOpen}
     position="left"
     transitionFn={fly}

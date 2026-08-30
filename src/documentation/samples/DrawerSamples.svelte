@@ -1,8 +1,8 @@
 <script lang="ts">
   import { fade, fly } from "svelte/transition";
 
-  import { Container, Text, Button } from "#src/lib/base/index.ts";
-  import { Drawer, CodeBlock } from "#src/lib/components/index.ts";
+  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { CodeBlock, Drawer } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
 
@@ -10,10 +10,10 @@
   let isPositionedDrawerOpen = $state(false);
   let isAnimatedDrawerOpen = $state(false);
   let isFlyDrawerOpen = $state(false);
-  let currentPosition = $state<"left" | "right" | "top" | "bottom">("left");
+  let currentPosition = $state<"bottom" | "left" | "right" | "top">("left");
 
-  const openAtPosition = (pos: "left" | "right" | "top" | "bottom") => {
-    currentPosition = pos;
+  const openAtPosition = (position: "bottom" | "left" | "right" | "top") => {
+    currentPosition = position;
     isPositionedDrawerOpen = true;
   };
 </script>
@@ -32,7 +32,7 @@
       >
         Open Drawer
       </Button>
-      <Drawer bind:isOpen={isBasicDrawerOpen} position="left">
+      <Drawer componentId="drawer-basic-sample" bind:isOpen={isBasicDrawerOpen} position="left">
         <Container class="flex min-w-64 flex-col gap-6 p-6">
           <Text type="h2" class="text-2xl font-bold">Navigation</Text>
           <Container class="flex flex-col gap-2">
@@ -85,7 +85,7 @@
           }}>Bottom</Button
         >
       </Container>
-      <Drawer bind:isOpen={isPositionedDrawerOpen} position={currentPosition}>
+      <Drawer componentId="drawer-positions-sample" bind:isOpen={isPositionedDrawerOpen} position={currentPosition}>
         <Container class="flex min-w-64 flex-col gap-4 p-8">
           <Text type="h2" class="text-xl font-bold">Position: {currentPosition}</Text>
           <Text>The drawer adapts its anchoring based on the prop.</Text>
@@ -117,6 +117,7 @@
         Open Animated
       </Button>
       <Drawer
+        componentId="drawer-animated-sample"
         bind:isOpen={isAnimatedDrawerOpen}
         position="right"
         transitionFn={fade}
@@ -155,10 +156,11 @@
         Open Fly Drawer
       </Button>
       <Drawer
+        componentId="drawer-fly-sample"
         bind:isOpen={isFlyDrawerOpen}
         position="bottom"
         transitionFn={fly}
-        transitionParams={{ y: 200, duration: 800 }}
+        transitionParams={{ duration: 800, y: 200 }}
         backdropTransitionFn={fade}
         backdropTransitionParams={{ duration: 600 }}
       >

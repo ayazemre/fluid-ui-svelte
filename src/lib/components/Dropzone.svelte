@@ -1,26 +1,35 @@
 <script lang="ts">
   import { Container } from "#src/lib/base/index.ts";
-  import { handleDragOver, isDragValid, handleDrop } from "#src/lib/utilities/dropzone.ts";
 
   import type { Snippet } from "svelte";
 
+  import {
+    processDropzoneDragEnter,
+    processDropzoneDragLeave,
+    processDropzoneDragOver,
+    processDropzoneDrop,
+    type DropzoneDropEffect,
+    type DropzoneMode,
+    type DropzoneState,
+  } from "./dropzone.ts";
+
   let {
+    componentId,
     variant = "",
-    componentId = "",
     children,
     dropEffect = "copy",
     mode = "file",
     data = $bindable(),
   }: {
+    componentId: string;
     variant?: string;
-    componentId?: string;
     children: Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>;
-    dropEffect?: "copy" | "move" | "link" | "none";
-    mode?: "file" | "text";
-    data?: File[] | string;
+    dropEffect?: DropzoneDropEffect;
+    mode?: DropzoneMode;
+    data?: Array<File> | string;
   } = $props();
 
-  const componentState = $state({ isDragOver: false, isInvalid: false });
+  let componentState: DropzoneState = $state({ isDragOver: false, isInvalid: false });
 </script>
 
 <Container
@@ -28,27 +37,19 @@
   class={[variant, "fluid-dropzone", "relative", componentState.isDragOver ? "drag-over" : "", componentState.isInvalid ? "drag-invalid" : ""].join(
     " ",
   )}
-  ondragover={(e: DragEvent) => {
-    console.log("dragovers");
-    handleDragOver(e, dropEffect, mode);
-    componentState.isDragOver = true;
-    componentState.isInvalid = !isDragValid(e, mode);
-    console.log("dropeffect: ", dropEffect);
+  ondragover={(event: DragEvent) => {
+    componentState = processDropzoneDragOver(event, dropEffect, mode);
   }}
-  ondragenter={(e: DragEvent) => {
-    componentState.isDragOver = true;
-    componentState.isInvalid = !isDragValid(e, mode);
+  ondragenter={(event: DragEvent) => {
+    componentState = processDropzoneDragEnter(event, mode);
   }}
   ondragleave={() => {
-    componentState.isDragOver = false;
-    componentState.isInvalid = false;
+    componentState = processDropzoneDragLeave();
   }}
-  ondrop={(e: DragEvent) => {
-    componentState.isDragOver = false;
-    componentState.isInvalid = false;
-
-    const result = handleDrop(e, mode);
-    if (result) {
+  ondrop={(event: DragEvent) => {
+    componentState = processDropzoneDragLeave();
+    const result = processDropzoneDrop(event, mode);
+    if (result !== null) {
       data = result;
     }
   }}

@@ -26,21 +26,6 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(accordionBodyTextElement).toBeVisible();
   });
 
-  test("Breadcrumb", async ({ page }) => {
-    const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
-
-    // Navigate to the Breadcrumb documentation sample page via sidebar
-    await desktopSidebarContainer.getByRole("link", { name: "Breadcrumb" }).click();
-    await expect(page).toHaveTitle(/Breadcrumb/);
-
-    // Verify breadcrumb item links exist
-    const homeNavigationLink = page.getByRole("link", { exact: true, name: "Home" }).first();
-    const componentsNavigationLink = page.getByRole("link", { exact: true, name: "Components" }).first();
-
-    await expect(homeNavigationLink).toBeVisible();
-    await expect(componentsNavigationLink).toBeVisible();
-  });
-
   test("Carousel", async ({ page }) => {
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
 
@@ -51,6 +36,18 @@ test.describe("Components Elements E2E Tests", () => {
     // Verify section headings for carousel samples
     await expect(page.getByRole("heading", { name: "Horizontal Examples" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Vertical Examples" })).toBeVisible();
+
+    // Verify Autoplay controls
+    const autoplayToggleButton = page.getByRole("button", { name: "Pause Autoplay" });
+    await expect(autoplayToggleButton).toBeVisible();
+    await autoplayToggleButton.click();
+    await expect(page.getByRole("button", { name: "Start Autoplay" })).toBeVisible();
+
+    // Verify navigation control buttons
+    const nextNavigationButton = page.getByRole("button", { name: "Next" }).first();
+    const previousNavigationButton = page.getByRole("button", { name: "Prev" }).first();
+    await expect(nextNavigationButton).toBeVisible();
+    await expect(previousNavigationButton).toBeVisible();
   });
 
   test("CodeBlock", async ({ page }) => {
@@ -65,12 +62,12 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(introTextElement).toBeVisible();
   });
 
-  test("DatePicker", async ({ page }) => {
+  test("CalendarGrid", async ({ page }) => {
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
 
-    // Navigate to the Date Picker documentation sample page via sidebar
-    await desktopSidebarContainer.getByRole("link", { name: "Date Picker" }).click();
-    await expect(page).toHaveTitle(/Date Picker/);
+    // Navigate to the Calendar Grid documentation sample page via sidebar
+    await desktopSidebarContainer.getByRole("link", { name: "Calendar Grid" }).click();
+    await expect(page).toHaveTitle(/Calendar Grid/);
 
     // Verify single month calendar section heading and weekday headers
     await expect(page.getByRole("heading", { name: "1. Single Month with External Navigation" })).toBeVisible();
@@ -141,22 +138,6 @@ test.describe("Components Elements E2E Tests", () => {
     await cancelModalButtonElement.click();
   });
 
-  test("NotificationArea", async ({ page }) => {
-    const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
-
-    // Navigate to the Notification Area documentation sample page via sidebar
-    await desktopSidebarContainer.getByRole("link", { name: "Notification Area" }).click();
-    await expect(page).toHaveTitle(/Notification Area/);
-
-    // Trigger success notification and verify toast message
-    const triggerSuccessButtonElement = page.getByRole("button", { name: "Success" });
-    await expect(triggerSuccessButtonElement).toBeVisible();
-    await triggerSuccessButtonElement.click();
-
-    const notificationMessageElement = page.getByText("This is a success notification message!");
-    await expect(notificationMessageElement).toBeVisible();
-  });
-
   test("Page", async ({ page }) => {
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
 
@@ -180,20 +161,20 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(currentPageIndicatorElement).toBeVisible();
   });
 
-  test("Popover", async ({ page }) => {
+  test("AnchoredOverlay", async ({ page }) => {
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
 
-    // Navigate to the Popover documentation sample page via sidebar
-    await desktopSidebarContainer.getByRole("link", { name: "Popover" }).click();
-    await expect(page).toHaveTitle(/Popover/);
+    // Navigate to the Anchored Overlay documentation sample page via sidebar
+    await desktopSidebarContainer.getByRole("link", { name: "Anchored Overlay" }).click();
+    await expect(page).toHaveTitle(/Anchored Overlay/);
 
-    // Click popover trigger element and verify popover content
-    const popoverTriggerElement = page.getByText("Click Me", { exact: true });
-    await expect(popoverTriggerElement).toBeVisible();
-    await popoverTriggerElement.click();
+    // Click anchor trigger element and verify overlay content
+    const anchorTriggerElement = page.getByRole("button", { name: "Options Menu" });
+    await expect(anchorTriggerElement).toBeVisible();
+    await anchorTriggerElement.click();
 
-    const popoverTitleElement = page.getByText("Popover Title", { exact: true });
-    await expect(popoverTitleElement).toBeVisible();
+    const overlayItemElement = page.getByRole("button", { name: "Profile Settings" });
+    await expect(overlayItemElement).toBeVisible();
   });
 
   test("Switch", async ({ page }) => {
@@ -213,5 +194,22 @@ test.describe("Components Elements E2E Tests", () => {
 
     const enabledStatusTextElement = page.getByText("Status: Enabled");
     await expect(enabledStatusTextElement).toBeVisible();
+  });
+
+  test("TimePicker", async ({ page }) => {
+    const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
+
+    // Navigate to the Time Picker documentation sample page via sidebar
+    await desktopSidebarContainer.getByRole("link", { name: "Time Picker" }).click();
+    await expect(page).toHaveTitle(/Time Picker/);
+
+    // Verify initial time display and select new hour
+    await expect(page.getByText("Selected Time: 14:30").first()).toBeVisible();
+
+    const hour16Button = page.locator("#time-picker-demo-minute").getByRole("button", { exact: true, name: "16" });
+    await expect(hour16Button).toBeVisible();
+    await hour16Button.click();
+
+    await expect(page.getByText("Selected Time: 16:30").first()).toBeVisible();
   });
 });

@@ -20,8 +20,8 @@
     <Container class="w-full rounded-xl border p-6 dark:border-neutral-800">
       <Button onclick={async () => (isBasicOpen = true)} class="fluid-button-primary">Open Modal</Button>
 
-      <Modal bind:isOpen={isBasicOpen}>
-        <Container class="p-6 flex flex-col gap-4">
+      <Modal componentId="modal-basic-sample" bind:isOpen={isBasicOpen}>
+        <Container class="flex flex-col gap-4 p-6">
           <Text type="h2" class="text-2xl font-bold">Modal Title</Text>
           <Text>This is a centered modal. It locks body scroll and closes on Escape key or backdrop click.</Text>
           <Container class="flex justify-end gap-2 mt-4">

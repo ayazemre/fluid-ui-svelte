@@ -20,7 +20,7 @@
   );
 </script>
 
-<Page title={data.title} description={data.description}>
+<Page componentId={`doc-page-${data.category}-${data.slug}`} title={data.title} description={data.description}>
   <Container class="flex flex-col gap-8">
     <!-- Header -->
     <Container class="flex flex-col gap-4">

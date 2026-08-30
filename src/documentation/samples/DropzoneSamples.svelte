@@ -18,7 +18,7 @@
     <Text class="text-sm text-neutral-500">Optimized for file uploads. The cursor indicates a "Copy" operation.</Text>
 
     <Container class="rounded-lg border p-6 dark:border-neutral-700">
-      <Dropzone bind:data={droppedFiles} mode="file" dropEffect="copy">
+      <Dropzone componentId="dropzone-file-sample" bind:data={droppedFiles} mode="file" dropEffect="copy">
         {#snippet children({ isDragOver, isInvalid })}
           <Container class="flex flex-col items-center gap-2">
             <Text class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}>
@@ -58,15 +58,23 @@
 
     <Container class="rounded-lg border bg-neutral-50 p-6 dark:border-neutral-700 dark:bg-neutral-900/50">
       <Container class="mb-6 flex gap-4">
-        <Draggable variant="primary" ondragstart={(e) => e.dataTransfer?.setData("text/plain", "ID: 12345 - User: Alice")}>
+        <Draggable
+          componentId="draggable-user-alice"
+          variant="primary"
+          ondragstart={(dragEvent: DragEvent) => dragEvent.dataTransfer?.setData("text/plain", "ID: 12345 - User: Alice")}
+        >
           <Text class="text-xs">Drag User Alice</Text>
         </Draggable>
-        <Draggable variant="secondary" ondragstart={(e) => e.dataTransfer?.setData("text/plain", "ID: 67890 - User: Bob")}>
+        <Draggable
+          componentId="draggable-user-bob"
+          variant="secondary"
+          ondragstart={(dragEvent: DragEvent) => dragEvent.dataTransfer?.setData("text/plain", "ID: 67890 - User: Bob")}
+        >
           <Text class="text-xs">Drag User Bob</Text>
         </Draggable>
       </Container>
 
-      <Dropzone bind:data={droppedData} mode="text" dropEffect="move">
+      <Dropzone componentId="dropzone-data-sample" bind:data={droppedData} mode="text" dropEffect="move">
         {#snippet children({ isDragOver, isInvalid })}
           <Container class="flex flex-col items-center gap-2">
             <Text class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}>

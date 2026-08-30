@@ -127,6 +127,28 @@ test.describe("Base Elements E2E Tests", () => {
     await expect(page.getByText("Value: 12345")).toBeVisible();
   });
 
+  test("Label", async ({ page }) => {
+    const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
+
+    // Navigate to the Label documentation sample page via sidebar
+    await desktopSidebarContainer.getByRole("link", { exact: true, name: "Label" }).click();
+    await expect(page).toHaveTitle(/Label/);
+
+    // Verify label elements are visible
+    const standardLabelElement = page.getByText("Full Name");
+    await expect(standardLabelElement).toBeVisible();
+
+    const requiredLabelElement = page.getByText("Email Address");
+    await expect(requiredLabelElement).toBeVisible();
+
+    const customLabelElement = page.getByText("Custom Styled Label");
+    await expect(customLabelElement).toBeVisible();
+
+    // Verify clicking label focuses associated input field
+    await standardLabelElement.click();
+    await expect(page.locator("#full-name")).toBeFocused();
+  });
+
   test("Link", async ({ page }) => {
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
 

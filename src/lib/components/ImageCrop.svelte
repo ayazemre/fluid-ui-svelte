@@ -1,10 +1,11 @@
 <script lang="ts">
   import { Container } from "#src/lib/base/index.ts";
-  import { drawImage, drawOverlay, generateCroppedImage } from "#src/lib/utilities/imageCrop.ts";
+
+  import { renderImageCropPipeline, type ImageCropAspectRatio, type ImageCropPanCoordinates, type ImageCropShape } from "./imageCrop.ts";
 
   let {
-    variant = "",
     componentId,
+    variant = "",
     sourceImage = $bindable(),
     aspectRatio,
     resultImage = $bindable(),
@@ -14,37 +15,22 @@
     shape = "rectangle",
     overlayColor = "rgba(0, 0, 0, 0.5)",
   }: {
+    componentId: string;
     sourceImage: ImageBitmap;
-    aspectRatio: { x: number; y: number };
+    aspectRatio: ImageCropAspectRatio;
     variant?: string;
-    componentId?: string;
     resultImage?: string;
     zoom?: number;
-    pan?: { x: number; y: number };
+    pan?: ImageCropPanCoordinates;
     padding?: number;
-    shape?: "rectangle" | "circle";
+    shape?: ImageCropShape;
     overlayColor?: string;
   } = $props();
 
   let canvasReference: HTMLCanvasElement | undefined = $state(undefined);
 
   $effect(() => {
-    if (canvasReference && sourceImage && aspectRatio) {
-      const context = canvasReference.getContext("2d");
-      if (context) {
-        canvasReference.width = sourceImage.width;
-        canvasReference.height = sourceImage.height;
-
-        // Draw transformed image
-        drawImage(context, sourceImage, { pan, zoom });
-
-        // Draw overlay (which calculates the crop box)
-        const crop = drawOverlay(context, aspectRatio, padding, shape, overlayColor);
-
-        // Generate final image
-        resultImage = generateCroppedImage(sourceImage, crop, { pan, zoom }, { height: sourceImage.height, width: sourceImage.width }, shape);
-      }
-    }
+    resultImage = renderImageCropPipeline(canvasReference, sourceImage, aspectRatio, { pan, zoom }, padding, shape, overlayColor);
   });
 </script>
 

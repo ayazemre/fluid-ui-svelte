@@ -5,7 +5,8 @@
   import type { HTMLAttributes } from "svelte/elements";
   import type { TransitionConfig } from "svelte/transition";
 
-  const {
+  let {
+    element = $bindable(undefined),
     type = "div",
     class: className = "",
     transitionFn = (node: Element, params?: any) => {
@@ -16,6 +17,7 @@
     children,
     ...rest
   }: {
+    element?: HTMLElement;
     type?: "div" | "nav" | "section" | "main" | "header" | "footer" | "aside" | "article";
     class?: string;
     transitionFn?: (node: Element, params?: any) => TransitionConfig;
@@ -27,6 +29,7 @@
 
 <svelte:element
   this={type}
+  bind:this={element}
   {...rest}
   transition:transitionFn={transitionParams}
   class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-container")}

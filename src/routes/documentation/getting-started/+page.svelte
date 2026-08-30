@@ -4,7 +4,11 @@
   import { CodeBlock, Page } from "#src/lib/components/index.ts";
 </script>
 
-<Page title="Fluid UI - Getting Started" description="Installation and usage guide for the Fluid UI Svelte component library.">
+<Page
+  componentId="getting-started-page"
+  title="Fluid UI - Getting Started"
+  description="Installation and usage guide for the Fluid UI Svelte component library."
+>
   <Container class="flex flex-col gap-10">
     <!-- Introduction -->
     <Container class="flex flex-col gap-4 border-b pb-8 dark:border-neutral-800">

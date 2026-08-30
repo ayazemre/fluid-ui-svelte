@@ -3,7 +3,7 @@
   import { Page } from "#src/lib/components/index.ts";
 </script>
 
-<Page title="Fluid UI - How To" description="Advanced guides and recipes for using Fluid UI Svelte.">
+<Page componentId="how-to-page" title="Fluid UI - How To" description="Advanced guides and recipes for using Fluid UI Svelte.">
   <Container class="flex flex-col gap-10">
     <Container class="flex flex-col gap-4 border-b pb-8 dark:border-neutral-800">
       <Text type="h1" class="text-3xl font-bold">How To</Text>

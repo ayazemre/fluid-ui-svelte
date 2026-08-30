@@ -1,22 +1,54 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { Container, Text, Button } from "#src/lib/base/index.ts";
-  import { ImageCrop, CodeBlock, Switch } from "#src/lib/components/index.ts";
+  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { CodeBlock, ImageCrop, Switch } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
 
   // Helper to convert hex to RGBA
-  function hexToRgba(hex: string, opacity: number) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  function hexToRgba(hex: string, opacity: number): string {
+    const red = parseInt(hex.slice(1, 3), 16);
+    const green = parseInt(hex.slice(3, 5), 16);
+    const blue = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   }
 
-  // Example 1 state
+  // Helper to transform Data URL to matching source MIME type (JPEG / PNG / WebP)
+  async function transformDataUrlToMimeType(sourceDataUrl: string, targetMimeType: string, quality: number = 0.92): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const temporaryImage = new Image();
+      temporaryImage.onload = () => {
+        const offscreenCanvas = document.createElement("canvas");
+        offscreenCanvas.width = temporaryImage.width;
+        offscreenCanvas.height = temporaryImage.height;
+        const canvasContext = offscreenCanvas.getContext("2d");
+        if (!canvasContext) {
+          resolve(sourceDataUrl);
+          return;
+        }
+
+        // For JPEG, fill white background to avoid black background on transparent areas
+        if (targetMimeType === "image/jpeg") {
+          canvasContext.fillStyle = "#ffffff";
+          canvasContext.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+        }
+
+        canvasContext.drawImage(temporaryImage, 0, 0);
+        resolve(offscreenCanvas.toDataURL(targetMimeType, quality));
+      };
+      temporaryImage.onerror = (error) => reject(error);
+      temporaryImage.src = sourceDataUrl;
+    });
+  }
+
+  // Example 1 state (Remote JPG)
   let imageBitmap: ImageBitmap | undefined = $state(undefined);
-  let resultImage: string | undefined = $state(undefined);
+  let rawResultImage: string | undefined = $state(undefined);
+  let transformedResultImage: string | undefined = $state(undefined);
+  const remoteMimeType = "image/jpeg";
+  const remoteExtension = "jpg";
+
   let zoom = $state(1);
   let panX = $state(0);
   let panY = $state(0);
@@ -26,9 +58,29 @@
   let overlayOpacity = $state(0.5);
   let overlayColor = $derived(hexToRgba(overlayHex, overlayOpacity));
 
-  // File upload example state
+  // Transform remote crop output to JPG when generated
+  $effect(() => {
+    if (rawResultImage) {
+      transformDataUrlToMimeType(rawResultImage, remoteMimeType)
+        .then((converted) => {
+          transformedResultImage = converted;
+        })
+        .catch(() => {
+          transformedResultImage = rawResultImage;
+        });
+    } else {
+      transformedResultImage = undefined;
+    }
+  });
+
+  // Example 2 state (File Upload)
   let uploadedBitmap: ImageBitmap | undefined = $state(undefined);
-  let uploadResult: string | undefined = $state(undefined);
+  let rawUploadResult: string | undefined = $state(undefined);
+  let transformedUploadResult: string | undefined = $state(undefined);
+  let uploadedMimeType = $state("image/png");
+  let uploadedExtension = $state("png");
+  let uploadedBaseFileName = $state("uploaded-image");
+
   let uploadZoom = $state(1);
   let uploadPanX = $state(0);
   let uploadPanY = $state(0);
@@ -37,6 +89,21 @@
   let uploadOverlayHex = $state("#000000");
   let uploadOverlayOpacity = $state(0.5);
   let uploadOverlayColor = $derived(hexToRgba(uploadOverlayHex, uploadOverlayOpacity));
+
+  // Transform uploaded crop output to match source file MIME type
+  $effect(() => {
+    if (rawUploadResult) {
+      transformDataUrlToMimeType(rawUploadResult, uploadedMimeType)
+        .then((converted) => {
+          transformedUploadResult = converted;
+        })
+        .catch(() => {
+          transformedUploadResult = rawUploadResult;
+        });
+    } else {
+      transformedUploadResult = undefined;
+    }
+  });
 
   onMount(async () => {
     try {
@@ -48,25 +115,66 @@
     }
   });
 
-  async function handleFileChange(event: Event) {
+  async function handleFileChange(event: Event): Promise<void> {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
     if (file) {
+      const fileDotIndex = file.name.lastIndexOf(".");
+      if (fileDotIndex !== -1) {
+        uploadedBaseFileName = file.name.substring(0, fileDotIndex);
+        uploadedExtension = file.name.substring(fileDotIndex + 1).toLowerCase();
+      } else {
+        uploadedBaseFileName = file.name;
+        uploadedExtension = file.type.includes("jpeg") || file.type.includes("jpg") ? "jpg" : "png";
+      }
+
+      if (file.type === "image/jpeg" || uploadedExtension === "jpg" || uploadedExtension === "jpeg") {
+        uploadedMimeType = "image/jpeg";
+        uploadedExtension = "jpg";
+      } else if (file.type === "image/webp" || uploadedExtension === "webp") {
+        uploadedMimeType = "image/webp";
+        uploadedExtension = "webp";
+      } else {
+        uploadedMimeType = "image/png";
+        uploadedExtension = "png";
+      }
+
       const blob = new Blob([file], { type: file.type });
       uploadedBitmap = await createImageBitmap(blob);
-      // Reset controls for new image
       uploadZoom = 1;
       uploadPanX = 0;
       uploadPanY = 0;
     }
   }
 
-  async function handleDownload(dataUrl: string | undefined, filename: string) {
-    if (!dataUrl) return;
+  function dataUrlToBlob(dataUrl: string): Blob {
+    const parts = dataUrl.split(";base64,");
+    const mimeType = parts[0].split(":")[1] || "image/png";
+    const rawData = window.atob(parts[1] || "");
+    const rawLength = rawData.length;
+    const uint8Array = new Uint8Array(rawLength);
+
+    for (let index = 0; index < rawLength; ++index) {
+      uint8Array[index] = rawData.charCodeAt(index);
+    }
+
+    return new Blob([uint8Array], { type: mimeType });
+  }
+
+  function handleDownload(dataUrl: string | undefined, filename: string): void {
+    if (!dataUrl) {
+      return;
+    }
+
+    const blob = dataUrlToBlob(dataUrl);
+    const objectUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = dataUrl;
+    link.href = objectUrl;
     link.download = filename;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(objectUrl);
   }
 </script>
 
@@ -80,7 +188,7 @@
       </Container>
       <Container class="flex items-center gap-3">
         <Text class="text-xs font-medium uppercase text-neutral-500">{isCircle ? "Circle" : "Rectangle"}</Text>
-        <Switch bind:checked={isCircle} onclick={async () => {}} />
+        <Switch componentId="image-crop-switch-1" bind:checked={isCircle} onclick={async () => {}} />
       </Container>
     </Container>
 
@@ -93,9 +201,10 @@
               <Text type="h4" class="font-semibold text-neutral-500">Canvas:</Text>
               <Container class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
                 <ImageCrop
+                  componentId="image-crop-basic"
                   sourceImage={imageBitmap}
                   aspectRatio={{ x: 1, y: 1 }}
-                  bind:resultImage
+                  bind:resultImage={rawResultImage}
                   {zoom}
                   pan={{ x: panX, y: panY }}
                   {padding}
@@ -107,16 +216,28 @@
 
             <Container class="flex flex-col gap-2">
               <Container class="flex items-center justify-between">
-                <Text type="h4" class="font-semibold text-neutral-500">Result:</Text>
-                {#if resultImage}
-                  <Button onclick={async () => handleDownload(resultImage, "crop-result.png")} class="fluid-button-primary scale-75">Download</Button>
+                <Container class="flex items-center gap-2">
+                  <Text type="h4" class="font-semibold text-neutral-500">Result:</Text>
+                  <span
+                    class="rounded bg-neutral-200 px-2 py-0.5 text-xs font-mono font-medium text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300"
+                  >
+                    {remoteExtension.toUpperCase()}
+                  </span>
+                </Container>
+                {#if transformedResultImage}
+                  <Button
+                    onclick={async () => handleDownload(transformedResultImage, `crop-result.${remoteExtension}`)}
+                    class="fluid-button-primary scale-75"
+                  >
+                    Download .{remoteExtension}
+                  </Button>
                 {/if}
               </Container>
               <Container class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
-                {#if resultImage}
-                  <img src={resultImage} alt="Cropped result" class="max-h-full max-w-full object-contain" />
+                {#if transformedResultImage}
+                  <img src={transformedResultImage} alt="Cropped result" class="max-h-full max-w-full object-contain" />
                 {:else}
-                  <Text class="text-xs text-neutral-400 italic">Processing...</Text>
+                  <Text class="text-xs italic text-neutral-400">Processing...</Text>
                 {/if}
               </Container>
             </Container>
@@ -170,22 +291,29 @@
     <Container class="flex items-center justify-between">
       <Container class="flex flex-col gap-1">
         <Text type="h3" class="text-lg font-semibold">File Upload</Text>
-        <Text class="text-sm text-neutral-500">Select a local image file to crop. Supports custom aspect ratios and colors.</Text>
+        <Text class="text-sm text-neutral-500">
+          Select a local image file to crop. Preserves source file extension (JPG / PNG / WebP) upon export.
+        </Text>
       </Container>
       <Container class="flex items-center gap-3">
         <Text class="text-xs font-medium uppercase text-neutral-500">{uploadIsCircle ? "Circle" : "Rectangle"}</Text>
-        <Switch bind:checked={uploadIsCircle} onclick={async () => {}} />
+        <Switch componentId="image-crop-switch-2" bind:checked={uploadIsCircle} onclick={async () => {}} />
       </Container>
     </Container>
 
     <Container class="rounded-lg border p-6 dark:border-neutral-700">
-      <Container class="mb-6">
+      <Container class="mb-6 flex flex-wrap items-center gap-4">
         <input
           type="file"
           accept="image/*"
           onchange={handleFileChange}
           class="text-sm text-neutral-500 file:mr-4 file:rounded-md file:border-0 file:bg-primary-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-neutral-800 dark:file:text-neutral-300"
         />
+        {#if uploadedBitmap}
+          <span class="rounded bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-700 dark:bg-primary-950 dark:text-primary-300">
+            Detected Source: {uploadedMimeType} (.{uploadedExtension})
+          </span>
+        {/if}
       </Container>
 
       {#if uploadedBitmap}
@@ -196,9 +324,10 @@
               <Text type="h4" class="font-semibold text-neutral-500">Canvas:</Text>
               <Container class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
                 <ImageCrop
+                  componentId="image-crop-upload"
                   sourceImage={uploadedBitmap}
                   aspectRatio={{ x: 16, y: 9 }}
-                  bind:resultImage={uploadResult}
+                  bind:resultImage={rawUploadResult}
                   zoom={uploadZoom}
                   pan={{ x: uploadPanX, y: uploadPanY }}
                   padding={uploadPadding}
@@ -210,18 +339,28 @@
 
             <Container class="flex flex-col gap-2">
               <Container class="flex items-center justify-between">
-                <Text type="h4" class="font-semibold text-neutral-500">Result:</Text>
-                {#if uploadResult}
-                  <Button onclick={async () => handleDownload(uploadResult, "upload-crop-result.png")} class="fluid-button-primary scale-75">
-                    Download
+                <Container class="flex items-center gap-2">
+                  <Text type="h4" class="font-semibold text-neutral-500">Result:</Text>
+                  <span
+                    class="rounded bg-neutral-200 px-2 py-0.5 text-xs font-mono font-medium text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300"
+                  >
+                    {uploadedExtension.toUpperCase()}
+                  </span>
+                </Container>
+                {#if transformedUploadResult}
+                  <Button
+                    onclick={async () => handleDownload(transformedUploadResult, `cropped-${uploadedBaseFileName}.${uploadedExtension}`)}
+                    class="fluid-button-primary scale-75"
+                  >
+                    Download .{uploadedExtension}
                   </Button>
                 {/if}
               </Container>
               <Container class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
-                {#if uploadResult}
-                  <img src={uploadResult} alt="Cropped result" class="max-h-full max-w-full object-contain" />
+                {#if transformedUploadResult}
+                  <img src={transformedUploadResult} alt="Cropped result" class="max-h-full max-w-full object-contain" />
                 {:else}
-                  <Text class="text-xs text-neutral-400 italic">Processing...</Text>
+                  <Text class="text-xs italic text-neutral-400">Processing...</Text>
                 {/if}
               </Container>
             </Container>

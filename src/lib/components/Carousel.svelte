@@ -1,8 +1,9 @@
 <script lang="ts" generics="T">
   import { Container } from "#src/lib/base/index.ts";
-  import { handleScrollEnd, scrollToIndex } from "#src/lib/utilities/carousel.ts";
 
   import type { Snippet } from "svelte";
+
+  import { getCarouselScrollMetrics, scrollToIndex, type CarouselScrollMetrics } from "./carousel.ts";
 
   let {
     componentId = crypto.randomUUID(),
@@ -10,43 +11,78 @@
     orientation = "horizontal",
     snapItems = true,
     activeIndex = $bindable(0),
+    scrollPercentage = $bindable(0),
     autoplay = false,
     autoplayDuration = 1000,
     visibleItemCount = 1,
     items,
     itemTemplate,
+    onscroll,
+    onscrollend,
   }: {
     componentId?: string;
     variant?: string;
     orientation?: "horizontal" | "vertical";
     snapItems?: boolean;
     activeIndex?: number;
+    scrollPercentage?: number;
     autoplay?: boolean;
     autoplayDuration?: number;
     visibleItemCount?: number;
     items: Array<T>;
     itemTemplate: Snippet<[{ item: T; index: number }]>;
+    onscroll?: (event: Event, metrics: CarouselScrollMetrics) => void;
+    onscrollend?: (event: Event, metrics: CarouselScrollMetrics) => void;
   } = $props();
+
+  let containerElement: HTMLElement | undefined = $state(undefined);
+  let isUserScrolling: boolean = false;
+  let lastProgrammaticIndex: number = activeIndex;
 
   $effect(() => {
     if (autoplay && items.length > 0) {
-      const interval = setInterval(() => {
+      const autoplayInterval = setInterval(() => {
         activeIndex = (activeIndex + 1) % items.length;
       }, autoplayDuration);
-      return () => clearInterval(interval);
+      return () => clearInterval(autoplayInterval);
     }
   });
 
   $effect(() => {
-    if (componentId && items.length > 1) {
-      scrollToIndex(componentId, activeIndex, orientation);
+    if (containerElement && items.length > 1 && !isUserScrolling && activeIndex !== lastProgrammaticIndex) {
+      lastProgrammaticIndex = activeIndex;
+      scrollToIndex(containerElement, activeIndex, orientation);
     }
   });
+
+  function handleScroll(event: Event): void {
+    if (!containerElement) {
+      return;
+    }
+    isUserScrolling = true;
+    const metrics = getCarouselScrollMetrics(containerElement, orientation);
+    scrollPercentage = metrics.scrollPercentage;
+    onscroll?.(event, metrics);
+  }
+
+  function handleScrollEnd(event: Event): void {
+    if (!containerElement) {
+      return;
+    }
+    const metrics = getCarouselScrollMetrics(containerElement, orientation);
+    scrollPercentage = metrics.scrollPercentage;
+    activeIndex = metrics.activeIndex;
+    lastProgrammaticIndex = metrics.activeIndex;
+    isUserScrolling = false;
+    onscrollend?.(event, metrics);
+  }
 </script>
 
 <Container
   id={componentId}
-  onscrollend={(e) => handleScrollEnd(e, orientation, activeIndex)}
+  bind:element={containerElement}
+  onscroll={handleScroll}
+  onscrollend={handleScrollEnd}
   class={[
     variant,
     "fluid-carousel-container",

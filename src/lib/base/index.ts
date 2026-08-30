@@ -3,6 +3,7 @@ export { default as Container } from "./Container.svelte";
 export { default as Form } from "./Form.svelte";
 export { default as Image } from "./Image.svelte";
 export { default as InputField } from "./InputField.svelte";
+export { default as Label } from "./Label.svelte";
 export { default as Link } from "./Link.svelte";
 export { default as List } from "./List.svelte";
 export { default as Table } from "./Table.svelte";
