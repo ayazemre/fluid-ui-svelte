@@ -66,7 +66,7 @@ export function drawOverlay(
 	const x = (canvasWidth - width) / 2;
 	const y = (canvasHeight - height) / 2;
 
-	const crop = { x, y, width, height };
+	const crop = { height, width, x, y };
 
 	// Draw dimmed background with a hole using 'evenodd' rule
 	context.fillStyle = overlayColor;

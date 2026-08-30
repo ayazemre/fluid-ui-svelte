@@ -18,9 +18,9 @@ export function scrollToIndex(
 	if (Math.abs(currentPosition - targetPosition) < 2) return;
 
 	element.scrollTo({
+		behavior: 'smooth',
 		left: orientation === 'horizontal' ? targetPosition : 0,
-		top: orientation === 'vertical' ? targetPosition : 0,
-		behavior: 'smooth'
+		top: orientation === 'vertical' ? targetPosition : 0
 	});
 }
 
