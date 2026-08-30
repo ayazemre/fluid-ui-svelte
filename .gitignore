@@ -7,3 +7,10 @@ dist
 node_modules
 coverage
 temporary
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

@@ -23,12 +23,12 @@ Tests mirror the source directory structure:
 ### 1. Base Elements (`tests/base/`)
 
 - **Focus**: Verifying standard HTML attributes, basic rendering, and prop passthrough.
-- **Naming**: `[ComponentName].svelte.test.ts`
+- **Naming**: `[ComponentName].test.ts`
 
 ### 2. Components (`tests/components/`)
 
 - **Focus**: Interaction logic, state changes, and composition of base elements.
-- **Naming**: `[ComponentName].svelte.test.ts`
+- **Naming**: `[ComponentName].test.ts`
 
 ### 3. Utilities (`tests/utilities/`)
 
