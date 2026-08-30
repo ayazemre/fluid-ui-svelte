@@ -1,108 +1,108 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	--font-family-sans: 'Inter', sans-serif;
-	--color-*: initial;
-	--color-white: #fff;
-	--color-black: #000;
+  --font-family-sans: "Inter", sans-serif;
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
 
-	--color-neutral-50: #fafafa;
-	--color-neutral-100: #f4f4f5;
-	--color-neutral-200: #e4e4e7;
-	--color-neutral-300: #dedee1;
-	--color-neutral-400: #a1a1aa;
-	--color-neutral-500: #71717a;
-	--color-neutral-600: #52525b;
-	--color-neutral-700: #3f3f46;
-	--color-neutral-800: #27272a;
-	--color-neutral-900: #18181b;
-	--color-neutral-950: #09090b;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #dedee1;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
 
-	--color-primary-50: #eff4ff;
-	--color-primary-100: #dce6fd;
-	--color-primary-200: #c0d4fd;
-	--color-primary-300: #95bafb;
-	--color-primary-400: #6295f8;
-	--color-primary-500: #3e6ff3;
-	--color-primary-600: #284fe8;
-	--color-primary-700: #203bd5;
-	--color-primary-800: #2032ad;
-	--color-primary-900: #203088;
-	--color-primary-950: #182053;
+  --color-primary-50: #eff4ff;
+  --color-primary-100: #dce6fd;
+  --color-primary-200: #c0d4fd;
+  --color-primary-300: #95bafb;
+  --color-primary-400: #6295f8;
+  --color-primary-500: #3e6ff3;
+  --color-primary-600: #284fe8;
+  --color-primary-700: #203bd5;
+  --color-primary-800: #2032ad;
+  --color-primary-900: #203088;
+  --color-primary-950: #182053;
 
-	--color-secondary-50: #f5f3ff;
-	--color-secondary-100: #ede9fe;
-	--color-secondary-200: #ddd6fe;
-	--color-secondary-300: #c4b5fd;
-	--color-secondary-400: #a78bfa;
-	--color-secondary-500: #8b5cf6;
-	--color-secondary-600: #7c3aed;
-	--color-secondary-700: #6d28d9;
-	--color-secondary-800: #5b21b6;
-	--color-secondary-900: #4c1d95;
-	--color-secondary-950: #2a1065;
+  --color-secondary-50: #f5f3ff;
+  --color-secondary-100: #ede9fe;
+  --color-secondary-200: #ddd6fe;
+  --color-secondary-300: #c4b5fd;
+  --color-secondary-400: #a78bfa;
+  --color-secondary-500: #8b5cf6;
+  --color-secondary-600: #7c3aed;
+  --color-secondary-700: #6d28d9;
+  --color-secondary-800: #5b21b6;
+  --color-secondary-900: #4c1d95;
+  --color-secondary-950: #2a1065;
 
-	--color-tertiary-50: #f5f3ff;
-	--color-tertiary-100: #ede9fe;
-	--color-tertiary-200: #ddd6fe;
-	--color-tertiary-300: #c4b5fd;
-	--color-tertiary-400: #a78bfa;
-	--color-tertiary-500: #8b5cf6;
-	--color-tertiary-600: #7c3aed;
-	--color-tertiary-700: #6d28d9;
-	--color-tertiary-800: #5b21b6;
-	--color-tertiary-900: #4c1d95;
-	--color-tertiary-950: #2a1065;
+  --color-tertiary-50: #f5f3ff;
+  --color-tertiary-100: #ede9fe;
+  --color-tertiary-200: #ddd6fe;
+  --color-tertiary-300: #c4b5fd;
+  --color-tertiary-400: #a78bfa;
+  --color-tertiary-500: #8b5cf6;
+  --color-tertiary-600: #7c3aed;
+  --color-tertiary-700: #6d28d9;
+  --color-tertiary-800: #5b21b6;
+  --color-tertiary-900: #4c1d95;
+  --color-tertiary-950: #2a1065;
 
-	--color-success-50: #ecfdf5;
-	--color-success-100: #d1fae5;
-	--color-success-200: #a7f3d0;
-	--color-success-300: #6ee7b7;
-	--color-success-400: #34d399;
-	--color-success-500: #10b981;
-	--color-success-600: #059669;
-	--color-success-700: #0f766e;
-	--color-success-800: #065f46;
-	--color-success-900: #064e3b;
-	--color-success-950: #022c22;
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #0f766e;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
+  --color-success-950: #022c22;
 
-	--color-warning-50: #fffbeb;
-	--color-warning-100: #fef3c7;
-	--color-warning-200: #fde68a;
-	--color-warning-300: #fcd34d;
-	--color-warning-400: #fbbf24;
-	--color-warning-500: #f59e0b;
-	--color-warning-600: #d97706;
-	--color-warning-700: #b45309;
-	--color-warning-800: #92400e;
-	--color-warning-900: #78350f;
-	--color-warning-950: #451a03;
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
 
-	--color-info-50: #f0f9ff;
-	--color-info-100: #e0f2fe;
-	--color-info-200: #bae6fd;
-	--color-info-300: #7dd3fc;
-	--color-info-400: #38bdf8;
-	--color-info-500: #0ea5e9;
-	--color-info-600: #0284c7;
-	--color-info-700: #0369a1;
-	--color-info-800: #075985;
-	--color-info-900: #0c4a6e;
-	--color-info-950: #082f49;
+  --color-info-50: #f0f9ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #7dd3fc;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+  --color-info-950: #082f49;
 
-	--color-error-50: #fef2f2;
-	--color-error-100: #fee2e2;
-	--color-error-200: #fecaca;
-	--color-error-300: #fca5a5;
-	--color-error-400: #f87171;
-	--color-error-500: #ef4444;
-	--color-error-600: #dc2626;
-	--color-error-700: #b91c1c;
-	--color-error-800: #991b1b;
-	--color-error-900: #7f1d1d;
-	--color-error-950: #450a0a;
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
 }
 
 /* ==========================================================================
@@ -112,87 +112,87 @@
 
 /* Button -------------------------- */
 .fluid-button {
-	@apply items-center gap-1 rounded-md p-2 transition-all duration-500;
+  @apply items-center gap-1 rounded-md p-2 transition-all duration-500;
 }
 .fluid-button-primary {
-	@apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
+  @apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
 }
 .fluid-button-secondary {
-	@apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
+  @apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
 }
 .fluid-button-outline {
-	@apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
+  @apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
 }
 .fluid-button-transparent {
-	@apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
+  @apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
 }
 
 /* Container ----------------------- */
 .fluid-container {
-	@apply transition-all duration-500;
+  @apply transition-all duration-500;
 }
 
 section,
 main.fluid-container {
-	@apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
+  @apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
 }
 
 /* Form ---------------------------- */
 .fluid-form {
-	@apply flex-col;
+  @apply flex-col;
 }
 
 /* Image --------------------------- */
 .fluid-image {
-	@apply object-contain;
+  @apply object-contain;
 }
 .fluid-image-loading {
-	@apply animate-pulse bg-primary-500;
+  @apply animate-pulse bg-primary-500;
 }
 
 /* Input Field --------------------- */
 .fluid-input-field {
-	@apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
+  @apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
 }
 .fluid-input-field-error {
-	@apply outline-2 outline-error-500;
+  @apply outline-2 outline-error-500;
 }
 
 /* Link ---------------------------- */
 .fluid-link {
-	@apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
+  @apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
 }
 
 /* List ---------------------------- */
 .fluid-unordered-list {
-	@apply list-disc text-neutral-950 dark:text-neutral-50;
+  @apply list-disc text-neutral-950 dark:text-neutral-50;
 }
 .fluid-ordered-list {
-	@apply list-decimal text-neutral-950 dark:text-neutral-50;
+  @apply list-decimal text-neutral-950 dark:text-neutral-50;
 }
 
 /* Table --------------------------- */
 .fluid-table {
-	@apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border transition-all duration-500 dark:border-neutral-300;
+  @apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border transition-all duration-500 dark:border-neutral-300;
 }
 .fluid-table-head {
-	@apply bg-neutral-200 transition-all duration-500 dark:bg-neutral-800;
+  @apply bg-neutral-200 transition-all duration-500 dark:bg-neutral-800;
 }
 .fluid-table-row {
-	@apply transition-all duration-500 even:bg-neutral-200 dark:even:bg-neutral-800;
+  @apply transition-all duration-500 even:bg-neutral-200 dark:even:bg-neutral-800;
 }
 .fluid-table-cell {
-	@apply border-collapse bg-clip-padding text-center transition-all duration-500;
+  @apply border-collapse bg-clip-padding text-center transition-all duration-500;
 }
 .fluid-table-body {
 }
 .fluid-table-footer {
-	@apply bg-clip-padding p-2 transition-all duration-500 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+  @apply bg-clip-padding p-2 transition-all duration-500 odd:bg-neutral-100 dark:odd:bg-neutral-800;
 }
 
 /* Text ---------------------------- */
 .fluid-text {
-	@apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
+  @apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
 }
 
 /* ==========================================================================
@@ -202,182 +202,198 @@ main.fluid-container {
 
 /* Accordion ----------------------- */
 .fluid-accordion-wrapper {
-	@apply flex-col;
+  @apply flex-col;
 }
 .fluid-accordion-header {
-	@apply items-center rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+  @apply items-center rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
 }
 .fluid-accordion-body {
-	@apply flex w-full flex-col gap-1 p-2;
+  @apply flex w-full flex-col gap-1 p-2;
 }
 
 /* Calendar ------------------------ */
 
 .fluid-calendar-wrapper {
-	@apply items-center gap-1 p-2;
+  @apply items-center gap-1 p-2;
 }
 .fluid-calendar-header {
-	@apply justify-center;
+  @apply justify-center;
 }
 .fluid-calendar-body {
-	@apply gap-4;
+  @apply gap-4;
 }
 .fluid-calendar-cell {
-	@apply dark:text-neutral-50;
+  @apply dark:text-neutral-50;
 }
 .fluid-calendar-cell-selected {
-	@apply bg-primary-600 text-neutral-50;
+  @apply bg-primary-600 text-neutral-50;
 }
 .fluid-calendar-cell-in-range {
-	@apply bg-primary-400 text-neutral-50;
+  @apply bg-primary-400 text-neutral-50;
 }
 .fluid-calendar-cell-rolling-day {
-	@apply opacity-25;
+  @apply opacity-25;
 }
 
 /* Carousel ------------------------ */
 .fluid-carousel-container {
-	@apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 .fluid-carousel-item {
-	@apply p-2;
+  @apply p-2;
 }
 
 /* Code Block ---------------------- */
 .fluid-code-block-container {
-	@apply rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
+  @apply rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
 }
 .fluid-code-block-row {
-	@apply gap-2;
+  @apply gap-2;
 }
 .fluid-code-block-index {
-	@apply border-r border-neutral-500 bg-neutral-200 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
+  @apply border-r border-neutral-500 bg-neutral-200 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
 }
 .fluid-code-block-content {
-	@apply px-4;
+  @apply px-4;
 }
 
 /* Drawer -------------------------- */
 .fluid-drawer-container {
-	@apply bg-black/30 backdrop-blur-sm;
+  @apply bg-black/30 backdrop-blur-sm;
 }
 .fluid-drawer-panel {
-	@apply bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
+  @apply bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
 }
 
 /* Draggable ----------------------- */
 .fluid-draggable {
-	@apply rounded-md border bg-white p-4 shadow-sm transition-all dark:border-neutral-700 dark:bg-neutral-800;
+  @apply rounded-md border bg-white p-4 shadow-sm transition-all dark:border-neutral-700 dark:bg-neutral-800;
 }
 
 /* Dropzone ------------------------ */
 .fluid-dropzone {
-	@apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
+  @apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
 }
 .fluid-dropzone.drag-over {
-	@apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
+  @apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
 }
 .fluid-dropzone.drag-invalid {
-	@apply border-error-500 bg-error-50 dark:bg-error-950/20;
+  @apply border-error-500 bg-error-50 dark:bg-error-950/20;
 }
 
 /* Page ---------------------------- */
 .fluid-page {
-	@apply p-8 md:p-16;
+  @apply p-8 md:p-16;
 }
 
 /* Image Crop ---------------------- */
 .fluid-image-crop-wrapper {
-	@apply flex size-full flex-col justify-center;
+  @apply flex size-full flex-col justify-center;
 }
 .fluid-image-cropper-canvas {
-	@apply block max-w-full;
+  @apply block max-w-full;
 }
 
 /* Switch -------------------------- */
 .fluid-switch-button {
-	@apply bg-neutral-200;
+  @apply bg-neutral-200;
 }
 .fluid-switch-circle {
-	@apply bg-white shadow;
+  @apply bg-white shadow;
 }
 .fluid-switch-button.checked {
-	@apply bg-primary-600;
+  @apply bg-primary-600;
 }
 
 /* Popover ------------------------- */
 .fluid-popover-container {
-	@apply relative inline-block;
+  @apply relative inline-block;
 }
 .fluid-popover-content {
-	@apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+  @apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
 }
 .fluid-popover-top {
-	@apply bottom-full left-1/2 mb-2 -translate-x-1/2;
+  @apply bottom-full left-1/2 mb-2 -translate-x-1/2;
 }
 .fluid-popover-bottom {
-	@apply left-1/2 top-full mt-2 -translate-x-1/2;
+  @apply left-1/2 top-full mt-2 -translate-x-1/2;
 }
 .fluid-popover-left {
-	@apply right-full top-1/2 mr-2 -translate-y-1/2;
+  @apply right-full top-1/2 mr-2 -translate-y-1/2;
 }
 .fluid-popover-right {
-	@apply left-full top-1/2 ml-2 -translate-y-1/2;
+  @apply left-full top-1/2 ml-2 -translate-y-1/2;
 }
 
 /* Modal --------------------------- */
 .fluid-modal-container {
-	@apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
+  @apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
 }
 .fluid-modal-panel {
-	@apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
+  @apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
 }
 
 /* Breadcrumb ---------------------- */
 .fluid-breadcrumb-container {
-	@apply flex items-center gap-2 text-sm;
+  @apply flex items-center gap-2 text-sm;
 }
 .fluid-breadcrumb-list {
-	@apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
+  @apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
 }
 .fluid-breadcrumb-item {
-	@apply flex items-center gap-2;
+  @apply flex items-center gap-2;
 }
 .fluid-breadcrumb-separator {
-	@apply text-neutral-400 select-none;
+  @apply text-neutral-400 select-none;
 }
 
 /* Pagination ---------------------- */
 .fluid-pagination-container {
-	@apply flex items-center gap-1;
+  @apply flex items-center gap-1;
 }
 .fluid-pagination-button {
-	@apply min-w-[2.5rem] h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply min-w-[2.5rem] h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
 }
 .fluid-pagination-button-active {
-	@apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+  @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
 }
 
 /* Notification Area --------------- */
 .fluid-notification-area {
-	@apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
+  @apply fixed z-[100] flex flex-col gap-2 p-4 pointer-events-none;
 }
-.fluid-notification-area-top-right { @apply top-0 right-0; }
-.fluid-notification-area-top-left { @apply top-0 left-0; }
-.fluid-notification-area-bottom-right { @apply bottom-0 right-0 flex-col-reverse; }
-.fluid-notification-area-bottom-left { @apply bottom-0 left-0 flex-col-reverse; }
+.fluid-notification-area-top-right {
+  @apply top-0 right-0;
+}
+.fluid-notification-area-top-left {
+  @apply top-0 left-0;
+}
+.fluid-notification-area-bottom-right {
+  @apply bottom-0 right-0 flex-col-reverse;
+}
+.fluid-notification-area-bottom-left {
+  @apply bottom-0 left-0 flex-col-reverse;
+}
 
 .fluid-notification {
-	@apply pointer-events-auto min-w-[300px] max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
+  @apply pointer-events-auto min-w-[300px] max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
 }
-.fluid-notification-success { @apply border-l-4 border-l-success-500; }
-.fluid-notification-error { @apply border-l-4 border-l-error-500; }
-.fluid-notification-warning { @apply border-l-4 border-l-warning-500; }
-.fluid-notification-info { @apply border-l-4 border-l-info-500; }
+.fluid-notification-success {
+  @apply border-l-4 border-l-success-500;
+}
+.fluid-notification-error {
+  @apply border-l-4 border-l-error-500;
+}
+.fluid-notification-warning {
+  @apply border-l-4 border-l-warning-500;
+}
+.fluid-notification-info {
+  @apply border-l-4 border-l-info-500;
+}
 
 .fluid-notification-content {
-	@apply flex-1;
+  @apply flex-1;
 }
 .fluid-notification-close {
-	@apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
+  @apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
 }

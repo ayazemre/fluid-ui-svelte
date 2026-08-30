@@ -25,13 +25,9 @@
 
 <Container
   id={componentId}
-  class={[
-    variant,
-    "fluid-dropzone",
-    "relative",
-    componentState.isDragOver ? "drag-over" : "",
-    componentState.isInvalid ? "drag-invalid" : "",
-  ].join(" ")}
+  class={[variant, "fluid-dropzone", "relative", componentState.isDragOver ? "drag-over" : "", componentState.isInvalid ? "drag-invalid" : ""].join(
+    " ",
+  )}
   ondragover={(e: DragEvent) => {
     console.log("dragovers");
     handleDragOver(e, dropEffect, mode);

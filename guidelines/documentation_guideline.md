@@ -26,8 +26,8 @@ Directives for generating `+page.svelte` documentation for Fluid UI Svelte compo
 
 ```svelte
 <script>
-	import { Button, Text, Table, CodeBlock } from '$lib/base';
-	// Use $lib/components for items in the components folder
+  import { Button, Text, Table, CodeBlock } from "$lib/base";
+  // Use $lib/components for items in the components folder
 </script>
 ```
 
@@ -43,7 +43,7 @@ Directives for generating `+page.svelte` documentation for Fluid UI Svelte compo
 ```svelte
 <Text type="h2">Usage</Text>
 <CodeBlock
-	code={`
+  code={`
 <script>
   import { Button } from 'fluid-ui-svelte';
 </script>
