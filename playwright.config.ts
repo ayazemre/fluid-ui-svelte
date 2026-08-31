@@ -39,7 +39,7 @@ export default defineConfig({
     //   use: { ...devices["Desktop Chrome"], channel: "chrome" },
     // },
   ],
-  reporter: [["html", { outputFile: "./tests/temporary/test-results.html" }]],
+  reporter: [["html", { outputFolder: "./tests/temporary", open: "never" }]],
   retries: process.env.CI ? 2 : 0,
   testDir: "./tests/e2e",
   use: {

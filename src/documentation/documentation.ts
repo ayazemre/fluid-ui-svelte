@@ -98,13 +98,13 @@ export const documentationRegistry = {
         {
           default: "undefined",
           description: "Svelte transition function.",
-          prop: "transitionFn",
+          prop: "transitionFunction",
           type: "Function",
         },
         {
           default: "undefined",
           description: "Parameters for the transition function.",
-          prop: "transitionParams",
+          prop: "transitionParameters",
           type: "object",
         },
         {
@@ -561,12 +561,6 @@ export const documentationRegistry = {
           type: "boolean",
         },
         {
-          default: "'click'",
-          description: "Interaction mode that triggers overlay opening ('click', 'hover', 'focus', 'manual').",
-          prop: "triggerMode",
-          type: "'click' | 'hover' | 'focus' | 'manual'",
-        },
-        {
           default: "true",
           description: "Whether clicking outside the overlay automatically closes it.",
           prop: "closeOnClickOutside",
@@ -587,7 +581,7 @@ export const documentationRegistry = {
         {
           default: "{ duration: 150 }",
           description: "Parameters for the transition function.",
-          prop: "transitionParams",
+          prop: "transitionParameters",
           type: "object",
         },
         {
@@ -870,7 +864,7 @@ export const documentationRegistry = {
         {
           default: "{}",
           description: "Parameters for the panel transition.",
-          prop: "transitionParams",
+          prop: "transitionParameters",
           type: "object",
         },
         {
@@ -882,7 +876,7 @@ export const documentationRegistry = {
         {
           default: "undefined",
           description: "Parameters for the backdrop transition.",
-          prop: "backdropTransitionParams",
+          prop: "backdropTransitionParameters",
           type: "object",
         },
       ],
@@ -1041,7 +1035,7 @@ export const documentationRegistry = {
         {
           default: "{ duration: 200, start: 0.95 }",
           description: "Parameters for the panel transition.",
-          prop: "transitionParams",
+          prop: "transitionParameters",
           type: "object",
         },
         {
@@ -1053,7 +1047,7 @@ export const documentationRegistry = {
         {
           default: "{ duration: 200 }",
           description: "Parameters for the backdrop transition.",
-          prop: "backdropTransitionParams",
+          prop: "backdropTransitionParameters",
           type: "object",
         },
         {

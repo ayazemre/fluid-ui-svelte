@@ -308,9 +308,9 @@ const drawerAnimated = `<script>
   id="drawer-animated"
   bind:isOpen={isAnimatedDrawerOpen}
   position="right"
-  transitionFn={fly} 
-  transitionParams={{ x: 500, duration: 500 }}
-  backdropTransitionFn={fade}
+  transitionFunction={fly} 
+  transitionParameters={{ x: 500, duration: 500 }}
+  backdropTransitionFunction={fade}
 >
   Animated Content
 </Drawer>`;
@@ -328,8 +328,8 @@ const drawerFlyAnimation = `<script>
   id="drawer-fly"
   bind:isOpen={isFlyDrawerOpen}
   position="bottom"
-  transitionFn={fly} 
-  transitionParams={{ y: 200, duration: 800 }}
+  transitionFunction={fly} 
+  transitionParameters={{ y: 200, duration: 800 }}
 >
   Fly Content
 </Drawer>`;

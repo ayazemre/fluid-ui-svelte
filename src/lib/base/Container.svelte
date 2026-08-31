@@ -13,7 +13,7 @@
     transitionFunction = () => {
       return {};
     },
-    transitionParams,
+    transitionParameters,
     overrideDefaultStyling = false,
     children,
     ...rest
@@ -23,7 +23,7 @@
     type?: "div" | "nav" | "section" | "main" | "header" | "footer" | "aside" | "article";
     class?: string;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
-    transitionParams?: Record<string, unknown>;
+    transitionParameters?: Record<string, unknown>;
     overrideDefaultStyling?: boolean;
     children?: Snippet;
   } & Omit<HTMLAttributes<HTMLElement>, "id"> = $props();
@@ -34,7 +34,7 @@
   {id}
   bind:this={underlyingElement}
   {...rest}
-  transition:transitionFunction={transitionParams}
+  transition:transitionFunction={transitionParameters}
   class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-container")}
 >
   {@render children?.()}

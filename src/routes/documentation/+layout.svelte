@@ -128,9 +128,9 @@
     bind:isOpen={globalState.isDocumentationDrawerOpen}
     position="left"
     transitionFunction={fly}
-    transitionParams={{ x: -300, duration: 300 }}
+    transitionParameters={{ x: -300, duration: 300 }}
     backdropTransitionFunction={fade}
-    backdropTransitionParams={{ duration: 300 }}
+    backdropTransitionParameters={{ duration: 300 }}
   >
     <Container id="documentation-mobile-drawer-content" class="flex h-full w-64 flex-col gap-2 overflow-y-auto bg-neutral-50 p-4 dark:bg-neutral-900">
       <Text id="documentation-mobile-drawer-title" type="h2" class="mb-4 text-xl font-bold">Menu</Text>

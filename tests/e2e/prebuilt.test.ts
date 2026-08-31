@@ -6,7 +6,7 @@ test.describe("Prebuilt Elements E2E Tests", () => {
     await page.goto("/documentation/getting-started");
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
     await desktopSidebarContainer.getByRole("button", { name: "Prebuilt" }).click();
-    await page.waitForTimeout(500);
+    await expect(desktopSidebarContainer.getByRole("link", { name: "Breadcrumb" })).toBeVisible();
   });
 
   test("Breadcrumb", async ({ page }) => {

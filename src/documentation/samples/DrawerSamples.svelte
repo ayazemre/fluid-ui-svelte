@@ -129,9 +129,9 @@
         bind:isOpen={isAnimatedDrawerOpen}
         position="right"
         transitionFunction={fade}
-        transitionParams={{ duration: 600 }}
+        transitionParameters={{ duration: 600 }}
         backdropTransitionFunction={fade}
-        backdropTransitionParams={{ duration: 600 }}
+        backdropTransitionParameters={{ duration: 600 }}
       >
         <Container id="drawer-animated-sample-content" class="flex min-w-80 flex-col gap-4 p-8">
           <Text id="drawer-animated-sample-title" type="h2" class="text-xl font-bold">Smooth Transitions</Text>
@@ -170,9 +170,9 @@
         bind:isOpen={isFlyDrawerOpen}
         position="bottom"
         transitionFunction={fly}
-        transitionParams={{ duration: 800, y: 200 }}
+        transitionParameters={{ duration: 800, y: 200 }}
         backdropTransitionFunction={fade}
-        backdropTransitionParams={{ duration: 600 }}
+        backdropTransitionParameters={{ duration: 600 }}
       >
         <Container id="drawer-fly-sample-content" class="flex min-w-80 flex-col gap-4 p-8">
           <Text id="drawer-fly-sample-title" type="h2" class="text-xl font-bold">Fly In</Text>

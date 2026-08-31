@@ -37,7 +37,7 @@
     <Container
       id={`${id}-body-container`}
       {transitionFunction}
-      transitionParams={{ duration: transitionDuration }}
+      transitionParameters={{ duration: transitionDuration }}
       class={[variant, "fluid-accordion-body"].join(" ")}
     >
       {@render body()}

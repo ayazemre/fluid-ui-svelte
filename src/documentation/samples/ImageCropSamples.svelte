@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Image, Text } from "#src/lib/base/index.ts";
   import { CodeBlock, ImageCrop, Switch } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
@@ -17,7 +17,7 @@
   // Helper to transform Data URL to matching source MIME type (JPEG / PNG / WebP)
   async function transformDataUrlToMimeType(sourceDataUrl: string, targetMimeType: string, quality: number = 0.92): Promise<string> {
     return new Promise((resolve, reject) => {
-      const temporaryImage = new Image();
+      const temporaryImage = new window.Image();
       temporaryImage.onload = () => {
         const offscreenCanvas = document.createElement("canvas");
         offscreenCanvas.width = temporaryImage.width;

@@ -24,7 +24,7 @@
     </Text>
     <Container id="international-input-phone-preview" class="rounded-xl border p-6 dark:border-neutral-800">
       <Container id="international-input-phone-wrapper" class="max-w-md">
-        <InternationalInput id="international-phone-demo" mode="phone" bind:selectedCountry bind:dialCode bind:value={phoneNumber} class="w-full" />
+        <InternationalInput id="international-phone-demo" mode="phone" bind:selectedCountry bind:dialCode bind:value={phoneNumber} variant="w-full" />
         <Text id="international-input-phone-status" class="mt-3 text-sm text-neutral-500">
           Selected: {selectedCountry} | Dial Code: {dialCode} | Value: {phoneNumber}
         </Text>
@@ -59,7 +59,7 @@
           mode="currency"
           bind:selectedCountry={currencyCountry}
           bind:value={currencyAmount}
-          class="w-full"
+          variant="w-full"
         />
         <Text id="international-input-currency-status" class="mt-3 text-sm text-neutral-500">
           Country: {currencyCountry} | Amount: {currencyAmount}

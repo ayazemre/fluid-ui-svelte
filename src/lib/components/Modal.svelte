@@ -14,9 +14,9 @@
     closeOnBackdropClick = true,
     scrollLock = true,
     transitionFunction = scale,
-    transitionParams = { duration: 200, start: 0.95 },
+    transitionParameters = { duration: 200, start: 0.95 },
     backdropTransitionFunction = fade,
-    backdropTransitionParams = { duration: 200 },
+    backdropTransitionParameters = { duration: 200 },
     children,
   }: {
     id: string;
@@ -25,9 +25,9 @@
     closeOnBackdropClick?: boolean;
     scrollLock?: boolean;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
-    transitionParams?: TransitionConfig & Record<string, unknown>;
+    transitionParameters?: TransitionConfig & Record<string, unknown>;
     backdropTransitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
-    backdropTransitionParams?: TransitionConfig & Record<string, unknown>;
+    backdropTransitionParameters?: TransitionConfig & Record<string, unknown>;
     children: Snippet;
   } = $props();
 
@@ -43,7 +43,7 @@
     {id}
     class={[variant, "fluid-modal-container"].join(" ")}
     transitionFunction={backdropTransitionFunction}
-    transitionParams={backdropTransitionParams}
+    transitionParameters={backdropTransitionParameters}
     onclick={() => {
       if (closeOnBackdropClick) {
         isOpen = false;
@@ -59,7 +59,7 @@
       role="presentation"
       class={[variant, "fluid-modal-panel"].join(" ")}
       {transitionFunction}
-      {transitionParams}
+      {transitionParameters}
     >
       {@render children()}
     </Container>

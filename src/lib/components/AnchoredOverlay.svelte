@@ -2,13 +2,10 @@
   import { fade, type TransitionConfig } from "svelte/transition";
 
   import { Container } from "#src/lib/base/index.ts";
-  import {
-    getAnchoredOverlayPositionClass,
-    setupAnchoredOverlayLifecycle,
-    type AnchoredOverlayPosition,
-  } from "#src/lib/components/anchoredOverlay.ts";
 
   import type { Snippet } from "svelte";
+
+  import { getAnchoredOverlayPositionClass, setupAnchoredOverlayLifecycle, type AnchoredOverlayPosition } from "./anchoredOverlay.ts";
 
   let {
     id,
@@ -38,8 +35,9 @@
     overlay: Snippet<[{ close: () => void }]>;
   } = $props();
 
-  let containerElement = $state<HTMLElement | undefined>(undefined);
-  let floatElement = $state<HTMLElement | undefined>(undefined);
+  let containerElement = $state<HTMLElement | null>(null);
+  let floatElement = $state<HTMLElement | null>(null);
+  // svelte-ignore state_referenced_locally
   let activePosition = $state<AnchoredOverlayPosition>(position);
 
   $effect(() => {
@@ -92,7 +90,7 @@
       role="region"
       class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition), overlayClass].join(" ")}
       {transitionFunction}
-      transitionParams={transitionParameters}
+      transitionParameters={transitionParameters}
     >
       {@render overlay({
         close: () => {

@@ -35,7 +35,7 @@
     onscrollend?: (event: Event, metrics: CarouselScrollMetrics) => void;
   } = $props();
 
-  let containerElement: HTMLElement | undefined = $state(undefined);
+  let containerElement: HTMLElement | null = $state(null);
   let isUserScrolling: boolean = false;
   let lastProgrammaticIndex: number = activeIndex;
 

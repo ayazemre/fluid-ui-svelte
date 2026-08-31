@@ -3,10 +3,10 @@ import { test, expect } from "@playwright/test";
 test.describe("Components Elements E2E Tests", () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to the getting started page before each test and expand the Components sidebar section
-    await page.goto("http://localhost:4173/documentation/getting-started");
+    await page.goto("/documentation/getting-started");
     const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
     await desktopSidebarContainer.getByRole("button", { name: "Components" }).click();
-    await page.waitForTimeout(500);
+    await expect(desktopSidebarContainer.getByRole("link", { name: "Accordion" })).toBeVisible();
   });
 
   test("Accordion", async ({ page }) => {
@@ -173,8 +173,12 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(anchorTriggerElement).toBeVisible();
     await anchorTriggerElement.click();
 
-    const overlayItemElement = page.getByText("Floating Overlay");
+    const overlayItemElement = page.locator("#anchored-overlay-click-title");
     await expect(overlayItemElement).toBeVisible();
+
+    const closeButtonElement = page.locator("#anchored-overlay-click-close-btn");
+    await closeButtonElement.click();
+    await expect(overlayItemElement).toBeHidden();
   });
 
   test("Switch", async ({ page }) => {

@@ -14,9 +14,9 @@
     closeOnBackdropClick = true,
     scrollLock = true,
     transitionFunction = emptyDrawerTransition,
-    transitionParams = {},
+    transitionParameters = {},
     backdropTransitionFunction = emptyDrawerTransition,
-    backdropTransitionParams,
+    backdropTransitionParameters,
     children,
   }: {
     id: string;
@@ -26,9 +26,9 @@
     closeOnBackdropClick?: boolean;
     scrollLock?: boolean;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
-    transitionParams?: TransitionConfig & { x?: number; y?: number };
+    transitionParameters?: TransitionConfig & Record<string, unknown>;
     backdropTransitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
-    backdropTransitionParams?: TransitionConfig & { x?: number; y?: number };
+    backdropTransitionParameters?: TransitionConfig & Record<string, unknown>;
     children: Snippet;
   } = $props();
 
@@ -44,7 +44,7 @@
     {id}
     class={[variant, "fluid-drawer-container", "fixed", "inset-0", "z-10"].join(" ")}
     transitionFunction={backdropTransitionFunction}
-    transitionParams={backdropTransitionParams}
+    transitionParameters={backdropTransitionParameters}
     onclick={() => {
       if (closeOnBackdropClick) {
         isOpen = false;
@@ -58,7 +58,7 @@
       onclick={(event: MouseEvent) => event.stopPropagation()}
       class={[variant, "fluid-drawer-panel", "fixed", "z-20", positionClasses[position]].join(" ")}
       {transitionFunction}
-      {transitionParams}
+      {transitionParameters}
     >
       {@render children()}
     </Container>
