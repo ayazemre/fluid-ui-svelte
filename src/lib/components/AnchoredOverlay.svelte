@@ -90,7 +90,7 @@
       role="region"
       class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition), overlayClass].join(" ")}
       {transitionFunction}
-      transitionParameters={transitionParameters}
+      {transitionParameters}
     >
       {@render overlay({
         close: () => {

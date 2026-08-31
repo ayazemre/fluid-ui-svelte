@@ -68,7 +68,7 @@
         type="button"
         overrideDefaultStyling={true}
         onclick={async () => toggle()}
-        disabled={disabled}
+        {disabled}
         class={[
           "flex items-center gap-2 bg-neutral-50 px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700",
           mode === "country" ? "rounded-lg justify-between min-w-50" : "rounded-l-lg border-r border-neutral-200 dark:border-neutral-700",
