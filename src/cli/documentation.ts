@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { documentationRegistry } from "../documentation/documentation.ts";
+
 export type ComponentDocumentationItem = {
   title: string;
   description: string;
@@ -26,76 +28,19 @@ function convertKebabCaseToPascalCase(kebabCaseString: string): string {
     .join("");
 }
 
-function findDocumentationFilePath(): string | undefined {
-  const currentDirectory = dirname(fileURLToPath(import.meta.url));
-  const candidatePaths = [
-    resolve(currentDirectory, "../documentation/documentation.ts"),
-    resolve(process.cwd(), "src/documentation/documentation.ts"),
-  ];
-
-  for (const candidatePath of candidatePaths) {
-    if (existsSync(candidatePath)) {
-      return candidatePath;
-    }
-  }
-
-  return undefined;
-}
-
 export function loadDocumentationRegistry(): CompleteDocumentationRegistry {
-  const documentationFilePath = findDocumentationFilePath();
+  const registryWithoutPages = ((): CompleteDocumentationRegistry => {
+    const { pages: _pages, ...componentRegistry } = documentationRegistry as CompleteDocumentationRegistry & { pages?: unknown };
+    return componentRegistry as CompleteDocumentationRegistry;
+  })();
 
-  if (documentationFilePath === undefined) {
-    return {
+  return (
+    registryWithoutPages ?? {
       base: {},
       components: {},
       prebuilt: {},
-    };
-  }
-
-  try {
-    const fileContent = readFileSync(documentationFilePath, "utf-8");
-    const registryDeclarationIndex = fileContent.indexOf("documentationRegistry =");
-
-    if (registryDeclarationIndex === -1) {
-      return {
-        base: {},
-        components: {},
-        prebuilt: {},
-      };
     }
-
-    const objectStartIndex = fileContent.indexOf("{", registryDeclarationIndex);
-    if (objectStartIndex === -1) {
-      return {
-        base: {},
-        components: {},
-        prebuilt: {},
-      };
-    }
-
-    const rawObjectString = fileContent.slice(objectStartIndex);
-    const sanitizedObjectString = rawObjectString.replace(/sampleComponent:\s*[a-zA-Z0-9_]+/g, "sampleComponent: null").replace(/;\s*$/, "");
-
-    const evaluatedRegistryFunction = new Function(`return ${sanitizedObjectString}`);
-    const evaluatedRegistry = evaluatedRegistryFunction() as CompleteDocumentationRegistry;
-
-    return (
-      evaluatedRegistry ?? {
-        base: {},
-        components: {},
-        prebuilt: {},
-      }
-    );
-  } catch (parseError) {
-    const errorMessage = parseError instanceof Error ? parseError.message : String(parseError);
-    console.error(`Failed to parse documentation registry: ${errorMessage}`);
-    return {
-      base: {},
-      components: {},
-      prebuilt: {},
-    };
-  }
+  );
 }
 
 function resolveSvelteComponentFilePath(categoryName: string, elementName: string): string | undefined {
@@ -166,20 +111,44 @@ export function findComponentDocumentation(
 export function formatGenericDocumentation(): string {
   const registry = loadDocumentationRegistry();
 
+  const pagesRegistry = (
+    documentationRegistry as unknown as Record<
+      string,
+      Record<string, { title: string; description: string; sections?: Array<Record<string, unknown>> }>
+    >
+  ).pages;
+  const gettingStartedPage = pagesRegistry?.["getting-started"];
+  const architectureSection = gettingStartedPage?.sections?.find((section) => (section as { id: string }).id === "architecture") as unknown as
+    | { layers: Array<{ id: string; title: string; path: string; description: string }> }
+    | undefined;
+  const layers = architectureSection?.layers ?? [];
+
+  function getLayerData(layerId: string): { title: string; description: string; importPath: string } | undefined {
+    const layer = layers.find((item) => item.id === layerId);
+    if (layer === undefined) {
+      return undefined;
+    }
+    return {
+      description: layer.description,
+      importPath: layer.path,
+      title: layer.title,
+    };
+  }
+
   const categoryDescriptions: Record<string, { title: string; importPath: string; description: string }> = {
-    base: {
+    base: getLayerData("base") ?? {
       description:
         "Lightweight wrappers around native HTML elements (Buttons, Inputs, Containers, Tables). Use them to maintain semantic consistency and accessibility without imposing heavy styles.",
       importPath: "fluid-ui-svelte/base",
       title: "Base Layer",
     },
-    components: {
+    components: getLayerData("components") ?? {
       description:
         "Fully-featured UI elements (Accordions, Calendars, Modals, Switches) composed from the Base Layer. They include interaction logic and default styling that can be themed via CSS variables.",
       importPath: "fluid-ui-svelte/components",
       title: "Components Layer",
     },
-    prebuilt: {
+    prebuilt: getLayerData("prebuilt") ?? {
       description:
         "High-level pre-assembled domain components (Breadcrumbs, International Inputs, Notification Areas) combining multiple primitives and workflows ready for immediate use.",
       importPath: "fluid-ui-svelte/prebuilt",
@@ -187,10 +156,14 @@ export function formatGenericDocumentation(): string {
     },
   };
 
-  const outputLines: Array<string> = [
-    "Fluid UI Svelte:",
-    "Fluid UI is a pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components and prebuilt domain widgets, giving you complete control over your application's architecture.",
-  ];
+  const introductionSection = gettingStartedPage?.sections?.find((section) => (section as { id: string }).id === "introduction") as unknown as
+    | { content: string }
+    | undefined;
+  const libraryDescription =
+    introductionSection?.content ??
+    "Fluid UI is a pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components and prebuilt domain widgets, giving you complete control over your application's architecture.";
+
+  const outputLines: Array<string> = ["Fluid UI Svelte:", libraryDescription];
 
   for (const [categoryKey, categoryRecord] of Object.entries(registry)) {
     const categoryMetadata = categoryDescriptions[categoryKey];

@@ -844,6 +844,47 @@ const internationalInputCurrency = `<script>
   bind:selectedCountry
 />`;
 
+// --- Searchable Selector ---
+
+const searchableSelectorBasic = `<script>
+  import { SearchableSelector } from 'fluid-ui-svelte/prebuilt';
+
+  const items = [
+    { value: "emre", label: "Emre Ayaz", avatarText: "EA" },
+    { value: "alice", label: "Alice Johnson", avatarText: "AJ" },
+    { value: "bob", label: "Bob Smith", avatarText: "BS" }
+  ];
+
+  let selectedValue = $state("emre");
+</script>
+
+<SearchableSelector
+  id="user-selector"
+  {items}
+  bind:selectedValue
+  placeholder="Select a user"
+  searchPlaceholder="Search users..."
+/>`;
+
+const searchableSelectorImages = `<script>
+  import { SearchableSelector } from 'fluid-ui-svelte/prebuilt';
+
+  const items = [
+    { value: "emre", label: "Emre Ayaz", avatarImage: "https://picsum.photos/id/1011/100/100" },
+    { value: "sarah", label: "Sarah Connor", avatarImage: "https://picsum.photos/id/1027/100/100" }
+  ];
+
+  let selectedValue = $state();
+</script>
+
+<SearchableSelector
+  id="user-selector-images"
+  {items}
+  bind:selectedValue
+  placeholder="Choose a person"
+  searchPlaceholder="Search people..."
+/>`;
+
 // --- Pagination ---
 
 const paginationBasic = `<script>
@@ -1016,6 +1057,8 @@ export const codeBlockContents = {
   pageBasic,
   pageMetadata,
   paginationBasic,
+  searchableSelectorBasic,
+  searchableSelectorImages,
   switchBasic,
   switchDisabled,
   tableStandard,

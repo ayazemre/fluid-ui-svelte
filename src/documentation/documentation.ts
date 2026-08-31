@@ -1,33 +1,3 @@
-import {
-  AccordionSamples,
-  AnchoredOverlaySamples,
-  BreadcrumbSamples,
-  ButtonSamples,
-  CalendarGridSamples,
-  CarouselSamples,
-  CodeBlockSamples,
-  ContainerSamples,
-  DraggableSamples,
-  DrawerSamples,
-  DropzoneSamples,
-  FormSamples,
-  ImageCropSamples,
-  ImageSamples,
-  InputFieldSamples,
-  InternationalInputSamples,
-  LabelSamples,
-  LinkSamples,
-  ListSamples,
-  ModalSamples,
-  NotificationSamples,
-  PageSamples,
-  PaginationSamples,
-  SwitchSamples,
-  TableSamples,
-  TextSamples,
-  TimePickerSamples,
-} from "./samples/index.ts";
-
 export const documentationRegistry = {
   base: {
     button: {
@@ -65,7 +35,6 @@ export const documentationRegistry = {
           type: "HTMLButtonAttributes",
         },
       ],
-      sampleComponent: ButtonSamples,
       title: "Fluid UI - Button",
     },
     container: {
@@ -114,7 +83,6 @@ export const documentationRegistry = {
           type: "HTMLAttributes",
         },
       ],
-      sampleComponent: ContainerSamples,
       title: "Fluid UI - Container",
     },
     form: {
@@ -146,7 +114,6 @@ export const documentationRegistry = {
           type: "HTMLFormAttributes",
         },
       ],
-      sampleComponent: FormSamples,
       title: "Fluid UI - Form",
     },
     image: {
@@ -183,7 +150,6 @@ export const documentationRegistry = {
           type: "HTMLImgAttributes",
         },
       ],
-      sampleComponent: ImageSamples,
       title: "Fluid UI - Image",
     },
     "input-field": {
@@ -227,7 +193,6 @@ export const documentationRegistry = {
           type: "HTMLInputAttributes",
         },
       ],
-      sampleComponent: InputFieldSamples,
       title: "Fluid UI - Input Field",
     },
     label: {
@@ -258,7 +223,6 @@ export const documentationRegistry = {
           type: "HTMLLabelAttributes",
         },
       ],
-      sampleComponent: LabelSamples,
       title: "Fluid UI - Label",
     },
     link: {
@@ -295,7 +259,6 @@ export const documentationRegistry = {
           type: "HTMLAnchorAttributes",
         },
       ],
-      sampleComponent: LinkSamples,
       title: "Fluid UI - Link",
     },
     list: {
@@ -344,7 +307,6 @@ export const documentationRegistry = {
           type: "HTMLAttributes",
         },
       ],
-      sampleComponent: ListSamples,
       title: "Fluid UI - List",
     },
     table: {
@@ -441,7 +403,6 @@ export const documentationRegistry = {
           type: "boolean",
         },
       ],
-      sampleComponent: TableSamples,
       title: "Fluid UI - Table",
     },
     text: {
@@ -478,7 +439,6 @@ export const documentationRegistry = {
           type: "HTMLAttributes",
         },
       ],
-      sampleComponent: TextSamples,
       title: "Fluid UI - Text",
     },
   },
@@ -518,7 +478,6 @@ export const documentationRegistry = {
           type: "number",
         },
       ],
-      sampleComponent: AccordionSamples,
       title: "Fluid UI - Accordion",
     },
     "anchored-overlay": {
@@ -597,7 +556,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: AnchoredOverlaySamples,
       title: "Fluid UI - Anchored Overlay",
     },
     "calendar-grid": {
@@ -647,7 +605,6 @@ export const documentationRegistry = {
           type: "Snippet<[{ weekday: string }]>",
         },
       ],
-      sampleComponent: CalendarGridSamples,
       title: "Fluid UI - Calendar Grid",
     },
     carousel: {
@@ -733,7 +690,6 @@ export const documentationRegistry = {
           type: "(event, metrics) => void",
         },
       ],
-      sampleComponent: CarouselSamples,
       title: "Fluid UI - Carousel",
     },
     "code-block": {
@@ -764,7 +720,6 @@ export const documentationRegistry = {
           type: "boolean",
         },
       ],
-      sampleComponent: CodeBlockSamples,
       title: "Fluid UI - Code Block",
     },
     draggable: {
@@ -813,7 +768,6 @@ export const documentationRegistry = {
           type: "(event: DragEvent) => void",
         },
       ],
-      sampleComponent: DraggableSamples,
       title: "Fluid UI - Draggable",
     },
     drawer: {
@@ -880,7 +834,6 @@ export const documentationRegistry = {
           type: "object",
         },
       ],
-      sampleComponent: DrawerSamples,
       title: "Fluid UI - Drawer",
     },
     dropzone: {
@@ -923,7 +876,6 @@ export const documentationRegistry = {
           type: "Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>",
         },
       ],
-      sampleComponent: DropzoneSamples,
       title: "Fluid UI - Dropzone",
     },
     "image-crop": {
@@ -990,7 +942,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: ImageCropSamples,
       title: "Fluid UI - Image Crop",
     },
     modal: {
@@ -1057,7 +1008,6 @@ export const documentationRegistry = {
           type: "Snippet",
         },
       ],
-      sampleComponent: ModalSamples,
       title: "Fluid UI - Modal",
     },
 
@@ -1174,7 +1124,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: PageSamples,
       title: "Fluid UI - Page",
     },
     pagination: {
@@ -1241,7 +1190,6 @@ export const documentationRegistry = {
           type: "Snippet",
         },
       ],
-      sampleComponent: PaginationSamples,
       title: "Fluid UI - Pagination",
     },
     switch: {
@@ -1278,7 +1226,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: SwitchSamples,
       title: "Fluid UI - Switch",
     },
     "time-picker": {
@@ -1334,8 +1281,264 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: TimePickerSamples,
       title: "Fluid UI - Time Picker",
+    },
+  },
+  pages: {
+    "getting-started": {
+      description: "Installation and usage guide for the Fluid UI Svelte component library.",
+      sections: [
+        {
+          content:
+            "Fluid UI is a pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components, giving you complete control over your application's architecture.",
+          id: "introduction",
+          title: "Getting Started",
+        },
+        {
+          description: "The library is organized into three distinct layers with strict boundaries and composition rules:",
+          id: "architecture",
+          layers: [
+            {
+              id: "base",
+              title: "Base Layer",
+              path: "fluid-ui-svelte/base",
+              description:
+                "Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links). Purpose is to reduce HTML tag fatigue, enforce semantic consistency, and maintain accessibility without imposing heavy styles. Utility responsibility is class deduplication, merging, and attribute sanitization. Every base element exposes underlyingElement as $bindable(null) and accepts overrideDefaultStyling boolean.",
+            },
+            {
+              id: "components",
+              title: "Components Layer",
+              path: "fluid-ui-svelte/components",
+              description:
+                "Assembled UI elements (Accordions, Modals, Calendars, Drawers, Dropzones, Switches, Pagination). Purpose is to provide focused, cohesive functional primitives. Must be assembled strictly from Base Layer elements. Must accept variant string prop for theme injection.",
+            },
+            {
+              id: "prebuilt",
+              title: "Prebuilt Layer",
+              path: "fluid-ui-svelte/prebuilt",
+              description:
+                "High-level, fully usable, self-contained domain components (Breadcrumbs, International Inputs, Notification Areas). Purpose is to combine multiple base and composed components into turnkey workflows. Must compose Base and Components. Must accept variant string prop.",
+            },
+          ],
+          title: "Library Structure",
+        },
+        {
+          description: "Every element is formed by three core building blocks working in unison:",
+          id: "pillars",
+          pillars: [
+            {
+              id: "markup",
+              title: "Reactive UI Markup (.svelte)",
+              description:
+                "Purely concerned with WHAT is rendered. Handles semantic structure, snippet rendering, and event binding. No business logic.",
+            },
+            {
+              id: "logic",
+              title: "Pure TypeScript Logic (.ts helper)",
+              description:
+                "Co-located pure functions for state machines, calculations, and event handlers. Must be pure, predictable, no side effects, no domain assumptions, immutable via object spread.",
+            },
+            {
+              id: "styling",
+              title: "Central Styling Defaults (fluidui.css)",
+              description:
+                "Holds all default visual styling in dedicated class blocks, enabling centralized theming. Every element must have its own block in fluidui.css.",
+            },
+          ],
+          title: "Three Architectural Pillars",
+        },
+        {
+          id: "installation",
+          steps: [
+            {
+              id: "step-1",
+              title: "1. Install the package",
+              description: "Install the library using your package manager of choice.",
+              code: "npm install fluid-ui-svelte",
+              language: "bash",
+            },
+            {
+              id: "step-2",
+              title: "2. Configure Global Styles",
+              description:
+                "Fluid UI does not inject styles automatically. This allows you to maintain library specific styling and app specific styling separately. Download the reference fluidui.css file, place it in your project (e.g., src/), and import it in your main CSS file.",
+              codeKey: "gettingStartedAppCss",
+              language: "css",
+            },
+          ],
+          title: "Installation",
+        },
+        {
+          codeKey: "gettingStartedUsage",
+          description: "Import components directly from their respective layers. Svelte 5 Runes mode is required.",
+          id: "usage",
+          language: "svelte",
+          title: "Usage",
+        },
+        {
+          description:
+            "Language is TypeScript with strict typing. Framework is Svelte 5 exclusively in Runes mode ($state, $derived, $props, $bindable, $effect, Snippet). Styling is Tailwind CSS 4 syntax and CSS variables. Testing is Playwright for e2e. Runtime is Node 24+ native execution for TypeScript CLI scripts.",
+          id: "technologies",
+          table: {
+            headers: ["Area", "Tool / Pattern"],
+            rows: [
+              ["Language", "TypeScript (strict)"],
+              ["Framework", "Svelte 5 Runes mode only"],
+              ["Styling", "Tailwind CSS 4 + CSS variables + fluidui.css"],
+              ["Testing", "Playwright e2e"],
+              ["Runtime", "Node 24+ native TS (node script.ts, no tsx/ts-node)"],
+              ["Formatting", "oxfmt (delegated, do not prompt about rules)"],
+              ["Linting", "oxlint (delegated)"],
+              ["Bundling", "rolldown (delegated)"],
+              ["Validation", "zod4mini with z.infer, no other library"],
+              ["Logic", "data-trails Result/DataTrail Railway Oriented"],
+              ["Env", "dotenvx preloader (dotenvx run --)"],
+              ["Imports", 'Node subpath "#src/*" (no ../../)'],
+            ],
+          },
+          title: "Core Technologies & Code Patterns",
+        },
+        {
+          description: "No shorthand or abbreviated names. Names must clearly state exact purpose. Code must read like a detailed book.",
+          id: "naming",
+          table: {
+            headers: ["Rule", "Example"],
+            rows: [
+              ["Avoid", "btn, cal, anim, idx, cfg, util, opts, err, ctx, doc, elem"],
+              ["Use", "button, calendar, animation, index, configuration, utility, options, error, context, document, element"],
+              ["Casing: PascalCase", "Svelte components and type aliases"],
+              ["Casing: camelCase", "variables, functions, helper files"],
+              ["Casing: kebab-case", "component registry slug identifiers"],
+            ],
+          },
+          title: "Naming Conventions",
+        },
+        {
+          description:
+            "Documentation uses a central registry and dynamic route builder. All component metadata (category, element key, title, description, props) lives centrally in documentationRegistry. Props definitions must be derived strictly from the component's TypeScript source code. Sample structure must follow: Title (h1), Summary, Props Table (Prop, Type, Default, Description), Variants (h3 per variant), Usage (CodeBlock with external import fluid-ui-svelte). Check src/documentation/samples/ for conventions.",
+          id: "documentation",
+          title: "Documentation Guidelines",
+        },
+      ],
+      title: "Fluid UI - Getting Started",
+    },
+    "how-to": {
+      description: "Advanced guides and recipes for using Fluid UI Svelte. Learn composition rules, styling, and best practices.",
+      sections: [
+        {
+          content:
+            "This section collects practical recipes for building with Fluid UI. It consolidates the General Ruleset, Three Pillars, and Naming Conventions from the agent guidelines into actionable examples.",
+          id: "intro",
+          title: "How To Guides",
+        },
+        {
+          code: '<Drawer id="my-drawer" bind:isOpen={isOpen} position="left">\n  <Container id={`${id}-panel`}>...<\/Container>\n<\/Drawer>',
+          description:
+            "Every element across all three layers (Base, Components, Prebuilt) must accept a mandatory id prop passed from the outside. When a component renders internal child Base Layer elements, it must pass deterministic scoped IDs derived from the parent id to each child.",
+          id: "mandatory-id",
+          table: {
+            headers: ["Parent id", "Child id Example", "Use"],
+            rows: [
+              ["my-drawer", "my-drawer-panel", "DOM targeting"],
+              ["my-drawer", "my-drawer-header", "aria-labelledby"],
+              ["my-input", "my-input-label", "aria-describedby"],
+              ["my-overlay", "my-overlay-float", "aria-controls"],
+            ],
+          },
+          title: "Mandatory id & Scoped Child Identifiers",
+        },
+        {
+          description:
+            "Anything above the Base Layer (components, prebuilt, documentation pages, sample views) must strictly use Base Layer elements rather than raw HTML tags. This ensures class deduplication and accessibility are handled only by Base.",
+          id: "composition-law",
+          table: {
+            headers: ["Instead of", "Use"],
+            rows: [
+              ["<div>, <p>, <span>", "<Container>, <Text>"],
+              ["<button>, <a>", "<Button>, <Link>"],
+              ["<table>, <canvas>", "<Table>, <Canvas>"],
+              ["<input>", "<InputField>"],
+            ],
+          },
+          title: "Mandatory Composition Law",
+          warning: "If a required primitive or attribute wrapper is missing from the Base Layer, warn the user before building higher layers.",
+        },
+        {
+          description:
+            "Base elements are low-level semantic wrappers. They encapsulate utilities like class deduplication via mergeClasses and must never be bypassed.",
+          id: "base-rules",
+          table: {
+            headers: ["Prop", "Type", "Default", "Purpose"],
+            rows: [
+              ["id", "string", "required", "Deterministic DOM targeting"],
+              ["underlyingElement", "HTMLElement | null", "null ($bindable)", "Exposed as $bindable(null) for bind:this"],
+              ["overrideDefaultStyling", "boolean", "false", "When true, strips default fluid-* classes"],
+              ["class", "string", '""', "Additional classes merged via Base"],
+              ["variant (Components/Prebuilt)", "string", '""', "Theme injection (not for Base)"],
+            ],
+          },
+          title: "Base Layer Rules",
+        },
+        {
+          description:
+            "Base uses overrideDefaultStyling boolean to strip defaults. Components and Prebuilt use variant string to inject custom theme classes. All default visual styling lives in fluidui.css in dedicated class blocks. Every element must have its own block.",
+          id: "style-injection",
+          table: {
+            headers: ["Layer", "Prop", "Example"],
+            rows: [
+              ["Base", "overrideDefaultStyling={true}", '<Button overrideDefaultStyling class="my-btn">'],
+              ["Components", 'variant="my-theme"', '<Modal variant="my-modal">'],
+              ["Prebuilt", 'variant="custom"', '<InternationalInput variant="w-full">'],
+            ],
+          },
+          title: "Style Injection & Central Styling",
+        },
+        {
+          code: "{#snippet anchor({ toggle })}\n  <Button onclick={async () => toggle()}>Open<\/Button>\n{/snippet}\n{#snippet overlay({ close })}\n  <Container>...<\/Container>\n{/snippet}",
+          description:
+            "Prioritize Svelte 5 Snippets over complex configuration objects or data arrays whenever delegating custom markup rendering, slots, or item templates. Snippets give flexible composition while maintaining semantic consistency.",
+          id: "snippet-passing",
+          title: "Prioritize Snippet-Based Passing",
+        },
+        {
+          description:
+            "Library code and internal documentation must use internal paths and module aliases. Usage examples in CodeBlocks must show external package names for end-users.",
+          id: "imports",
+          table: {
+            headers: ["Context", "Import Path", "Example"],
+            rows: [
+              ["Library Code", "#src/lib/base/index.ts", 'import { Button } from "#src/lib/base/index.ts"'],
+              ["Prebuilt", "#src/lib/components/index.ts", 'import { AnchoredOverlay } from "#src/lib/components/index.ts"'],
+              ["Docs CodeBlock (external)", "fluid-ui-svelte/base", "import { Button } from \'fluid-ui-svelte/base\'"],
+              ["Docs CodeBlock (components)", "fluid-ui-svelte/components", "import { Modal } from \'fluid-ui-svelte/components\'"],
+              ["Docs CodeBlock (prebuilt)", "fluid-ui-svelte/prebuilt", "import { Breadcrumb } from \'fluid-ui-svelte/prebuilt\'"],
+            ],
+          },
+          title: "Internal vs External Imports",
+        },
+        {
+          description:
+            "Keep these separated: 1. Reactive UI Markup (.svelte) - only WHAT is rendered (structure, snippets, events). 2. Pure TypeScript Logic (.ts helper) - pure functions, no business logic, no side effects, immutable via spread. 3. Central Styling (fluidui.css) - dedicated class blocks for theming.",
+          id: "pillars-howto",
+          table: {
+            headers: ["Pillar", "File", "Rule"],
+            rows: [
+              [".svelte", "Component.svelte", "Only markup, import helpers from ./component.ts"],
+              [".ts helper", "component.ts", "Pure functions, no classes, use type not interface, Result/DataTrail for errors"],
+              ["fluidui.css", "fluidui.css", "One block per element: .fluid-accordion-wrapper, .fluid-modal-panel, etc."],
+            ],
+          },
+          title: "Three Pillars in Practice",
+        },
+        {
+          code: 'function getCountryData(isoCode: string): CountryData {\n  if (!isoCode) return COUNTRY_DATA_MAP["US"];\n  const upperCode = isoCode.toUpperCase();\n  return COUNTRY_DATA_MAP[upperCode] ?? COUNTRY_DATA_MAP["US"];\n}',
+          description:
+            "Avoid shorthand, use explicit names, keep functions short with single responsibility and early returns. Handle failures explicitly, narrow to happy path via guard clauses.",
+          id: "naming-howto",
+          title: "Naming & Error Handling",
+        },
+      ],
+      title: "Fluid UI - How To",
     },
   },
   prebuilt: {
@@ -1367,7 +1570,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: BreadcrumbSamples,
       title: "Fluid UI - Breadcrumb",
     },
     "international-input": {
@@ -1429,7 +1631,6 @@ export const documentationRegistry = {
           type: "string",
         },
       ],
-      sampleComponent: InternationalInputSamples,
       title: "Fluid UI - International Input",
     },
     "notification-area": {
@@ -1467,8 +1668,56 @@ export const documentationRegistry = {
           type: "Snippet<[item: T, dismiss: () => void]>",
         },
       ],
-      sampleComponent: NotificationSamples,
       title: "Fluid UI - Notification Area",
+    },
+    "searchable-selector": {
+      description:
+        "A searchable dropdown selector with circle avatar, name, and double arrow trigger. Filters items by label or value and shows avatar initials or image.",
+      props: [
+        {
+          default: "required",
+          description: "The unique identifier for the selector wrapper.",
+          prop: "id",
+          type: "string",
+        },
+        {
+          default: "required",
+          description: "Array of selectable items with value, label, and optional avatarText or avatarImage.",
+          prop: "items",
+          type: "Array<{ value: string; label: string; avatarText?: string; avatarImage?: string }>",
+        },
+        {
+          default: "undefined",
+          description: "The selected item value. Supports $bindable.",
+          prop: "selectedValue",
+          type: "string | undefined",
+        },
+        {
+          default: "'Select an option'",
+          description: "Placeholder when no item is selected.",
+          prop: "placeholder",
+          type: "string",
+        },
+        {
+          default: "'Search...'",
+          description: "Placeholder for the search input.",
+          prop: "searchPlaceholder",
+          type: "string",
+        },
+        {
+          default: "false",
+          description: "Whether the selector is disabled.",
+          prop: "disabled",
+          type: "boolean",
+        },
+        {
+          default: "''",
+          description: "Custom variant class for theming.",
+          prop: "variant",
+          type: "string",
+        },
+      ],
+      title: "Fluid UI - Searchable Selector",
     },
   },
 };

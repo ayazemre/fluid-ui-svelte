@@ -1,11 +1,49 @@
 <script lang="ts">
-  import { documentationRegistry } from "#src/documentation/documentation.ts";
   import { Container, Text, Table } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
 
+  import * as Samples from "#src/documentation/samples/index.ts";
+
   let { data } = $props();
-  // @ts-ignore
-  let SampleComponent = $derived(documentationRegistry[data.category][data.slug].sampleComponent);
+
+  const sampleMap: Record<string, Record<string, any>> = {
+    base: {
+      button: Samples.ButtonSamples,
+      container: Samples.ContainerSamples,
+      form: Samples.FormSamples,
+      image: Samples.ImageSamples,
+      "input-field": Samples.InputFieldSamples,
+      label: Samples.LabelSamples,
+      link: Samples.LinkSamples,
+      list: Samples.ListSamples,
+      table: Samples.TableSamples,
+      text: Samples.TextSamples
+    },
+    components: {
+      accordion: Samples.AccordionSamples,
+      "anchored-overlay": Samples.AnchoredOverlaySamples,
+      "calendar-grid": Samples.CalendarGridSamples,
+      carousel: Samples.CarouselSamples,
+      "code-block": Samples.CodeBlockSamples,
+      draggable: Samples.DraggableSamples,
+      drawer: Samples.DrawerSamples,
+      dropzone: Samples.DropzoneSamples,
+      "image-crop": Samples.ImageCropSamples,
+      modal: Samples.ModalSamples,
+      page: Samples.PageSamples,
+      pagination: Samples.PaginationSamples,
+      switch: Samples.SwitchSamples,
+      "time-picker": Samples.TimePickerSamples
+    },
+    prebuilt: {
+      breadcrumb: Samples.BreadcrumbSamples,
+      "international-input": Samples.InternationalInputSamples,
+      "notification-area": Samples.NotificationSamples,
+      "searchable-selector": Samples.SearchableSelectorSamples
+    }
+  };
+
+  let SampleComponent = $derived(sampleMap[data.category]?.[data.slug]);
 
   const headers = ["Prop", "Type", "Default", "Description"];
 
@@ -75,9 +113,11 @@
     </Container>
 
     <!-- Samples -->
-    <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
-      <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Samples</Text>
-      <SampleComponent />
-    </Container>
+    {#if SampleComponent}
+      <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
+        <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Samples</Text>
+        <SampleComponent />
+      </Container>
+    {/if}
   </Container>
 </Page>

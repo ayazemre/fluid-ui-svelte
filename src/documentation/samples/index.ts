@@ -22,6 +22,7 @@ export { default as NotificationSamples } from "./NotificationSamples.svelte";
 export { default as PageSamples } from "./PageSamples.svelte";
 export { default as PaginationSamples } from "./PaginationSamples.svelte";
 export { default as AnchoredOverlaySamples } from "./AnchoredOverlaySamples.svelte";
+export { default as SearchableSelectorSamples } from "./SearchableSelectorSamples.svelte";
 export { default as SwitchSamples } from "./SwitchSamples.svelte";
 export { default as TableSamples } from "./TableSamples.svelte";
 export { default as TextSamples } from "./TextSamples.svelte";

@@ -449,3 +449,11 @@ main.fluid-container {
 .fluid-notification-close {
   @apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
 }
+
+/* Searchable Selector ------------ */
+.fluid-searchable-selector-trigger {
+  @apply transition-all;
+}
+.fluid-searchable-selector-dropdown {
+  @apply rounded-xl border bg-white shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+}
