@@ -6,7 +6,7 @@
   import { handleDraggableDrag, handleDraggableDragEnd, handleDraggableDragStart } from "./draggable.ts";
 
   let {
-    componentId,
+    id,
     variant = "",
     disabled = false,
     children,
@@ -14,7 +14,7 @@
     ondragend,
     ondragstart,
   }: {
-    componentId: string;
+    id: string;
     variant?: string;
     disabled?: boolean;
     children: Snippet<[{ isDragging: boolean }] | []>;
@@ -27,7 +27,7 @@
 </script>
 
 <Container
-  id={componentId}
+  {id}
   draggable={!disabled}
   ondragstart={(event: DragEvent) => {
     isDragging = handleDraggableDragStart(event, disabled, ondragstart);

@@ -4,7 +4,9 @@
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  const {
+  let {
+    id,
+    underlyingElement = $bindable(null),
     caption = "",
     tableHeadItems,
     tableRowItems,
@@ -22,6 +24,8 @@
     overrideDefaultStyling = false,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLTableElement | null;
     caption?: string;
     tableHeadItems: Array<T>;
     tableRowItems: Array<Array<U>>;
@@ -37,10 +41,10 @@
     cellClass?: string;
     footerClass?: string;
     overrideDefaultStyling?: boolean;
-  } & HTMLAttributes<HTMLTableElement> = $props();
+  } & Omit<HTMLAttributes<HTMLTableElement>, "id"> = $props();
 </script>
 
-<table class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-table")} {...rest}>
+<table {id} bind:this={underlyingElement} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-table")} {...rest}>
   {#if caption}
     <caption class={mergeClasses(captionClass, overrideDefaultStyling ? "" : "fluid-table-caption")}>
       {caption}

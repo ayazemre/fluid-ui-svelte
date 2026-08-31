@@ -1,3 +1,3 @@
-export function mergeClasses(classA: string, classB: string) {
-  return [...new Set([...classA.split(" "), ...classB.split(" ")])].join(" ").trim();
+export function mergeClasses(firstClassString: string, secondClassString: string): string {
+  return [...new Set([...firstClassString.split(" "), ...secondClassString.split(" ")])].join(" ").trim();
 }

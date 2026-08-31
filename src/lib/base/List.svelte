@@ -4,7 +4,9 @@
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  const {
+  let {
+    id,
+    underlyingElement = $bindable(null),
     type = "ul",
     items = [],
     itemTemplate,
@@ -13,13 +15,15 @@
     overrideDefaultStyling = false,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLUListElement | HTMLOListElement | null;
     type?: "ol" | "ul";
     items: Array<T>;
     itemTemplate: Snippet<[T, number]>;
     class?: string;
     itemClass?: string;
     overrideDefaultStyling?: boolean;
-  } & HTMLAttributes<HTMLUListElement | HTMLOListElement> = $props();
+  } & Omit<HTMLAttributes<HTMLUListElement | HTMLOListElement>, "id"> = $props();
 
   const classes = {
     ol: "fluid-ordered-list",
@@ -27,7 +31,13 @@
   };
 </script>
 
-<svelte:element this={type} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : classes[type])}>
+<svelte:element
+  this={type}
+  {id}
+  bind:this={underlyingElement}
+  {...rest}
+  class={mergeClasses(className, overrideDefaultStyling ? "" : classes[type])}
+>
   {#each items as item, index}
     <li class={mergeClasses(itemClass, overrideDefaultStyling ? "" : classes[type] + "-item")}>
       {@render itemTemplate(item, index)}

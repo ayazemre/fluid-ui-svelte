@@ -6,25 +6,26 @@
   import type { Snippet } from "svelte";
 
   const {
+    id,
     variant = "",
-    componentId,
     header,
     body,
     transitionFunction = slide,
     transitionDuration = 250,
   }: {
+    id: string;
     variant?: string;
-    componentId?: string;
     header: Snippet<[{ isExpanded: boolean }]>;
     body: Snippet;
-    transitionFunction?: (node: Element, params?: any) => TransitionConfig;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
     transitionDuration?: number;
   } = $props();
   const componentState = $state({ isExpanded: false });
 </script>
 
-<Container id={componentId} class={[variant, "fluid-accordion-wrapper", "flex"].join(" ")}>
+<Container {id} class={[variant, "fluid-accordion-wrapper", "flex"].join(" ")}>
   <Button
+    id={`${id}-header-button`}
     onclick={async () => {
       componentState.isExpanded = !componentState.isExpanded;
     }}
@@ -34,7 +35,8 @@
   </Button>
   {#if componentState.isExpanded}
     <Container
-      transitionFn={transitionFunction}
+      id={`${id}-body-container`}
+      {transitionFunction}
       transitionParams={{ duration: transitionDuration }}
       class={[variant, "fluid-accordion-body"].join(" ")}
     >

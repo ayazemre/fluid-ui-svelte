@@ -5,9 +5,9 @@
   import { codeBlockContents } from "./codeBlockContents.ts";
 </script>
 
-<Container class="flex flex-col gap-4">
-  <Text>Here is an example of the CodeBlock component.</Text>
-  <Container class="flex flex-col gap-4 rounded-lg border p-4">
-    <CodeBlock language="svelte" code={codeBlockContents.codeBlockExample} />
+<Container id="code-block-samples-container" class="flex flex-col gap-4">
+  <Text id="code-block-sample-description">Here is an example of the CodeBlock component.</Text>
+  <Container id="code-block-sample-preview" class="flex flex-col gap-4 rounded-lg border p-4">
+    <CodeBlock id="code-block-sample-example" language="svelte" code={codeBlockContents.codeBlockExample} />
   </Container>
 </Container>

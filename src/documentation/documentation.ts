@@ -527,7 +527,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component container.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -581,7 +581,7 @@ export const documentationRegistry = {
         {
           default: "fade",
           description: "Svelte transition function for the floating overlay.",
-          prop: "transitionFn",
+          prop: "transitionFunction",
           type: "function",
         },
         {
@@ -611,9 +611,9 @@ export const documentationRegistry = {
         "A monthly calendar grid primitive powered by the Temporal API. It renders a month view based on a provided ISO date without internal year or navigation controls, ideal for composable date pickers and multi-month blocks.",
       props: [
         {
-          default: "undefined",
+          default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -629,39 +629,39 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "undefined",
-          description: "Selected start date (YYYY-MM-DD). Supports $bindable.",
+          default: "''",
+          description: "The start date string in ISO format for range selections. Supports $bindable.",
           prop: "startDate",
           type: "string",
         },
         {
-          default: "undefined",
-          description: "Selected end date (YYYY-MM-DD). Supports $bindable.",
+          default: "''",
+          description: "The end date string in ISO format for range selections. Supports $bindable.",
           prop: "endDate",
           type: "string",
         },
         {
-          default: "['Mon', 'Tue', ...]",
-          description: "Array of week day names to display in the header.",
-          prop: "weekDays",
-          type: "string[]",
+          default: "undefined",
+          description: "Optional custom snippet for rendering individual day cells.",
+          prop: "daySnippet",
+          type: "Snippet<[{ day: PlainDate; isCurrentMonth: boolean; isSelected: boolean; isInRange: boolean }]>",
         },
         {
-          default: "false",
-          description: "Whether to hide days from previous/next months.",
-          prop: "hideRollingDays",
-          type: "boolean",
+          default: "undefined",
+          description: "Optional custom snippet for rendering weekday header labels.",
+          prop: "headerSnippet",
+          type: "Snippet<[{ weekday: string }]>",
         },
       ],
       sampleComponent: CalendarGridSamples,
       title: "Fluid UI - Calendar Grid",
     },
     carousel: {
-      description: "A high-performance carousel with custom JS-based snapping and smooth touch interactions.",
+      description: "A performant, accessible carousel component supporting horizontal and vertical orientations, autoplay, custom snippets, and smooth transitions.",
       props: [
         {
           default: "required",
-          description: "Array of data items to render.",
+          description: "An array of data items to render in the carousel.",
           prop: "items",
           type: "T[]",
         },
@@ -714,9 +714,9 @@ export const documentationRegistry = {
           type: "number",
         },
         {
-          default: "crypto.randomUUID()",
+          default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -778,7 +778,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -833,7 +833,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -863,7 +863,7 @@ export const documentationRegistry = {
         {
           default: "() => {}",
           description: "Transition function for the drawer panel.",
-          prop: "transitionFn",
+          prop: "transitionFunction",
           type: "function",
         },
         {
@@ -875,7 +875,7 @@ export const documentationRegistry = {
         {
           default: "() => {}",
           description: "Transition function for the backdrop.",
-          prop: "backdropTransitionFn",
+          prop: "backdropTransitionFunction",
           type: "function",
         },
         {
@@ -912,7 +912,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -991,7 +991,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
       ],
@@ -1028,13 +1028,13 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
           default: "scale",
           description: "Svelte transition function for the modal panel.",
-          prop: "transitionFn",
+          prop: "transitionFunction",
           type: "function",
         },
         {
@@ -1046,7 +1046,7 @@ export const documentationRegistry = {
         {
           default: "fade",
           description: "Svelte transition function for the backdrop.",
-          prop: "backdropTransitionFn",
+          prop: "backdropTransitionFunction",
           type: "function",
         },
         {
@@ -1073,7 +1073,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the main page element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -1188,7 +1188,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the pagination navigation element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -1277,9 +1277,9 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "''",
+          default: "required",
           description: "The unique identifier for the component element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
       ],
@@ -1293,7 +1293,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component container.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -1348,6 +1348,12 @@ export const documentationRegistry = {
       description: "A navigation aid that allows users to keep track of their location within programs, documents, or websites.",
       props: [
         {
+          default: "required",
+          description: "The unique identifier for the component wrapper.",
+          prop: "id",
+          type: "string",
+        },
+        {
           default: "[]",
           description: "An array of breadcrumb items.",
           prop: "items",
@@ -1365,12 +1371,6 @@ export const documentationRegistry = {
           prop: "variant",
           type: "string",
         },
-        {
-          default: "crypto.randomUUID()",
-          description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
-          type: "string",
-        },
       ],
       sampleComponent: BreadcrumbSamples,
       title: "Fluid UI - Breadcrumb",
@@ -1382,7 +1382,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the component wrapper.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {
@@ -1444,7 +1444,7 @@ export const documentationRegistry = {
         {
           default: "required",
           description: "The unique identifier for the notification area element.",
-          prop: "componentId",
+          prop: "id",
           type: "string",
         },
         {

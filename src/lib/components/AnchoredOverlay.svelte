@@ -6,37 +6,34 @@
     getAnchoredOverlayPositionClass,
     setupAnchoredOverlayLifecycle,
     type AnchoredOverlayPosition,
-    type TriggerMode,
   } from "#src/lib/components/anchoredOverlay.ts";
 
   import type { Snippet } from "svelte";
 
   let {
-    componentId,
+    id,
     isOpen = $bindable(false),
     position = "bottom-start",
     autoFlip = true,
-    triggerMode = "click",
     closeOnClickOutside = true,
     closeOnEscape = true,
     variant = "",
     overlayClass = "",
-    transitionFn = fade,
-    transitionParams = { duration: 150 },
+    transitionFunction = fade,
+    transitionParameters = { duration: 150 },
     anchor,
     overlay,
   }: {
-    componentId: string;
+    id: string;
     isOpen?: boolean;
     position?: AnchoredOverlayPosition;
     autoFlip?: boolean;
-    triggerMode?: TriggerMode;
     closeOnClickOutside?: boolean;
     closeOnEscape?: boolean;
     variant?: string;
     overlayClass?: string;
-    transitionFn?: (node: Element, params?: any) => TransitionConfig;
-    transitionParams?: any;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionParameters?: TransitionConfig & Record<string, unknown>;
     anchor: Snippet<[{ close: () => void; isOpen: boolean; open: () => void; toggle: () => void }]>;
     overlay: Snippet<[{ close: () => void }]>;
   } = $props();
@@ -54,8 +51,8 @@
       autoFlip,
       closeOnClickOutside,
       closeOnEscape,
-      getContainerElement: () => containerElement ?? (typeof document !== "undefined" ? document.getElementById(componentId) : undefined),
-      getFloatElement: () => floatElement ?? (typeof document !== "undefined" ? document.getElementById(`${componentId}-float`) : undefined),
+      getContainerElement: () => containerElement ?? (typeof document !== "undefined" ? document.getElementById(id) : undefined),
+      getFloatElement: () => floatElement ?? (typeof document !== "undefined" ? document.getElementById(`${id}-float`) : undefined),
       getIsOpen: () => isOpen,
       onClose: () => {
         isOpen = false;
@@ -69,74 +66,33 @@
 </script>
 
 <Container
-  id={componentId}
-  bind:element={containerElement}
+  {id}
+  bind:underlyingElement={containerElement}
   overrideDefaultStyling={true}
   class={["fluid-anchored-overlay-container", variant].join(" ")}
-  onmouseenter={() => {
-    if (triggerMode === "hover") {
-      isOpen = true;
-    }
-  }}
-  onmouseleave={() => {
-    if (triggerMode === "hover") {
-      isOpen = false;
-    }
-  }}
-  onfocusin={() => {
-    if (triggerMode === "focus") {
-      isOpen = true;
-    }
-  }}
-  onfocusout={(event) => {
-    if (triggerMode === "focus") {
-      const nextTarget = event.relatedTarget as Node | null;
-      const targetContainer = containerElement ?? (typeof document !== "undefined" ? document.getElementById(componentId) : null);
-      if (!targetContainer?.contains(nextTarget)) {
-        isOpen = false;
-      }
-    }
-  }}
 >
-  <Container
-    overrideDefaultStyling={true}
-    class="fluid-anchored-overlay-anchor inline-block"
-    role="presentation"
-    onclick={() => {
-      if (triggerMode === "click") {
-        isOpen = !isOpen;
-      }
-    }}
-    onkeydown={(event) => {
-      if (triggerMode === "click" && (event.key === "Enter" || event.key === " ")) {
-        event.preventDefault();
-        isOpen = !isOpen;
-      }
-    }}
-  >
-    {@render anchor({
-      close: () => {
-        isOpen = false;
-      },
-      isOpen,
-      open: () => {
-        isOpen = true;
-      },
-      toggle: () => {
-        isOpen = !isOpen;
-      },
-    })}
-  </Container>
+  {@render anchor({
+    close: () => {
+      isOpen = false;
+    },
+    isOpen,
+    open: () => {
+      isOpen = true;
+    },
+    toggle: () => {
+      isOpen = !isOpen;
+    },
+  })}
 
   {#if isOpen}
     <Container
-      id="{componentId}-float"
-      bind:element={floatElement}
+      id={`${id}-float`}
+      bind:underlyingElement={floatElement}
       overrideDefaultStyling={true}
       role="region"
       class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition), overlayClass].join(" ")}
-      {transitionFn}
-      {transitionParams}
+      {transitionFunction}
+      transitionParams={transitionParameters}
     >
       {@render overlay({
         close: () => {

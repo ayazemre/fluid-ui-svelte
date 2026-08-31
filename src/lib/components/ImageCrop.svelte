@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Container } from "#src/lib/base/index.ts";
+  import { Canvas, Container } from "#src/lib/base/index.ts";
 
   import { renderImageCropPipeline, type ImageCropAspectRatio, type ImageCropPanCoordinates, type ImageCropShape } from "./imageCrop.ts";
 
   let {
-    componentId,
+    id,
     variant = "",
     sourceImage = $bindable(),
     aspectRatio,
@@ -15,7 +15,7 @@
     shape = "rectangle",
     overlayColor = "rgba(0, 0, 0, 0.5)",
   }: {
-    componentId: string;
+    id: string;
     sourceImage: ImageBitmap;
     aspectRatio: ImageCropAspectRatio;
     variant?: string;
@@ -27,13 +27,13 @@
     overlayColor?: string;
   } = $props();
 
-  let canvasReference: HTMLCanvasElement | undefined = $state(undefined);
+  let canvasReference: HTMLCanvasElement | null = $state(null);
 
   $effect(() => {
-    resultImage = renderImageCropPipeline(canvasReference, sourceImage, aspectRatio, { pan, zoom }, padding, shape, overlayColor);
+    resultImage = renderImageCropPipeline(canvasReference ?? undefined, sourceImage, aspectRatio, { pan, zoom }, padding, shape, overlayColor);
   });
 </script>
 
-<Container id={componentId} class={[variant, "fluid-image-crop-wrapper"].join(" ")}>
-  <canvas bind:this={canvasReference} class={[variant, "fluid-image-cropper-canvas"].join(" ")}></canvas>
+<Container {id} class={[variant, "fluid-image-crop-wrapper"].join(" ")}>
+  <Canvas id={`${id}-canvas`} bind:underlyingElement={canvasReference} class={[variant, "fluid-image-cropper-canvas"].join(" ")} />
 </Container>

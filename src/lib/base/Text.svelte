@@ -4,13 +4,17 @@
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  const {
+  let {
+    id,
+    underlyingElement = $bindable(null),
     type = "p",
     class: className = "",
     overrideDefaultStyling = false,
     children,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLElement | null;
     type?:
       | "p"
       | "h1"
@@ -35,9 +39,9 @@
     children?: Snippet;
     class?: string;
     overrideDefaultStyling?: boolean;
-  } & HTMLAttributes<HTMLParagraphElement & HTMLHeadingElement & HTMLSpanElement> = $props();
+  } & Omit<HTMLAttributes<HTMLParagraphElement & HTMLHeadingElement & HTMLSpanElement>, "id"> = $props();
 </script>
 
-<svelte:element this={type} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-text")}
-  >{@render children?.()}
+<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-text")}>
+  {@render children?.()}
 </svelte:element>

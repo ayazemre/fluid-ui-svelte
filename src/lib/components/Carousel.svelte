@@ -6,7 +6,7 @@
   import { getCarouselScrollMetrics, scrollToIndex, type CarouselScrollMetrics } from "./carousel.ts";
 
   let {
-    componentId = crypto.randomUUID(),
+    id,
     variant = "",
     orientation = "horizontal",
     snapItems = true,
@@ -20,7 +20,7 @@
     onscroll,
     onscrollend,
   }: {
-    componentId?: string;
+    id: string;
     variant?: string;
     orientation?: "horizontal" | "vertical";
     snapItems?: boolean;
@@ -79,8 +79,8 @@
 </script>
 
 <Container
-  id={componentId}
-  bind:element={containerElement}
+  {id}
+  bind:underlyingElement={containerElement}
   onscroll={handleScroll}
   onscrollend={handleScrollEnd}
   class={[
@@ -96,6 +96,7 @@
 >
   {#each items as item, index}
     <Container
+      id={`${id}-item-${index}`}
       class={[variant, "fluid-carousel-item", "shrink-0", snapItems ? "snap-start" : ""].join(" ")}
       style="flex-basis: calc(100% / {visibleItemCount})"
     >

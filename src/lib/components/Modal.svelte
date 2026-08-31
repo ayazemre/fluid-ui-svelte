@@ -8,26 +8,26 @@
   import { setupModalLifecycle } from "./modal.ts";
 
   let {
-    componentId,
+    id,
     variant = "",
     isOpen = $bindable(false),
     closeOnBackdropClick = true,
     scrollLock = true,
-    transitionFn = scale,
+    transitionFunction = scale,
     transitionParams = { duration: 200, start: 0.95 },
-    backdropTransitionFn = fade,
+    backdropTransitionFunction = fade,
     backdropTransitionParams = { duration: 200 },
     children,
   }: {
-    componentId: string;
+    id: string;
     variant?: string;
     isOpen?: boolean;
     closeOnBackdropClick?: boolean;
     scrollLock?: boolean;
-    transitionFn?: (node: Element, parameters?: any) => TransitionConfig;
-    transitionParams?: Record<string, unknown>;
-    backdropTransitionFn?: (node: Element, parameters?: any) => TransitionConfig;
-    backdropTransitionParams?: Record<string, unknown>;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionParams?: TransitionConfig & Record<string, unknown>;
+    backdropTransitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    backdropTransitionParams?: TransitionConfig & Record<string, unknown>;
     children: Snippet;
   } = $props();
 
@@ -40,9 +40,9 @@
 
 {#if isOpen}
   <Container
-    id={componentId}
+    {id}
     class={[variant, "fluid-modal-container"].join(" ")}
-    transitionFn={backdropTransitionFn}
+    transitionFunction={backdropTransitionFunction}
     transitionParams={backdropTransitionParams}
     onclick={() => {
       if (closeOnBackdropClick) {
@@ -52,15 +52,16 @@
     role="dialog"
     aria-modal="true"
   >
-    <div
-      id="{componentId}-panel"
+    <Container
+      id={`${id}-panel`}
       onclick={(event: MouseEvent) => event.stopPropagation()}
       onkeydown={(event: KeyboardEvent) => event.stopPropagation()}
       role="presentation"
       class={[variant, "fluid-modal-panel"].join(" ")}
-      transition:transitionFn={transitionParams}
+      transitionFunction={transitionFunction}
+      {transitionParams}
     >
       {@render children()}
-    </div>
+    </Container>
   </Container>
 {/if}

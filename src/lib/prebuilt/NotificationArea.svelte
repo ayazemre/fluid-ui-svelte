@@ -14,13 +14,13 @@
   import type { Snippet } from "svelte";
 
   let {
-    componentId,
+    id,
     items = $bindable([]),
     position = "top-right",
     variant = "",
     itemSnippet,
   }: {
-    componentId: string;
+    id: string;
     items?: T[];
     position?: NotificationPosition;
     variant?: string;
@@ -30,21 +30,17 @@
   $effect(() => {
     return setupNotificationAutoDismiss(
       () => items,
-      (id) => {
-        items = removeItemFromList(items, id);
+      (dismissedItemId) => {
+        items = removeItemFromList(items, dismissedItemId);
       },
     );
   });
 </script>
 
-<Container
-  id={componentId}
-  role="region"
-  aria-live="polite"
-  class={[variant, "fluid-notification-area", getNotificationAreaPositionClass(position)].join(" ")}
->
+<Container {id} role="region" aria-live="polite" class={[variant, "fluid-notification-area", getNotificationAreaPositionClass(position)].join(" ")}>
   {#each items as item (item.id)}
-    <div animate:flip={{ duration: 300 }} in:fly={getNotificationFlyParameters(position)} out:fade={{ duration: 200 }}>
+    <!-- Note: raw <div> is intentional — animate:flip cannot be applied through Container's svelte:element -->
+    <div id={`${id}-item-${item.id}`} animate:flip={{ duration: 300 }} in:fly={getNotificationFlyParameters(position)} out:fade={{ duration: 200 }}>
       {@render itemSnippet(item, () => {
         items = removeItemFromList(items, item.id);
       })}

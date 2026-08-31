@@ -7,27 +7,27 @@
   import { emptyDrawerTransition, positionClasses, setupDrawerLifecycle, type DrawerPosition } from "./drawer.ts";
 
   let {
-    componentId,
+    id,
     variant = "",
     isOpen = $bindable(false),
     position = "left",
     closeOnBackdropClick = true,
     scrollLock = true,
-    transitionFn = emptyDrawerTransition,
+    transitionFunction = emptyDrawerTransition,
     transitionParams = {},
-    backdropTransitionFn = emptyDrawerTransition,
+    backdropTransitionFunction = emptyDrawerTransition,
     backdropTransitionParams,
     children,
   }: {
-    componentId: string;
+    id: string;
     variant?: string;
     isOpen?: boolean;
     position?: DrawerPosition;
     closeOnBackdropClick?: boolean;
     scrollLock?: boolean;
-    transitionFn?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
     transitionParams?: TransitionConfig & { x?: number; y?: number };
-    backdropTransitionFn?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    backdropTransitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
     backdropTransitionParams?: TransitionConfig & { x?: number; y?: number };
     children: Snippet;
   } = $props();
@@ -41,9 +41,9 @@
 
 {#if isOpen}
   <Container
-    id={componentId}
+    {id}
     class={[variant, "fluid-drawer-container", "fixed", "inset-0", "z-10"].join(" ")}
-    transitionFn={backdropTransitionFn}
+    transitionFunction={backdropTransitionFunction}
     transitionParams={backdropTransitionParams}
     onclick={() => {
       if (closeOnBackdropClick) {
@@ -54,9 +54,10 @@
     aria-modal="true"
   >
     <Container
+      id={`${id}-panel`}
       onclick={(event: MouseEvent) => event.stopPropagation()}
       class={[variant, "fluid-drawer-panel", "fixed", "z-20", positionClasses[position]].join(" ")}
-      {transitionFn}
+      {transitionFunction}
       {transitionParams}
     >
       {@render children()}

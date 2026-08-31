@@ -7,22 +7,23 @@
   let username = $state("");
 </script>
 
-<Container class="flex flex-col gap-12">
+<Container id="form-samples-container" class="flex flex-col gap-12">
   <!-- Basic Form -->
-  <Container class="flex flex-col gap-4">
-    <Text type="h3" class="text-lg font-semibold">Basic Form</Text>
-    <Text class="text-sm text-neutral-500">
-      A standard form wrapper that automatically handles <Text type="code">preventDefault</Text> on submission.
+  <Container id="form-sample-basic-section" class="flex flex-col gap-4">
+    <Text id="form-sample-basic-heading" type="h3" class="text-lg font-semibold">Basic Form</Text>
+    <Text id="form-sample-basic-description" class="text-sm text-neutral-500">
+      A standard form wrapper that automatically handles <Text id="form-sample-basic-desc-code" type="code">preventDefault</Text> on submission.
     </Text>
 
-    <Container class="rounded-lg border p-6 dark:border-neutral-700">
-      <Form class="gap-4">
-        <Container class="flex flex-col gap-2">
-          <Text type="span" class="text-sm font-medium">Username</Text>
-          <InputField bind:value={username} placeholder="Enter username" />
+    <Container id="form-sample-basic-preview" class="rounded-lg border p-6 dark:border-neutral-700">
+      <Form id="form-sample-basic-form" class="gap-4">
+        <Container id="form-sample-basic-input-group" class="flex flex-col gap-2">
+          <Text id="form-sample-basic-username-label" type="span" class="text-sm font-medium">Username</Text>
+          <InputField id="form-sample-username-input" bind:value={username} placeholder="Enter username" />
         </Container>
 
         <Button
+          id="form-sample-submit-button"
           type="submit"
           class="fluid-button-primary"
           onclick={async (event, buttonState) => {
@@ -32,13 +33,13 @@
           }}
         >
           {#snippet loadingPlaceholder()}
-            <span>Submitting...</span>
+            <Text id="form-sample-loading-text" type="span">Submitting...</Text>
           {/snippet}
           Submit
         </Button>
       </Form>
     </Container>
 
-    <CodeBlock code={codeBlockContents.formBasic} language="svelte" />
+    <CodeBlock id="form-sample-basic-code" code={codeBlockContents.formBasic} language="svelte" />
   </Container>
 </Container>

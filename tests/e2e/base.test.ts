@@ -135,13 +135,13 @@ test.describe("Base Elements E2E Tests", () => {
     await expect(page).toHaveTitle(/Label/);
 
     // Verify label elements are visible
-    const standardLabelElement = page.getByText("Full Name");
+    const standardLabelElement = page.locator("#label-sample-standard-label");
     await expect(standardLabelElement).toBeVisible();
 
-    const requiredLabelElement = page.getByText("Email Address");
+    const requiredLabelElement = page.locator("#label-sample-required-label");
     await expect(requiredLabelElement).toBeVisible();
 
-    const customLabelElement = page.getByText("Custom Styled Label");
+    const customLabelElement = page.locator("#label-sample-custom-label");
     await expect(customLabelElement).toBeVisible();
 
     // Verify clicking label focuses associated input field

@@ -29,16 +29,16 @@ export function setupDrawerLifecycle(isDrawerOpen: boolean, scrollLock: boolean,
     document.body.style.overflow = "hidden";
   }
 
-  const onKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = (event: KeyboardEvent): void => {
     handleDrawerKeyDown(event, isDrawerOpen, closeCallback);
   };
 
-  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keydown", handleKeyDown);
 
   return () => {
     if (scrollLock) {
       document.body.style.overflow = originalBodyOverflowStyle;
     }
-    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("keydown", handleKeyDown);
   };
 }

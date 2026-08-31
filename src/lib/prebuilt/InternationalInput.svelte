@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Container, InputField } from "#src/lib/base/index.ts";
+  import { Button, Container, InputField, Text } from "#src/lib/base/index.ts";
   import { AnchoredOverlay } from "#src/lib/components/index.ts";
   import {
     filterCountryEntries,
@@ -10,7 +10,7 @@
   } from "#src/lib/prebuilt/internationalInput.ts";
 
   let {
-    componentId,
+    id,
     mode = "phone",
     selectedCountry = $bindable("US"),
     dialCode = $bindable("+1"),
@@ -20,7 +20,7 @@
     disabled = false,
     variant = "",
   }: {
-    componentId: string;
+    id: string;
     mode?: InternationalInputMode;
     selectedCountry?: string;
     dialCode?: string;
@@ -46,7 +46,7 @@
 </script>
 
 <Container
-  id={componentId}
+  {id}
   overrideDefaultStyling={true}
   class={[
     "flex items-center rounded-lg border border-neutral-300 bg-white transition-all focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20 dark:border-neutral-700 dark:bg-neutral-900",
@@ -56,7 +56,7 @@
   ].join(" ")}
 >
   <AnchoredOverlay
-    componentId="{componentId}-country-selector"
+    id={`${id}-country-selector`}
     position="bottom-start"
     overlayClass="flex w-64 flex-col gap-1 rounded-xl border border-neutral-200 bg-white p-1.5 shadow-xl dark:border-neutral-700 dark:bg-neutral-900 z-50"
     closeOnClickOutside={true}
@@ -64,6 +64,7 @@
   >
     {#snippet anchor()}
       <Button
+        id={`${id}-trigger-button`}
         type="button"
         overrideDefaultStyling={true}
         class={[
@@ -71,25 +72,26 @@
           mode === "country" ? "rounded-lg justify-between min-w-50" : "rounded-l-lg border-r border-neutral-200 dark:border-neutral-700",
         ].join(" ")}
       >
-        <span class="flex items-center gap-2">
-          <span class="text-base">{triggerInfo.flag}</span>
-          <span class="text-xs">{triggerInfo.label}</span>
-        </span>
-        <span class="text-[10px] text-neutral-400">&darr;</span>
+        <Text id={`${id}-trigger-display`} type="span" class="flex items-center gap-2">
+          <Text id={`${id}-trigger-flag`} type="span" class="text-base">{triggerInfo.flag}</Text>
+          <Text id={`${id}-trigger-label`} type="span" class="text-xs">{triggerInfo.label}</Text>
+        </Text>
+        <Text id={`${id}-trigger-arrow`} type="span" class="text-[10px] text-neutral-400">&darr;</Text>
       </Button>
     {/snippet}
 
     {#snippet overlay({ close })}
       <InputField
-        id="{componentId}-search-input"
+        id={`${id}-search-input`}
         bind:value={searchQuery}
         placeholder={searchPlaceholder}
         class="rounded-md border border-neutral-200 px-2 py-1 text-xs dark:border-neutral-700"
       />
 
-      <Container overrideDefaultStyling={true} class="flex max-h-48 flex-col gap-0.5 overflow-y-auto">
+      <Container id={`${id}-country-list`} overrideDefaultStyling={true} class="flex max-h-48 flex-col gap-0.5 overflow-y-auto">
         {#each filteredCountries as { isoCode, data } (isoCode)}
           <Button
+            id={`${id}-option-${isoCode}-button`}
             type="button"
             overrideDefaultStyling={true}
             onclick={async () => {
@@ -108,13 +110,13 @@
               selectedCountry.toUpperCase() === isoCode ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "",
             ].join(" ")}
           >
-            <span class="flex items-center gap-2 truncate">
-              <span class="text-sm">{data.flag}</span>
-              <span class="truncate text-neutral-800 dark:text-neutral-200">{data.name}</span>
-            </span>
-            <span class="ml-2 shrink-0 text-neutral-400">
+            <Text id={`${id}-option-${isoCode}-info`} type="span" class="flex items-center gap-2 truncate">
+              <Text id={`${id}-option-${isoCode}-flag`} type="span" class="text-sm">{data.flag}</Text>
+              <Text id={`${id}-option-${isoCode}-name`} type="span" class="truncate text-neutral-800 dark:text-neutral-200">{data.name}</Text>
+            </Text>
+            <Text id={`${id}-option-${isoCode}-detail`} type="span" class="ml-2 shrink-0 text-neutral-400">
               {mode === "phone" ? data.dialCode : mode === "currency" ? data.currency : isoCode}
-            </span>
+            </Text>
           </Button>
         {/each}
       </Container>
@@ -123,9 +125,9 @@
 
   {#if mode !== "country"}
     <InputField
-      id="{componentId}-input"
+      id={`${id}-input`}
       {value}
-      oninput={(event) => {
+      oninput={(event: Event) => {
         const raw = (event.target as HTMLInputElement).value;
         if (mode === "phone") {
           value = raw.replace(/\D/g, "");
@@ -133,7 +135,7 @@
           value = raw;
         }
       }}
-      type={"text"}
+      type="text"
       placeholder={getPlaceholderForMode(mode, currentCountry, placeholder)}
       {disabled}
       overrideDefaultStyling={true}

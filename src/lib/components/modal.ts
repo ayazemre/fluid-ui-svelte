@@ -14,16 +14,16 @@ export function setupModalLifecycle(isModalOpen: boolean, scrollLock: boolean, c
     document.body.style.overflow = "hidden";
   }
 
-  const onKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = (event: KeyboardEvent): void => {
     handleModalKeyDown(event, isModalOpen, closeCallback);
   };
 
-  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keydown", handleKeyDown);
 
   return () => {
     if (scrollLock) {
       document.body.style.overflow = originalBodyOverflowStyle;
     }
-    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("keydown", handleKeyDown);
   };
 }

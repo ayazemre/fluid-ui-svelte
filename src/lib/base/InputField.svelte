@@ -6,6 +6,8 @@
   import { applyCharacterFilter } from "./inputField.ts";
 
   let {
+    id,
+    underlyingElement = $bindable(null),
     type = "text",
     value = $bindable(""),
     class: className = "",
@@ -14,37 +16,44 @@
     oninput,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLInputElement | HTMLTextAreaElement | null;
     class?: string;
     type?: "text" | "password" | "textarea";
     value?: string;
     characterFilter?: Array<string>;
     overrideDefaultStyling?: boolean;
-  } & Omit<HTMLInputAttributes, "value" | "type"> &
-    Omit<HTMLTextareaAttributes, "value"> = $props();
+    oninput?: (event: Event) => void;
+  } & Omit<HTMLInputAttributes, "value" | "type" | "id"> &
+    Omit<HTMLTextareaAttributes, "value" | "id"> = $props();
 </script>
 
 {#if type === "textarea"}
   <textarea
+    {id}
+    bind:this={underlyingElement}
     bind:value
-    oninput={(e) => {
+    oninput={(event: Event) => {
       if (characterFilter) {
         value = applyCharacterFilter(characterFilter, value);
       }
-      oninput?.(e as any);
+      oninput?.(event);
     }}
-    {...rest as any}
+    {...rest}
     class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-input-field")}></textarea>
 {:else}
   <input
+    {id}
+    bind:this={underlyingElement}
     bind:value
     {type}
-    oninput={(e) => {
+    oninput={(event: Event) => {
       if (characterFilter) {
         value = applyCharacterFilter(characterFilter, value);
       }
-      oninput?.(e as any);
+      oninput?.(event);
     }}
-    {...rest as any}
+    {...rest}
     class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-input-field")}
   />
 {/if}

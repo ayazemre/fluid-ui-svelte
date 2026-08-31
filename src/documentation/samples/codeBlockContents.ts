@@ -269,7 +269,7 @@ const drawerBasicUsage = `<script>
 
 <Button onclick={async () => isBasicDrawerOpen = true}>Open Drawer</Button>
 
-<Drawer componentId="drawer-basic" bind:isOpen={isBasicDrawerOpen} position="left">
+<Drawer id="drawer-basic" bind:isOpen={isBasicDrawerOpen} position="left">
   <div class="flex flex-col gap-4">
     <Text type="h2">Drawer Content</Text>
     <Text>This is some content inside the drawer.</Text>
@@ -290,10 +290,10 @@ const drawerPositions = `<script>
 <Button onclick={async () => top = true}>Top</Button>
 <Button onclick={async () => bottom = true}>Bottom</Button>
 
-<Drawer componentId="drawer-left" bind:isOpen={left} position="left">Left Drawer</Drawer>
-<Drawer componentId="drawer-right" bind:isOpen={right} position="right">Right Drawer</Drawer>
-<Drawer componentId="drawer-top" bind:isOpen={top} position="top">Top Drawer</Drawer>
-<Drawer componentId="drawer-bottom" bind:isOpen={bottom} position="bottom">Bottom Drawer</Drawer>`;
+<Drawer id="drawer-left" bind:isOpen={left} position="left">Left Drawer</Drawer>
+<Drawer id="drawer-right" bind:isOpen={right} position="right">Right Drawer</Drawer>
+<Drawer id="drawer-top" bind:isOpen={top} position="top">Top Drawer</Drawer>
+<Drawer id="drawer-bottom" bind:isOpen={bottom} position="bottom">Bottom Drawer</Drawer>`;
 
 const drawerAnimated = `<script>
   import { Drawer } from 'fluid-ui-svelte/components';
@@ -305,7 +305,7 @@ const drawerAnimated = `<script>
 <Button onclick={async () => isAnimatedDrawerOpen = true}>Open Animated</Button>
 
 <Drawer 
-  componentId="drawer-animated"
+  id="drawer-animated"
   bind:isOpen={isAnimatedDrawerOpen}
   position="right"
   transitionFn={fly} 
@@ -325,7 +325,7 @@ const drawerFlyAnimation = `<script>
 <Button onclick={async () => isFlyDrawerOpen = true}>Open Fly Drawer</Button>
 
 <Drawer 
-  componentId="drawer-fly"
+  id="drawer-fly"
   bind:isOpen={isFlyDrawerOpen}
   position="bottom"
   transitionFn={fly} 
@@ -352,7 +352,7 @@ const calendarGridSingle = `<script>
     <Button onclick={() => changeMonth(-1)}>Prev</Button>
     <Button onclick={() => changeMonth(1)}>Next</Button>
   </Container>
-  <CalendarGrid {currentDate} componentId="calendar-single" />
+  <CalendarGrid {currentDate} id="calendar-single" />
 </Container>`;
 
 const calendarGridDual = `<script>
@@ -376,8 +376,8 @@ const calendarGridDual = `<script>
     <Button onclick={() => changeMonth(1)}>Next</Button>
   </Container>
   <Container class="flex gap-8 flex-wrap">
-    <CalendarGrid currentDate={baseDate} componentId="cal-1" />
-    <CalendarGrid currentDate={getOffsetDate(1)} componentId="cal-2" />
+    <CalendarGrid currentDate={baseDate} id="cal-1" />
+    <CalendarGrid currentDate={getOffsetDate(1)} id="cal-2" />
   </Container>
 </Container>`;
 
@@ -403,7 +403,7 @@ const calendarGridSixMonth = `<script>
   </Container>
   <Container class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {#each Array(6) as _, index}
-      <CalendarGrid currentDate={getOffsetDate(index)} componentId="cal-{index}" />
+      <CalendarGrid currentDate={getOffsetDate(index)} id="cal-{index}" />
     {/each}
   </Container>
 </Container>`;
@@ -441,13 +441,13 @@ const calendarGridRange = `<script>
       currentDate={baseDate} 
       bind:startDate 
       bind:endDate 
-      componentId="cal-range-1" 
+      id="cal-range-1" 
     />
     <CalendarGrid 
       currentDate={getOffsetDate(1)} 
       bind:startDate 
       bind:endDate 
-      componentId="cal-range-2" 
+      id="cal-range-2" 
     />
   </Container>
 </Container>`;
@@ -494,7 +494,7 @@ const carouselInteractive = `<script>
   const items = [...];
 </script>
 
-<Carousel {items} componentId="demo-id">
+<Carousel {items} id="demo-id">
   {#snippet itemTemplate({ item })}
     <div class="h-64 flex items-center justify-center">
       {item.text}
@@ -550,7 +550,7 @@ const imageCropBasic = `<script>
 </script>
 
 {#if bitmap}
-  <ImageCrop componentId="image-crop-demo" sourceImage={bitmap} aspectRatio={{ x: 16, y: 9 }} />
+  <ImageCrop id="image-crop-demo" sourceImage={bitmap} aspectRatio={{ x: 16, y: 9 }} />
 {/if}`;
 
 const imageCropUpload = `<script>
@@ -572,7 +572,7 @@ const imageCropUpload = `<script>
 
 {#if uploadedBitmap}
   <ImageCrop 
-    componentId="image-crop-upload"
+    id="image-crop-upload"
     sourceImage={uploadedBitmap} 
     aspectRatio={{ x: 16, y: 9 }} 
     bind:resultImage 
@@ -598,7 +598,7 @@ const imageCropCircle = `<script>
 
 {#if bitmap}
   <ImageCrop 
-    componentId="image-crop-circle"
+    id="image-crop-circle"
     sourceImage={bitmap} 
     aspectRatio={{ x: 1, y: 1 }} 
     shape="circle" 
@@ -612,7 +612,7 @@ const pageBasic = `<script>
 </script>
 
 <Page 
-  componentId="home-page"
+  id="home-page"
   title="Home" 
   description="Welcome to my awesome website."
 >
@@ -625,7 +625,7 @@ const pageMetadata = `<script>
 </script>
 
 <Page 
-  componentId="article-page"
+  id="article-page"
   title="My Article" 
   description="A deep dive into Fluid UI Svelte."
   type="article"
@@ -662,7 +662,7 @@ const draggableBasic = `<script>
 </script>
 
 <Draggable 
-  componentId="draggable-item" 
+  id="draggable-item" 
   ondragstart={(event) => event.dataTransfer?.setData('text/plain', 'Data')}
 > 
   <div>Drag me</div>
@@ -676,7 +676,7 @@ const dropzoneFile = `<script>
   let droppedFiles = $state<File[]>([]);
 </script>
 
-<Dropzone componentId="dropzone-file" bind:data={droppedFiles} mode="file" dropEffect="copy">
+<Dropzone id="dropzone-file" bind:data={droppedFiles} mode="file" dropEffect="copy">
   {#snippet children({ isDragOver })}
     <div class="flex flex-col items-center gap-2">
       <p class="font-medium">
@@ -703,7 +703,7 @@ const dropzoneData = `<script>
   let droppedData = $state('');
 </script>
 
-<Dropzone componentId="dropzone-data" bind:data={droppedData} mode="text" dropEffect="move">
+<Dropzone id="dropzone-data" bind:data={droppedData} mode="text" dropEffect="move">
   {#snippet children({ isDragOver })}
     <div class="flex flex-col items-center gap-2">
       <p class="font-medium">
@@ -727,7 +727,7 @@ const anchoredOverlayClick = `<script>
   import { Button, Text } from 'fluid-ui-svelte/base';
 </script>
 
-<AnchoredOverlay componentId="click-overlay-demo" triggerMode="click" position="bottom-start">
+<AnchoredOverlay id="click-overlay-demo" triggerMode="click" position="bottom-start">
   {#snippet anchor()}
     <Button class="fluid-button-primary">Click to Toggle</Button>
   {/snippet}
@@ -745,7 +745,7 @@ const anchoredOverlayHover = `<script>
   import { Text } from 'fluid-ui-svelte/base';
 </script>
 
-<AnchoredOverlay componentId="hover-overlay-demo" triggerMode="hover" position="top">
+<AnchoredOverlay id="hover-overlay-demo" triggerMode="hover" position="top">
   {#snippet anchor()}
     <span class="inline-flex cursor-pointer rounded-lg bg-neutral-100 px-3 py-1.5 text-sm font-medium dark:bg-neutral-800">
       Hover Over Me
@@ -767,13 +767,13 @@ const modalBasic = `<script>
   let isModalOpen = $state(false);
 </script>
 
-<Button onclick={async () => isModalOpen = true}>Open Modal</Button>
+<Button id="open-modal-trigger" onclick={async () => isModalOpen = true}>Open Modal</Button>
 
-<Modal componentId="modal-sample" bind:isOpen={isModalOpen}>
-  <Container class="p-6 flex flex-col gap-4">
-    <Text type="h2">Modal Title</Text>
-    <Text>This is a barebone modal component.</Text>
-    <Button onclick={async () => isModalOpen = false}>Close</Button>
+<Modal id="modal-sample" bind:isOpen={isModalOpen}>
+  <Container id="modal-content" class="p-6 flex flex-col gap-4">
+    <Text id="modal-title" type="h2">Modal Title</Text>
+    <Text id="modal-body">This is a barebone modal component.</Text>
+    <Button id="modal-close" onclick={async () => isModalOpen = false}>Close</Button>
   </Container>
 </Modal>`;
 
@@ -811,7 +811,7 @@ const internationalInputBasic = `<script>
 </script>
 
 <InternationalInput 
-  componentId="user-phone-input"
+  id="user-phone-input"
   mode="phone"
   bind:value={phoneNumber} 
   bind:selectedCountry
@@ -825,7 +825,7 @@ const internationalInputCountry = `<script>
 </script>
 
 <InternationalInput 
-  componentId="user-country-picker"
+  id="user-country-picker"
   mode="country"
   bind:selectedCountry
 />`;
@@ -838,7 +838,7 @@ const internationalInputCurrency = `<script>
 </script>
 
 <InternationalInput 
-  componentId="user-currency-input"
+  id="user-currency-input"
   mode="currency"
   bind:value={amount}
   bind:selectedCountry
@@ -853,7 +853,7 @@ const paginationBasic = `<script>
 </script>
 
 <Pagination 
-  componentId="my-pagination"
+  id="my-pagination"
   bind:currentPage 
   totalPages={10} 
   siblingCount={1}
@@ -891,7 +891,7 @@ const notificationBasic = `<script lang="ts">
 <Button onclick={async () => add()}>Notify</Button>
 
 <NotificationArea
-  componentId="my-notifications"
+  id="my-notifications"
   position="bottom-right"
   bind:items={notifications}
 >
@@ -912,7 +912,7 @@ const timePickerHourOnly = `<script>
 </script>
 
 <TimePicker
-  componentId="time-picker-hour-only"
+  id="time-picker-hour-only"
   mode="hour"
   bind:selectedTime={selectedHour}
 />`;
@@ -924,7 +924,7 @@ const timePickerBasic = `<script>
 </script>
 
 <TimePicker
-  componentId="time-picker-basic"
+  id="time-picker-basic"
   mode="minute"
   bind:selectedTime
 />`;
@@ -936,7 +936,7 @@ const timePickerWithSeconds = `<script>
 </script>
 
 <TimePicker
-  componentId="time-picker-seconds"
+  id="time-picker-seconds"
   mode="second"
   stepSecondInterval={5}
   bind:selectedTime
@@ -949,7 +949,7 @@ const timePickerTwelveHour = `<script>
 </script>
 
 <TimePicker
-  componentId="time-picker-12h"
+  id="time-picker-12h"
   format="12h"
   bind:selectedTime
 />`;

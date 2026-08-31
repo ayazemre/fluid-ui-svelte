@@ -4,16 +4,16 @@
   import { applyDate, generateCalendarCellStyles, generateDaysOfTheMonthFromDate } from "./calendarGrid.ts";
 
   let {
+    id,
     variant = "",
-    componentId,
     currentDate = Temporal.Now.plainDateISO().toString(),
     startDate = $bindable(),
     endDate = $bindable(),
     weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     hideRollingDays = false,
   }: {
+    id: string;
     variant?: string;
-    componentId?: string;
     currentDate?: string;
     startDate?: string;
     endDate?: string;
@@ -31,17 +31,18 @@
   }
 </script>
 
-<Container id={componentId} class={[variant, "fluid-calendar-wrapper", "flex", "flex-col"].join(" ")}>
-  <Container class={[variant, "fluid-calendar-header", "flex", "w-full"].join(" ")}>
-    <Text>{monthName}</Text>
+<Container {id} class={[variant, "fluid-calendar-wrapper", "flex", "flex-col"].join(" ")}>
+  <Container id={`${id}-header`} class={[variant, "fluid-calendar-header", "flex", "w-full"].join(" ")}>
+    <Text id={`${id}-month-title`}>{monthName}</Text>
   </Container>
-  <Container class={[variant, "fluid-calendar-body", "grid", "grid-cols-7", "justify-items-center"].join(" ")}>
+  <Container id={`${id}-body`} class={[variant, "fluid-calendar-body", "grid", "grid-cols-7", "justify-items-center"].join(" ")}>
     {#each weekDays as day}
-      <Text>{day}</Text>
+      <Text id={`${id}-weekday-${day}`}>{day}</Text>
     {/each}
 
     {#each calendarDays as cellDay}
       <Button
+        id={`${id}-cell-${cellDay}`}
         onclick={async () => handleDateSelection(cellDay)}
         class={[variant, ...generateCalendarCellStyles(currentDate, cellDay, startDate, endDate, hideRollingDays)].join(" ")}
       >

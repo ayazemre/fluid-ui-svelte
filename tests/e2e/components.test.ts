@@ -157,7 +157,7 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(page).toHaveTitle(/Pagination/);
 
     // Verify page state indicator text
-    const currentPageIndicatorElement = page.getByText("Current Page: 1");
+    const currentPageIndicatorElement = page.getByText("Current Page: 1", { exact: true });
     await expect(currentPageIndicatorElement).toBeVisible();
   });
 
@@ -169,11 +169,11 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(page).toHaveTitle(/Anchored Overlay/);
 
     // Click anchor trigger element and verify overlay content
-    const anchorTriggerElement = page.getByRole("button", { name: "Options Menu" });
+    const anchorTriggerElement = page.getByRole("button", { name: "Click to Toggle" });
     await expect(anchorTriggerElement).toBeVisible();
     await anchorTriggerElement.click();
 
-    const overlayItemElement = page.getByRole("button", { name: "Profile Settings" });
+    const overlayItemElement = page.getByText("Floating Overlay");
     await expect(overlayItemElement).toBeVisible();
   });
 

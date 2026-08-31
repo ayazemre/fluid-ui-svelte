@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { Button, Container } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib/base/index.ts";
 
   import type { Snippet } from "svelte";
-  import type { HTMLAttributes } from "svelte/elements";
 
   import { calculatePaginationRange, isValidPageNavigation } from "./pagination.ts";
 
   let {
-    componentId,
+    id,
     currentPage = $bindable(1),
     totalPages = 1,
     siblingCount = 1,
@@ -18,7 +17,7 @@
     nextSnippet,
     ellipsisSnippet,
   }: {
-    componentId: string;
+    id: string;
     currentPage: number;
     totalPages: number;
     siblingCount?: number;
@@ -40,8 +39,9 @@
   );
 </script>
 
-<Container id={componentId} type="nav" aria-label="Pagination" class={["fluid-pagination-container", variant].join(" ")}>
+<Container {id} type="nav" aria-label="Pagination" class={["fluid-pagination-container", variant].join(" ")}>
   <Button
+    id={`${id}-previous-button`}
     onclick={async () => {
       if (isValidPageNavigation(currentPage - 1, currentPage, totalPages)) {
         currentPage -= 1;
@@ -64,6 +64,7 @@
   {#each paginationItems as item (item.key)}
     {#if item.type === "page"}
       <Button
+        id={`${id}-page-${item.page}-button`}
         onclick={async () => {
           if (isValidPageNavigation(item.page, currentPage, totalPages)) {
             currentPage = item.page;
@@ -82,17 +83,20 @@
       {#if ellipsisSnippet}
         {@render ellipsisSnippet()}
       {:else}
-        <span
+        <Text
+          id={`${id}-ellipsis-${item.key}`}
+          type="span"
           aria-hidden="true"
           class={["fluid-pagination-ellipsis flex min-w-[2.5rem] h-10 items-center justify-center text-neutral-400 select-none", variant].join(" ")}
         >
           &hellip;
-        </span>
+        </Text>
       {/if}
     {/if}
   {/each}
 
   <Button
+    id={`${id}-next-button`}
     onclick={async () => {
       if (isValidPageNavigation(currentPage + 1, currentPage, totalPages)) {
         currentPage += 1;

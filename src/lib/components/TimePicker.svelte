@@ -12,7 +12,7 @@
   } from "#src/lib/components/timePicker.ts";
 
   let {
-    componentId,
+    id,
     mode = "minute",
     selectedTime = $bindable("12:00"),
     format = "24h",
@@ -21,7 +21,7 @@
     showHeader = true,
     variant = "",
   }: {
-    componentId: string;
+    id: string;
     mode?: TimePickerMode;
     selectedTime?: string;
     format?: TimeFormat;
@@ -38,7 +38,7 @@
 </script>
 
 <Container
-  id={componentId}
+  {id}
   overrideDefaultStyling={true}
   class={[
     "fluid-timepicker-wrapper flex flex-col rounded-xl border border-neutral-200 bg-white p-3 shadow-sm dark:border-neutral-800 dark:bg-neutral-900",
@@ -47,23 +47,25 @@
 >
   {#if showHeader}
     <Container
+      id={`${id}-header`}
       overrideDefaultStyling={true}
       class="fluid-timepicker-header mb-2 flex items-center justify-between border-b border-neutral-100 pb-2 dark:border-neutral-800"
     >
-      <Text class="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+      <Text id={`${id}-header-mode-label`} class="text-xs font-semibold uppercase tracking-wider text-neutral-400">
         {mode === "hour" ? "Hour" : "Time"}
       </Text>
-      <Text class="text-xs font-medium text-neutral-700 dark:text-neutral-200">
+      <Text id={`${id}-header-selected-time`} class="text-xs font-medium text-neutral-700 dark:text-neutral-200">
         {selectedTime}
       </Text>
     </Container>
   {/if}
 
-  <Container overrideDefaultStyling={true} class="fluid-timepicker-body flex items-stretch gap-1.5">
+  <Container id={`${id}-body`} overrideDefaultStyling={true} class="fluid-timepicker-body flex items-stretch gap-1.5">
     <!-- Hours Column -->
-    <Container overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+    <Container id={`${id}-hours-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
       {#each availableHours as hourItem (hourItem)}
         <Button
+          id={`${id}-hour-option-${hourItem}`}
           type="button"
           overrideDefaultStyling={true}
           onclick={async () => {
@@ -81,9 +83,10 @@
 
     <!-- Minutes Column -->
     {#if mode === "minute" || mode === "second"}
-      <Container overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+      <Container id={`${id}-minutes-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
         {#each availableMinutes as minuteItem (minuteItem)}
           <Button
+            id={`${id}-minute-option-${minuteItem}`}
             type="button"
             overrideDefaultStyling={true}
             onclick={async () => {
@@ -102,9 +105,10 @@
 
     <!-- Seconds Column -->
     {#if mode === "second"}
-      <Container overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+      <Container id={`${id}-seconds-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
         {#each availableSeconds as secondItem (secondItem)}
           <Button
+            id={`${id}-second-option-${secondItem}`}
             type="button"
             overrideDefaultStyling={true}
             onclick={async () => {
@@ -123,9 +127,10 @@
 
     <!-- 12-Hour AM / PM Column -->
     {#if format === "12h"}
-      <Container overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5">
+      <Container id={`${id}-period-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5">
         {#each ["AM", "PM"] as const as periodItem (periodItem)}
           <Button
+            id={`${id}-period-option-${periodItem}`}
             type="button"
             overrideDefaultStyling={true}
             onclick={async () => {

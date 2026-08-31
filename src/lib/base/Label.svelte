@@ -4,18 +4,22 @@
   import type { Snippet } from "svelte";
   import type { HTMLLabelAttributes } from "svelte/elements";
 
-  const {
+  let {
+    id,
+    underlyingElement = $bindable(null),
     class: className = "",
     overrideDefaultStyling = false,
     children,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLLabelElement | null;
     class?: string;
     overrideDefaultStyling?: boolean;
     children?: Snippet;
-  } & HTMLLabelAttributes = $props();
+  } & Omit<HTMLLabelAttributes, "id"> = $props();
 </script>
 
-<label {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-label")}>
+<label {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-label")}>
   {@render children?.()}
 </label>

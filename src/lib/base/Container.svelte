@@ -6,10 +6,11 @@
   import type { TransitionConfig } from "svelte/transition";
 
   let {
-    element = $bindable(undefined),
+    id,
+    underlyingElement = $bindable(null),
     type = "div",
     class: className = "",
-    transitionFn = (node: Element, params?: any) => {
+    transitionFunction = () => {
       return {};
     },
     transitionParams,
@@ -17,21 +18,23 @@
     children,
     ...rest
   }: {
-    element?: HTMLElement;
+    id: string;
+    underlyingElement?: HTMLElement | null;
     type?: "div" | "nav" | "section" | "main" | "header" | "footer" | "aside" | "article";
     class?: string;
-    transitionFn?: (node: Element, params?: any) => TransitionConfig;
-    transitionParams?: TransitionConfig;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionParams?: Record<string, unknown>;
     overrideDefaultStyling?: boolean;
     children?: Snippet;
-  } & HTMLAttributes<HTMLElement> = $props();
+  } & Omit<HTMLAttributes<HTMLElement>, "id"> = $props();
 </script>
 
 <svelte:element
   this={type}
-  bind:this={element}
+  {id}
+  bind:this={underlyingElement}
   {...rest}
-  transition:transitionFn={transitionParams}
+  transition:transitionFunction={transitionParams}
   class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-container")}
 >
   {@render children?.()}

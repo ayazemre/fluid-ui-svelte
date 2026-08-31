@@ -1,103 +1,95 @@
-# Documentation Guideline
+# Agent Development Guidelines for Fluid UI Svelte
 
-Directives for generating `+page.svelte` documentation for Fluid UI Svelte components.
+Directives and architectural rules for AI agents developing, maintaining, and creating documentation within the Fluid UI Svelte library.
 
-## Core Rules
+---
 
-- **Internal Project Context**: Being provided this guideline implies documentation is being created _within_ the library project.
-- **Internal Imports**: In the `<script>` tag of the documentation page, do **not** use `import { ... } from 'fluid-ui-svelte'`. Instead, use internal paths to the library's index files (e.g., `import { Button } from '$lib/base';` or `import { Accordion } from '$lib/components';`).
-- **Prerequisites**: You must be provided with at least one existing documentation example and the `documentation_guideline.md` file before creating a new documentation page.
-- **Use Source Code**: Derive props and details strictly from component source.
-- **Technical Tone**: Professional, clear, and concise.
-- **No New Files**: Edit only the provided `+page.svelte`.
-- **Library Components**: Use `Text`, `Table`, `CodeBlock`, etc., from the library instead of raw HTML.
+## 1. Architectural Layers & General Ruleset
 
-## Page Structure
+Fluid UI Svelte is organized into three distinct layers with strict boundaries and composition rules:
 
-1. **Title**: Use `<Text type="h1">Component Name</Text>`.
-2. **Summary**: Brief description using `<Text>`.
-3. **Props Table**: `<Text type="h2">Props</Text>` followed by `<Table>` with columns: `Prop`, `Type`, `Default`, `Description`.
-4. **Variants**: `<Text type="h2">Samples and Variants</Text>`. For each: `<Text type="h3">`, description, and rendered component.
-5. **Usage**: `<Text type="h2">Usage</Text>` followed by `<CodeBlock>`. The code inside `CodeBlock` should show the **external** import path (`fluid-ui-svelte`) for end-users.
+### 1.1. Base Layer (`src/lib/base/`)
+- Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links).
+- **Purpose**: Reduce HTML tag fatigue, enforce semantic consistency, and maintain accessibility without imposing heavy styles.
+- **Utility Responsibility**: Base Layer elements encapsulate foundational utilities such as class deduplication, class merging, and attribute sanitization.
+- **Implementation Constraint**: Base elements can be constructed directly from native HTML elements.
+- **Underlying Element Binding**: Every base element must expose an `underlyingElement` prop as a `$bindable` reference typed to the corresponding HTML element or null (e.g., `let { underlyingElement = $bindable(null) }: { underlyingElement?: HTMLElement | null } = $props();`).
+- **Style Overrides (`overrideDefaultStyling`)**: Base elements must accept an `overrideDefaultStyling: boolean` prop (default `false`). When `true`, it strips default base styling classes, giving consumers complete unopinionated styling control.
 
-## Examples
+### 1.2. Components Layer (`src/lib/components/`)
+- Assembled UI elements (Accordions, Modals, Calendars, Drawers, Dropzones, Switches, Pagination).
+- **Purpose & Scope**: Provide focused, cohesive functional primitives. Components deliver distinct functionality and can either be used directly on their own with thin layout wrappers or merged with other components to construct fully ready prebuilt elements.
+- **Composition Law**: All components **must** be assembled strictly from Base Layer elements.
+- **Style Injection (`variant`)**: Components must accept a `variant: string` prop (or custom class props) so users can inject custom theme classes and override default styling.
 
-### Internal Imports (Script Tag)
+### 1.3. Prebuilt Layer (`src/lib/prebuilt/`)
+- High-level, fully usable, self-contained domain components (Breadcrumbs, International Inputs, Notification Areas).
+- **Purpose**: Combine multiple base and composed components into full turnkey workflows ready for immediate application use.
+- **Composition Law**: Prebuilt components **must** compose Base Layer elements and Components Layer elements.
+- **Style Injection (`variant`)**: Prebuilt elements must accept a `variant: string` prop so users can inject custom theme classes and override default styling.
 
-```svelte
-<script>
-  import { Button, Text, Table, CodeBlock } from "$lib/base";
-  // Use $lib/components for items in the components folder
-</script>
-```
+### 1.4. General Ruleset
+- **Mandatory Element Identifier (`id`) & Scoped Child Identifiers**: Every element across all three layers (Base, Components, Prebuilt) must accept a mandatory `id` prop (`id: string`) passed from the outside. When a component or prebuilt element renders internal child Base Layer elements, it must pass deterministic scoped IDs derived from the parent `id` to each child element (e.g., `${id}-button`, `${id}-header`, `${id}-content`, `${id}-panel`). This ensures deterministic DOM targeting, accessibility attribute associations (such as `aria-labelledby`, `aria-controls`, or `aria-describedby`), and reliable testing hooks.
+- **Mandatory Composition Law**: Anything above the Base Layer (components, prebuilt elements, documentation pages, and sample views) **must strictly use Base Layer elements** (e.g., `<Text>`, `<Container>`, `<Button>`, `<Table>`, `<Link>`, `<Canvas>`) rather than raw HTML tags (`<div>`, `<p>`, `<span>`, `<button>`, `<a>`, `<table>`, `<canvas>`).
+- **Missing Base Warning**: If a required primitive or attribute wrapper is missing from the Base Layer, the agent **must warn the user** before building components, prebuilt elements, or documentation pages that depend on it.
+- **No Redundant Utilities**: Because all higher-level elements compose Base Layer elements, low-level utilities like class deduplication, class merging, or styling cleanup must be handled exclusively by the Base Layer. Higher-level components and prebuilt elements must not perform redundant class deduplication.
+- **Prioritize Snippet-Based Passing**: Prioritize Svelte 5 Snippets over complex configuration objects or data arrays whenever delegating custom markup rendering, slots, or item templates. Snippets give consumers flexible composition while maintaining semantic consistency.
+- **Internal vs. External Imports**:
+  - **Library Code & Internal Documentation**: Use internal paths and module aliases (e.g., `#src/lib/base/index.ts`, `#src/lib/components/index.ts`, `#src/lib/prebuilt/index.ts`). Never import from `"fluid-ui-svelte"` inside the library repository.
+  - **Usage Examples in Documentation CodeBlocks**: Show the external package name (`"fluid-ui-svelte"`, `"fluid-ui-svelte/base"`, `"fluid-ui-svelte/components"`, `"fluid-ui-svelte/prebuilt"`) intended for consumer end-users.
 
-### Title & Summary
+---
 
-```svelte
-<Text type="h1">Button</Text>
-<Text>Standard interactive button component.</Text>
-```
+## 2. Three Architectural Pillars & Separation of Concerns
 
-### Usage (Showing External Path for Users)
+Every element in Fluid UI Svelte is formed by three core building blocks working in unison:
 
-```svelte
-<Text type="h2">Usage</Text>
-<CodeBlock
-  code={`
-<script>
-  import { Button } from 'fluid-ui-svelte';
-</script>
+1. **Reactive UI Markup (`.svelte` files)**: Purely concerned with **WHAT** is rendered on the screen (semantic structure, snippet rendering, and event binding).
+2. **Pure TypeScript Logic (`.ts` helper files in the same folder)**: Co-located pure functions containing state machines, calculations, and event handlers imported and bound into the `.svelte` file.
+   - **No Business Logic**: Components must remain purely visual and interactive presentation primitives. They must never contain application-specific business logic or domain assumptions.
+   - **Pure Functions & Immutability**: Helper functions must be pure, predictable, and avoid side effects.
+3. **Central Styling Defaults (`fluidui.css`)**: Holds all default visual styling in dedicated class blocks, enabling flexible centralized theming. Every element must have its own dedicated styling block in `fluidui.css`.
 
-<Button variant="primary">Click Me</Button>
-`}
-/>
-```
+---
 
-# Programming Guidelines
+## 3. Documentation Guidelines
 
-## Introduction
+The documentation system uses a central registry and a dynamic route builder structure. Agents must inspect `src/documentation/documentation.ts` and `src/routes/documentation/[category]/[slug]/` before creating or updating documentation.
 
-Agents operating in this project must strictly follow these guidelines. If any instruction or project state is confusing, you must ask for clarification before proceeding. Always verify your actions and ensure they align with the established patterns of this codebase.
+### 3.1. Central Registry (`src/documentation/documentation.ts`)
+- All component metadata (category, element key, title, description, props definitions) lives centrally in `documentationRegistry`.
+- Props definitions must be derived strictly from the component's TypeScript source code.
 
-## Core Principles
+### 3.2. Documentation Structure for Individual Components
+When creating or editing component documentation samples in `src/documentation/samples/`, agents must follow this exact structure using Base Layer components:
 
-This project follows a **procedural and functional approach** to programming. Code should be modular, predictable, and avoid unnecessary side effects or deeply nested class hierarchies.
+1. **Title**: `<Text type="h1">Component Name</Text>`
+2. **Summary**: Brief description of the component using `<Text>`
+3. **Props Table**: `<Text type="h2">Props</Text>` followed by `<Table>` with columns: `Prop`, `Type`, `Default`, `Description`
+4. **Variants**: `<Text type="h2">Samples and Variants</Text>`. For each variant: `<Text type="h3">Variant Name</Text>`, brief description, and the rendered component
+5. **Usage**: `<Text type="h2">Usage</Text>` followed by `<CodeBlock>`. The code inside `<CodeBlock>` must display the external import path (`fluid-ui-svelte`) for end-users
 
-## Core Technologies
+Agents must check existing sample files in `src/documentation/samples/` and replicate their exact conventions.
 
-This is a UI library project. All development must adhere to the following core technology stack:
+---
 
-- **Language**: TypeScript
-- **Framework**: Svelte 5 (Runes mode)
-- **CSS**: Tailwind CSS 4
-- **Testing**: Vitest (Vite-based testing framework)
+## 4. Core Technologies & Code Patterns
 
-## Project Architecture & Constraints
+- **Language**: TypeScript with strict typing.
+- **Framework**: Svelte 5 exclusively in Runes mode (`$state`, `$derived`, `$props`, `$bindable`, `$effect`, `Snippet`).
+- **Styling**: Tailwind CSS 4 syntax and CSS variables.
+- **Testing**: Playwright for end-to-end integration tests.
+- **Runtime**: Node 24+ native execution for TypeScript CLI scripts.
 
-As a reusable UI library, the following architectural decisions must be respected:
+---
 
-- **Composability**: Components and base elements must be designed to be composable.
-- **Strict Separation of Concerns**:
-  - **No Business Logic**: Components should remain purely visual or interactive without containing application-specific business logic.
-  - **Logic Extraction**: Complex interactive logic (e.g., for calendars, carousels) must be extracted into separate files within `src/lib/utilities/`.
-- **Folder Structure**:
-  - `src/lib/base/`: Fundamental, low-level building blocks.
-  - `src/lib/components/`: More complex, composed UI elements.
-  - `src/lib/utilities/`: Pure logic, helpers, and extracted component state management.
-- **Implementation Workflow**:
-  - Follow the provided structure for base elements and components.
-  - If a real creation task lacks an example structure or clear direction, you **must ask** for an example or architectural guidance.
-- **Svelte 5 Patterns**: Use Svelte 5 features (like runes: `$state`, `$derived`, `$props`) exclusively.
-- **Type Safety**: Ensure all code is strictly typed with TypeScript.
-- **Tailwind 4**: Utilize Tailwind 4 features and syntax for all styling needs.
-- **Dependency Adherence**: Do not introduce alternative frameworks or libraries unless explicitly directed.
+## 5. Naming Conventions
 
-## Naming Conventions
-
-- **Full Words**: Never shorten or abbreviate words in variable names, file names, or function names.
-  - **Bad**: `cal`, `anim`, `btn`, `idx`, `config`, `util`
-  - **Good**: `calendar`, `animation`, `button`, `index`, `configuration`, `utility`
-- **Precision**: Be precise and descriptive. Names should clearly indicate the purpose and content of the variable or function.
-  - **Bad**: `data`, `item`, `handle`
-  - **Good**: `userData`, `menuItem`, `handleButtonClick`
-- **Consistency**: Maintain consistent naming patterns across the codebase (e.g., using `camelCase` for variables and functions, `PascalCase` for components).
+- **No Shorthand or Abbreviated Names**: Never use abbreviated variable, file, or function names.
+  - Avoid: `btn`, `cal`, `anim`, `idx`, `cfg`, `util`, `opts`, `err`, `ctx`, `doc`, `elem`
+  - Use: `button`, `calendar`, `animation`, `index`, `configuration`, `utility`, `options`, `error`, `context`, `document`, `element`
+- **Descriptive & Explicit**: Names must clearly state their exact purpose and state.
+- **Casing Patterns**:
+  - `PascalCase` for Svelte components and type aliases.
+  - `camelCase` for variables, functions, and helper files.
+  - `kebab-case` for component registry slug identifiers.

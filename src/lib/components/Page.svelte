@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Container } from "#src/lib/base/index.ts";
-  import { serializeStructuredData, type OpenGraphType, type TwitterCardType } from "#src/lib/utilities/page.ts";
 
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
+  import { serializeStructuredData, type OpenGraphType, type TwitterCardType } from "./page.ts";
+
   let {
-    componentId,
+    id,
     title = "",
     description = "",
     image = "",
@@ -27,7 +28,7 @@
     children,
     ...rest
   }: {
-    componentId: string;
+    id: string;
     title?: string;
     description?: string;
     image?: string;
@@ -130,6 +131,6 @@
   {/if}
 </svelte:head>
 
-<Container id={componentId} type="main" class={[className, "fluid-page flex w-full flex-1 flex-col"].join(" ")} {...rest}>
+<Container {id} type="main" class={[className, "fluid-page flex w-full flex-1 flex-col"].join(" ")} {...rest}>
   {@render children?.()}
 </Container>

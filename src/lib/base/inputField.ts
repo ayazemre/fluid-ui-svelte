@@ -1,6 +1,6 @@
-export function applyCharacterFilter(keys: Array<string>, value: string) {
+export function applyCharacterFilter(allowedCharacters: Array<string>, value: string): string {
   return value
     .split("")
-    .filter((char) => keys.includes(char))
+    .filter((character) => allowedCharacters.includes(character))
     .join("");
 }

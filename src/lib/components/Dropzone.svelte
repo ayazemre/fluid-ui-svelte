@@ -14,14 +14,14 @@
   } from "./dropzone.ts";
 
   let {
-    componentId,
+    id,
     variant = "",
     children,
     dropEffect = "copy",
     mode = "file",
     data = $bindable(),
   }: {
-    componentId: string;
+    id: string;
     variant?: string;
     children: Snippet<[{ isDragOver: boolean; isInvalid: boolean }]>;
     dropEffect?: DropzoneDropEffect;
@@ -33,7 +33,7 @@
 </script>
 
 <Container
-  id={componentId}
+  {id}
   class={[variant, "fluid-dropzone", "relative", componentState.isDragOver ? "drag-over" : "", componentState.isInvalid ? "drag-invalid" : ""].join(
     " ",
   )}

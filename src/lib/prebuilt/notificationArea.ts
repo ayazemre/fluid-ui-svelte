@@ -63,10 +63,10 @@ export function setupNotificationAutoDismiss<T extends { duration?: number; id: 
   }
 
   // Remove timers for items no longer present
-  for (const [id, timer] of activeTimers.entries()) {
-    if (!currentItemIds.has(id)) {
-      clearTimeout(timer);
-      activeTimers.delete(id);
+  for (const [notificationId, timeoutTimer] of activeTimers.entries()) {
+    if (!currentItemIds.has(notificationId)) {
+      clearTimeout(timeoutTimer);
+      activeTimers.delete(notificationId);
     }
   }
 

@@ -3,20 +3,31 @@
 
   import type { HTMLImgAttributes } from "svelte/elements";
 
-  const {
+  let {
+    id,
+    underlyingElement = $bindable(null),
     class: className = "",
     overrideDefaultStyling = false,
+    onload,
     ...rest
   }: {
+    id: string;
+    underlyingElement?: HTMLImageElement | null;
     class?: string;
     overrideDefaultStyling?: boolean;
-  } & HTMLImgAttributes = $props();
-  // TODO: This delays and causes unnecessary loading animation.
+    onload?: (event: Event) => void;
+  } & Omit<HTMLImgAttributes, "id"> = $props();
+
   let isLoaded = $state(false);
 </script>
 
 <img
-  onload={() => (isLoaded = true)}
+  {id}
+  bind:this={underlyingElement}
+  onload={(event: Event) => {
+    isLoaded = true;
+    onload?.(event);
+  }}
   {...rest}
   class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-image") + (isLoaded ? "" : " fluid-image-loading")}
 />

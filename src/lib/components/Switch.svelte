@@ -2,16 +2,16 @@
   import { Button, Text } from "#src/lib/base/index.ts";
 
   let {
+    id,
     variant = "",
-    componentId = "",
     onclick,
     checked = $bindable(false),
     disabled = false,
   }: {
-    onclick: (event: Event, checked: boolean) => Promise<unknown>;
+    id: string;
+    onclick?: (event: MouseEvent | Event, checked: boolean) => Promise<unknown> | void;
     checked?: boolean;
     disabled?: boolean;
-    componentId?: string;
     variant?: string;
   } = $props();
 </script>
@@ -19,7 +19,7 @@
 <Button
   role="switch"
   aria-checked={checked}
-  id={componentId}
+  {id}
   class={[
     variant,
     "relative",
@@ -40,16 +40,19 @@
     "fluid-switch-button",
     checked ? "checked" : "",
   ].join(" ")}
-  onclick={async (event) => {
+  onclick={async (event: MouseEvent | Event) => {
     if (!disabled) {
       checked = !checked;
-      await onclick(event, checked);
+      if (onclick) {
+        await onclick(event, checked);
+      }
     }
   }}
   {disabled}
   overrideDefaultStyling
 >
   <Text
+    id={`${id}-indicator`}
     type="span"
     class={[
       variant,
