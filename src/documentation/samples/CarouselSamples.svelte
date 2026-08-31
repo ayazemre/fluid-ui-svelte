@@ -61,13 +61,23 @@
   <!-- 2. Horizontal - Autoplay -->
   <Container id="carousel-sample-h-autoplay-section" class="flex flex-col gap-4">
     <Text id="carousel-sample-h-autoplay-heading" type="h3" class="text-xl font-bold">2. Autoplay</Text>
-    <Text id="carousel-sample-h-autoplay-description" class="text-neutral-500">Automatically advances slides at a specified interval with manual override support.</Text>
+    <Text id="carousel-sample-h-autoplay-description" class="text-neutral-500"
+      >Automatically advances slides at a specified interval with manual override support.</Text
+    >
 
     <Container id="carousel-sample-h-autoplay-controls" class="flex flex-wrap items-center gap-4">
-      <Button id="carousel-autoplay-toggle-btn" class={isAutoplayActive ? "fluid-button-error" : "fluid-button-primary"} onclick={async () => (isAutoplayActive = !isAutoplayActive)}>
+      <Button
+        id="carousel-autoplay-toggle-btn"
+        class={isAutoplayActive ? "fluid-button-error" : "fluid-button-primary"}
+        onclick={async () => (isAutoplayActive = !isAutoplayActive)}
+      >
         {isAutoplayActive ? "Pause Autoplay" : "Start Autoplay"}
       </Button>
-      <Button id="carousel-autoplay-duration-btn" class="fluid-button-secondary" onclick={async () => (autoplayDuration = autoplayDuration === 1000 ? 2500 : 1000)}>
+      <Button
+        id="carousel-autoplay-duration-btn"
+        class="fluid-button-secondary"
+        onclick={async () => (autoplayDuration = autoplayDuration === 1000 ? 2500 : 1000)}
+      >
         Duration: {autoplayDuration}ms
       </Button>
       <Text id="carousel-autoplay-slide-indicator" class="text-sm font-medium text-neutral-600 dark:text-neutral-400">
@@ -77,14 +87,7 @@
 
     <Container id="carousel-sample-h-autoplay-preview" class="w-full rounded-xl border p-6 dark:border-neutral-800">
       <Container id="carousel-sample-h-autoplay-wrapper" class="w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700">
-        <Carousel
-          id="h-autoplay"
-          {items}
-          autoplay={isAutoplayActive}
-          {autoplayDuration}
-          bind:activeIndex={autoplayActiveIndex}
-          visibleItemCount={1}
-        >
+        <Carousel id="h-autoplay" {items} autoplay={isAutoplayActive} {autoplayDuration} bind:activeIndex={autoplayActiveIndex} visibleItemCount={1}>
           {#snippet itemTemplate({ item, index })}
             <Container id={`carousel-h-autoplay-item-${index}`} class="flex h-40 w-full items-center justify-center {item.color} text-white">
               <Text id={`carousel-h-autoplay-text-${index}`} type="h2" class="text-4xl font-bold">{item.text}</Text>
@@ -102,10 +105,22 @@
     <Text id="carousel-sample-h-multi-description" class="text-neutral-500">Carousel with multiple visible items and external controls.</Text>
 
     <Container id="carousel-sample-h-multi-controls" class="flex flex-wrap items-center gap-4">
-      <Button id="carousel-h-multi-prev-btn" class="fluid-button-primary" onclick={async () => scroll("prev", h_multi_index, (n) => (h_multi_index = n), items.length)}>Prev</Button>
-      <Button id="carousel-h-multi-next-btn" class="fluid-button-primary" onclick={async () => scroll("next", h_multi_index, (n) => (h_multi_index = n), items.length)}>Next</Button>
-      <Button id="carousel-h-multi-less-btn" class="fluid-button-primary" onclick={async () => (h_multi_count = Math.max(1, h_multi_count - 1))}>Less Items</Button>
-      <Button id="carousel-h-multi-more-btn" class="fluid-button-primary" onclick={async () => (h_multi_count = Math.min(6, h_multi_count + 1))}>More Items</Button>
+      <Button
+        id="carousel-h-multi-prev-btn"
+        class="fluid-button-primary"
+        onclick={async () => scroll("prev", h_multi_index, (n) => (h_multi_index = n), items.length)}>Prev</Button
+      >
+      <Button
+        id="carousel-h-multi-next-btn"
+        class="fluid-button-primary"
+        onclick={async () => scroll("next", h_multi_index, (n) => (h_multi_index = n), items.length)}>Next</Button
+      >
+      <Button id="carousel-h-multi-less-btn" class="fluid-button-primary" onclick={async () => (h_multi_count = Math.max(1, h_multi_count - 1))}
+        >Less Items</Button
+      >
+      <Button id="carousel-h-multi-more-btn" class="fluid-button-primary" onclick={async () => (h_multi_count = Math.min(6, h_multi_count + 1))}
+        >More Items</Button
+      >
       <Text id="carousel-h-multi-count-text">Visible: {h_multi_count}</Text>
     </Container>
 
@@ -168,16 +183,31 @@
     <Text id="carousel-sample-v-multi-heading" type="h3" class="text-xl font-bold">6. Vertical Multiple (Controlled)</Text>
 
     <Container id="carousel-sample-v-multi-controls" class="flex flex-wrap items-center gap-4">
-      <Button id="carousel-v-multi-prev-btn" class="fluid-button-primary" onclick={async () => scroll("prev", v_multi_index, (n) => (v_multi_index = n), items.length)}>Up</Button>
-      <Button id="carousel-v-multi-next-btn" class="fluid-button-primary" onclick={async () => scroll("next", v_multi_index, (n) => (v_multi_index = n), items.length)}>Down</Button>
-      <Button id="carousel-v-multi-less-btn" class="fluid-button-primary" onclick={async () => (v_multi_count = Math.max(1, v_multi_count - 1))}>Less Items</Button>
-      <Button id="carousel-v-multi-more-btn" class="fluid-button-primary" onclick={async () => (v_multi_count = Math.min(6, v_multi_count + 1))}>More Items</Button>
+      <Button
+        id="carousel-v-multi-prev-btn"
+        class="fluid-button-primary"
+        onclick={async () => scroll("prev", v_multi_index, (n) => (v_multi_index = n), items.length)}>Up</Button
+      >
+      <Button
+        id="carousel-v-multi-next-btn"
+        class="fluid-button-primary"
+        onclick={async () => scroll("next", v_multi_index, (n) => (v_multi_index = n), items.length)}>Down</Button
+      >
+      <Button id="carousel-v-multi-less-btn" class="fluid-button-primary" onclick={async () => (v_multi_count = Math.max(1, v_multi_count - 1))}
+        >Less Items</Button
+      >
+      <Button id="carousel-v-multi-more-btn" class="fluid-button-primary" onclick={async () => (v_multi_count = Math.min(6, v_multi_count + 1))}
+        >More Items</Button
+      >
       <Text id="carousel-v-multi-count-text">Visible: {v_multi_count}</Text>
       <Text id="carousel-v-multi-index-text">Active: {v_multi_index}</Text>
     </Container>
 
     <Container id="carousel-sample-v-multi-preview" class="rounded-xl border p-6 dark:border-neutral-800">
-      <Container id="carousel-sample-v-multi-wrapper" class="h-96 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700">
+      <Container
+        id="carousel-sample-v-multi-wrapper"
+        class="h-96 w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700"
+      >
         <Carousel
           id="v-multi-controlled"
           {items}

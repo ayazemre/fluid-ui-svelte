@@ -17,14 +17,7 @@
 </script>
 
 <Container {id} type="nav" aria-label="Breadcrumb" class={[variant, "fluid-breadcrumb-container"].join(" ")}>
-  <List
-    id={`${id}-list`}
-    type="ol"
-    {items}
-    class="fluid-breadcrumb-list"
-    itemClass="fluid-breadcrumb-item"
-    itemTemplate={itemTemplateFunction}
-  />
+  <List id={`${id}-list`} type="ol" {items} class="fluid-breadcrumb-list" itemClass="fluid-breadcrumb-item" itemTemplate={itemTemplateFunction} />
 </Container>
 
 {#snippet itemTemplateFunction(item: { label: string; href: string }, index: number)}

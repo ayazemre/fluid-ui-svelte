@@ -109,7 +109,11 @@
       {/each}
     {/snippet}
   </Accordion>
-  <Link id={`${idPrefix}-nav-how-to`} href="/documentation/how-to" class={[page.url.pathname === "/documentation/how-to" ? "active" : "", "fluid-sidebar-link", "p-2"].join(" ")}>
+  <Link
+    id={`${idPrefix}-nav-how-to`}
+    href="/documentation/how-to"
+    class={[page.url.pathname === "/documentation/how-to" ? "active" : "", "fluid-sidebar-link", "p-2"].join(" ")}
+  >
     <Text id={`${idPrefix}-nav-how-to-text`} overrideDefaultStyling>How To</Text>
   </Link>
   <Link id={`${idPrefix}-nav-llm-guide`} href="/llm-protocol" class="fluid-sidebar-link p-2">

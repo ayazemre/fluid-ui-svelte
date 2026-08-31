@@ -657,7 +657,8 @@ export const documentationRegistry = {
       title: "Fluid UI - Calendar Grid",
     },
     carousel: {
-      description: "A performant, accessible carousel component supporting horizontal and vertical orientations, autoplay, custom snippets, and smooth transitions.",
+      description:
+        "A performant, accessible carousel component supporting horizontal and vertical orientations, autoplay, custom snippets, and smooth transitions.",
       props: [
         {
           default: "required",

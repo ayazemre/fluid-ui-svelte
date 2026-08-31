@@ -13,7 +13,9 @@
 <Container id="page-samples-container" class="flex flex-col gap-12">
   <Container id="page-sample-social-section" class="flex flex-col gap-4">
     <Text id="page-sample-social-heading" type="h3" class="text-lg font-semibold">Social Preview Simulator</Text>
-    <Text id="page-sample-social-description" class="text-sm text-neutral-500">See how your page metadata would appear when shared on platforms like Discord, Slack, or LinkedIn.</Text>
+    <Text id="page-sample-social-description" class="text-sm text-neutral-500"
+      >See how your page metadata would appear when shared on platforms like Discord, Slack, or LinkedIn.</Text
+    >
 
     <Container id="page-sample-social-grid" class="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <!-- Controls -->
@@ -39,7 +41,10 @@
       <!-- Visual Preview -->
       <Container id="page-sample-visual-preview" class="flex flex-col justify-center gap-4">
         <Text id="page-sample-visual-label" class="text-xs font-medium text-neutral-400 uppercase">Mock Link Preview</Text>
-        <Container id="page-sample-card" class="overflow-hidden rounded-lg border bg-neutral-50 shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
+        <Container
+          id="page-sample-card"
+          class="overflow-hidden rounded-lg border bg-neutral-50 shadow-sm dark:border-neutral-700 dark:bg-neutral-800"
+        >
           {#if previewImage}
             <Container id="page-sample-card-image-wrapper" class="aspect-[1.91/1] w-full overflow-hidden border-b dark:border-neutral-700">
               <Image id="page-sample-card-image" src={previewImage} alt="Social preview" class="h-full w-full object-cover" />
@@ -57,7 +62,9 @@
 
   <Container id="page-sample-basic-section" class="flex flex-col gap-4">
     <Text id="page-sample-basic-heading" type="h3" class="text-lg font-semibold">Basic Usage</Text>
-    <Text id="page-sample-basic-description" class="text-sm text-neutral-500">The Page component wraps your entire route content and automatically manages the document head.</Text>
+    <Text id="page-sample-basic-description" class="text-sm text-neutral-500"
+      >The Page component wraps your entire route content and automatically manages the document head.</Text
+    >
 
     <Container id="page-sample-basic-preview" class="rounded-lg border bg-neutral-50 p-6 dark:border-neutral-700 dark:bg-neutral-900">
       <Text id="page-sample-basic-notice" class="text-center text-neutral-500 italic">
@@ -71,7 +78,9 @@
 
   <Container id="page-sample-metadata-section" class="flex flex-col gap-4">
     <Text id="page-sample-metadata-heading" type="h3" class="text-lg font-semibold">With Detailed Metadata</Text>
-    <Text id="page-sample-metadata-description" class="text-sm text-neutral-500">You can provide comprehensive metadata for SEO and social sharing previews (Open Graph & Twitter).</Text>
+    <Text id="page-sample-metadata-description" class="text-sm text-neutral-500"
+      >You can provide comprehensive metadata for SEO and social sharing previews (Open Graph & Twitter).</Text
+    >
 
     <CodeBlock id="page-sample-metadata-code" code={codeBlockContents.pageMetadata} language="svelte" />
   </Container>

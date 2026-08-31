@@ -13,7 +13,10 @@ export type ComponentCategoryRecord = Record<string, ComponentDocumentationItem>
 export type CompleteDocumentationRegistry = Record<string, ComponentCategoryRecord>;
 
 function normalizeIdentifier(rawIdentifier: string): string {
-  return rawIdentifier.trim().toLowerCase().replace(/[\s_-]+/g, "");
+  return rawIdentifier
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, "");
 }
 
 function convertKebabCaseToPascalCase(kebabCaseString: string): string {
@@ -72,18 +75,18 @@ export function loadDocumentationRegistry(): CompleteDocumentationRegistry {
     }
 
     const rawObjectString = fileContent.slice(objectStartIndex);
-    const sanitizedObjectString = rawObjectString
-      .replace(/sampleComponent:\s*[a-zA-Z0-9_]+/g, "sampleComponent: null")
-      .replace(/;\s*$/, "");
+    const sanitizedObjectString = rawObjectString.replace(/sampleComponent:\s*[a-zA-Z0-9_]+/g, "sampleComponent: null").replace(/;\s*$/, "");
 
     const evaluatedRegistryFunction = new Function(`return ${sanitizedObjectString}`);
     const evaluatedRegistry = evaluatedRegistryFunction() as CompleteDocumentationRegistry;
 
-    return evaluatedRegistry ?? {
-      base: {},
-      components: {},
-      prebuilt: {},
-    };
+    return (
+      evaluatedRegistry ?? {
+        base: {},
+        components: {},
+        prebuilt: {},
+      }
+    );
   } catch (parseError) {
     const errorMessage = parseError instanceof Error ? parseError.message : String(parseError);
     console.error(`Failed to parse documentation registry: ${errorMessage}`);
@@ -97,10 +100,7 @@ export function loadDocumentationRegistry(): CompleteDocumentationRegistry {
 
 function resolveSvelteComponentFilePath(categoryName: string, elementName: string): string | undefined {
   const currentDirectory = dirname(fileURLToPath(import.meta.url));
-  const candidateFilenames = [
-    `${convertKebabCaseToPascalCase(elementName)}.svelte`,
-    `${elementName}.svelte`,
-  ];
+  const candidateFilenames = [`${convertKebabCaseToPascalCase(elementName)}.svelte`, `${elementName}.svelte`];
 
   const candidateBasePaths = [
     resolve(currentDirectory, "../lib", categoryName),
@@ -248,10 +248,7 @@ export function printGenericDocumentation(): void {
   console.log(formatGenericDocumentation());
 }
 
-export function printElementDocumentation(
-  targetCategory: string,
-  targetElementName: string,
-): void {
+export function printElementDocumentation(targetCategory: string, targetElementName: string): void {
   console.log(formatElementDocumentation(targetCategory, targetElementName));
 }
 

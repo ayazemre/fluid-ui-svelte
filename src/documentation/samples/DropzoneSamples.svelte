@@ -15,13 +15,18 @@
   <!-- File Only Dropzone -->
   <Container id="dropzone-sample-file-section" class="flex flex-col gap-4">
     <Text id="dropzone-sample-file-heading" type="h3" class="text-lg font-semibold">File Dropzone (Copy)</Text>
-    <Text id="dropzone-sample-file-description" class="text-sm text-neutral-500">Optimized for file uploads. The cursor indicates a "Copy" operation.</Text>
+    <Text id="dropzone-sample-file-description" class="text-sm text-neutral-500"
+      >Optimized for file uploads. The cursor indicates a "Copy" operation.</Text
+    >
 
     <Container id="dropzone-sample-file-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Dropzone id="dropzone-file-sample" bind:data={droppedFiles} mode="file" dropEffect="copy">
         {#snippet children({ isDragOver, isInvalid })}
           <Container id="dropzone-file-content" class="flex flex-col items-center gap-2">
-            <Text id="dropzone-file-status-text" class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}>
+            <Text
+              id="dropzone-file-status-text"
+              class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}
+            >
               {#if isInvalid}
                 You are trying to drop unsupported data
               {:else if isDragOver}
@@ -77,7 +82,10 @@
       <Dropzone id="dropzone-data-sample" bind:data={droppedData} mode="text" dropEffect="move">
         {#snippet children({ isDragOver, isInvalid })}
           <Container id="dropzone-data-content" class="flex flex-col items-center gap-2">
-            <Text id="dropzone-data-status-text" class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}>
+            <Text
+              id="dropzone-data-status-text"
+              class={isInvalid ? "font-bold text-error-600" : isDragOver ? "font-bold text-primary-600" : "font-medium text-neutral-500"}
+            >
               {#if isInvalid}
                 You are trying to drop unsupported data
               {:else if isDragOver}
@@ -93,7 +101,9 @@
                 class="mt-4 w-full rounded border border-neutral-200 bg-neutral-100 p-2 text-left text-sm dark:border-neutral-700 dark:bg-neutral-800"
               >
                 <Text id="dropzone-data-result-title" class="mb-1 font-bold text-primary-600">Captured Data:</Text>
-                <Text id="dropzone-data-result-content" type="pre" class="font-mono whitespace-pre-wrap text-neutral-600 dark:text-neutral-400">{droppedData}</Text>
+                <Text id="dropzone-data-result-content" type="pre" class="font-mono whitespace-pre-wrap text-neutral-600 dark:text-neutral-400"
+                  >{droppedData}</Text
+                >
               </Container>
             {/if}
           </Container>

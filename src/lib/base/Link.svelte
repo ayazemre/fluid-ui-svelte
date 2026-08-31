@@ -20,11 +20,6 @@
   } & Omit<HTMLAnchorAttributes, "id"> = $props();
 </script>
 
-<a
-  {id}
-  bind:this={underlyingElement}
-  {...rest}
-  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-link")}
->
+<a {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-link")}>
   {@render children()}
 </a>

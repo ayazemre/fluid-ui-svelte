@@ -17,9 +17,4 @@
   } & Omit<HTMLCanvasAttributes, "id"> = $props();
 </script>
 
-<canvas
-  {id}
-  bind:this={underlyingElement}
-  {...rest}
-  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-canvas")}
-></canvas>
+<canvas {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-canvas")}></canvas>

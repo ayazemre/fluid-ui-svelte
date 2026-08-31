@@ -137,12 +137,16 @@
   <!-- 1. Interactive Demo -->
   <Container id="notification-sample-interactive-section" class="flex flex-col gap-6">
     <Text id="notification-sample-interactive-heading" type="h3" class="text-xl font-bold">1. Interactive Screen Edge & Generic Snippet Demo</Text>
-    <Text id="notification-sample-interactive-description" class="text-neutral-500">Choose screen edge position and trigger custom notifications.</Text>
+    <Text id="notification-sample-interactive-description" class="text-neutral-500"
+      >Choose screen edge position and trigger custom notifications.</Text
+    >
 
     <Container id="notification-sample-interactive-preview" class="flex flex-col gap-6 rounded-xl border p-6 dark:border-neutral-800">
       <!-- Screen Position Selector -->
       <Container id="notification-sample-position-selector" class="flex flex-col gap-2">
-        <Text id="notification-sample-position-label" class="text-sm font-semibold uppercase tracking-wider text-neutral-500">Screen Edge Position</Text>
+        <Text id="notification-sample-position-label" class="text-sm font-semibold uppercase tracking-wider text-neutral-500"
+          >Screen Edge Position</Text
+        >
         <Container id="notification-sample-position-grid" class="grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4">
           {#each edgePositions as positionOption (positionOption.value)}
             <Button
@@ -165,13 +169,41 @@
       <Container id="notification-sample-spawn-selector" class="flex flex-col gap-2">
         <Text id="notification-sample-spawn-label" class="text-sm font-semibold uppercase tracking-wider text-neutral-500">Spawn Notifications</Text>
         <Container id="notification-sample-spawn-grid" class="flex flex-wrap gap-3">
-          <Button id="notification-spawn-info-btn" onclick={async () => spawnStandardNotification("info")} class="bg-info-500 text-white hover:bg-info-600">Info</Button>
-          <Button id="notification-spawn-success-btn" onclick={async () => spawnStandardNotification("success")} class="bg-success-500 text-white hover:bg-success-600">Success</Button>
-          <Button id="notification-spawn-warning-btn" onclick={async () => spawnStandardNotification("warning")} class="bg-warning-500 text-white hover:bg-warning-600">Warning</Button>
-          <Button id="notification-spawn-error-btn" onclick={async () => spawnStandardNotification("error")} class="bg-error-500 text-white hover:bg-error-600">Error</Button>
-          <Button id="notification-spawn-action-btn" onclick={async () => spawnActionNotification()} class="bg-amber-600 text-white hover:bg-amber-700">Action (Undo)</Button>
-          <Button id="notification-spawn-progress-btn" onclick={async () => spawnProgressNotification()} class="bg-indigo-600 text-white hover:bg-indigo-700">Progress Bar</Button>
-          <Button id="notification-spawn-pill-btn" onclick={async () => spawnPillNotification()} class="bg-emerald-600 text-white hover:bg-emerald-700">Compact Pill</Button>
+          <Button
+            id="notification-spawn-info-btn"
+            onclick={async () => spawnStandardNotification("info")}
+            class="bg-info-500 text-white hover:bg-info-600">Info</Button
+          >
+          <Button
+            id="notification-spawn-success-btn"
+            onclick={async () => spawnStandardNotification("success")}
+            class="bg-success-500 text-white hover:bg-success-600">Success</Button
+          >
+          <Button
+            id="notification-spawn-warning-btn"
+            onclick={async () => spawnStandardNotification("warning")}
+            class="bg-warning-500 text-white hover:bg-warning-600">Warning</Button
+          >
+          <Button
+            id="notification-spawn-error-btn"
+            onclick={async () => spawnStandardNotification("error")}
+            class="bg-error-500 text-white hover:bg-error-600">Error</Button
+          >
+          <Button
+            id="notification-spawn-action-btn"
+            onclick={async () => spawnActionNotification()}
+            class="bg-amber-600 text-white hover:bg-amber-700">Action (Undo)</Button
+          >
+          <Button
+            id="notification-spawn-progress-btn"
+            onclick={async () => spawnProgressNotification()}
+            class="bg-indigo-600 text-white hover:bg-indigo-700">Progress Bar</Button
+          >
+          <Button
+            id="notification-spawn-pill-btn"
+            onclick={async () => spawnPillNotification()}
+            class="bg-emerald-600 text-white hover:bg-emerald-700">Compact Pill</Button
+          >
         </Container>
       </Container>
 
@@ -197,12 +229,24 @@
               class="pointer-events-auto flex min-w-[320px] max-w-md flex-col gap-2 rounded-xl border border-neutral-200 bg-white p-4 shadow-lg dark:border-neutral-700 dark:bg-neutral-800"
             >
               <Container id={`notification-progress-header-${item.id}`} class="flex items-center justify-between">
-                <Text id={`notification-progress-title-${item.id}`} class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">{item.title}</Text>
-                <Text id={`notification-progress-pct-${item.id}`} type="span" class="text-xs font-mono font-bold text-neutral-500">{item.progress}%</Text>
+                <Text
+                  id={`notification-progress-title-${item.id}`}
+                  class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">{item.title}</Text
+                >
+                <Text id={`notification-progress-pct-${item.id}`} type="span" class="text-xs font-mono font-bold text-neutral-500"
+                  >{item.progress}%</Text
+                >
               </Container>
               <Text id={`notification-progress-msg-${item.id}`} class="text-sm font-medium">{item.message}</Text>
-              <Container id={`notification-progress-bar-bg-${item.id}`} class="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-700">
-                <Container id={`notification-progress-bar-fill-${item.id}`} class="h-full bg-indigo-600 transition-all duration-300 dark:bg-indigo-400" style="width: {item.progress}%;"></Container>
+              <Container
+                id={`notification-progress-bar-bg-${item.id}`}
+                class="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-700"
+              >
+                <Container
+                  id={`notification-progress-bar-fill-${item.id}`}
+                  class="h-full bg-indigo-600 transition-all duration-300 dark:bg-indigo-400"
+                  style="width: {item.progress}%;"
+                ></Container>
               </Container>
             </Container>
           {:else if item.variant === "action"}
@@ -212,10 +256,19 @@
               class="pointer-events-auto flex min-w-[320px] max-w-md items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/95 p-4 shadow-lg dark:border-amber-900/40 dark:bg-neutral-800"
             >
               <Container id={`notification-action-text-col-${item.id}`} class="flex flex-col gap-0.5">
-                <Text id={`notification-action-title-${item.id}`} class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">{item.title}</Text>
-                <Text id={`notification-action-msg-${item.id}`} class="text-sm font-medium text-neutral-800 dark:text-neutral-200">{item.message}</Text>
+                <Text
+                  id={`notification-action-title-${item.id}`}
+                  class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">{item.title}</Text
+                >
+                <Text id={`notification-action-msg-${item.id}`} class="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+                  >{item.message}</Text
+                >
               </Container>
-              <Button id={`notification-action-btn-${item.id}`} onclick={async () => dismiss()} class="rounded-md bg-amber-600 px-3 py-1 text-xs font-bold text-white hover:bg-amber-700">
+              <Button
+                id={`notification-action-btn-${item.id}`}
+                onclick={async () => dismiss()}
+                class="rounded-md bg-amber-600 px-3 py-1 text-xs font-bold text-white hover:bg-amber-700"
+              >
                 {item.actionLabel || "Undo"}
               </Button>
             </Container>
@@ -230,7 +283,9 @@
             >
               <Container id={`notification-standard-content-${item.id}`} class="flex flex-1 flex-col gap-0.5">
                 {#if item.title}
-                  <Text id={`notification-standard-title-${item.id}`} class="text-xs font-bold uppercase tracking-wider text-neutral-500">{item.title}</Text>
+                  <Text id={`notification-standard-title-${item.id}`} class="text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >{item.title}</Text
+                  >
                 {/if}
                 <Text id={`notification-standard-msg-${item.id}`} class="text-sm font-medium">{item.message}</Text>
               </Container>

@@ -184,7 +184,9 @@
     <Container id="image-crop-remote-header" class="flex items-center justify-between">
       <Container id="image-crop-remote-titles" class="flex flex-col gap-1">
         <Text id="image-crop-remote-heading" type="h3" class="text-lg font-semibold">Rectangle Crop (1:1)</Text>
-        <Text id="image-crop-remote-description" class="text-sm text-neutral-500">Standard rectangular cropping with zoom, pan, and padding controls.</Text>
+        <Text id="image-crop-remote-description" class="text-sm text-neutral-500"
+          >Standard rectangular cropping with zoom, pan, and padding controls.</Text
+        >
       </Container>
       <Container id="image-crop-remote-switch-wrapper" class="flex items-center gap-3">
         <Text id="image-crop-remote-shape-label" class="text-xs font-medium uppercase text-neutral-500">{isCircle ? "Circle" : "Rectangle"}</Text>
@@ -199,7 +201,10 @@
           <Container id="image-crop-remote-preview-row" class="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Container id="image-crop-remote-canvas-col" class="flex flex-col gap-2">
               <Text id="image-crop-remote-canvas-label" type="h4" class="font-semibold text-neutral-500">Canvas:</Text>
-              <Container id="image-crop-remote-canvas-wrapper" class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
+              <Container
+                id="image-crop-remote-canvas-wrapper"
+                class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800"
+              >
                 <ImageCrop
                   id="image-crop-basic"
                   sourceImage={imageBitmap}
@@ -236,9 +241,17 @@
                   </Button>
                 {/if}
               </Container>
-              <Container id="image-crop-remote-result-image-wrapper" class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
+              <Container
+                id="image-crop-remote-result-image-wrapper"
+                class="flex aspect-square items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800"
+              >
                 {#if transformedResultImage}
-                  <Image id="image-crop-remote-result-img" src={transformedResultImage} alt="Cropped result" class="max-h-full max-w-full object-contain" />
+                  <Image
+                    id="image-crop-remote-result-img"
+                    src={transformedResultImage}
+                    alt="Cropped result"
+                    class="max-h-full max-w-full object-contain"
+                  />
                 {:else}
                   <Text id="image-crop-remote-processing-text" class="text-xs italic text-neutral-400">Processing...</Text>
                 {/if}
@@ -299,7 +312,9 @@
         </Text>
       </Container>
       <Container id="image-crop-upload-switch-wrapper" class="flex items-center gap-3">
-        <Text id="image-crop-upload-shape-label" class="text-xs font-medium uppercase text-neutral-500">{uploadIsCircle ? "Circle" : "Rectangle"}</Text>
+        <Text id="image-crop-upload-shape-label" class="text-xs font-medium uppercase text-neutral-500"
+          >{uploadIsCircle ? "Circle" : "Rectangle"}</Text
+        >
         <Switch id="image-crop-switch-2" bind:checked={uploadIsCircle} onclick={async () => {}} />
       </Container>
     </Container>
@@ -314,7 +329,11 @@
           class="text-sm text-neutral-500 file:mr-4 file:rounded-md file:border-0 file:bg-primary-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-neutral-800 dark:file:text-neutral-300"
         />
         {#if uploadedBitmap}
-          <Text id="image-crop-upload-detected-badge" type="span" class="rounded bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-700 dark:bg-primary-950 dark:text-primary-300">
+          <Text
+            id="image-crop-upload-detected-badge"
+            type="span"
+            class="rounded bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-700 dark:bg-primary-950 dark:text-primary-300"
+          >
             Detected Source: {uploadedMimeType} (.{uploadedExtension})
           </Text>
         {/if}
@@ -326,7 +345,10 @@
           <Container id="image-crop-upload-preview-row" class="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Container id="image-crop-upload-canvas-col" class="flex flex-col gap-2">
               <Text id="image-crop-upload-canvas-label" type="h4" class="font-semibold text-neutral-500">Canvas:</Text>
-              <Container id="image-crop-upload-canvas-wrapper" class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
+              <Container
+                id="image-crop-upload-canvas-wrapper"
+                class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800"
+              >
                 <ImageCrop
                   id="image-crop-upload"
                   sourceImage={uploadedBitmap}
@@ -363,9 +385,17 @@
                   </Button>
                 {/if}
               </Container>
-              <Container id="image-crop-upload-result-image-wrapper" class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800">
+              <Container
+                id="image-crop-upload-result-image-wrapper"
+                class="flex aspect-video items-center justify-center overflow-hidden rounded bg-neutral-100 dark:bg-neutral-800"
+              >
                 {#if transformedUploadResult}
-                  <Image id="image-crop-upload-result-img" src={transformedUploadResult} alt="Cropped result" class="max-h-full max-w-full object-contain" />
+                  <Image
+                    id="image-crop-upload-result-img"
+                    src={transformedUploadResult}
+                    alt="Cropped result"
+                    class="max-h-full max-w-full object-contain"
+                  />
                 {:else}
                   <Text id="image-crop-upload-processing-text" class="text-xs italic text-neutral-400">Processing...</Text>
                 {/if}
@@ -403,14 +433,27 @@
                 <input id="image-crop-upload-color-input" type="color" bind:value={uploadOverlayHex} class="h-8 w-full" />
               </Container>
               <Container id="image-crop-upload-opacity-group" class="flex flex-col gap-2">
-                <Text id="image-crop-upload-opacity-label" class="text-xs font-medium uppercase text-neutral-500">Opacity ({uploadOverlayOpacity})</Text>
-                <input id="image-crop-upload-opacity-input" type="range" min="0" max="1" step="0.05" bind:value={uploadOverlayOpacity} class="w-full" />
+                <Text id="image-crop-upload-opacity-label" class="text-xs font-medium uppercase text-neutral-500"
+                  >Opacity ({uploadOverlayOpacity})</Text
+                >
+                <input
+                  id="image-crop-upload-opacity-input"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  bind:value={uploadOverlayOpacity}
+                  class="w-full"
+                />
               </Container>
             </Container>
           </Container>
         </Container>
       {:else}
-        <Container id="image-crop-upload-empty-state" class="flex h-48 w-full items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 dark:border-neutral-800">
+        <Container
+          id="image-crop-upload-empty-state"
+          class="flex h-48 w-full items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 dark:border-neutral-800"
+        >
           <Text id="image-crop-upload-empty-text" class="text-neutral-400">Please select an image to start cropping</Text>
         </Container>
       {/if}

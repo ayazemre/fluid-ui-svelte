@@ -39,7 +39,13 @@
     <Text id="input-sample-textarea-heading" type="h3" class="text-lg font-semibold">Textarea</Text>
     <Text id="input-sample-textarea-description" class="text-sm text-neutral-500">Multiline text input for longer messages.</Text>
     <Container id="input-sample-textarea-preview" class="rounded-lg border p-6 dark:border-neutral-700">
-      <InputField id="input-sample-textarea-input" type="textarea" placeholder="Enter your message..." bind:value={textAreaValue} class="h-32 w-full" />
+      <InputField
+        id="input-sample-textarea-input"
+        type="textarea"
+        placeholder="Enter your message..."
+        bind:value={textAreaValue}
+        class="h-32 w-full"
+      />
       <Text id="input-sample-textarea-value-text" class="mt-2 text-sm text-neutral-500">Value: {textAreaValue}</Text>
     </Container>
     <CodeBlock id="input-sample-textarea-code" code={codeBlockContents.inputTextArea} language="svelte" />

@@ -22,7 +22,9 @@
   <!-- Required Indicator -->
   <Container id="label-sample-required-container" class="flex flex-col gap-2">
     <Text id="label-sample-required-heading" type="h3" class="text-lg font-semibold">With Required Indicator</Text>
-    <Text id="label-sample-required-description" class="text-sm text-neutral-500">A label containing an inline visual indicator for mandatory fields.</Text>
+    <Text id="label-sample-required-description" class="text-sm text-neutral-500"
+      >A label containing an inline visual indicator for mandatory fields.</Text
+    >
     <Container id="label-sample-required-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Container id="label-sample-required-group" class="flex flex-col gap-1.5">
         <Label id="label-sample-required-label" for="email-address">

@@ -43,7 +43,9 @@
           </Container>
         {/snippet}
         {#snippet body()}
-          <Container id="accordion-sample-custom-body-content" class="p-4 italic">This accordion uses a cross-fade transition instead of the default slide.</Container>
+          <Container id="accordion-sample-custom-body-content" class="p-4 italic"
+            >This accordion uses a cross-fade transition instead of the default slide.</Container
+          >
         {/snippet}
       </Accordion>
     </Container>

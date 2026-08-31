@@ -76,11 +76,17 @@
   <Container id="home-hero-content-container" class="z-10 flex flex-1 flex-col items-center justify-center gap-6 bg-transparent px-4 py-16 md:p-16">
     <Container id="home-hero-title-wrapper" class="flex text-center">
       <Text id="home-hero-heading" type="h1" class="text-4xl font-bold text-neutral-950 sm:text-5xl md:text-6xl dark:text-neutral-50"
-        >Build with <Text id="home-hero-heading-highlight" type="span" class="bg-linear-to-r from-primary-600 to-secondary-300 bg-clip-text text-transparent">Fluid UI</Text></Text
+        >Build with <Text
+          id="home-hero-heading-highlight"
+          type="span"
+          class="bg-linear-to-r from-primary-600 to-secondary-300 bg-clip-text text-transparent">Fluid UI</Text
+        ></Text
       >
     </Container>
     <Container id="home-hero-description-wrapper" class="flex">
-      <Text id="home-hero-description" class="text-center text-lg text-neutral-950 opacity-70 transition-colors sm:text-xl dark:text-neutral-50 dark:opacity-80"
+      <Text
+        id="home-hero-description"
+        class="text-center text-lg text-neutral-950 opacity-70 transition-colors sm:text-xl dark:text-neutral-50 dark:opacity-80"
         >A modern Svelte component library for building beautiful, responsive interfaces.</Text
       >
     </Container>

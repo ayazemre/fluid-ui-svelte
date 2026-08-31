@@ -58,7 +58,7 @@
       onkeydown={(event: KeyboardEvent) => event.stopPropagation()}
       role="presentation"
       class={[variant, "fluid-modal-panel"].join(" ")}
-      transitionFunction={transitionFunction}
+      {transitionFunction}
       {transitionParams}
     >
       {@render children()}

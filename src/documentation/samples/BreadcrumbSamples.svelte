@@ -15,7 +15,9 @@
 <Container id="breadcrumb-samples-container" class="flex flex-col gap-10">
   <Container id="breadcrumb-samples-header" class="flex flex-col gap-2">
     <Text id="breadcrumb-samples-title" type="h1">Breadcrumb Samples</Text>
-    <Text id="breadcrumb-samples-description" class="text-neutral-500">A navigation aid that allows users to keep track of their location within programs, documents, or websites.</Text>
+    <Text id="breadcrumb-samples-description" class="text-neutral-500"
+      >A navigation aid that allows users to keep track of their location within programs, documents, or websites.</Text
+    >
   </Container>
 
   <!-- 1. Basic Breadcrumb -->

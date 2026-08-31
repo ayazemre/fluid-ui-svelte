@@ -62,7 +62,11 @@
 
   <Container id={`${id}-body`} overrideDefaultStyling={true} class="fluid-timepicker-body flex items-stretch gap-1.5">
     <!-- Hours Column -->
-    <Container id={`${id}-hours-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+    <Container
+      id={`${id}-hours-column`}
+      overrideDefaultStyling={true}
+      class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
+    >
       {#each availableHours as hourItem (hourItem)}
         <Button
           id={`${id}-hour-option-${hourItem}`}
@@ -83,7 +87,11 @@
 
     <!-- Minutes Column -->
     {#if mode === "minute" || mode === "second"}
-      <Container id={`${id}-minutes-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+      <Container
+        id={`${id}-minutes-column`}
+        overrideDefaultStyling={true}
+        class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
+      >
         {#each availableMinutes as minuteItem (minuteItem)}
           <Button
             id={`${id}-minute-option-${minuteItem}`}
@@ -105,7 +113,11 @@
 
     <!-- Seconds Column -->
     {#if mode === "second"}
-      <Container id={`${id}-seconds-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]">
+      <Container
+        id={`${id}-seconds-column`}
+        overrideDefaultStyling={true}
+        class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
+      >
         {#each availableSeconds as secondItem (secondItem)}
           <Button
             id={`${id}-second-option-${secondItem}`}

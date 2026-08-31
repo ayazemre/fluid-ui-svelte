@@ -20,7 +20,10 @@
   {#each code.split("\n") as line, index}
     <Container id={`${id}-row-${index}`} class={[variant, "fluid-code-block-row", "flex", "items-start"].join(" ")}>
       {#if showLineNumbers}
-        <Container id={`${id}-index-container-${index}`} class={[variant, "fluid-code-block-index", "sticky", "left-0", "z-1", "min-w-10", "px-2"].join(" ")}>
+        <Container
+          id={`${id}-index-container-${index}`}
+          class={[variant, "fluid-code-block-index", "sticky", "left-0", "z-1", "min-w-10", "px-2"].join(" ")}
+        >
           <Text id={`${id}-index-${index}`} class="select-none">{index}</Text>
         </Container>
       {/if}
