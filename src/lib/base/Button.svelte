@@ -1,35 +1,42 @@
 <script lang="ts">
-	import type { HTMLButtonAttributes } from 'svelte/elements';
-	import { mergeClasses } from '$lib/utilities/common';
-	import type { Snippet } from 'svelte';
+  import { mergeClasses } from "#src/lib/utilities/common.ts";
 
-	const {
-		onclick,
-		class: className = '',
-		overrideDefaultStyling = false,
-		loadingPlaceholder,
-		children,
-		...rest
-	}: {
-		onclick: (event: Event, buttonState: { inProgress: boolean }) => Promise<unknown>;
-		class?: string;
-		overrideDefaultStyling?: boolean;
-		loadingPlaceholder?: Snippet;
-		children: Snippet;
-	} & Omit<HTMLButtonAttributes, 'onclick'> = $props();
+  import type { Snippet } from "svelte";
+  import type { HTMLButtonAttributes } from "svelte/elements";
 
-	let buttonState = $state({ inProgress: false });
+  let {
+    id,
+    underlyingElement = $bindable(null),
+    onclick,
+    class: className = "",
+    overrideDefaultStyling = false,
+    loadingPlaceholder,
+    children,
+    ...rest
+  }: {
+    id: string;
+    underlyingElement?: HTMLButtonElement | null;
+    onclick: (event: MouseEvent | Event, buttonState: { inProgress: boolean }) => Promise<unknown> | void;
+    class?: string;
+    overrideDefaultStyling?: boolean;
+    loadingPlaceholder?: Snippet;
+    children: Snippet;
+  } & Omit<HTMLButtonAttributes, "onclick" | "id"> = $props();
+
+  let buttonState = $state({ inProgress: false });
 </script>
 
 <button
-	type="button"
-	onclick={async (event: Event) => onclick(event, buttonState)}
-	{...rest}
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-button flex cursor-pointer')}
+  {id}
+  bind:this={underlyingElement}
+  type="button"
+  onclick={async (event: MouseEvent | Event) => await onclick(event, buttonState)}
+  {...rest}
+  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-button flex cursor-pointer")}
 >
-	{#if buttonState.inProgress && loadingPlaceholder}
-		{@render loadingPlaceholder()}
-	{:else}
-		{@render children()}
-	{/if}
+  {#if buttonState.inProgress && loadingPlaceholder}
+    {@render loadingPlaceholder()}
+  {:else}
+    {@render children()}
+  {/if}
 </button>

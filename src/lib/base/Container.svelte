@@ -1,34 +1,41 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements';
-	import { mergeClasses } from '$lib/utilities/common';
-	import type { Snippet } from 'svelte';
-	import type { TransitionConfig } from 'svelte/transition';
+  import { mergeClasses } from "#src/lib/utilities/common.ts";
 
-	const {
-		type = 'div',
-		class: className = '',
-		transitionFn = (node: Element, params?: any) => {
-			return {};
-		},
-		transitionParams,
-		overrideDefaultStyling = false,
-		children,
-		...rest
-	}: {
-		type?: 'div' | 'nav' | 'section' | 'main' | 'header' | 'footer' | 'aside' | 'article';
-		class?: string;
-		transitionFn?: (node: Element, params?: any) => TransitionConfig;
-		transitionParams?: TransitionConfig;
-		overrideDefaultStyling?: boolean;
-		children?: Snippet;
-	} & HTMLAttributes<HTMLElement> = $props();
+  import type { Snippet } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
+  import type { TransitionConfig } from "svelte/transition";
+
+  let {
+    id,
+    underlyingElement = $bindable(null),
+    type = "div",
+    class: className = "",
+    transitionFunction = () => {
+      return {};
+    },
+    transitionParameters,
+    overrideDefaultStyling = false,
+    children,
+    ...rest
+  }: {
+    id: string;
+    underlyingElement?: HTMLElement | null;
+    type?: "div" | "nav" | "section" | "main" | "header" | "footer" | "aside" | "article";
+    class?: string;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionParameters?: Record<string, unknown>;
+    overrideDefaultStyling?: boolean;
+    children?: Snippet;
+  } & Omit<HTMLAttributes<HTMLElement>, "id"> = $props();
 </script>
 
 <svelte:element
-	this={type}
-	{...rest}
-	transition:transitionFn={transitionParams}
-	class={mergeClasses(className, overrideDefaultStyling ? '' : 'fluid-container')}
+  this={type}
+  {id}
+  bind:this={underlyingElement}
+  {...rest}
+  transition:transitionFunction={transitionParameters}
+  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-container")}
 >
-	{@render children?.()}
+  {@render children?.()}
 </svelte:element>

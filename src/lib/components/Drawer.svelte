@@ -1,79 +1,66 @@
 <script lang="ts">
-	import { Container } from '$lib/base';
-	import { mergeClasses } from '$lib/utilities/common';
-	import type { TransitionConfig } from 'svelte/transition';
-	import type { Snippet } from 'svelte';
-	import { positionClasses } from '$lib/utilities/drawer';
+  import { Container } from "#src/lib/base/index.ts";
 
-	let {
-		variant = '',
-		componentId,
-		isOpen = $bindable(false),
-		position = 'left',
-		closeOnBackdropClick = true,
-		scrollLock = true,
-		transitionFn = (node: Element, params?: any) => {
-			return {};
-		},
-		transitionParams = {},
-		backdropTransitionFn = (node: Element, params?: any) => {
-			return {};
-		},
-		backdropTransitionParams,
-		children
-	}: {
-		isOpen?: boolean;
-		position?: 'left' | 'right' | 'top' | 'bottom';
-		closeOnBackdropClick?: boolean;
-		scrollLock?: boolean;
-		variant?: string;
-		componentId?: string;
-		transitionFn?: (node: Element, params?: any) => TransitionConfig;
-		transitionParams?: TransitionConfig & { x?: number; y?: number };
-		backdropTransitionFn?: (node: Element, params?: any) => TransitionConfig;
-		backdropTransitionParams?: TransitionConfig & { x?: number; y?: number };
-		children: Snippet;
-	} = $props();
+  import type { Snippet } from "svelte";
+  import type { TransitionConfig } from "svelte/transition";
 
-	function handleKeyDown(event: KeyboardEvent) {
-		if (event.key === 'Escape' && isOpen) {
-			isOpen = false;
-		}
-	}
+  import { emptyDrawerTransition, positionClasses, setupDrawerLifecycle, type DrawerPosition } from "./drawer.ts";
 
-	$effect(() => {
-		if (isOpen) {
-			const originalStyle = window.getComputedStyle(document.body).overflow;
-			if (scrollLock) document.body.style.overflow = 'hidden';
-			window.addEventListener('keydown', handleKeyDown);
+  let {
+    id,
+    variant = "",
+    isOpen = $bindable(false),
+    position = "left",
+    closeOnBackdropClick = true,
+    scrollLock = true,
+    transitionFunction = emptyDrawerTransition,
+    transitionParameters = {},
+    backdropTransitionFunction = emptyDrawerTransition,
+    backdropTransitionParameters,
+    children,
+  }: {
+    id: string;
+    variant?: string;
+    isOpen?: boolean;
+    position?: DrawerPosition;
+    closeOnBackdropClick?: boolean;
+    scrollLock?: boolean;
+    transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    transitionParameters?: TransitionConfig & Record<string, unknown>;
+    backdropTransitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
+    backdropTransitionParameters?: TransitionConfig & Record<string, unknown>;
+    children: Snippet;
+  } = $props();
 
-			return () => {
-				if (scrollLock) document.body.style.overflow = originalStyle;
-				window.removeEventListener('keydown', handleKeyDown);
-			};
-		}
-	});
+  $effect(() => {
+    return setupDrawerLifecycle(isOpen, scrollLock, () => {
+      isOpen = false;
+    });
+  });
 </script>
 
 {#if isOpen}
-	<Container
-		id={componentId}
-		class={mergeClasses(variant, 'fluid-drawer-container fixed inset-0 z-10')}
-		transitionFn={backdropTransitionFn}
-		transitionParams={backdropTransitionParams}
-		onclick={async () => {
-			if (closeOnBackdropClick) isOpen = false;
-		}}
-		role="dialog"
-		aria-modal="true"
-	>
-		<Container
-			onclick={(event) => event.stopPropagation()}
-			class={mergeClasses(variant, `fluid-drawer-panel fixed z-20 ${positionClasses[position]}`)}
-			{transitionFn}
-			{transitionParams}
-		>
-			{@render children()}
-		</Container>
-	</Container>
+  <Container
+    {id}
+    class={[variant, "fluid-drawer-container", "fixed", "inset-0", "z-10"].join(" ")}
+    transitionFunction={backdropTransitionFunction}
+    transitionParameters={backdropTransitionParameters}
+    onclick={() => {
+      if (closeOnBackdropClick) {
+        isOpen = false;
+      }
+    }}
+    role="dialog"
+    aria-modal="true"
+  >
+    <Container
+      id={`${id}-panel`}
+      onclick={(event: MouseEvent) => event.stopPropagation()}
+      class={[variant, "fluid-drawer-panel", "fixed", "z-20", positionClasses[position]].join(" ")}
+      {transitionFunction}
+      {transitionParameters}
+    >
+      {@render children()}
+    </Container>
+  </Container>
 {/if}

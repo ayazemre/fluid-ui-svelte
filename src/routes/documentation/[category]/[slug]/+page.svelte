@@ -1,79 +1,123 @@
 <script lang="ts">
-	import { componentRegistry } from '../../../../documentation/registry.js';
-	import { Container, Text, Table } from '$lib/base';
-	import { Page } from '$lib/components';
+  import { Container, Text, Table } from "#src/lib/base/index.ts";
+  import { Page } from "#src/lib/components/index.ts";
 
-	let { data } = $props();
+  import * as Samples from "#src/documentation/samples/index.ts";
 
-	// Retrieve the non-serializable sample component from the registry
+  let { data } = $props();
 
-	let SampleComponent = $derived(
-		// @ts-ignore
-		componentRegistry[data.category][data.slug].sampleComponent
-	);
+  const sampleMap: Record<string, Record<string, any>> = {
+    base: {
+      button: Samples.ButtonSamples,
+      container: Samples.ContainerSamples,
+      form: Samples.FormSamples,
+      image: Samples.ImageSamples,
+      "input-field": Samples.InputFieldSamples,
+      label: Samples.LabelSamples,
+      link: Samples.LinkSamples,
+      list: Samples.ListSamples,
+      table: Samples.TableSamples,
+      text: Samples.TextSamples
+    },
+    components: {
+      accordion: Samples.AccordionSamples,
+      "anchored-overlay": Samples.AnchoredOverlaySamples,
+      "calendar-grid": Samples.CalendarGridSamples,
+      carousel: Samples.CarouselSamples,
+      "code-block": Samples.CodeBlockSamples,
+      draggable: Samples.DraggableSamples,
+      drawer: Samples.DrawerSamples,
+      dropzone: Samples.DropzoneSamples,
+      "image-crop": Samples.ImageCropSamples,
+      modal: Samples.ModalSamples,
+      page: Samples.PageSamples,
+      pagination: Samples.PaginationSamples,
+      switch: Samples.SwitchSamples,
+      "time-picker": Samples.TimePickerSamples
+    },
+    prebuilt: {
+      breadcrumb: Samples.BreadcrumbSamples,
+      "international-input": Samples.InternationalInputSamples,
+      "notification-area": Samples.NotificationSamples,
+      "searchable-selector": Samples.SearchableSelectorSamples
+    }
+  };
 
-	const headers = ['Prop', 'Type', 'Default', 'Description'];
+  let SampleComponent = $derived(sampleMap[data.category]?.[data.slug]);
 
-	// Prepare the rows for the props table
-	const tableRows = $derived(
-		data.props.map((p: any) => [
-			{ value: p.prop, col: 'prop' },
-			{ value: p.type, col: 'type' },
-			{ value: p.default, col: 'default' },
-			{ value: p.description, col: 'desc' }
-		])
-	);
+  const headers = ["Prop", "Type", "Default", "Description"];
+
+  // Prepare the rows for the props table
+  const tableRows = $derived(
+    data.props.map((p: any) => [
+      { col: "prop", value: p.prop },
+      { col: "type", value: p.type },
+      { col: "default", value: p.default },
+      { col: "desc", value: p.description },
+    ]),
+  );
 </script>
 
-<Page title={data.title} description={data.description}>
-	<Container class="flex flex-col gap-8">
-		<!-- Header -->
-		<Container class="flex flex-col gap-4">
-			<Text type="h1" class="text-4xl font-bold">{data.title.replace('Fluid UI - ', '')}</Text>
-			<Text>
-				{data.description}
-			</Text>
-		</Container>
+<Page id={`doc-page-${data.category}-${data.slug}`} title={data.title} description={data.description}>
+  <Container id={`doc-page-main-container-${data.category}-${data.slug}`} class="flex flex-col gap-8">
+    <!-- Header -->
+    <Container id={`doc-page-header-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
+      <Text id={`doc-page-main-title-${data.category}-${data.slug}`} type="h1" class="text-4xl font-bold"
+        >{data.title.replace("Fluid UI - ", "")}</Text
+      >
+      <Text id={`doc-page-main-description-${data.category}-${data.slug}`}>
+        {data.description}
+      </Text>
+    </Container>
 
-		<!-- Props Table -->
-		<Container class="hidden flex-col gap-4 overflow-x-auto md:flex">
-			<Text type="h2" class="text-2xl font-semibold">Props</Text>
-			<Table
-				tableHeadItems={headers}
-				tableRowItems={tableRows}
-				tableFooterItems={[]}
-				class="w-full text-left"
-			>
-				{#snippet headTemplate(item)}
-					<Text class="p-2 font-bold">{item}</Text>
-				{/snippet}
+    <!-- Props Table -->
+    <Container id={`doc-page-props-container-${data.category}-${data.slug}`} class="hidden flex-col gap-4 overflow-x-auto md:flex">
+      <Text id={`doc-page-props-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Props</Text>
+      <Table
+        id={`doc-page-props-table-${data.category}-${data.slug}`}
+        tableHeadItems={headers}
+        tableRowItems={tableRows}
+        tableFooterItems={[]}
+        class="w-full text-left"
+      >
+        {#snippet headTemplate(item)}
+          <Text id={`doc-props-head-${item.toLowerCase().replace(/ /g, "-")}`} class="p-2 font-bold">{item}</Text>
+        {/snippet}
 
-				{#snippet bodyTemplate(item: { value: string; col: string })}
-					<Container overrideDefaultStyling={true} class="p-2">
-						{#if item.col === 'prop'}
-							<Text type="code" class="font-bold text-primary-600">{item.value}</Text>
-						{:else if item.col === 'type'}
-							<Text type="code" class="text-sm text-neutral-600 dark:text-neutral-400"
-								>{item.value}</Text
-							>
-						{:else if item.col === 'default'}
-							<Text type="code" class="text-sm text-neutral-500">{item.value}</Text>
-						{:else}
-							<Text class="text-sm">{item.value}</Text>
-						{/if}
-					</Container>
-				{/snippet}
+        {#snippet bodyTemplate(item: { value: string; col: string })}
+          <Container id={`doc-props-body-cell-${item.col}-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} overrideDefaultStyling={true} class="p-2">
+            {#if item.col === "prop"}
+              <Text id={`doc-props-val-prop-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} type="code" class="font-bold text-primary-600"
+                >{item.value}</Text
+              >
+            {:else if item.col === "type"}
+              <Text
+                id={`doc-props-val-type-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`}
+                type="code"
+                class="text-sm text-neutral-600 dark:text-neutral-400">{item.value}</Text
+              >
+            {:else if item.col === "default"}
+              <Text id={`doc-props-val-default-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} type="code" class="text-sm text-neutral-500"
+                >{item.value}</Text
+              >
+            {:else}
+              <Text id={`doc-props-val-desc-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`} class="text-sm">{item.value}</Text>
+            {/if}
+          </Container>
+        {/snippet}
 
-				{#snippet footerTemplate()}
-					<Container overrideDefaultStyling={true} />
-				{/snippet}
-			</Table>
-		</Container>
+        {#snippet footerTemplate()}
+          <Container id={`doc-props-footer-empty-${data.category}-${data.slug}`} overrideDefaultStyling={true} />
+        {/snippet}
+      </Table>
+    </Container>
 
-		<!-- Samples -->
-		<Container class="flex flex-col gap-4">
-			<Text type="h2" class="text-2xl font-semibold">Samples</Text>
-			<SampleComponent />
-		</Container>
-	</Container>
+    <!-- Samples -->
+    {#if SampleComponent}
+      <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
+        <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Samples</Text>
+        <SampleComponent />
+      </Container>
+    {/if}
+  </Container>
 </Page>

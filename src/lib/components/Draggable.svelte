@@ -1,26 +1,47 @@
 <script lang="ts">
-	import { Container } from '$lib/base';
-	import { mergeClasses } from '$lib/utilities/common';
-	import type { Snippet } from 'svelte';
+  import { Container } from "#src/lib/base/index.ts";
 
-	let {
-		variant = '',
-		componentId = '',
-		children,
-		ondragstart
-	}: {
-		variant?: string;
-		componentId?: string;
-		children: Snippet;
-		ondragstart?: (event: DragEvent) => void;
-	} = $props();
+  import type { Snippet } from "svelte";
+
+  import { handleDraggableDrag, handleDraggableDragEnd, handleDraggableDragStart } from "./draggable.ts";
+
+  let {
+    id,
+    variant = "",
+    disabled = false,
+    children,
+    ondrag,
+    ondragend,
+    ondragstart,
+  }: {
+    id: string;
+    variant?: string;
+    disabled?: boolean;
+    children: Snippet<[{ isDragging: boolean }] | []>;
+    ondrag?: (event: DragEvent) => void;
+    ondragend?: (event: DragEvent) => void;
+    ondragstart?: (event: DragEvent) => void;
+  } = $props();
+
+  let isDragging = $state(false);
 </script>
 
 <Container
-	id={componentId}
-	draggable="true"
-	{ondragstart}
-	class={mergeClasses(variant, 'cursor-grab active:cursor-grabbing fluid-draggable')}
+  {id}
+  draggable={!disabled}
+  ondragstart={(event: DragEvent) => {
+    isDragging = handleDraggableDragStart(event, disabled, ondragstart);
+  }}
+  ondrag={(event: DragEvent) => handleDraggableDrag(event, ondrag)}
+  ondragend={(event: DragEvent) => {
+    isDragging = handleDraggableDragEnd(event, ondragend);
+  }}
+  class={[
+    variant,
+    disabled ? "cursor-not-allowed opacity-60" : "cursor-grab active:cursor-grabbing",
+    isDragging ? "fluid-dragging opacity-50" : "",
+    "fluid-draggable",
+  ].join(" ")}
 >
-	{@render children()}
+  {@render children({ isDragging })}
 </Container>
