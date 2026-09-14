@@ -1,16 +1,15 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
 
-  import { AnchoredOverlay } from "#src/lib/components/index.ts";
+  import { Button, Container, Image, InputField, Text } from "../base/index.ts";
+  import { AnchoredOverlay } from "../components/index.ts";
   import {
     filterSearchableSelectorItems,
     getSearchableSelectorAvatarBackground,
     getSearchableSelectorInitials,
     getSelectedSearchableSelectorItem,
     type SearchableSelectorItem,
-  } from "#src/lib/prebuilt/searchableSelector.ts";
-
-  import { Button, Container, Image, InputField, Text } from "../base/index.ts";
+  } from "../prebuilt/searchableSelector.ts";
 
   let {
     id,

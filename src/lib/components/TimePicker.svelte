@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Button, Container, Text } from "../base/index.ts";
   import {
     formatTimeString,
     generateHours,
@@ -8,9 +9,7 @@
     parseTimeString,
     type TimeFormat,
     type TimePickerMode,
-  } from "#src/lib/components/timePicker.ts";
-
-  import { Button, Container, Text } from "../base/index.ts";
+  } from "../components/timePicker.ts";
 
   let {
     id,

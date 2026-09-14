@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { defaultCodeBlockDiffTheme, defaultCodeBlockTokenTheme, svelteParserConfiguration } from "#src/lib/utilities/parsers.ts";
-
-  import type { DiffThemeMapping, ParserConfiguration, TokenThemeMapping } from "#src/lib/utilities/parsers.ts";
+  import type { DiffThemeMapping, ParserConfiguration, TokenThemeMapping } from "../utilities/parsers.ts";
   import type { CondensedDiffRow, DiffLine, DiffLineActionPayload } from "./codeBlock.ts";
 
   import { Button, Container, Text } from "../base/index.ts";
+  import { defaultCodeBlockDiffTheme, defaultCodeBlockTokenTheme, svelteParserConfiguration } from "../utilities/parsers.ts";
   import {
     buildCondensedDiffRows,
     computeLineDiff,
