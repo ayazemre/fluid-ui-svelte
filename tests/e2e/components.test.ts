@@ -71,7 +71,7 @@ test.describe("Components Elements E2E Tests", () => {
 
     // Verify condensed diff collapses unchanged sections into gap rows
     const condensedDiffContainer = page.locator("#code-block-sample-diff");
-    await expect(condensedDiffContainer.getByText(/unchanged lines hidden/)).toBeVisible();
+    await expect(condensedDiffContainer.getByText(/unchanged lines hidden/).first()).toBeVisible();
 
     // Verify full diff renders every line without gap rows
     const fullDiffContainer = page.locator("#code-block-sample-full-diff");
@@ -89,9 +89,12 @@ test.describe("Components Elements E2E Tests", () => {
     await condensedReviewContainer.getByRole("button", { name: "Accept change" }).first().click();
     await expect(condensedReviewContainer.getByRole("button", { name: "Accept change" })).toHaveCount(initialCondensedAcceptCount - 1);
 
+    // Capture the shared full file count after the accept above removed one block there too
+    const sharedFullRejectCount = await fullReviewContainer.getByRole("button", { name: "Reject change" }).count();
+
     // Reject the first full file change block and verify one decision resolves
     await fullReviewContainer.getByRole("button", { name: "Reject change" }).first().click();
-    await expect(fullReviewContainer.getByRole("button", { name: "Reject change" })).toHaveCount(initialFullRejectCount - 1);
+    await expect(fullReviewContainer.getByRole("button", { name: "Reject change" })).toHaveCount(sharedFullRejectCount - 1);
 
     // Reset the shared review state and verify both views restore
     await page.getByRole("button", { name: "Reset review" }).click();
