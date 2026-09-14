@@ -176,7 +176,7 @@ function buildSubsequenceLengthTable(sourceLines: Array<string>, modifiedLines: 
   const lengthTable: Array<Array<number>> = [];
 
   for (let sourceIndex = 0; sourceIndex <= sourceLineCount; sourceIndex++) {
-    lengthTable.push(new Array<number>(modifiedLineCount + 1).fill(0));
+    lengthTable.push(Array.from({ length: modifiedLineCount + 1 }, () => 0));
   }
 
   for (let sourceIndex = sourceLineCount - 1; sourceIndex >= 0; sourceIndex--) {
