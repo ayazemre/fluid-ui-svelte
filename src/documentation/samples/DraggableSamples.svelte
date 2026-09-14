@@ -33,6 +33,6 @@
       <Text id="draggable-sample-status-text" class="text-sm font-mono italic text-neutral-400">{dragStatus}</Text>
     </Container>
 
-    <CodeBlock id="draggable-sample-basic-code" code={codeBlockContents.draggableBasic} language="svelte" />
+    <CodeBlock id="draggable-sample-basic-code" sourceCode={codeBlockContents.draggableBasic} language="svelte" />
   </Container>
 </Container>

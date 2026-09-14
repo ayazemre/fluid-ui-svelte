@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "../documentation.css";
+  import "../app.css";
   import { page } from "$app/state";
   import Icon from "@iconify/svelte";
 

@@ -4,7 +4,6 @@ export type DateRange = {
 };
 
 export function applyDate(currentDates: DateRange, selectedDateString: string): DateRange {
-  // If end date is clicked again, remove end date selection
   if (currentDates.endDate && currentDates.endDate === selectedDateString) {
     return {
       endDate: undefined,
@@ -12,7 +11,6 @@ export function applyDate(currentDates: DateRange, selectedDateString: string): 
     };
   }
 
-  // If start date is clicked again, remove start date selection
   if (currentDates.startDate && currentDates.startDate === selectedDateString) {
     return {
       endDate: currentDates.endDate,
@@ -20,7 +18,6 @@ export function applyDate(currentDates: DateRange, selectedDateString: string): 
     };
   }
 
-  // Nothing is selected, set start date
   if (!currentDates.startDate) {
     return {
       endDate: currentDates.endDate,
@@ -28,9 +25,8 @@ export function applyDate(currentDates: DateRange, selectedDateString: string): 
     };
   }
 
-  // If start date exists but no end date, complete the range
   if (!currentDates.endDate) {
-    const startComparison = Temporal.PlainDate.compare(Temporal.PlainDate.from(selectedDateString), Temporal.PlainDate.from(currentDates.startDate));
+    const startComparison = compareIsoDateStrings(selectedDateString, currentDates.startDate);
 
     if (startComparison < 0) {
       return {
@@ -45,11 +41,7 @@ export function applyDate(currentDates: DateRange, selectedDateString: string): 
     };
   }
 
-  // If both dates exist, rearrange range based on newly selected date
-  const rearrangementComparison = Temporal.PlainDate.compare(
-    Temporal.PlainDate.from(selectedDateString),
-    Temporal.PlainDate.from(currentDates.startDate),
-  );
+  const rearrangementComparison = compareIsoDateStrings(selectedDateString, currentDates.startDate);
 
   if (rearrangementComparison < 0) {
     return {
@@ -65,31 +57,32 @@ export function applyDate(currentDates: DateRange, selectedDateString: string): 
 }
 
 export function generateDaysOfTheMonthFromDate(dateString: string): Array<string> {
-  const currentDate = Temporal.PlainDate.from(dateString);
-  const firstDayOfMonth = currentDate.with({ day: 1 });
+  const currentDate = parseIsoDateStringToDate(dateString);
+  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
-  // Temporal.PlainDate dayOfWeek: Monday is 1, Sunday is 7. Offset relative to Monday:
-  const startDayOffset = firstDayOfMonth.dayOfWeek - 1;
-  const daysInCurrentMonth = currentDate.daysInMonth;
+  const startDayOffset = (firstDayOfMonth.getDay() + 6) % 7;
+  const daysInCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const calendarDays: Array<string> = [];
 
-  // Add rollover days from previous month
   for (let offset = startDayOffset; offset > 0; offset--) {
-    calendarDays.push(firstDayOfMonth.subtract({ days: offset }).toString());
+    const previousDate = new Date(firstDayOfMonth);
+    previousDate.setDate(firstDayOfMonth.getDate() - offset);
+    calendarDays.push(formatDateToIsoString(previousDate));
   }
 
-  // Add days of the current month
   for (let currentDayNumber = 1; currentDayNumber <= daysInCurrentMonth; currentDayNumber++) {
-    calendarDays.push(currentDate.with({ day: currentDayNumber }).toString());
+    const currentDayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDayNumber);
+    calendarDays.push(formatDateToIsoString(currentDayDate));
   }
 
-  // Add rollover days from next month to complete standard grid (35 or 42 cells)
   const totalGridCells = startDayOffset + daysInCurrentMonth > 35 ? 42 : 35;
   const remainingCellCount = totalGridCells - calendarDays.length;
-  const lastDayOfMonth = currentDate.with({ day: daysInCurrentMonth });
+  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), daysInCurrentMonth);
 
   for (let nextDayNumber = 1; nextDayNumber <= remainingCellCount; nextDayNumber++) {
-    calendarDays.push(lastDayOfMonth.add({ days: nextDayNumber }).toString());
+    const nextDate = new Date(lastDayOfMonth);
+    nextDate.setDate(lastDayOfMonth.getDate() + nextDayNumber);
+    calendarDays.push(formatDateToIsoString(nextDate));
   }
 
   return calendarDays;
@@ -100,15 +93,15 @@ export function isBetweenDateRange(selectedDateString: string, startDateString?:
     return false;
   }
 
-  const selectedDate = Temporal.PlainDate.from(selectedDateString);
-  const startDate = Temporal.PlainDate.from(startDateString);
-  const endDate = Temporal.PlainDate.from(endDateString);
+  const selectedDate = parseIsoDateStringToDate(selectedDateString);
+  const startDate = parseIsoDateStringToDate(startDateString);
+  const endDate = parseIsoDateStringToDate(endDateString);
 
-  const startEndComparison = Temporal.PlainDate.compare(startDate, endDate);
+  const startEndComparison = compareDates(startDate, endDate);
   const earlierDate = startEndComparison < 0 ? startDate : endDate;
   const laterDate = startEndComparison < 0 ? endDate : startDate;
 
-  return Temporal.PlainDate.compare(selectedDate, earlierDate) > 0 && Temporal.PlainDate.compare(selectedDate, laterDate) < 0;
+  return compareDates(selectedDate, earlierDate) > 0 && compareDates(selectedDate, laterDate) < 0;
 }
 
 export function generateCalendarCellStyles(
@@ -119,10 +112,10 @@ export function generateCalendarCellStyles(
   hideRollingDays: boolean = false,
 ): Array<string> {
   const styles: Array<string> = ["fluid-calendar-cell"];
-  const currentDate = Temporal.PlainDate.from(currentDateString);
-  const cellDate = Temporal.PlainDate.from(cellDateString);
+  const currentDate = parseIsoDateStringToDate(currentDateString);
+  const cellDate = parseIsoDateStringToDate(cellDateString);
 
-  if (currentDate.month !== cellDate.month) {
+  if (currentDate.getMonth() !== cellDate.getMonth()) {
     styles.push("fluid-calendar-cell-rolling-day");
     if (hideRollingDays) {
       styles.push("invisible");
@@ -138,4 +131,58 @@ export function generateCalendarCellStyles(
   }
 
   return styles;
+}
+
+export function getCurrentIsoDateString(): string {
+  return formatDateToIsoString(new Date());
+}
+
+export function addMonthsToIsoDateString(dateString: string, monthsToAdd: number): string {
+  const parsedDate = parseIsoDateStringToDate(dateString);
+  const resultDate = new Date(parsedDate);
+  resultDate.setMonth(parsedDate.getMonth() + monthsToAdd);
+  return formatDateToIsoString(resultDate);
+}
+
+export function getMonthNameFromIsoDateString(dateString: string): string {
+  const parsedDate = parseIsoDateStringToDate(dateString);
+  return parsedDate.toLocaleString("default", { month: "long" });
+}
+
+export function getDayNumberFromIsoDateString(dateString: string): number {
+  const parsedDate = parseIsoDateStringToDate(dateString);
+  return parsedDate.getDate();
+}
+
+function parseIsoDateStringToDate(isoDateString: string): Date {
+  const [yearString, monthString, dayString] = isoDateString.split("-");
+  const year = Number(yearString);
+  const month = Number(monthString);
+  const day = Number(dayString);
+  return new Date(year, month - 1, day);
+}
+
+function formatDateToIsoString(date: Date): string {
+  const year = String(date.getFullYear()).padStart(4, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return year + "-" + month + "-" + day;
+}
+
+function compareIsoDateStrings(firstDateString: string, secondDateString: string): number {
+  const firstDate = parseIsoDateStringToDate(firstDateString);
+  const secondDate = parseIsoDateStringToDate(secondDateString);
+  return compareDates(firstDate, secondDate);
+}
+
+function compareDates(firstDate: Date, secondDate: Date): number {
+  const firstTime = firstDate.getTime();
+  const secondTime = secondDate.getTime();
+  if (firstTime < secondTime) {
+    return -1;
+  }
+  if (firstTime > secondTime) {
+    return 1;
+  }
+  return 0;
 }

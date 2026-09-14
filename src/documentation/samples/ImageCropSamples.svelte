@@ -299,7 +299,7 @@
         <Text id="image-crop-remote-loading-text">Loading image bitmap...</Text>
       {/if}
     </Container>
-    <CodeBlock id="image-crop-remote-code" code={codeBlockContents.imageCropBasic} language="svelte" />
+    <CodeBlock id="image-crop-remote-code" sourceCode={codeBlockContents.imageCropBasic} language="svelte" />
   </Container>
 
   <!-- Example 2: File Picker -->
@@ -458,6 +458,6 @@
         </Container>
       {/if}
     </Container>
-    <CodeBlock id="image-crop-upload-code" code={codeBlockContents.imageCropUpload} language="svelte" />
+    <CodeBlock id="image-crop-upload-code" sourceCode={codeBlockContents.imageCropUpload} language="svelte" />
   </Container>
 </Container>

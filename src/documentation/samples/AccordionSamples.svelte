@@ -28,7 +28,7 @@
         {/snippet}
       </Accordion>
     </Container>
-    <CodeBlock id="accordion-sample-standard-code" code={codeBlockContents.accordionStandard} language="svelte" />
+    <CodeBlock id="accordion-sample-standard-code" sourceCode={codeBlockContents.accordionStandard} language="svelte" />
   </Container>
 
   <!-- Custom Transition -->
@@ -49,6 +49,6 @@
         {/snippet}
       </Accordion>
     </Container>
-    <CodeBlock id="accordion-sample-custom-code" code={codeBlockContents.accordionCustom} language="svelte" />
+    <CodeBlock id="accordion-sample-custom-code" sourceCode={codeBlockContents.accordionCustom} language="svelte" />
   </Container>
 </Container>

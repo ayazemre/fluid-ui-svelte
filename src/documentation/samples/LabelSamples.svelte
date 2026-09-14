@@ -16,7 +16,7 @@
         <InputField id="full-name" placeholder="John Doe" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-standard-code" code={codeBlockContents.labelStandard} language="svelte" />
+    <CodeBlock id="label-sample-standard-code" sourceCode={codeBlockContents.labelStandard} language="svelte" />
   </Container>
 
   <!-- Required Indicator -->
@@ -33,7 +33,7 @@
         <InputField id="email-address" type="text" placeholder="john@example.com" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-required-code" code={codeBlockContents.labelRequired} language="svelte" />
+    <CodeBlock id="label-sample-required-code" sourceCode={codeBlockContents.labelRequired} language="svelte" />
   </Container>
 
   <!-- Custom Styled -->
@@ -46,6 +46,6 @@
         <InputField id="custom-input" placeholder="Styled input" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-custom-code" code={codeBlockContents.labelCustom} language="svelte" />
+    <CodeBlock id="label-sample-custom-code" sourceCode={codeBlockContents.labelCustom} language="svelte" />
   </Container>
 </Container>

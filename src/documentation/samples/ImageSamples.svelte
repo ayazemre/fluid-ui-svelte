@@ -25,7 +25,7 @@
         <Image id="image-sample-standard-img" src="https://picsum.photos/id/1018/500/300" alt="Nature scene" class="h-full w-full object-cover!" />
       </Container>
     </Container>
-    <CodeBlock id="image-sample-standard-code" code={codeBlockContents.imageStandard} language="svelte" />
+    <CodeBlock id="image-sample-standard-code" sourceCode={codeBlockContents.imageStandard} language="svelte" />
   </Container>
 
   <!-- Placeholder / Loading Example -->
@@ -39,6 +39,6 @@
         <Image id="image-sample-loading-img" src={delayedSrc} alt="Delayed loading example" class="h-full w-full object-cover!" />
       </Container>
     </Container>
-    <CodeBlock id="image-sample-loading-code" code={codeBlockContents.imageLoading} language="svelte" />
+    <CodeBlock id="image-sample-loading-code" sourceCode={codeBlockContents.imageLoading} language="svelte" />
   </Container>
 </Container>

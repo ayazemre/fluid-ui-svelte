@@ -51,7 +51,7 @@
       </Dropzone>
     </Container>
 
-    <CodeBlock id="dropzone-sample-file-code" code={codeBlockContents.dropzoneFile} language="svelte" />
+    <CodeBlock id="dropzone-sample-file-code" sourceCode={codeBlockContents.dropzoneFile} language="svelte" />
   </Container>
 
   <!-- Data Only Dropzone -->
@@ -111,6 +111,6 @@
       </Dropzone>
     </Container>
 
-    <CodeBlock id="dropzone-sample-data-code" code={codeBlockContents.dropzoneData} language="svelte" />
+    <CodeBlock id="dropzone-sample-data-code" sourceCode={codeBlockContents.dropzoneData} language="svelte" />
   </Container>
 </Container>

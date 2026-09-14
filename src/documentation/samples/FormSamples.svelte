@@ -40,6 +40,6 @@
       </Form>
     </Container>
 
-    <CodeBlock id="form-sample-basic-code" code={codeBlockContents.formBasic} language="svelte" />
+    <CodeBlock id="form-sample-basic-code" sourceCode={codeBlockContents.formBasic} language="svelte" />
   </Container>
 </Container>

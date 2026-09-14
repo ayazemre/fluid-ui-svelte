@@ -28,7 +28,7 @@
         Primary Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-primary-code" code={codeBlockContents.buttonPrimary} language="svelte" />
+    <CodeBlock id="button-sample-primary-code" sourceCode={codeBlockContents.buttonPrimary} language="svelte" />
   </Container>
 
   <!-- Secondary Button -->
@@ -51,7 +51,7 @@
         Secondary Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-secondary-code" code={codeBlockContents.buttonSecondary} language="svelte" />
+    <CodeBlock id="button-sample-secondary-code" sourceCode={codeBlockContents.buttonSecondary} language="svelte" />
   </Container>
 
   <!-- Outline Button -->
@@ -74,7 +74,7 @@
         Outline Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-outline-code" code={codeBlockContents.buttonOutline} language="svelte" />
+    <CodeBlock id="button-sample-outline-code" sourceCode={codeBlockContents.buttonOutline} language="svelte" />
   </Container>
 
   <!-- Transparent Button -->
@@ -97,7 +97,7 @@
         Transparent Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-transparent-code" code={codeBlockContents.buttonTransparent} language="svelte" />
+    <CodeBlock id="button-sample-transparent-code" sourceCode={codeBlockContents.buttonTransparent} language="svelte" />
   </Container>
 
   <!-- With Icon -->
@@ -121,6 +121,6 @@
         <Text id="button-sample-icon-text" type="span">GitHub</Text>
       </Button>
     </Container>
-    <CodeBlock id="button-sample-icon-code" code={codeBlockContents.buttonIcon} language="svelte" />
+    <CodeBlock id="button-sample-icon-code" sourceCode={codeBlockContents.buttonIcon} language="svelte" />
   </Container>
 </Container>

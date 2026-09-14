@@ -30,7 +30,7 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-phone-code" code={codeBlockContents.internationalInputBasic} language="svelte" />
+    <CodeBlock id="international-input-phone-code" sourceCode={codeBlockContents.internationalInputBasic} language="svelte" />
   </Container>
 
   <!-- 2. Country Only Mode -->
@@ -45,7 +45,7 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-country-code" code={codeBlockContents.internationalInputCountry} language="svelte" />
+    <CodeBlock id="international-input-country-code" sourceCode={codeBlockContents.internationalInputCountry} language="svelte" />
   </Container>
 
   <!-- 3. Currency Mode -->
@@ -66,6 +66,6 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-currency-code" code={codeBlockContents.internationalInputCurrency} language="svelte" />
+    <CodeBlock id="international-input-currency-code" sourceCode={codeBlockContents.internationalInputCurrency} language="svelte" />
   </Container>
 </Container>

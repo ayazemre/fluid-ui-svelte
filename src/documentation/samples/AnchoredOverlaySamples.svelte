@@ -33,7 +33,7 @@
         {/snippet}
       </AnchoredOverlay>
     </Container>
-    <CodeBlock id="anchored-overlay-sample-click-code" code={codeBlockContents.anchoredOverlayClick} language="svelte" />
+    <CodeBlock id="anchored-overlay-sample-click-code" sourceCode={codeBlockContents.anchoredOverlayClick} language="svelte" />
   </Container>
 
   <!-- 2. Hover Trigger -->
@@ -62,6 +62,6 @@
         {/snippet}
       </AnchoredOverlay>
     </Container>
-    <CodeBlock id="anchored-overlay-sample-hover-code" code={codeBlockContents.anchoredOverlayHover} language="svelte" />
+    <CodeBlock id="anchored-overlay-sample-hover-code" sourceCode={codeBlockContents.anchoredOverlayHover} language="svelte" />
   </Container>
 </Container>

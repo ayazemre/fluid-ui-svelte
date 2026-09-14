@@ -19,7 +19,7 @@
         <Text id="container-sample-header-text" type="h3" class="text-primary-900 dark:text-primary-100">Header Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-header-code" code={codeBlockContents.containerHeader} language="svelte" />
+    <CodeBlock id="container-sample-header-code" sourceCode={codeBlockContents.containerHeader} language="svelte" />
   </Container>
 
   <!-- Nav Container -->
@@ -35,7 +35,7 @@
         <Text id="container-sample-nav-text" class="text-secondary-900 dark:text-secondary-100">Navigation Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-nav-code" code={codeBlockContents.containerNav} language="svelte" />
+    <CodeBlock id="container-sample-nav-code" sourceCode={codeBlockContents.containerNav} language="svelte" />
   </Container>
 
   <!-- Section Container -->
@@ -51,7 +51,7 @@
         <Text id="container-sample-section-text" class="text-info-900 dark:text-info-100">Section Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-section-code" code={codeBlockContents.containerSection} language="svelte" />
+    <CodeBlock id="container-sample-section-code" sourceCode={codeBlockContents.containerSection} language="svelte" />
   </Container>
 
   <!-- Footer Container -->
@@ -67,6 +67,6 @@
         <Text id="container-sample-footer-text" class="text-warning-900 dark:text-warning-100">Footer Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-footer-code" code={codeBlockContents.containerFooter} language="svelte" />
+    <CodeBlock id="container-sample-footer-code" sourceCode={codeBlockContents.containerFooter} language="svelte" />
   </Container>
 </Container>

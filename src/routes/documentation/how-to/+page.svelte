@@ -3,7 +3,12 @@
   import { Container, Table, Text } from "#src/lib/base/index.ts";
   import { CodeBlock, Page } from "#src/lib/components/index.ts";
 
-  const pageData = (documentationRegistry as unknown as Record<string, Record<string, { title: string; description: string; sections: Array<Record<string, unknown>> }>>).pages["how-to"];
+  const pageData = (
+    documentationRegistry as unknown as Record<
+      string,
+      Record<string, { title: string; description: string; sections: Array<Record<string, unknown>> }>
+    >
+  ).pages["how-to"];
 
   type TableData = { headers: Array<string>; rows: Array<Array<string>> };
   type HowToSection = {
@@ -13,13 +18,16 @@
     content?: string;
     table?: TableData;
     code?: string;
+    language?: string;
     warning?: string;
   };
 
   const sections = pageData.sections as unknown as Array<HowToSection>;
 
   function getTableRows(table: TableData): Array<Array<{ value: string; col: string }>> {
-    return table.rows.map((row) => row.map((value, index) => ({ col: table.headers[index]?.toLowerCase().replace(/[^a-z0-9]/g, "-") ?? "col", value })));
+    return table.rows.map((row) =>
+      row.map((value, index) => ({ col: table.headers[index]?.toLowerCase().replace(/[^a-z0-9]/g, "-") ?? "col", value })),
+    );
   }
 </script>
 
@@ -40,7 +48,10 @@
           <Text id={`how-to-${section.id}-body`}>{section.content}</Text>
         {/if}
         {#if section.warning}
-          <Container id={`how-to-${section.id}-warning`} class="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
+          <Container
+            id={`how-to-${section.id}-warning`}
+            class="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950"
+          >
             <Text id={`how-to-${section.id}-warning-text`} class="text-sm text-amber-800 dark:text-amber-200">Warning: {section.warning}</Text>
           </Container>
         {/if}
@@ -57,8 +68,14 @@
                 <Text id={`how-to-${section.id}-head-${item.toLowerCase().replace(/[^a-z0-9]/g, "-")}`} class="p-2 font-bold">{item}</Text>
               {/snippet}
               {#snippet bodyTemplate(item)}
-                <Container id={`how-to-${section.id}-cell-${item.col}-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`} overrideDefaultStyling class="p-2">
-                  <Text id={`how-to-${section.id}-val-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`} type="code" class="text-sm">{item.value}</Text>
+                <Container
+                  id={`how-to-${section.id}-cell-${item.col}-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`}
+                  overrideDefaultStyling
+                  class="p-2"
+                >
+                  <Text id={`how-to-${section.id}-val-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`} type="code" class="text-sm"
+                    >{item.value}</Text
+                  >
                 </Container>
               {/snippet}
               {#snippet footerTemplate()}
@@ -68,7 +85,7 @@
           </Container>
         {/if}
         {#if section.code}
-          <CodeBlock id={`how-to-${section.id}-code`} code={section.code} language="svelte" />
+          <CodeBlock id={`how-to-${section.id}-code`} sourceCode={section.code} language={section.language ?? "svelte"} />
         {/if}
       </Container>
     {/each}

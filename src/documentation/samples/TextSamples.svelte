@@ -15,7 +15,7 @@
       <Text id="text-sample-h2" type="h2" class="text-xl font-semibold">Heading 2</Text>
       <Text id="text-sample-h3" type="h3" class="text-lg font-medium">Heading 3</Text>
     </Container>
-    <CodeBlock id="text-sample-headings-code" code={codeBlockContents.textHeadings} language="svelte" />
+    <CodeBlock id="text-sample-headings-code" sourceCode={codeBlockContents.textHeadings} language="svelte" />
   </Container>
 
   <!-- Inline Styles -->
@@ -28,7 +28,7 @@
         <Text id="text-sample-inline-mark" type="mark">highlighted</Text>.
       </Text>
     </Container>
-    <CodeBlock id="text-sample-inline-code" code={codeBlockContents.textInline} language="svelte" />
+    <CodeBlock id="text-sample-inline-code" sourceCode={codeBlockContents.textInline} language="svelte" />
   </Container>
 
   <!-- Code and Pre -->
@@ -44,7 +44,7 @@
 }`}
       </Text>
     </Container>
-    <CodeBlock id="text-sample-code-code" code={codeBlockContents.textCode} language="svelte" />
+    <CodeBlock id="text-sample-code-code" sourceCode={codeBlockContents.textCode} language="svelte" />
   </Container>
 
   <!-- Semantic Extras -->
@@ -60,6 +60,6 @@
         H<Text id="text-sample-sub-formula" type="sub">2</Text>O and E = mc<Text id="text-sample-sup-formula" type="sup">2</Text>
       </Text>
     </Container>
-    <CodeBlock id="text-sample-semantic-code" code={codeBlockContents.textSemantic} language="svelte" />
+    <CodeBlock id="text-sample-semantic-code" sourceCode={codeBlockContents.textSemantic} language="svelte" />
   </Container>
 </Container>

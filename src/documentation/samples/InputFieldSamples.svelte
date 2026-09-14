@@ -20,7 +20,7 @@
       <InputField id="input-sample-basic-input" placeholder="Enter your name" bind:value={textValue} class="w-full" />
       <Text id="input-sample-basic-value-text" class="mt-2 text-sm text-neutral-500">Value: {textValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-basic-code" code={codeBlockContents.inputBasic} language="svelte" />
+    <CodeBlock id="input-sample-basic-code" sourceCode={codeBlockContents.inputBasic} language="svelte" />
   </Container>
 
   <!-- Password -->
@@ -31,7 +31,7 @@
       <InputField id="input-sample-password-input" type="password" placeholder="Enter password" bind:value={passwordValue} class="w-full" />
       <Text id="input-sample-password-value-text" class="mt-2 text-sm text-neutral-500">Value: {passwordValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-password-code" code={codeBlockContents.inputPassword} language="svelte" />
+    <CodeBlock id="input-sample-password-code" sourceCode={codeBlockContents.inputPassword} language="svelte" />
   </Container>
 
   <!-- Textarea -->
@@ -48,7 +48,7 @@
       />
       <Text id="input-sample-textarea-value-text" class="mt-2 text-sm text-neutral-500">Value: {textAreaValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-textarea-code" code={codeBlockContents.inputTextArea} language="svelte" />
+    <CodeBlock id="input-sample-textarea-code" sourceCode={codeBlockContents.inputTextArea} language="svelte" />
   </Container>
 
   <!-- Numeric Filter -->
@@ -65,7 +65,7 @@
       />
       <Text id="input-sample-numeric-value-text" class="mt-2 text-sm text-neutral-500">Value: {numericValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-numeric-code" code={codeBlockContents.inputNumeric} language="svelte" />
+    <CodeBlock id="input-sample-numeric-code" sourceCode={codeBlockContents.inputNumeric} language="svelte" />
   </Container>
 
   <!-- Error State -->
@@ -76,6 +76,6 @@
       <InputField id="input-sample-error-input" class="fluid-input-field-error w-full" placeholder="Error styling" bind:value={errorValue} />
       <Text id="input-sample-error-value-text" class="mt-2 text-sm text-neutral-500">Value: {errorValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-error-code" code={codeBlockContents.inputError} language="svelte" />
+    <CodeBlock id="input-sample-error-code" sourceCode={codeBlockContents.inputError} language="svelte" />
   </Container>
 </Container>

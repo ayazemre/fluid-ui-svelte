@@ -27,7 +27,7 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-hour-code" code={codeBlockContents.timePickerHourOnly} language="svelte" />
+    <CodeBlock id="time-picker-sample-hour-code" sourceCode={codeBlockContents.timePickerHourOnly} language="svelte" />
   </Container>
 
   <!-- 2. Standard Hour & Minute Mode -->
@@ -46,7 +46,7 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-minute-code" code={codeBlockContents.timePickerBasic} language="svelte" />
+    <CodeBlock id="time-picker-sample-minute-code" sourceCode={codeBlockContents.timePickerBasic} language="svelte" />
   </Container>
 
   <!-- 3. Precise Seconds Mode -->
@@ -65,7 +65,7 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-seconds-code" code={codeBlockContents.timePickerWithSeconds} language="svelte" />
+    <CodeBlock id="time-picker-sample-seconds-code" sourceCode={codeBlockContents.timePickerWithSeconds} language="svelte" />
   </Container>
 
   <!-- 4. 12-Hour AM/PM Format -->
@@ -84,6 +84,6 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-12h-code" code={codeBlockContents.timePickerTwelveHour} language="svelte" />
+    <CodeBlock id="time-picker-sample-12h-code" sourceCode={codeBlockContents.timePickerTwelveHour} language="svelte" />
   </Container>
 </Container>

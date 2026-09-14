@@ -31,6 +31,6 @@
         </Container>
       </Modal>
     </Container>
-    <CodeBlock id="modal-basic-codeblock" code={codeBlockContents.modalBasic} language="svelte" />
+    <CodeBlock id="modal-basic-codeblock" sourceCode={codeBlockContents.modalBasic} language="svelte" />
   </Container>
 </Container>

@@ -1,7 +1,3 @@
-import { existsSync, readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-
 import { documentationRegistry } from "../documentation/documentation.ts";
 
 export type ComponentDocumentationItem = {
@@ -43,42 +39,126 @@ export function loadDocumentationRegistry(): CompleteDocumentationRegistry {
   );
 }
 
-function resolveSvelteComponentFilePath(categoryName: string, elementName: string): string | undefined {
-  const currentDirectory = dirname(fileURLToPath(import.meta.url));
-  const candidateFilenames = [`${convertKebabCaseToPascalCase(elementName)}.svelte`, `${elementName}.svelte`];
+export type ComponentPropDocumentation = {
+  default?: string;
+  description?: string;
+  prop?: string;
+  type?: string;
+};
 
-  const candidateBasePaths = [
-    resolve(currentDirectory, "../lib", categoryName),
-    resolve(currentDirectory, "../dist", categoryName),
-    resolve(process.cwd(), "src/lib", categoryName),
-    resolve(process.cwd(), "dist", categoryName),
-  ];
+function isPropDocumentationEntry(entry: unknown): entry is ComponentPropDocumentation {
+  if (!entry || typeof entry !== "object") {
+    return false;
+  }
+  return typeof (entry as Record<string, unknown>).prop === "string";
+}
 
-  for (const basePath of candidateBasePaths) {
-    for (const filename of candidateFilenames) {
-      const prospectivePath = resolve(basePath, filename);
-      if (existsSync(prospectivePath)) {
-        return prospectivePath;
-      }
+function padColumnValue(columnValue: string, columnWidth: number): string {
+  if (columnValue.length >= columnWidth) {
+    return columnValue;
+  }
+  return columnValue + " ".repeat(columnWidth - columnValue.length);
+}
+
+export function formatPropsTable(componentProps?: Array<unknown>): string {
+  if (!componentProps || componentProps.length === 0) {
+    return "Props: none documented.";
+  }
+
+  const tableRows: Array<{ defaultValue: string; description: string; name: string; type: string }> = [];
+  for (const entry of componentProps) {
+    if (!isPropDocumentationEntry(entry)) {
+      continue;
+    }
+    tableRows.push({
+      defaultValue: entry.default ?? "",
+      description: entry.description ?? "",
+      name: entry.prop ?? "",
+      type: entry.type ?? "",
+    });
+  }
+
+  if (tableRows.length === 0) {
+    return "Props: none documented.";
+  }
+
+  const headerName = "Prop";
+  const headerType = "Type";
+  const headerDefault = "Default";
+  const headerDescription = "Description";
+
+  let nameWidth = headerName.length;
+  let typeWidth = headerType.length;
+  let defaultWidth = headerDefault.length;
+  let descriptionWidth = headerDescription.length;
+
+  for (const tableRow of tableRows) {
+    if (tableRow.name.length > nameWidth) {
+      nameWidth = tableRow.name.length;
+    }
+    if (tableRow.type.length > typeWidth) {
+      typeWidth = tableRow.type.length;
+    }
+    if (tableRow.defaultValue.length > defaultWidth) {
+      defaultWidth = tableRow.defaultValue.length;
+    }
+    if (tableRow.description.length > descriptionWidth) {
+      descriptionWidth = tableRow.description.length;
     }
   }
 
-  return undefined;
+  const outputLines: Array<string> = ["Props:"];
+  outputLines.push(
+    padColumnValue(headerName, nameWidth) +
+      "  " +
+      padColumnValue(headerType, typeWidth) +
+      "  " +
+      padColumnValue(headerDefault, defaultWidth) +
+      "  " +
+      headerDescription,
+  );
+  outputLines.push(
+    padColumnValue("", nameWidth).replace(/ /g, "-") +
+      "  " +
+      padColumnValue("", typeWidth).replace(/ /g, "-") +
+      "  " +
+      padColumnValue("", defaultWidth).replace(/ /g, "-") +
+      "  " +
+      padColumnValue("", descriptionWidth).replace(/ /g, "-"),
+  );
+
+  for (const tableRow of tableRows) {
+    outputLines.push(
+      padColumnValue(tableRow.name, nameWidth) +
+        "  " +
+        padColumnValue(tableRow.type, typeWidth) +
+        "  " +
+        padColumnValue(tableRow.defaultValue, defaultWidth) +
+        "  " +
+        tableRow.description,
+    );
+  }
+
+  return outputLines.join("\n");
 }
 
-export function readSvelteComponentSource(categoryName: string, elementName: string): string {
-  const resolvedPath = resolveSvelteComponentFilePath(categoryName, elementName);
-
-  if (resolvedPath === undefined) {
-    return `// Source file for ${categoryName}/${elementName} could not be located on disk.`;
+function resolveCategoryImportPath(categoryKey: string): string {
+  if (categoryKey === "base") {
+    return "fluid-ui-svelte/base";
   }
-
-  try {
-    return readFileSync(resolvedPath, "utf-8").trim();
-  } catch (fileReadError) {
-    const errorMessage = fileReadError instanceof Error ? fileReadError.message : String(fileReadError);
-    return `// Error reading file at ${resolvedPath}: ${errorMessage}`;
+  if (categoryKey === "components") {
+    return "fluid-ui-svelte/components";
   }
+  if (categoryKey === "prebuilt") {
+    return "fluid-ui-svelte/prebuilt";
+  }
+  return "fluid-ui-svelte";
+}
+
+export function formatUsageSnippet(categoryKey: string, elementKey: string): string {
+  const componentName = convertKebabCaseToPascalCase(elementKey);
+  const importPath = resolveCategoryImportPath(categoryKey);
+  return "<script>\n  import { " + componentName + " } from '" + importPath + "';\n</script>";
 }
 
 export function findComponentDocumentation(
@@ -184,6 +264,12 @@ export function formatGenericDocumentation(): string {
     }
   }
 
+  outputLines.push("");
+  outputLines.push("For detailed information about an element, run:");
+  outputLines.push("  npx fluid-ui-svelte --documentation select=<category.element>");
+  outputLines.push("Example:");
+  outputLines.push("  npx fluid-ui-svelte --documentation select=components.code-block");
+
   return outputLines.join("\n");
 }
 
@@ -204,14 +290,14 @@ export function formatElementDocumentation(targetCategory: string, targetElement
   }
 
   const { categoryKey, elementKey, item } = searchResult;
-  const svelteSourceCode = readSvelteComponentSource(categoryKey, elementKey);
 
   const outputLines: Array<string> = [
-    `Component: ${categoryKey}.${elementKey}`,
-    `Title: ${item.title}`,
-    `Description: ${item.description}`,
-    "Source:",
-    svelteSourceCode,
+    "Component: " + categoryKey + "." + elementKey,
+    "Title: " + item.title,
+    "Description: " + item.description,
+    "Usage:",
+    formatUsageSnippet(categoryKey, elementKey),
+    formatPropsTable(item.props),
   ];
 
   return outputLines.join("\n");
