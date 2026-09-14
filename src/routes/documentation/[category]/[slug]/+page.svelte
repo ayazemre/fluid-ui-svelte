@@ -1,6 +1,6 @@
 <script lang="ts">
   import * as Samples from "#src/documentation/samples/index.ts";
-  import { Container, Text, Table } from "#src/lib/base/index.ts";
+  import { Container, Text, Table } from "#src/lib//base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
 
   let { data } = $props();

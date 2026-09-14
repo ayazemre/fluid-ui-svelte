@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { applyDiffLineDecision } from "#src/lib/components/codeBlock.ts";
   import { CodeBlock } from "#src/lib/components/index.ts";
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { mergeClasses } from "#src/lib/utilities/common.ts";
-
   import type { Snippet } from "svelte";
   import type { HTMLAnchorAttributes } from "svelte/elements";
+
+  import { mergeClasses } from "../utilities/common.ts";
 
   let {
     id,

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Button, Container, InputField, Text } from "#src/lib/base/index.ts";
   import { AnchoredOverlay } from "#src/lib/components/index.ts";
   import {
     filterCountryEntries,
@@ -8,6 +7,8 @@
     getTriggerDisplay,
     type InternationalInputMode,
   } from "#src/lib/prebuilt/internationalInput.ts";
+
+  import { Button, Container, InputField, Text } from "../base/index.ts";
 
   let {
     id,

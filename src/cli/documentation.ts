@@ -1,4 +1,5 @@
 import { documentationRegistry } from "../documentation/documentation.ts";
+import { codeBlockContents } from "../documentation/samples/codeBlockContents.ts";
 
 export type ComponentDocumentationItem = {
   title: string;
@@ -188,6 +189,62 @@ export function findComponentDocumentation(
   return undefined;
 }
 
+export type UsageExampleEntry = {
+  exampleCode: string;
+  exampleName: string;
+};
+
+function resolveExamplePrefix(elementKey: string): string {
+  const normalizedElementKey: string = normalizeIdentifier(elementKey);
+  if (normalizedElementKey === "inputfield") {
+    return "input";
+  }
+  if (normalizedElementKey === "notificationarea") {
+    return "notification";
+  }
+  return normalizedElementKey;
+}
+
+export function findUsageExamplesForElement(elementKey: string): Array<UsageExampleEntry> {
+  const examplePrefix: string = resolveExamplePrefix(elementKey);
+  const matchedExamples: Array<UsageExampleEntry> = [];
+  for (const [contentKey, contentValue] of Object.entries(codeBlockContents)) {
+    if (typeof contentValue !== "string") {
+      continue;
+    }
+    if (contentKey.toLowerCase().startsWith(examplePrefix.toLowerCase())) {
+      matchedExamples.push({
+        exampleCode: contentValue,
+        exampleName: contentKey,
+      });
+    }
+  }
+  matchedExamples.sort((firstEntry, secondEntry) => {
+    if (firstEntry.exampleName < secondEntry.exampleName) {
+      return -1;
+    }
+    if (firstEntry.exampleName > secondEntry.exampleName) {
+      return 1;
+    }
+    return 0;
+  });
+  return matchedExamples.slice(0, 3);
+}
+
+export function formatUsageExamples(elementKey: string): string {
+  const matchedExamples: Array<UsageExampleEntry> = findUsageExamplesForElement(elementKey);
+  if (matchedExamples.length === 0) {
+    return "Usage examples: none documented in codeBlockContents.";
+  }
+  const exampleLines: Array<string> = ["Usage examples (" + String(matchedExamples.length) + " of up to 3):"];
+  for (const matchedExample of matchedExamples) {
+    exampleLines.push("");
+    exampleLines.push("--- " + matchedExample.exampleName + " ---");
+    exampleLines.push(matchedExample.exampleCode);
+  }
+  return exampleLines.join("\n");
+}
+
 export function formatGenericDocumentation(): string {
   const registry = loadDocumentationRegistry();
 
@@ -244,6 +301,18 @@ export function formatGenericDocumentation(): string {
     "Fluid UI is a pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components and prebuilt domain widgets, giving you complete control over your application's architecture.";
 
   const outputLines: Array<string> = ["Fluid UI Svelte:", libraryDescription];
+  outputLines.push("");
+  outputLines.push("Requirements: Svelte 5 Runes mode, Node 24+ native TypeScript, Tailwind CSS 4.");
+  outputLines.push("Rules: every element requires a mandatory id with scoped child ids. Compose from Base elements.");
+  outputLines.push("");
+  outputLines.push("Installation:");
+  outputLines.push("  npm install fluid-ui-svelte");
+  outputLines.push("  Import fluidui.css in your global CSS, then import from layer paths.");
+  outputLines.push("");
+  outputLines.push("Usage:");
+  outputLines.push("  import { Button } from 'fluid-ui-svelte/base';");
+  outputLines.push("  import { Accordion } from 'fluid-ui-svelte/components';");
+  outputLines.push("  import { Breadcrumb } from 'fluid-ui-svelte/prebuilt';");
 
   for (const [categoryKey, categoryRecord] of Object.entries(registry)) {
     const categoryMetadata = categoryDescriptions[categoryKey];
@@ -262,13 +331,17 @@ export function formatGenericDocumentation(): string {
     for (const [elementKey, documentationItem] of Object.entries(categoryRecord)) {
       outputLines.push(`- ${categoryKey}.${elementKey}: ${documentationItem.description}`);
     }
+    outputLines.push("Count: " + String(Object.keys(categoryRecord).length) + " elements.");
   }
 
   outputLines.push("");
-  outputLines.push("For detailed information about an element, run:");
+  outputLines.push("Next steps:");
+  outputLines.push("  For one element tutorial, run:");
   outputLines.push("  npx fluid-ui-svelte --documentation select=<category.element>");
-  outputLines.push("Example:");
+  outputLines.push("Examples:");
+  outputLines.push("  npx fluid-ui-svelte --documentation select=base.button");
   outputLines.push("  npx fluid-ui-svelte --documentation select=components.code-block");
+  outputLines.push("  npx fluid-ui-svelte --documentation select=prebuilt.breadcrumb");
 
   return outputLines.join("\n");
 }
@@ -290,14 +363,20 @@ export function formatElementDocumentation(targetCategory: string, targetElement
   }
 
   const { categoryKey, elementKey, item } = searchResult;
+  const importPath = resolveCategoryImportPath(categoryKey);
 
   const outputLines: Array<string> = [
     "Component: " + categoryKey + "." + elementKey,
     "Title: " + item.title,
+    "Layer: " + categoryKey + " (" + importPath + ")",
     "Description: " + item.description,
+    "Rules: pass a mandatory id. Child Base elements use scoped ids like <id>-panel. Base uses overrideDefaultStyling. Components and prebuilt use variant.",
+    "Import: import { " + convertKebabCaseToPascalCase(elementKey) + " } from '" + importPath + "';",
     "Usage:",
     formatUsageSnippet(categoryKey, elementKey),
+    formatUsageExamples(elementKey),
     formatPropsTable(item.props),
+    "Next: npx fluid-ui-svelte --documentation select=" + categoryKey + "." + elementKey,
   ];
 
   return outputLines.join("\n");

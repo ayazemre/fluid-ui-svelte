@@ -3,7 +3,7 @@
   import { page } from "$app/state";
   import Icon from "@iconify/svelte";
 
-  import { Container, Text, Link, Button } from "#src/lib/base/index.ts";
+  import { Container, Text, Link, Button } from "#src/lib//base/index.ts";
 
   import { globalState } from "./globalState.svelte.ts";
 

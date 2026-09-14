@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { Container } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
+  import { Container } from "../base/index.ts";
   import { serializeStructuredData, type OpenGraphType, type TwitterCardType } from "./page.ts";
 
   let {

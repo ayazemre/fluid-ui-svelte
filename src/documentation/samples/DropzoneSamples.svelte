@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Container, Text } from "#src/lib/base/index.ts";
+  import { Container, Text } from "#src/lib//base/index.ts";
   import { Dropzone, CodeBlock, Draggable } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";

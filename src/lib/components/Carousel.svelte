@@ -1,8 +1,7 @@
 <script lang="ts" generics="T">
-  import { Container } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
 
+  import { Container } from "../base/index.ts";
   import { getCarouselScrollMetrics, scrollToIndex, type CarouselScrollMetrics } from "./carousel.ts";
 
   let {

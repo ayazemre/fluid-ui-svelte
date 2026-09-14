@@ -4,7 +4,7 @@
   import { fade, fly } from "svelte/transition";
 
   import { documentationRegistry } from "#src/documentation/documentation.ts";
-  import { Container, Link, Text } from "#src/lib/base/index.ts";
+  import { Container, Link, Text } from "#src/lib//base/index.ts";
   import { Accordion, Drawer } from "#src/lib/components/index.ts";
 
   import { globalState } from "../globalState.svelte.ts";

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { mergeClasses } from "#src/lib/utilities/common.ts";
-
   import type { HTMLImgAttributes } from "svelte/elements";
+
+  import { mergeClasses } from "../utilities/common.ts";
 
   let {
     id,

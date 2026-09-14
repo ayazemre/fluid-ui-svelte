@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
 
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { CodeBlock } from "#src/lib/components/index.ts";
   import { NotificationArea } from "#src/lib/prebuilt/index.ts";
 

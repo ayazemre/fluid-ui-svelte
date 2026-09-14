@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2026-09-14
+
+### Added
+
+- CLI element tutorials now include up to 3 usage examples from `codeBlockContents` with alias handling for `input-field` and `notification-area`.
+- CLI generic output now reports per category element counts with install, usage, and next step guidance.
+- CLI element output now reports layer import path, mandatory `id` rules, and import line.
+
+### Changed
+
+- Migrated single parent library imports from `#src/lib` aliases to relative `../` paths across base, components, prebuilt, routes, and samples to survive `svelte-package` `lib` flattening.
+- Extended CLI help with categories, requirements, mandatory `id` rules, and examples.
+- Rewrote `README.md` into a comprehensive guide from the getting started structure with architecture, pillars, install, usage, CLI reference, tech table, naming, and component lists.
+- Removed website references from `README.md` and CLI output.
+
+### Fixed
+
+- Fixed `dist` imports rewriting to `../lib` paths by avoiding cross slice aliases for close files.
+
 ## [0.4.0] - 2026-09-14
 
 ### Added

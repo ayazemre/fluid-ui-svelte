@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade, fly } from "svelte/transition";
 
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { CodeBlock, Drawer } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";

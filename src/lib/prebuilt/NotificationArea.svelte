@@ -2,7 +2,6 @@
   import { flip } from "svelte/animate";
   import { fade, fly } from "svelte/transition";
 
-  import { Container } from "#src/lib/base/index.ts";
   import {
     getNotificationAreaPositionClass,
     getNotificationFlyParameters,
@@ -12,6 +11,8 @@
   } from "#src/lib/prebuilt/notificationArea.ts";
 
   import type { Snippet } from "svelte";
+
+  import { Container } from "../base/index.ts";
 
   let {
     id,

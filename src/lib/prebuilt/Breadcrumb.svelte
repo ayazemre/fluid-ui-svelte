@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Container, Link, List, Text } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
+
+  import { Container, Link, List, Text } from "../base/index.ts";
 
   let {
     id,

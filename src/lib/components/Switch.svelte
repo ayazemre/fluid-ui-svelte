@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Text } from "#src/lib/base/index.ts";
+  import { Button, Text } from "../base/index.ts";
 
   let {
     id,

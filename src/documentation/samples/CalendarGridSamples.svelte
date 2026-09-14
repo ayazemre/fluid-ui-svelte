@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { addMonthsToIsoDateString, getCurrentIsoDateString } from "#src/lib/components/calendarGrid.ts";
   import { CalendarGrid, CodeBlock } from "#src/lib/components/index.ts";
 

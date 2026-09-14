@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Container, Text } from "#src/lib/base/index.ts";
+  import { Container, Text } from "#src/lib//base/index.ts";
   import { CodeBlock } from "#src/lib/components/index.ts";
   import { Breadcrumb } from "#src/lib/prebuilt/index.ts";
 
