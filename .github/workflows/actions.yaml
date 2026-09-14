@@ -23,11 +23,12 @@ jobs:
     secrets: inherit
 
   publish:
+    if: github.ref == 'refs/heads/main'
     needs: [integrity, test]
     uses: ./.github/workflows/publish.yaml
     with:
       current_version: ${{ needs.integrity.outputs.current_version }}
     permissions:
       contents: read
-      packages: write
+      id-token: write
     secrets: inherit
