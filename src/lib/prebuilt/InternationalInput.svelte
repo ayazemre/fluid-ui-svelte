@@ -1,14 +1,13 @@
 <script lang="ts">
-  import { AnchoredOverlay } from "#src/lib/components/index.ts";
+  import { Button, Container, InputField, Text } from "../base/index.ts";
+  import { AnchoredOverlay } from "../components/index.ts";
   import {
     filterCountryEntries,
     getCountryData,
     getPlaceholderForMode,
     getTriggerDisplay,
     type InternationalInputMode,
-  } from "#src/lib/prebuilt/internationalInput.ts";
-
-  import { Button, Container, InputField, Text } from "../base/index.ts";
+  } from "../prebuilt/internationalInput.ts";
 
   let {
     id,

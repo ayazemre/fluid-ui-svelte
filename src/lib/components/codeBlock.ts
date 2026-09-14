@@ -1,4 +1,4 @@
-import type { ParserConfiguration, ParserRule, ParserToken, TokenThemeMapping } from "#src/lib/utilities/parsers.ts";
+import type { ParserConfiguration, ParserRule, ParserToken, TokenThemeMapping } from "../utilities/parsers.ts";
 
 export type {
   DiffThemeMapping,
@@ -7,7 +7,7 @@ export type {
   ParserStateDefinition,
   ParserToken,
   TokenThemeMapping,
-} from "#src/lib/utilities/parsers.ts";
+} from "../utilities/parsers.ts";
 
 function getTailwindClassesForTokenType(tokenType: string, tokenThemeMapping: TokenThemeMapping): string {
   return tokenThemeMapping[tokenType] ?? "";
