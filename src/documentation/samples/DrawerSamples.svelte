@@ -53,7 +53,7 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-basic-code" code={codeBlockContents.drawerBasicUsage} language="svelte" />
+    <CodeBlock id="drawer-sample-basic-code" sourceCode={codeBlockContents.drawerBasicUsage} language="svelte" />
   </Container>
 
   <!-- 2. Positions -->
@@ -107,7 +107,7 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-positions-code" code={codeBlockContents.drawerPositions} language="svelte" />
+    <CodeBlock id="drawer-sample-positions-code" sourceCode={codeBlockContents.drawerPositions} language="svelte" />
   </Container>
 
   <!-- 3. Animated -->
@@ -148,7 +148,7 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-animated-code" code={codeBlockContents.drawerAnimated} language="svelte" />
+    <CodeBlock id="drawer-sample-animated-code" sourceCode={codeBlockContents.drawerAnimated} language="svelte" />
   </Container>
 
   <!-- 4. Fly Animation -->
@@ -189,6 +189,6 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-fly-code" code={codeBlockContents.drawerFlyAnimation} language="svelte" />
+    <CodeBlock id="drawer-sample-fly-code" sourceCode={codeBlockContents.drawerFlyAnimation} language="svelte" />
   </Container>
 </Container>

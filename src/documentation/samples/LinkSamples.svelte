@@ -13,7 +13,7 @@
     <Container id="link-sample-standard-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Link id="link-sample-standard-link" href="/documentation/base/button">Navigate to Button</Link>
     </Container>
-    <CodeBlock id="link-sample-standard-code" code={codeBlockContents.linkStandard} language="svelte" />
+    <CodeBlock id="link-sample-standard-code" sourceCode={codeBlockContents.linkStandard} language="svelte" />
   </Container>
 
   <!-- Custom Styled -->
@@ -23,6 +23,6 @@
     <Container id="link-sample-custom-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Link id="link-sample-custom-link" href="/documentation/base/image" class="font-bold text-primary-600 uppercase">Bold Primary Link</Link>
     </Container>
-    <CodeBlock id="link-sample-custom-code" code={codeBlockContents.linkCustom} language="svelte" />
+    <CodeBlock id="link-sample-custom-code" sourceCode={codeBlockContents.linkCustom} language="svelte" />
   </Container>
 </Container>

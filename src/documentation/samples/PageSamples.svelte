@@ -73,7 +73,7 @@
       </Text>
     </Container>
 
-    <CodeBlock id="page-sample-basic-code" code={codeBlockContents.pageBasic} language="svelte" />
+    <CodeBlock id="page-sample-basic-code" sourceCode={codeBlockContents.pageBasic} language="svelte" />
   </Container>
 
   <Container id="page-sample-metadata-section" class="flex flex-col gap-4">
@@ -82,6 +82,6 @@
       >You can provide comprehensive metadata for SEO and social sharing previews (Open Graph & Twitter).</Text
     >
 
-    <CodeBlock id="page-sample-metadata-code" code={codeBlockContents.pageMetadata} language="svelte" />
+    <CodeBlock id="page-sample-metadata-code" sourceCode={codeBlockContents.pageMetadata} language="svelte" />
   </Container>
 </Container>

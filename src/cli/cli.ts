@@ -3,16 +3,17 @@
 import { printDocumentationByPath, printGenericDocumentation } from "./documentation.ts";
 
 type ParsedCommandLineArguments = {
-  command: string | undefined;
-  targetElementPath: string | undefined;
-  flags: Array<string>;
+  selectedElementPath: string | undefined;
+  showDocumentation: boolean;
   showHelp: boolean;
+  unknownArguments: Array<string>;
 };
 
 function parseCommandLineArguments(rawArguments: Array<string>): ParsedCommandLineArguments {
-  const flags: Array<string> = [];
-  const positionalArguments: Array<string> = [];
+  let selectedElementPath: string | undefined = undefined;
+  let showDocumentation = false;
   let showHelp = false;
+  const unknownArguments: Array<string> = [];
 
   for (const argumentItem of rawArguments) {
     if (argumentItem === "--help" || argumentItem === "-h" || argumentItem === "help") {
@@ -20,38 +21,24 @@ function parseCommandLineArguments(rawArguments: Array<string>): ParsedCommandLi
       continue;
     }
 
-    if (argumentItem.startsWith("-")) {
-      flags.push(argumentItem);
+    if (argumentItem === "--documentation") {
+      showDocumentation = true;
       continue;
     }
 
-    positionalArguments.push(argumentItem);
-  }
-
-  const primaryArgument = positionalArguments[0];
-  const secondaryArgument = positionalArguments[1];
-
-  let command: string | undefined = undefined;
-  let targetElementPath: string | undefined = undefined;
-
-  if (primaryArgument !== undefined) {
-    if (primaryArgument.includes(".")) {
-      command = "documentation";
-      targetElementPath = primaryArgument;
-    } else if (primaryArgument === "documentation" || primaryArgument === "docs" || primaryArgument === "component") {
-      command = "documentation";
-      targetElementPath = secondaryArgument;
-    } else {
-      command = primaryArgument;
-      targetElementPath = secondaryArgument;
+    if (argumentItem.startsWith("select=")) {
+      selectedElementPath = argumentItem.slice("select=".length);
+      continue;
     }
+
+    unknownArguments.push(argumentItem);
   }
 
   return {
-    command,
-    flags,
+    selectedElementPath,
+    showDocumentation,
     showHelp,
-    targetElementPath,
+    unknownArguments,
   };
 }
 
@@ -60,26 +47,22 @@ function generateHelpMessage(): string {
 Fluid UI Svelte CLI
 
 Usage:
-  npx fluid-ui-svelte [command] [options]
-  npx fluid-ui-svelte [elementcategory.elementname]
-
-Commands:
-  (no command)                 Print generic library documentation
-  documentation [path]         Print generic documentation or specific element documentation
-  help                         Display this help message
-
-Documentation Path Format:
-  elementcategory.elementname  (e.g., base.button, components.modal, prebuilt.breadcrumb)
+  npx fluid-ui-svelte [options]
 
 Options:
-  -h, --help                   Show help and usage information
+  (no options)                   Print generic library documentation
+  --documentation                 Print generic documentation, or a full component tutorial with select=
+  --documentation select=<category.element>
+                                 Print a full tutorial for one element
+
+Element Path Format:
+  category.element  (e.g., base.button, components.modal, prebuilt.breadcrumb)
 
 Examples:
   npx fluid-ui-svelte
-  npx fluid-ui-svelte base.button
-  npx fluid-ui-svelte components.modal
-  npx fluid-ui-svelte prebuilt.breadcrumb
-  npx fluid-ui-svelte documentation base.input-field
+  npx fluid-ui-svelte --documentation
+  npx fluid-ui-svelte --documentation select=base.button
+  npx fluid-ui-svelte --documentation select=components.code-block
 `;
 }
 
@@ -98,17 +81,18 @@ function runCommandLineInterface(): void {
     return;
   }
 
-  if (parsedArguments.command === undefined || parsedArguments.command === "documentation") {
-    printDocumentationByPath(parsedArguments.targetElementPath);
+  if (parsedArguments.selectedElementPath !== undefined && parsedArguments.selectedElementPath !== "") {
+    printDocumentationByPath(parsedArguments.selectedElementPath);
     return;
   }
 
-  if (parsedArguments.command.includes(".")) {
-    printDocumentationByPath(parsedArguments.command);
+  if (parsedArguments.showDocumentation && parsedArguments.unknownArguments.length === 0) {
+    printGenericDocumentation();
     return;
   }
 
-  console.log(`Unknown command: "${parsedArguments.command}".`);
+  const unknownCommand = parsedArguments.unknownArguments[0] ?? "";
+  console.log(`Unknown command: "${unknownCommand}".`);
   console.log("Run 'npx fluid-ui-svelte --help' to see available commands.\n");
   printGenericDocumentation();
 }

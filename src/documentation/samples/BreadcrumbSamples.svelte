@@ -27,7 +27,7 @@
     <Container id="breadcrumb-sample-basic-preview" class="w-full rounded-xl border p-6 dark:border-neutral-800">
       <Breadcrumb id="breadcrumb-basic-sample" {items} />
     </Container>
-    <CodeBlock id="breadcrumb-sample-basic-code" code={codeBlockContents.breadcrumbBasic} language="svelte" />
+    <CodeBlock id="breadcrumb-sample-basic-code" sourceCode={codeBlockContents.breadcrumbBasic} language="svelte" />
   </Container>
 
   <!-- 2. Custom Separator -->
@@ -37,6 +37,6 @@
     <Container id="breadcrumb-sample-separator-preview" class="w-full rounded-xl border p-6 dark:border-neutral-800">
       <Breadcrumb id="breadcrumb-separator-sample" {items} separator=">" />
     </Container>
-    <CodeBlock id="breadcrumb-sample-separator-code" code={codeBlockContents.breadcrumbSeparator} language="svelte" />
+    <CodeBlock id="breadcrumb-sample-separator-code" sourceCode={codeBlockContents.breadcrumbSeparator} language="svelte" />
   </Container>
 </Container>

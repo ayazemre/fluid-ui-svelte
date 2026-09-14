@@ -25,7 +25,7 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-unordered-code" code={codeBlockContents.listUnordered} language="svelte" />
+    <CodeBlock id="list-sample-unordered-code" sourceCode={codeBlockContents.listUnordered} language="svelte" />
   </Container>
 
   <!-- Ordered -->
@@ -39,7 +39,7 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-ordered-code" code={codeBlockContents.listOrdered} language="svelte" />
+    <CodeBlock id="list-sample-ordered-code" sourceCode={codeBlockContents.listOrdered} language="svelte" />
   </Container>
 
   <!-- Item Styling -->
@@ -53,7 +53,7 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-styling-code" code={codeBlockContents.listItemStyling} language="svelte" />
+    <CodeBlock id="list-sample-styling-code" sourceCode={codeBlockContents.listItemStyling} language="svelte" />
   </Container>
 
   <!-- Complex Objects -->
@@ -69,6 +69,6 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-complex-code" code={codeBlockContents.listComplex} language="svelte" />
+    <CodeBlock id="list-sample-complex-code" sourceCode={codeBlockContents.listComplex} language="svelte" />
   </Container>
 </Container>

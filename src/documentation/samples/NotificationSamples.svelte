@@ -298,6 +298,6 @@
       </NotificationArea>
     </Container>
 
-    <CodeBlock id="notification-sample-code" code={codeBlockContents.notificationBasic} language="svelte" />
+    <CodeBlock id="notification-sample-code" sourceCode={codeBlockContents.notificationBasic} language="svelte" />
   </Container>
 </Container>

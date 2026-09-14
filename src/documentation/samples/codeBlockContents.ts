@@ -1,12 +1,14 @@
 // Parsing errors happen in code editor when imports and script tags used inside code block component's contents.
 // To prevent this we import usage examples from here.
 
-const gettingStartedAppCss = `/* src/app.css */
+export const gettingStartedInstallation = `npm install fluid-ui-svelte`;
+
+export const gettingStartedAppCss = `/* src/app.css */
 @import "./fluidui.css";
 
 /* Your application styles */`;
 
-const gettingStartedUsage = `<script>
+export const gettingStartedUsage = `<script>
   // Import a base element for custom implementation
   import { Button } from 'fluid-ui-svelte/base';
 
@@ -19,6 +21,23 @@ const gettingStartedUsage = `<script>
 <Accordion>
   <!-- Accordion content -->
 </Accordion>`;
+
+export const howToMandatoryId = `<Drawer id="my-drawer" bind:isOpen={isOpen} position="left">
+  <Container id={\`\${id}-panel\`}>...</Container>
+</Drawer>`;
+
+export const howToSnippetComposition = `{#snippet anchor({ toggle })}
+  <Button onclick={async () => toggle()}>Open</Button>
+{/snippet}
+{#snippet overlay({ close })}
+  <Container>...</Container>
+{/snippet}`;
+
+export const howToNamingAndHandling = `function getCountryData(isoCode: string): CountryData {
+  if (!isoCode) return COUNTRY_DATA_MAP["US"];
+  const upperCode = isoCode.toUpperCase();
+  return COUNTRY_DATA_MAP[upperCode] ?? COUNTRY_DATA_MAP["US"];
+}`;
 
 // --- Button ---
 
@@ -256,7 +275,97 @@ const codeBlockExample = `<script lang="ts">
   import CodeBlock from 'fluid-ui-svelte/components/CodeBlock.svelte';
 </script>
 
-<CodeBlock language="typescript" code="console.log('Hello, Fluid UI!');" />`;
+<CodeBlock language="typescript" sourceCode="console.log('Hello, Fluid UI!');" />`;
+
+const codeBlockDiffSource = `<script>
+  import { Button } from 'fluid-ui-svelte/base';
+  import { Container, Text } from 'fluid-ui-svelte/base';
+
+  let userName = $state('Ada');
+  let loginAttempts = $state(0);
+  let isLocked = $state(false);
+  let sessionToken = $state('');
+
+  function handleLogin(): void {
+    loginAttempts += 1;
+    if (loginAttempts >= 3) {
+      isLocked = true;
+    }
+  }
+
+  function handleLogout(): void {
+    sessionToken = '';
+    loginAttempts = 0;
+  }
+
+  function handleReset(): void {
+    loginAttempts = 0;
+    isLocked = false;
+  }
+</script>
+
+<Container>
+  <Text>Hello {userName}</Text>
+  <Text>Attempts: {loginAttempts}</Text>
+  <Button>Sign in</Button>
+</Container>`;
+
+const codeBlockDiffModified = `<script>
+  import { Button } from 'fluid-ui-svelte/base';
+  import { Container, Text } from 'fluid-ui-svelte/base';
+
+  let userName = $state('Ada Lovelace');
+  let loginAttempts = $state(0);
+  let isLocked = $state(false);
+  let showRecoveryHint = $state(false);
+  let sessionToken = $state('');
+
+  function handleLogin(): void {
+    loginAttempts += 1;
+    if (loginAttempts >= 5) {
+      isLocked = true;
+      showRecoveryHint = true;
+    }
+  }
+
+  function handleLogout(): void {
+    sessionToken = '';
+    loginAttempts = 0;
+  }
+</script>
+
+<Container>
+  <Text>Hello {userName}</Text>
+  <Text>Attempts: {loginAttempts}</Text>
+  <Button>Continue</Button>
+</Container>`;
+
+const codeBlockDiffReview = `<script>
+  import { CodeBlock } from 'fluid-ui-svelte/components';
+  import { applyDiffLineDecision } from 'fluid-ui-svelte/components/codeBlock';
+  import { codeBlockDiffModified, codeBlockDiffSource } from './codeBlockContents';
+
+  let reviewSourceCode = $state(codeBlockDiffSource);
+  let reviewModifiedCode = $state<string | undefined>(codeBlockDiffModified);
+</script>
+
+<CodeBlock
+  id="code-block-review"
+  language="svelte"
+  sourceCode={reviewSourceCode}
+  modifiedCode={reviewModifiedCode}
+  showDiffLineActions
+  onAcceptDiffLine={({ diffRow }) => {
+    const result = applyDiffLineDecision(reviewSourceCode, reviewModifiedCode ?? '', diffRow, 'accepted');
+    reviewSourceCode = result.sourceCode;
+    reviewModifiedCode = result.modifiedCode;
+  }}
+  onRejectDiffLine={({ diffRow }) => {
+    const result = applyDiffLineDecision(reviewSourceCode, reviewModifiedCode ?? '', diffRow, 'rejected');
+    reviewSourceCode = result.sourceCode;
+    reviewModifiedCode = result.modifiedCode;
+  }}
+/>`;
 
 // --- Drawer ---
 
@@ -340,10 +449,12 @@ const calendarGridSingle = `<script>
   import { CalendarGrid } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
-  let currentDate = $state(Temporal.Now.plainDateISO().toString());
+  let currentDate = $state(new Date().toISOString().slice(0, 10));
 
   const changeMonth = (increment: number) => {
-    currentDate = Temporal.PlainDate.from(currentDate).add({ months: increment }).toString();
+    const [year, month, day] = currentDate.split("-").map(Number);
+    const date = new Date(year, month - 1 + increment, day);
+    currentDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
   };
 </script>
 
@@ -359,14 +470,20 @@ const calendarGridDual = `<script>
   import { CalendarGrid } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
-  let baseDate = $state(Temporal.Now.plainDateISO().toString());
+  let baseDate = $state(new Date().toISOString().slice(0, 10));
   
+  const addMonthsToIsoDateString = (dateString: string, monthsToAdd: number) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(year, month - 1 + monthsToAdd, day);
+    return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+  };
+
   const getOffsetDate = (offset: number) => {
-    return Temporal.PlainDate.from(baseDate).add({ months: offset }).toString();
+    return addMonthsToIsoDateString(baseDate, offset);
   };
 
   const changeMonth = (increment: number) => {
-    baseDate = Temporal.PlainDate.from(baseDate).add({ months: increment }).toString();
+    baseDate = addMonthsToIsoDateString(baseDate, increment);
   };
 </script>
 
@@ -385,14 +502,20 @@ const calendarGridSixMonth = `<script>
   import { CalendarGrid } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
-  let baseDate = $state(Temporal.Now.plainDateISO().toString());
+  let baseDate = $state(new Date().toISOString().slice(0, 10));
   
+  const addMonthsToIsoDateString = (dateString: string, monthsToAdd: number) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(year, month - 1 + monthsToAdd, day);
+    return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+  };
+
   const getOffsetDate = (offset: number) => {
-    return Temporal.PlainDate.from(baseDate).add({ months: offset }).toString();
+    return addMonthsToIsoDateString(baseDate, offset);
   };
 
   const changeMonth = (increment: number) => {
-    baseDate = Temporal.PlainDate.from(baseDate).add({ months: increment }).toString();
+    baseDate = addMonthsToIsoDateString(baseDate, increment);
   };
 </script>
 
@@ -412,16 +535,22 @@ const calendarGridRange = `<script>
   import { CalendarGrid } from 'fluid-ui-svelte/components';
   import { Button, Container, Text } from 'fluid-ui-svelte/base';
 
-  let baseDate = $state(Temporal.Now.plainDateISO().toString());
+  let baseDate = $state(new Date().toISOString().slice(0, 10));
   let startDate = $state<string>();
   let endDate = $state<string>();
 
+  const addMonthsToIsoDateString = (dateString: string, monthsToAdd: number) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(year, month - 1 + monthsToAdd, day);
+    return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+  };
+
   const getOffsetDate = (offset: number) => {
-    return Temporal.PlainDate.from(baseDate).add({ months: offset }).toString();
+    return addMonthsToIsoDateString(baseDate, offset);
   };
 
   const changeMonth = (increment: number) => {
-    baseDate = Temporal.PlainDate.from(baseDate).add({ months: increment }).toString();
+    baseDate = addMonthsToIsoDateString(baseDate, increment);
   };
 </script>
 
@@ -456,14 +585,20 @@ const calendarGridMulti = `<script>
   import { CalendarGrid } from 'fluid-ui-svelte/components';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
+  const addMonthsToIsoDateString = (dateString: string, monthsToAdd: number) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(year, month - 1 + monthsToAdd, day);
+    return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+  };
+
   const multiCalendarState = $state({
-    currentDate: Temporal.Now.plainDateISO().toString(),
+    currentDate: new Date().toISOString().slice(0, 10),
     startDate: '',
     endDate: ''
   });
 
   const changeMonthMulti = (increment: number) => {
-    multiCalendarState.currentDate = Temporal.PlainDate.from(multiCalendarState.currentDate).add({ months: increment }).toString();
+    multiCalendarState.currentDate = addMonthsToIsoDateString(multiCalendarState.currentDate, increment);
   };
 </script>
 
@@ -482,7 +617,7 @@ const calendarGridMulti = `<script>
     <CalendarGrid 
       bind:startDate={multiCalendarState.startDate} 
       bind:endDate={multiCalendarState.endDate} 
-      currentDate={Temporal.PlainDate.from(multiCalendarState.currentDate).add({ months: 1 }).toString()} 
+      currentDate={addMonthsToIsoDateString(multiCalendarState.currentDate, 1)} 
     />
   </Container>
 </Container>`;
@@ -1015,6 +1150,9 @@ export const codeBlockContents = {
   carouselAutoplay,
   carouselInteractive,
   carouselUsage,
+  codeBlockDiffModified,
+  codeBlockDiffReview,
+  codeBlockDiffSource,
   codeBlockExample,
   containerFooter,
   containerHeader,
@@ -1029,7 +1167,11 @@ export const codeBlockContents = {
   dropzoneFile,
   formBasic,
   gettingStartedAppCss,
+  gettingStartedInstallation,
   gettingStartedUsage,
+  howToMandatoryId,
+  howToNamingAndHandling,
+  howToSnippetComposition,
   imageCropBasic,
   imageCropCircle,
   imageCropUpload,

@@ -1,24 +1,23 @@
 <script lang="ts">
   import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { addMonthsToIsoDateString, getCurrentIsoDateString } from "#src/lib/components/calendarGrid.ts";
   import { CalendarGrid, CodeBlock } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
 
-  // Example 1: Single Month State
-  let singleCalendarDate = $state(Temporal.Now.plainDateISO().toString());
+  let singleCalendarDate = $state(getCurrentIsoDateString());
   const changeSingleMonth = (monthIncrement: number) => {
-    singleCalendarDate = Temporal.PlainDate.from(singleCalendarDate).add({ months: monthIncrement }).toString();
+    singleCalendarDate = addMonthsToIsoDateString(singleCalendarDate, monthIncrement);
   };
 
-  // Example 2: Multi Calendar State
   const multiCalendarState = $state({
-    currentDate: Temporal.Now.plainDateISO().toString(),
+    currentDate: getCurrentIsoDateString(),
     endDate: "",
     startDate: "",
   });
 
   const changeMultiMonth = (monthIncrement: number) => {
-    multiCalendarState.currentDate = Temporal.PlainDate.from(multiCalendarState.currentDate).add({ months: monthIncrement }).toString();
+    multiCalendarState.currentDate = addMonthsToIsoDateString(multiCalendarState.currentDate, monthIncrement);
   };
 </script>
 
@@ -38,7 +37,7 @@
         <CalendarGrid id="calendar-single" currentDate={singleCalendarDate} />
       </Container>
     </Container>
-    <CodeBlock id="calendar-grid-sample-single-code" code={codeBlockContents.calendarGridSingle} language="svelte" />
+    <CodeBlock id="calendar-grid-sample-single-code" sourceCode={codeBlockContents.calendarGridSingle} language="svelte" />
   </Container>
 
   <!-- 2. Multi Calendar -->
@@ -64,13 +63,13 @@
         <Container id="calendar-grid-sample-multi-2-wrapper" class="max-w-sm rounded border p-4 dark:border-neutral-800">
           <CalendarGrid
             id="calendar-multi-2"
-            currentDate={Temporal.PlainDate.from(multiCalendarState.currentDate).add({ months: 1 }).toString()}
+            currentDate={addMonthsToIsoDateString(multiCalendarState.currentDate, 1)}
             bind:startDate={multiCalendarState.startDate}
             bind:endDate={multiCalendarState.endDate}
           />
         </Container>
       </Container>
     </Container>
-    <CodeBlock id="calendar-grid-sample-multi-code" code={codeBlockContents.calendarGridMulti} language="svelte" />
+    <CodeBlock id="calendar-grid-sample-multi-code" sourceCode={codeBlockContents.calendarGridMulti} language="svelte" />
   </Container>
 </Container>

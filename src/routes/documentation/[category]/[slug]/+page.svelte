@@ -1,8 +1,7 @@
 <script lang="ts">
+  import * as Samples from "#src/documentation/samples/index.ts";
   import { Container, Text, Table } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
-
-  import * as Samples from "#src/documentation/samples/index.ts";
 
   let { data } = $props();
 
@@ -17,7 +16,7 @@
       link: Samples.LinkSamples,
       list: Samples.ListSamples,
       table: Samples.TableSamples,
-      text: Samples.TextSamples
+      text: Samples.TextSamples,
     },
     components: {
       accordion: Samples.AccordionSamples,
@@ -33,14 +32,14 @@
       page: Samples.PageSamples,
       pagination: Samples.PaginationSamples,
       switch: Samples.SwitchSamples,
-      "time-picker": Samples.TimePickerSamples
+      "time-picker": Samples.TimePickerSamples,
     },
     prebuilt: {
       breadcrumb: Samples.BreadcrumbSamples,
       "international-input": Samples.InternationalInputSamples,
       "notification-area": Samples.NotificationSamples,
-      "searchable-selector": Samples.SearchableSelectorSamples
-    }
+      "searchable-selector": Samples.SearchableSelectorSamples,
+    },
   };
 
   let SampleComponent = $derived(sampleMap[data.category]?.[data.slug]);

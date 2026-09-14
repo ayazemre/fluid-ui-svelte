@@ -55,7 +55,7 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-1-code" code={codeBlockContents.carouselInteractive} language="svelte" />
+    <CodeBlock id="carousel-sample-h-1-code" sourceCode={codeBlockContents.carouselInteractive} language="svelte" />
   </Container>
 
   <!-- 2. Horizontal - Autoplay -->
@@ -96,7 +96,7 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-autoplay-code" code={codeBlockContents.carouselAutoplay} language="svelte" />
+    <CodeBlock id="carousel-sample-h-autoplay-code" sourceCode={codeBlockContents.carouselAutoplay} language="svelte" />
   </Container>
 
   <!-- 3. Horizontal - Multiple Items (Controlled) -->
@@ -135,7 +135,7 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-multi-code" code={codeBlockContents.carouselUsage} language="svelte" />
+    <CodeBlock id="carousel-sample-h-multi-code" sourceCode={codeBlockContents.carouselUsage} language="svelte" />
   </Container>
 
   <!-- 4. Horizontal - Free Scroll (No Snap) -->

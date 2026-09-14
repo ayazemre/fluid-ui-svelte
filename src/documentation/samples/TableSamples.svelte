@@ -37,7 +37,7 @@
         {/snippet}
       </Table>
     </Container>
-    <CodeBlock id="table-sample-basic-code" code={codeBlockContents.tableStandard} language="svelte" />
+    <CodeBlock id="table-sample-basic-code" sourceCode={codeBlockContents.tableStandard} language="svelte" />
   </Container>
 
   <!-- Custom Styled -->
@@ -65,6 +65,6 @@
         {/snippet}
       </Table>
     </Container>
-    <CodeBlock id="table-sample-styled-code" code={codeBlockContents.tableStyled} language="svelte" />
+    <CodeBlock id="table-sample-styled-code" sourceCode={codeBlockContents.tableStyled} language="svelte" />
   </Container>
 </Container>

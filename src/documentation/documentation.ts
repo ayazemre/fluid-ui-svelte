@@ -1,3 +1,12 @@
+import {
+  gettingStartedAppCss,
+  gettingStartedInstallation,
+  gettingStartedUsage,
+  howToMandatoryId,
+  howToNamingAndHandling,
+  howToSnippetComposition,
+} from "./samples/codeBlockContents.ts";
+
 export const documentationRegistry = {
   base: {
     button: {
@@ -560,7 +569,7 @@ export const documentationRegistry = {
     },
     "calendar-grid": {
       description:
-        "A monthly calendar grid primitive powered by the Temporal API. It renders a month view based on a provided ISO date without internal year or navigation controls, ideal for composable date pickers and multi-month blocks.",
+        "A monthly calendar grid primitive powered by the native Date API. It renders a month view based on a provided ISO date without internal year or navigation controls, ideal for composable date pickers and multi-month blocks.",
       props: [
         {
           default: "required",
@@ -575,7 +584,7 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "Temporal.Now.plainDateISO().toString()",
+          default: "new Date().toISOString().slice(0, 10)",
           description: "ISO 8601 formatted date string (YYYY-MM-DD) that determines the displayed month. Supports $bindable.",
           prop: "currentDate",
           type: "string",
@@ -596,7 +605,7 @@ export const documentationRegistry = {
           default: "undefined",
           description: "Optional custom snippet for rendering individual day cells.",
           prop: "daySnippet",
-          type: "Snippet<[{ day: PlainDate; isCurrentMonth: boolean; isSelected: boolean; isInRange: boolean }]>",
+          type: "Snippet<[{ day: string; isCurrentMonth: boolean; isSelected: boolean; isInRange: boolean }]>",
         },
         {
           default: "undefined",
@@ -693,12 +702,25 @@ export const documentationRegistry = {
       title: "Fluid UI - Carousel",
     },
     "code-block": {
-      description: "A component for displaying formatted code snippets with syntax highlighting.",
+      description:
+        "A view only code viewer with syntax highlighting and condensed diff support. Pass modifiedCode to switch into diff mode, otherwise sourceCode renders as a single view.",
       props: [
         {
           default: "required",
-          description: "A string containing the code to be displayed.",
-          prop: "code",
+          description: "The unique identifier for the component wrapper.",
+          prop: "id",
+          type: "string",
+        },
+        {
+          default: "required",
+          description: "The source code to display. In diff mode this is the original side.",
+          prop: "sourceCode",
+          type: "string",
+        },
+        {
+          default: "undefined",
+          description: "The modified code. When set, the block renders a condensed diff of changed lines plus context.",
+          prop: "modifiedCode",
           type: "string",
         },
         {
@@ -708,16 +730,66 @@ export const documentationRegistry = {
           type: "string",
         },
         {
+          default: "true",
+          description: "Whether to show line numbers in the gutter.",
+          prop: "showLineNumbers",
+          type: "boolean",
+        },
+        {
+          default: "2",
+          description: "Number of unchanged context lines kept around each change in condensed diff view.",
+          prop: "diffContextLineCount",
+          type: "number",
+        },
+        {
+          default: "true",
+          description: "Whether diff mode collapses unchanged sections into gap rows. Set to false for the full file view.",
+          prop: "condensedDiff",
+          type: "boolean",
+        },
+        {
+          default: "false",
+          description: "Whether changed diff rows show per line accept and reject actions.",
+          prop: "showDiffLineActions",
+          type: "boolean",
+        },
+        {
+          default: "undefined",
+          description:
+            "Callback fired when a change block is accepted. Takes the modified side for the whole paired change. Receives the clicked row and its row index.",
+          prop: "onAcceptDiffLine",
+          type: "(payload: DiffLineActionPayload) => void",
+        },
+        {
+          default: "undefined",
+          description:
+            "Callback fired when a change block is rejected. Keeps the source side for the whole paired change. Receives the clicked row and its row index.",
+          prop: "onRejectDiffLine",
+          type: "(payload: DiffLineActionPayload) => void",
+        },
+        {
+          default: "undefined",
+          description: "Custom parser configuration for token rules. Defaults to the Svelte parser for svelte and html.",
+          prop: "parserConfiguration",
+          type: "ParserConfiguration",
+        },
+        {
+          default: "undefined",
+          description: "Custom token to Tailwind class mapping. Defaults to the default token theme.",
+          prop: "tokenThemeMapping",
+          type: "TokenThemeMapping",
+        },
+        {
+          default: "undefined",
+          description: "Custom diff row and gutter class mapping. Defaults to the default diff theme.",
+          prop: "diffThemeMapping",
+          type: "DiffThemeMapping",
+        },
+        {
           default: "''",
           description: "Custom CSS classes to apply custom styling variants.",
           prop: "variant",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, prevents the component from applying its default styling.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
       ],
       title: "Fluid UI - Code Block",
@@ -1299,25 +1371,25 @@ export const documentationRegistry = {
           id: "architecture",
           layers: [
             {
-              id: "base",
-              title: "Base Layer",
-              path: "fluid-ui-svelte/base",
               description:
                 "Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links). Purpose is to reduce HTML tag fatigue, enforce semantic consistency, and maintain accessibility without imposing heavy styles. Utility responsibility is class deduplication, merging, and attribute sanitization. Every base element exposes underlyingElement as $bindable(null) and accepts overrideDefaultStyling boolean.",
+              id: "base",
+              path: "fluid-ui-svelte/base",
+              title: "Base Layer",
             },
             {
-              id: "components",
-              title: "Components Layer",
-              path: "fluid-ui-svelte/components",
               description:
                 "Assembled UI elements (Accordions, Modals, Calendars, Drawers, Dropzones, Switches, Pagination). Purpose is to provide focused, cohesive functional primitives. Must be assembled strictly from Base Layer elements. Must accept variant string prop for theme injection.",
+              id: "components",
+              path: "fluid-ui-svelte/components",
+              title: "Components Layer",
             },
             {
-              id: "prebuilt",
-              title: "Prebuilt Layer",
-              path: "fluid-ui-svelte/prebuilt",
               description:
                 "High-level, fully usable, self-contained domain components (Breadcrumbs, International Inputs, Notification Areas). Purpose is to combine multiple base and composed components into turnkey workflows. Must compose Base and Components. Must accept variant string prop.",
+              id: "prebuilt",
+              path: "fluid-ui-svelte/prebuilt",
+              title: "Prebuilt Layer",
             },
           ],
           title: "Library Structure",
@@ -1327,22 +1399,22 @@ export const documentationRegistry = {
           id: "pillars",
           pillars: [
             {
-              id: "markup",
-              title: "Reactive UI Markup (.svelte)",
               description:
                 "Purely concerned with WHAT is rendered. Handles semantic structure, snippet rendering, and event binding. No business logic.",
+              id: "markup",
+              title: "Reactive UI Markup (.svelte)",
             },
             {
-              id: "logic",
-              title: "Pure TypeScript Logic (.ts helper)",
               description:
                 "Co-located pure functions for state machines, calculations, and event handlers. Must be pure, predictable, no side effects, no domain assumptions, immutable via object spread.",
+              id: "logic",
+              title: "Pure TypeScript Logic (.ts helper)",
             },
             {
-              id: "styling",
-              title: "Central Styling Defaults (fluidui.css)",
               description:
                 "Holds all default visual styling in dedicated class blocks, enabling centralized theming. Every element must have its own block in fluidui.css.",
+              id: "styling",
+              title: "Central Styling Defaults (fluidui.css)",
             },
           ],
           title: "Three Architectural Pillars",
@@ -1351,25 +1423,25 @@ export const documentationRegistry = {
           id: "installation",
           steps: [
             {
-              id: "step-1",
-              title: "1. Install the package",
+              code: gettingStartedInstallation,
               description: "Install the library using your package manager of choice.",
-              code: "npm install fluid-ui-svelte",
+              id: "step-1",
               language: "bash",
+              title: "1. Install the package",
             },
             {
-              id: "step-2",
-              title: "2. Configure Global Styles",
+              code: gettingStartedAppCss,
               description:
                 "Fluid UI does not inject styles automatically. This allows you to maintain library specific styling and app specific styling separately. Download the reference fluidui.css file, place it in your project (e.g., src/), and import it in your main CSS file.",
-              codeKey: "gettingStartedAppCss",
+              id: "step-2",
               language: "css",
+              title: "2. Configure Global Styles",
             },
           ],
           title: "Installation",
         },
         {
-          codeKey: "gettingStartedUsage",
+          code: gettingStartedUsage,
           description: "Import components directly from their respective layers. Svelte 5 Runes mode is required.",
           id: "usage",
           language: "svelte",
@@ -1432,10 +1504,11 @@ export const documentationRegistry = {
           title: "How To Guides",
         },
         {
-          code: '<Drawer id="my-drawer" bind:isOpen={isOpen} position="left">\n  <Container id={`${id}-panel`}>...<\/Container>\n<\/Drawer>',
+          code: howToMandatoryId,
           description:
             "Every element across all three layers (Base, Components, Prebuilt) must accept a mandatory id prop passed from the outside. When a component renders internal child Base Layer elements, it must pass deterministic scoped IDs derived from the parent id to each child.",
           id: "mandatory-id",
+          language: "svelte",
           table: {
             headers: ["Parent id", "Child id Example", "Use"],
             rows: [
@@ -1494,10 +1567,11 @@ export const documentationRegistry = {
           title: "Style Injection & Central Styling",
         },
         {
-          code: "{#snippet anchor({ toggle })}\n  <Button onclick={async () => toggle()}>Open<\/Button>\n{/snippet}\n{#snippet overlay({ close })}\n  <Container>...<\/Container>\n{/snippet}",
+          code: howToSnippetComposition,
           description:
             "Prioritize Svelte 5 Snippets over complex configuration objects or data arrays whenever delegating custom markup rendering, slots, or item templates. Snippets give flexible composition while maintaining semantic consistency.",
           id: "snippet-passing",
+          language: "svelte",
           title: "Prioritize Snippet-Based Passing",
         },
         {
@@ -1509,9 +1583,9 @@ export const documentationRegistry = {
             rows: [
               ["Library Code", "#src/lib/base/index.ts", 'import { Button } from "#src/lib/base/index.ts"'],
               ["Prebuilt", "#src/lib/components/index.ts", 'import { AnchoredOverlay } from "#src/lib/components/index.ts"'],
-              ["Docs CodeBlock (external)", "fluid-ui-svelte/base", "import { Button } from \'fluid-ui-svelte/base\'"],
-              ["Docs CodeBlock (components)", "fluid-ui-svelte/components", "import { Modal } from \'fluid-ui-svelte/components\'"],
-              ["Docs CodeBlock (prebuilt)", "fluid-ui-svelte/prebuilt", "import { Breadcrumb } from \'fluid-ui-svelte/prebuilt\'"],
+              ["Docs CodeBlock (external)", "fluid-ui-svelte/base", "import { Button } from 'fluid-ui-svelte/base'"],
+              ["Docs CodeBlock (components)", "fluid-ui-svelte/components", "import { Modal } from 'fluid-ui-svelte/components'"],
+              ["Docs CodeBlock (prebuilt)", "fluid-ui-svelte/prebuilt", "import { Breadcrumb } from 'fluid-ui-svelte/prebuilt'"],
             ],
           },
           title: "Internal vs External Imports",
@@ -1531,10 +1605,11 @@ export const documentationRegistry = {
           title: "Three Pillars in Practice",
         },
         {
-          code: 'function getCountryData(isoCode: string): CountryData {\n  if (!isoCode) return COUNTRY_DATA_MAP["US"];\n  const upperCode = isoCode.toUpperCase();\n  return COUNTRY_DATA_MAP[upperCode] ?? COUNTRY_DATA_MAP["US"];\n}',
+          code: howToNamingAndHandling,
           description:
             "Avoid shorthand, use explicit names, keep functions short with single responsibility and early returns. Handle failures explicitly, narrow to happy path via guard clauses.",
           id: "naming-howto",
+          language: "typescript",
           title: "Naming & Error Handling",
         },
       ],

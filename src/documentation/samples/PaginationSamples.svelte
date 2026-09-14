@@ -24,7 +24,7 @@
       <Pagination id="pagination-basic" bind:currentPage={basicPage} totalPages={5} />
       <Text id="pagination-sample-basic-status" class="mt-4 text-sm text-neutral-600 dark:text-neutral-400">Current Page: {basicPage}</Text>
     </Container>
-    <CodeBlock id="pagination-sample-basic-code" code={codeBlockContents.paginationBasic} language="svelte" />
+    <CodeBlock id="pagination-sample-basic-code" sourceCode={codeBlockContents.paginationBasic} language="svelte" />
   </Container>
 
   <!-- 2. Large Page Count with Ellipsis -->

@@ -26,7 +26,7 @@
       </Text>
     </Container>
 
-    <CodeBlock id="switch-sample-basic-code" code={codeBlockContents.switchBasic} language="svelte" />
+    <CodeBlock id="switch-sample-basic-code" sourceCode={codeBlockContents.switchBasic} language="svelte" />
   </Container>
 
   <!-- Example 2: Disabled State -->
@@ -45,6 +45,6 @@
       </Container>
     </Container>
 
-    <CodeBlock id="switch-sample-disabled-code" code={codeBlockContents.switchDisabled} language="svelte" />
+    <CodeBlock id="switch-sample-disabled-code" sourceCode={codeBlockContents.switchDisabled} language="svelte" />
   </Container>
 </Container>

@@ -9,7 +9,10 @@ export function getSearchableSelectorInitials(label: string, avatarText?: string
   if (avatarText !== undefined && avatarText.trim() !== "") {
     return avatarText.trim().slice(0, 2).toUpperCase();
   }
-  const words = label.trim().split(/\s+/).filter((word) => word.length > 0);
+  const words = label
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0);
   if (words.length === 0) {
     return "?";
   }
@@ -19,7 +22,10 @@ export function getSearchableSelectorInitials(label: string, avatarText?: string
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
-export function getSelectedSearchableSelectorItem(items: Array<SearchableSelectorItem>, selectedValue: string | undefined): SearchableSelectorItem | undefined {
+export function getSelectedSearchableSelectorItem(
+  items: Array<SearchableSelectorItem>,
+  selectedValue: string | undefined,
+): SearchableSelectorItem | undefined {
   if (selectedValue === undefined || selectedValue === "") {
     return undefined;
   }
@@ -32,7 +38,11 @@ export function filterSearchableSelectorItems(items: Array<SearchableSelectorIte
     return items;
   }
   return items.filter((item) => {
-    return item.label.toLowerCase().includes(normalizedQuery) || item.value.toLowerCase().includes(normalizedQuery) || (item.avatarText !== undefined && item.avatarText.toLowerCase().includes(normalizedQuery));
+    return (
+      item.label.toLowerCase().includes(normalizedQuery) ||
+      item.value.toLowerCase().includes(normalizedQuery) ||
+      (item.avatarText !== undefined && item.avatarText.toLowerCase().includes(normalizedQuery))
+    );
   });
 }
 

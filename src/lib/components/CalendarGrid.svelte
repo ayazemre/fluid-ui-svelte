@@ -1,12 +1,19 @@
 <script lang="ts">
   import { Button, Container, Text } from "#src/lib/base/index.ts";
 
-  import { applyDate, generateCalendarCellStyles, generateDaysOfTheMonthFromDate } from "./calendarGrid.ts";
+  import {
+    applyDate,
+    generateCalendarCellStyles,
+    generateDaysOfTheMonthFromDate,
+    getCurrentIsoDateString,
+    getDayNumberFromIsoDateString,
+    getMonthNameFromIsoDateString,
+  } from "./calendarGrid.ts";
 
   let {
     id,
     variant = "",
-    currentDate = Temporal.Now.plainDateISO().toString(),
+    currentDate = getCurrentIsoDateString(),
     startDate = $bindable(),
     endDate = $bindable(),
     weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -22,7 +29,7 @@
   } = $props();
 
   const calendarDays = $derived(generateDaysOfTheMonthFromDate(currentDate));
-  const monthName = $derived(Temporal.PlainDate.from(currentDate).toLocaleString("default", { month: "long" }));
+  const monthName = $derived(getMonthNameFromIsoDateString(currentDate));
 
   function handleDateSelection(selectedDate: string): void {
     const result = applyDate({ endDate, startDate }, selectedDate);
@@ -46,7 +53,7 @@
         onclick={async () => handleDateSelection(cellDay)}
         class={[variant, ...generateCalendarCellStyles(currentDate, cellDay, startDate, endDate, hideRollingDays)].join(" ")}
       >
-        {Temporal.PlainDate.from(cellDay).day}
+        {getDayNumberFromIsoDateString(cellDay)}
       </Button>
     {/each}
   </Container>
