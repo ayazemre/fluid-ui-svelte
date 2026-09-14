@@ -1,9 +1,9 @@
 <script lang="ts">
   import { slide, type TransitionConfig } from "svelte/transition";
 
-  import { Container, Button } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
+
+  import { Container, Button } from "../base/index.ts";
 
   const {
     id,

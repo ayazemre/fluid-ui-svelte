@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { mergeClasses } from "#src/lib/utilities/common.ts";
-
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import type { TransitionConfig } from "svelte/transition";
+
+  import { mergeClasses } from "../utilities/common.ts";
 
   let {
     id,

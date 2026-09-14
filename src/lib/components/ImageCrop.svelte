@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Canvas, Container } from "#src/lib/base/index.ts";
-
+  import { Canvas, Container } from "../base/index.ts";
   import { renderImageCropPipeline, type ImageCropAspectRatio, type ImageCropPanCoordinates, type ImageCropShape } from "./imageCrop.ts";
 
   let {

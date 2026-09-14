@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import Icon from "@iconify/svelte";
 
-  import { Container, Button, Text } from "#src/lib/base/index.ts";
+  import { Container, Button, Text } from "#src/lib//base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
 </script>
 

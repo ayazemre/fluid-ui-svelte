@@ -43,27 +43,46 @@ function parseCommandLineArguments(rawArguments: Array<string>): ParsedCommandLi
 }
 
 function generateHelpMessage(): string {
-  return `
-Fluid UI Svelte CLI
-
-Usage:
-  npx fluid-ui-svelte [options]
-
-Options:
-  (no options)                   Print generic library documentation
-  --documentation                 Print generic documentation, or a full component tutorial with select=
-  --documentation select=<category.element>
-                                 Print a full tutorial for one element
-
-Element Path Format:
-  category.element  (e.g., base.button, components.modal, prebuilt.breadcrumb)
-
-Examples:
-  npx fluid-ui-svelte
-  npx fluid-ui-svelte --documentation
-  npx fluid-ui-svelte --documentation select=base.button
-  npx fluid-ui-svelte --documentation select=components.code-block
-`;
+  const helpMessageLines: Array<string> = [
+    "Fluid UI Svelte CLI",
+    "",
+    "A pragmatic Svelte 5 component library. Base wrappers, interactive components, and prebuilt domain widgets.",
+    "",
+    "Usage:",
+    "  npx fluid-ui-svelte [options]",
+    "",
+    "Options:",
+    "  (no options)                   Print generic library documentation",
+    "  --help, -h, help               Print this help message",
+    "  --documentation                Print generic documentation",
+    "  --documentation select=<category.element>",
+    "                                 Print a full tutorial for one element",
+    "",
+    "Categories:",
+    "  base                           fluid-ui-svelte/base (semantic wrappers, overrideDefaultStyling)",
+    "  components                     fluid-ui-svelte/components (focused primitives, variant)",
+    "  prebuilt                       fluid-ui-svelte/prebuilt (turnkey workflows, variant)",
+    "",
+    "Element Path Format:",
+    "  category.element  (e.g., base.button, components.modal, prebuilt.breadcrumb)",
+    "",
+    "Requirements:",
+    "  Svelte 5 Runes mode, Node 24+ native TypeScript, Tailwind CSS 4 for default theme",
+    "",
+    "Rules:",
+    "  Every element requires a mandatory id prop with scoped child ids (for example my-drawer-panel).",
+    "  Compose from Base elements and prefer snippets over config objects.",
+    "",
+    "Examples:",
+    "  npx fluid-ui-svelte",
+    "  npx fluid-ui-svelte --help",
+    "  npx fluid-ui-svelte --documentation",
+    "  npx fluid-ui-svelte --documentation select=base.button",
+    "  npx fluid-ui-svelte --documentation select=components.code-block",
+    "  npx fluid-ui-svelte --documentation select=prebuilt.breadcrumb",
+    "",
+  ];
+  return helpMessageLines.join("\n");
 }
 
 function runCommandLineInterface(): void {

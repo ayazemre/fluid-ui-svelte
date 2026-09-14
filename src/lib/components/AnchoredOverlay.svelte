@@ -1,10 +1,9 @@
 <script lang="ts">
   import { fade, type TransitionConfig } from "svelte/transition";
 
-  import { Container } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
 
+  import { Container } from "../base/index.ts";
   import { getAnchoredOverlayPositionClass, setupAnchoredOverlayLifecycle, type AnchoredOverlayPosition } from "./anchoredOverlay.ts";
 
   let {

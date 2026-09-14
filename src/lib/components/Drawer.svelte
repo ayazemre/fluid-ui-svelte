@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { Container } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
   import type { TransitionConfig } from "svelte/transition";
 
+  import { Container } from "../base/index.ts";
   import { emptyDrawerTransition, positionClasses, setupDrawerLifecycle, type DrawerPosition } from "./drawer.ts";
 
   let {

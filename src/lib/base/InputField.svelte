@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { mergeClasses } from "#src/lib/utilities/common.ts";
-
   import type { HTMLInputAttributes, HTMLTextareaAttributes } from "svelte/elements";
 
+  import { mergeClasses } from "../utilities/common.ts";
   import { applyCharacterFilter } from "./inputField.ts";
 
   let {

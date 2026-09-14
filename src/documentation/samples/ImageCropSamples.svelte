@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { Button, Container, Image, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Image, Text } from "#src/lib//base/index.ts";
   import { CodeBlock, ImageCrop, Switch } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";

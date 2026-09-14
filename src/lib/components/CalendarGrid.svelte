@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
-
+  import { Button, Container, Text } from "../base/index.ts";
   import {
     applyDate,
     generateCalendarCellStyles,

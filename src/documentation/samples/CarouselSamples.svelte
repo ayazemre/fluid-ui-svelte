@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
+  import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { Carousel, CodeBlock } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";

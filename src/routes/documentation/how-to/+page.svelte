@@ -1,6 +1,6 @@
 <script lang="ts">
   import { documentationRegistry } from "#src/documentation/documentation.ts";
-  import { Container, Table, Text } from "#src/lib/base/index.ts";
+  import { Container, Table, Text } from "#src/lib//base/index.ts";
   import { CodeBlock, Page } from "#src/lib/components/index.ts";
 
   const pageData = (

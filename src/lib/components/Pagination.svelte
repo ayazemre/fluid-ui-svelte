@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Button, Container, Text } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
 
+  import { Button, Container, Text } from "../base/index.ts";
   import { calculatePaginationRange, isValidPageNavigation } from "./pagination.ts";
 
   let {

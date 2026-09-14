@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Container } from "#src/lib/base/index.ts";
-
   import type { Snippet } from "svelte";
 
+  import { Container } from "../base/index.ts";
   import { handleDraggableDrag, handleDraggableDragEnd, handleDraggableDragStart } from "./draggable.ts";
 
   let {
