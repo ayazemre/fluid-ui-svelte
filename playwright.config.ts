@@ -58,5 +58,4 @@ export default defineConfig({
     timeout: 5000,
     url: applicationOrigin + "/" + applicationBasePath,
   },
-  workers: process.env.CI ? 1 : undefined,
 });
