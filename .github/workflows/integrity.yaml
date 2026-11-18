@@ -1,0 +1,22 @@
+name: Integrity
+on:
+  workflow_call:
+    outputs:
+      should_publish:
+        description: Whether the current package version is higher than the published version
+        value: ${{ jobs.integrity.outputs.should_publish }}
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.integrity_checks.outputs.should_publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26.x
+          cache: npm
+      - name: Run integrity checks
+        id: integrity_checks
+        run: ./scripts/repository.sh integrity
