@@ -1,9 +1,13 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const applicationOrigin = process.env.ORIGIN ?? "http://localhost:3000";
+const applicationBasePath = process.env.BASE_PATH ?? "";
+const browserSlowMotionMilliseconds = process.env.CI ? 0 : 1000;
+
 export default defineConfig({
   forbidOnly: !!process.env.CI,
   fullyParallel: true,
-  outputDir: "./tests/temporary",
+  outputDir: "./tests/browser/temporary",
   projects: [
     {
       name: "chromium",
@@ -39,17 +43,20 @@ export default defineConfig({
     //   use: { ...devices["Desktop Chrome"], channel: "chrome" },
     // },
   ],
-  reporter: [["html", { open: "never", outputFolder: "./tests/temporary" }]],
+  reporter: [["html", { open: "never", outputFolder: "./tests/browser/temporary" }]],
   retries: process.env.CI ? 2 : 0,
-  testDir: "./tests/e2e",
+  testDir: "./tests/browser",
+  testMatch: "**/*.spec.ts",
   use: {
-    baseURL: "http://localhost:4173",
+    baseURL: applicationOrigin + "/" + applicationBasePath,
+    launchOptions: { slowMo: browserSlowMotionMilliseconds },
     trace: "on-first-retry",
   },
   webServer: {
-    command: "npm run preview",
+    command: "npm run start",
     reuseExistingServer: !process.env.CI,
-    url: "http://localhost:4173",
+    timeout: 5000,
+    url: applicationOrigin + "/" + applicationBasePath,
   },
   workers: process.env.CI ? 1 : undefined,
 });

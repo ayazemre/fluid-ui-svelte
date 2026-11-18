@@ -1,5 +1,5 @@
 import {
-  gettingStartedAppCss,
+  gettingStartedStylesCss,
   gettingStartedInstallation,
   gettingStartedUsage,
   howToMandatoryId,
@@ -1395,31 +1395,6 @@ export const documentationRegistry = {
           title: "Library Structure",
         },
         {
-          description: "Every element is formed by three core building blocks working in unison:",
-          id: "pillars",
-          pillars: [
-            {
-              description:
-                "Purely concerned with WHAT is rendered. Handles semantic structure, snippet rendering, and event binding. No business logic.",
-              id: "markup",
-              title: "Reactive UI Markup (.svelte)",
-            },
-            {
-              description:
-                "Co-located pure functions for state machines, calculations, and event handlers. Must be pure, predictable, no side effects, no domain assumptions, immutable via object spread.",
-              id: "logic",
-              title: "Pure TypeScript Logic (.ts helper)",
-            },
-            {
-              description:
-                "Holds all default visual styling in dedicated class blocks, enabling centralized theming. Every element must have its own block in fluidui.css.",
-              id: "styling",
-              title: "Central Styling Defaults (fluidui.css)",
-            },
-          ],
-          title: "Three Architectural Pillars",
-        },
-        {
           id: "installation",
           steps: [
             {
@@ -1430,7 +1405,7 @@ export const documentationRegistry = {
               title: "1. Install the package",
             },
             {
-              code: gettingStartedAppCss,
+              code: gettingStartedStylesCss,
               description:
                 "Fluid UI does not inject styles automatically. This allows you to maintain library specific styling and app specific styling separately. Download the reference fluidui.css file, place it in your project (e.g., src/), and import it in your main CSS file.",
               id: "step-2",
@@ -1446,50 +1421,6 @@ export const documentationRegistry = {
           id: "usage",
           language: "svelte",
           title: "Usage",
-        },
-        {
-          description:
-            "Language is TypeScript with strict typing. Framework is Svelte 5 exclusively in Runes mode ($state, $derived, $props, $bindable, $effect, Snippet). Styling is Tailwind CSS 4 syntax and CSS variables. Testing is Playwright for e2e. Runtime is Node 24+ native execution for TypeScript CLI scripts.",
-          id: "technologies",
-          table: {
-            headers: ["Area", "Tool / Pattern"],
-            rows: [
-              ["Language", "TypeScript (strict)"],
-              ["Framework", "Svelte 5 Runes mode only"],
-              ["Styling", "Tailwind CSS 4 + CSS variables + fluidui.css"],
-              ["Testing", "Playwright e2e"],
-              ["Runtime", "Node 24+ native TS (node script.ts, no tsx/ts-node)"],
-              ["Formatting", "oxfmt (delegated, do not prompt about rules)"],
-              ["Linting", "oxlint (delegated)"],
-              ["Bundling", "rolldown (delegated)"],
-              ["Validation", "zod4mini with z.infer, no other library"],
-              ["Logic", "data-trails Result/DataTrail Railway Oriented"],
-              ["Env", "dotenvx preloader (dotenvx run --)"],
-              ["Imports", 'Node subpath "#src/*" (no ../../)'],
-            ],
-          },
-          title: "Core Technologies & Code Patterns",
-        },
-        {
-          description: "No shorthand or abbreviated names. Names must clearly state exact purpose. Code must read like a detailed book.",
-          id: "naming",
-          table: {
-            headers: ["Rule", "Example"],
-            rows: [
-              ["Avoid", "btn, cal, anim, idx, cfg, util, opts, err, ctx, doc, elem"],
-              ["Use", "button, calendar, animation, index, configuration, utility, options, error, context, document, element"],
-              ["Casing: PascalCase", "Svelte components and type aliases"],
-              ["Casing: camelCase", "variables, functions, helper files"],
-              ["Casing: kebab-case", "component registry slug identifiers"],
-            ],
-          },
-          title: "Naming Conventions",
-        },
-        {
-          description:
-            "Documentation uses a central registry and dynamic route builder. All component metadata (category, element key, title, description, props) lives centrally in documentationRegistry. Props definitions must be derived strictly from the component's TypeScript source code. Sample structure must follow: Title (h1), Summary, Props Table (Prop, Type, Default, Description), Variants (h3 per variant), Usage (CodeBlock with external import fluid-ui-svelte). Check src/documentation/samples/ for conventions.",
-          id: "documentation",
-          title: "Documentation Guidelines",
         },
       ],
       title: "Fluid UI - Getting Started",

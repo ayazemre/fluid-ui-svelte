@@ -2,20 +2,22 @@ import { error } from "@sveltejs/kit";
 
 import { documentationRegistry } from "#src/documentation/documentation.ts";
 
-export function load({ params }) {
+import type { PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = ({ params }) => {
   const { category, slug } = params;
 
   // @ts-ignore
   const categoryRegistry = documentationRegistry[category];
 
   if (!categoryRegistry) {
-    throw error(404, "Category not found");
+    error(404, "Category not found");
   }
 
   const componentData = categoryRegistry[slug];
 
   if (!componentData) {
-    throw error(404, "Component not found");
+    error(404, "Component not found");
   }
 
   // We return only the serializable data
@@ -26,4 +28,4 @@ export function load({ params }) {
     slug,
     title: componentData.title,
   };
-}
+};

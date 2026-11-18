@@ -8,27 +8,8 @@ export default defineConfig({
     tailwindcss(),
     sveltekit({
       adapter: adapter(),
-      typescript: {
-        config: () => {
-          return {
-            compilerOptions: {
-              allowImportingTsExtensions: true,
-              isolatedModules: true,
-              lib: ["esnext", "DOM", "DOM.Iterable"],
-              module: "esnext",
-              moduleResolution: "bundler",
-              noEmit: true,
-              rootDirs: ["..", "./types"],
-              skipLibCheck: true,
-              sourceMap: true,
-              strict: true,
-              target: "esnext",
-              types: ["node"],
-              verbatimModuleSyntax: true,
-            },
-          };
-        },
-      },
+      paths: { base: process.env.BASE_PATH ? `/${process.env.BASE_PATH}` : "" },
     }),
   ],
+  server: { host: process.env.HOST ? process.env.HOST : "localhost", port: process.env.PORT ? parseInt(process.env.PORT) : 4000, strictPort: true },
 });

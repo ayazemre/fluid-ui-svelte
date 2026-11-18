@@ -5,75 +5,70 @@
 
 A pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components, giving you complete control over your application's architecture.
 
-## Documentation
+## Scope
 
-Use the shippable CLI for terminal docs. Full metadata lives in "src/documentation/documentation.ts".
+This document covers how a consumer installs, configures, and uses the `fluid-ui-svelte` package. It describes the three layers, their components, the global styling setup, and the rules that every usage follows.
 
-```bash
-npx fluid-ui-svelte --documentation select=base.button
-```
+It does not cover how to contribute to the repository. The development commands, test suites, and release process are described in the Development section and in `tests/tests.md`.
 
 ## Architecture
 
-Three layers with strict boundaries:
+The library is organized into three layers with strict boundaries. Each layer imports from the layers below it and never from the layers above it.
 
-### Base Layer — fluid-ui-svelte/base
+### Base Layer
 
-Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links).
+The base layer holds the fundamental, low-level semantic wrappers around native HTML elements. It reduces HTML tag fatigue, enforces semantic consistency and accessibility, and handles class deduplication, merging, and attribute sanitization.
 
-- Reduces HTML tag fatigue and enforces semantic consistency and accessibility.
-- Handles class deduplication, merging, and attribute sanitization.
-- Every element exposes `underlyingElement` as `$bindable(null)`.
-- Accepts `overrideDefaultStyling` boolean. When true, default base classes are stripped.
+Import path: `fluid-ui-svelte/base`
 
-Elements: Button, Canvas, Container, Form, Image, InputField, Label, Link, List, Table, Text.
+### Components Layer
 
-### Components Layer — fluid-ui-svelte/components
+The components layer holds focused, cohesive functional primitives assembled strictly from base elements. These components are purely visual and interactive, and they contain no application business logic.
 
-Focused, cohesive functional primitives assembled strictly from Base elements.
+Import path: `fluid-ui-svelte/components`
 
-- Accordion, AnchoredOverlay, CalendarGrid, Carousel, CodeBlock, Draggable, Drawer, Dropzone, ImageCrop, Modal, Page, Pagination, Switch, TimePicker.
-- Accepts `variant` string for theme injection.
-- Purely visual and interactive. No application business logic.
+### Prebuilt Layer
 
-### Prebuilt Layer — fluid-ui-svelte/prebuilt
+The prebuilt layer holds turnkey domain workflows that compose the base and components layers. These components are ready for immediate application use.
 
-Turnkey domain workflows composing Base and Components.
+Import path: `fluid-ui-svelte/prebuilt`
 
-- Breadcrumb, InternationalInput, NotificationArea, SearchableSelector.
-- Accepts `variant` string for theme injection.
-- Ready for immediate application use.
+## Design Pillars
 
-## Three Pillars
+Each component is built from three parts that stay separate.
 
-1. Reactive UI Markup (.svelte): what is rendered, structure, snippets, event binding.
-2. Pure TypeScript Logic (.ts helper): state machines, calculations, handlers. Pure, immutable, no side effects.
-3. Central Styling Defaults (fluidui.css): dedicated class blocks per element for centralized theming.
+1. Reactive UI markup in `.svelte` files defines what is rendered, the structure, the snippets, and the event binding.
+2. Pure TypeScript logic in `.ts` helper files defines state machines, calculations, and handlers. This logic is pure, immutable, and free of side effects.
+3. Central styling defaults in `fluidui.css` define a dedicated class block for each element, so theming happens in one place.
 
 ## Requirements
 
-- Svelte 5 Runes mode (`$state`, `$derived`, `$props`, `$bindable`, `$effect`, `Snippet`).
-- Node 24+ native TypeScript execution.
-- Tailwind CSS 4 syntax and CSS variables.
+- Svelte 5 in Runes mode (`$state`, `$derived`, `$props`, `$bindable`, `$effect`, `Snippet`). The peer dependency is `svelte` `^5.0.0`.
+- Tailwind CSS 4 syntax and CSS variables, for the default styling.
 
 ## Installation
+
+### Install the package
 
 ```bash
 npm install fluid-ui-svelte
 ```
 
-Configure global styles. Fluid UI does not inject styles automatically:
+### Configure global styles
+
+Fluid UI does not inject styles automatically. This keeps library styling and application styling separate.
+
+1. Copy the reference `src/fluidui.css` file from the repository into your project, for example into `src/`.
+2. Import it in your main CSS file.
 
 ```css
 /* src/app.css */
 @import "./fluidui.css";
 ```
 
-Place the reference `fluidui.css` in your project (for example `src/`) and import it in your main CSS file.
-
 ## Usage
 
-Svelte 5 Runes mode is required.
+Import components from the layer that owns them. Svelte 5 in Runes mode is required.
 
 ```svelte
 <script>
@@ -85,14 +80,14 @@ Svelte 5 Runes mode is required.
 <Button id="submit-button" onclick={async () => {}}>Submit</Button>
 ```
 
-Rules:
+### Usage Rules
 
-- Every element requires a mandatory `id` prop from the outside.
-- Internal child Base elements use deterministic scoped ids (for example `my-drawer-panel`, `my-modal-title`).
-- Prioritize snippets over config objects for custom markup.
-- Base uses `overrideDefaultStyling`. Components and prebuilt use `variant`.
+- Every element requires an `id` prop from the outside.
+- Internal child base elements use deterministic scoped ids, such as `my-drawer-panel` or `my-modal-title`.
+- Snippets are preferred over configuration objects for custom markup.
+- Base elements accept `overrideDefaultStyling`. Components and prebuilt elements accept `variant`.
 
-Example with mandatory id and snippets:
+### Example: Drawer With Snippet Content
 
 ```svelte
 <Drawer id="my-drawer" bind:isOpen position="left">
@@ -100,54 +95,45 @@ Example with mandatory id and snippets:
 </Drawer>
 ```
 
-## CLI Reference
+## Component Reference
 
-The package ships `npx fluid-ui-svelte`.
+The table lists each layer, its import path, and its components. The documentation registry in `src/documentation/documentation.ts` holds the full description and props table of each component.
 
-```bash
-npx fluid-ui-svelte
-npx fluid-ui-svelte --help
-npx fluid-ui-svelte --documentation
-npx fluid-ui-svelte --documentation select=base.button
-npx fluid-ui-svelte --documentation select=components.code-block
-npx fluid-ui-svelte --documentation select=prebuilt.breadcrumb
-```
-
-- No options prints generic library documentation with layer descriptions and element lists.
-- `--documentation` prints generic documentation.
-- `--documentation select=<category.element>` prints title, description, layer import path, usage snippet, and props table.
-- Path format is `category.element` (for example `base.button`, `components.modal`).
-
-## Core Technologies
-
-| Area       | Tool / Pattern                                                                  |
-| ---------- | ------------------------------------------------------------------------------- |
-| Language   | TypeScript strict                                                               |
-| Framework  | Svelte 5 Runes mode only                                                        |
-| Styling    | Tailwind CSS 4 + CSS variables + fluidui.css                                    |
-| Testing    | Playwright end to end                                                           |
-| Runtime    | Node 24+ native TS, no tsx or ts-node                                           |
-| Formatting | oxfmt                                                                           |
-| Linting    | oxlint                                                                          |
-| Imports    | Node subpath `#src/*`, relative `./` and `../` for same or single parent folder |
+| Layer      | Import path                  | Components                                                                                                                                         |
+| ---------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base       | `fluid-ui-svelte/base`       | Button, Canvas, Container, Form, Image, InputField, Label, Link, List, Table, Text                                                                 |
+| Components | `fluid-ui-svelte/components` | Accordion, AnchoredOverlay, CalendarGrid, Carousel, CodeBlock, Draggable, Drawer, Dropzone, ImageCrop, Modal, Page, Pagination, Switch, TimePicker |
+| Prebuilt   | `fluid-ui-svelte/prebuilt`   | Breadcrumb, InternationalInput, NotificationArea, SearchableSelector                                                                               |
 
 ## Naming Conventions
 
-- No shorthand names (`button` not `btn`, `configuration` not `cfg`).
+- No shortened names. Use `button`, not `btn`, and `configuration`, not `cfg`.
 - `PascalCase` for Svelte components and type aliases.
-- `camelCase` for variables, functions, helper files.
+- `camelCase` for variables, functions, and helper files.
 - `kebab-case` for registry slugs.
 
-## Components
+## Development
 
-Base (`fluid-ui-svelte/base`): Button, Canvas, Container, Form, Image, InputField, Label, Link, List, Table, Text.
+Run these commands from the repository root.
 
-Components (`fluid-ui-svelte/components`): Accordion, AnchoredOverlay, CalendarGrid, Carousel, CodeBlock, Draggable, Drawer, Dropzone, ImageCrop, Modal, Page, Pagination, Switch, TimePicker.
+```bash
+npm install
+npm run dev
+npm run build
+npm run lint
+npm run format
+npm run check
+npx playwright install chromium
+npm run test:browser
+```
 
-Prebuilt (`fluid-ui-svelte/prebuilt`): Breadcrumb, InternationalInput, NotificationArea, SearchableSelector.
-
-See `src/documentation/documentation.ts` for full `documentationRegistry` with descriptions and props. Props are derived strictly from source.
+- `npm run dev` starts the documentation site.
+- `npm run build` builds the site and the library into `dist/`, then checks the package with publint.
+- `npm run lint` runs oxlint with automatic fixes.
+- `npm run format` formats the source with oxfmt.
+- `npm run check` runs the Svelte and TypeScript checks.
+- `npm run test:browser` runs the Playwright browser suites in `tests/browser/`.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.

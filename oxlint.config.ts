@@ -2,6 +2,7 @@ import { defineConfig } from "oxlint";
 
 export default defineConfig({
   ignorePatterns: ["dist", "node_modules", "build"],
+  options: { typeAware: true, typeCheck: true },
   overrides: [
     {
       excludeFiles: ["*config*"],
@@ -17,6 +18,12 @@ export default defineConfig({
         "unicorn/filename-case": ["error", { cases: { camelCase: true } }],
       },
     },
+    {
+      files: ["*.test.ts"],
+      rules: {
+        "typescript/no-floating-promises": "off",
+      },
+    },
   ],
   plugins: ["eslint", "import", "unicorn", "typescript"],
   rules: {
@@ -27,5 +34,6 @@ export default defineConfig({
     "max-statements": ["error", 50],
     "no-unused-vars": "error",
     "sort-keys": "error",
+    "typescript/only-throw-error": "error",
   },
 });

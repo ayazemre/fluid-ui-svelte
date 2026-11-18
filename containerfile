@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:24-slim AS builder
+FROM node:26-slim AS builder
 WORKDIR /app
 
 # Copy dependency files first for better caching
@@ -12,7 +12,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 # Stage 2: Production
-FROM node:24-slim AS runner
+FROM node:26-slim AS runner
 WORKDIR /app
 
 # Security: Run as non-root user
@@ -27,4 +27,4 @@ EXPOSE 3000
 ENV NODE_ENV=production
 ENV PORT=3000
 
-CMD [ "node", "build" ]
+CMD [ "npm", "run", "start" ]

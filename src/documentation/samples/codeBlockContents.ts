@@ -3,7 +3,7 @@
 
 export const gettingStartedInstallation = `npm install fluid-ui-svelte`;
 
-export const gettingStartedAppCss = `/* src/app.css */
+export const gettingStartedStylesCss = `/* src/styles.css */
 @import "./fluidui.css";
 
 /* Your application styles */`;
@@ -1166,8 +1166,8 @@ export const codeBlockContents = {
   dropzoneData,
   dropzoneFile,
   formBasic,
-  gettingStartedAppCss,
   gettingStartedInstallation,
+  gettingStartedStylesCss,
   gettingStartedUsage,
   howToMandatoryId,
   howToNamingAndHandling,

@@ -11,7 +11,6 @@ jobs:
     uses: ./.github/workflows/integrity.yaml
     permissions:
       contents: read
-      packages: read
     secrets: inherit
 
   test:
@@ -19,15 +18,12 @@ jobs:
     uses: ./.github/workflows/test.yaml
     permissions:
       contents: read
-      packages: read
     secrets: inherit
 
   publish:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.integrity.outputs.should_publish == 'true'
     needs: [integrity, test]
     uses: ./.github/workflows/publish.yaml
-    with:
-      current_version: ${{ needs.integrity.outputs.current_version }}
     permissions:
       contents: read
       id-token: write

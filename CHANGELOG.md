@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-11-18
+
+### Added
+
+- Added a `containerfile` that builds the site on `node:26-slim` and runs `npm run start` on port 3000.
+- Added repository operations `integrity`, `test`, `publish`, and `push` to `scripts/repository.sh`.
+- Added GitHub workflows for integrity, test, and publish, with npm trusted publishing and provenance.
+- Added browser test suites in `tests/browser/` for the base, components, and prebuilt layers.
+
+### Changed
+
+- Migrated the library and the documentation site to the SvelteKit 3 baseline on Svelte 5 and Node 26.
+- Renamed `src/app.css` to `src/styles.css` and the export `gettingStartedAppCss` to `gettingStartedStylesCss`.
+- Replaced the lint script with `oxlint --fix` and the format script with `oxfmt`, excluding `dist`, `build`, and `node_modules`.
+- Rewrote `README.md` from the current code.
+
+### Removed
+
+- Removed the command line interface, its `bin` entry, and the `build:cli` script.
+- Removed the `infrastructure/` folder, the Podman setup, and the `Dockerfile`.
+- Removed the `llms` and `testing` routes, the unit and integration tests, and the `data-trails` and `zod` dependencies.
+- Removed the `.npmrc` file and the `peerDependenciesMeta` entry.
+
 ## [0.4.2] - 2026-09-14
 
 ### Added
