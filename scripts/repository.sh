@@ -208,10 +208,10 @@ install_dependencies() {
 
 is_branch_name_valid() {
   # Function metadata
-  # Description: Checks that a branch name uses the development or maintenance category followed by a kebab-case description. It writes nothing and reports the result through the return code.
+  # Description: Checks that a branch name is dev or main, or uses the development or maintenance category followed by a kebab-case description. It writes nothing and reports the result through the return code.
   # Input: $1 the branch name.
   # Exit: 0 when the branch name is valid, 1 when it is not or when it is missing.
-  local branch_name="${1:-}" branch_name_pattern='^(development|maintenance)/[a-z0-9]+(-[a-z0-9]+)*$'
+  local branch_name="${1:-}" branch_name_pattern='^((development|maintenance)/[a-z0-9]+(-[a-z0-9]+)*|dev|main)$'
 
   if [[ "$branch_name" =~ $branch_name_pattern ]]; then
     return 0
@@ -574,7 +574,7 @@ run_repository_publish() {
 
 run_repository_push() {
   # Function metadata
-  # Description: Pushes the current branch with a commit of every change. It checks the commit message and the branch name, then runs the lint with automatic fixes and the format write, commits every change with the commit message, and pushes the branch to origin without force. It refuses a branch that does not match the branch naming rules, and it writes the progress and the reasons to stderr and nothing to stdout.
+  # Description: Pushes the current branch with a commit of every change. It checks the commit message and the branch name, then runs the lint with automatic fixes and the format write, commits every change with the commit message, and pushes the branch to origin without force. The branch may be dev, main, or a development or maintenance branch, and any other branch is refused. It writes the progress and the reasons to stderr and nothing to stdout.
   # Input: --commit_message=<type: description>, where the type is development or maintenance.
   # Exit: 0 when the branch is pushed, 1 when the repository root cannot be resolved, a step fails, or the branch name is not valid, 2 when the commit message is missing, malformed, or an argument is unknown.
   local repository_root_path="" commit_message="" argument="" branch_name=""
@@ -603,7 +603,7 @@ run_repository_push() {
 
   branch_name="$(read_current_branch_name)" || return 1
   if ! is_branch_name_valid "$branch_name"; then
-    printf '\033[31m%s\033[0m\n' "Error: the push is refused, the branch $branch_name must start with development/ or maintenance/ and continue with a kebab-case description" >&2
+    printf '\033[31m%s\033[0m\n' "Error: the push is refused, the branch $branch_name must be dev or main, or start with development/ or maintenance/ and continue with a kebab-case description" >&2
     return 1
   fi
 
@@ -648,7 +648,7 @@ print_repository_help() {
   printf '%s\n' "  check             Check the shell syntax of every script of the repository"
   printf '%s\n' "  integrity         Run the shell, lint, format, and changelog checks, then write should_publish to stdout and to GITHUB_OUTPUT when it is set, exits 1 when a check fails"
   printf '%s\n' "  test              Check node, install dependencies, build, run the browser tests, exits 1 when a step fails"
-  printf '%s\n' "  push              Run the lint with fixes and the format, commit every change with --commit_message=<type: description>, then push the current branch, exits 1 when a step fails, exits 2 when the commit message is wrong"
+  printf '%s\n' "  push              Run the lint with fixes and the format, commit every change with --commit_message=<type: description>, then push the current branch (dev, main, development/*, or maintenance/*), exits 1 when a step fails or the branch is refused, exits 2 when the commit message is wrong"
   printf '%s\n' "  publish           Check node, install dependencies, refuse when the version is not higher than npm, build, then publish with provenance, exits 1 when a step fails"
   return 0
 }
