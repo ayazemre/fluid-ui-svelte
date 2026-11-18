@@ -1,0 +1,30 @@
+{
+  "editor.inlineSuggest.enabled": false,
+  "explorer.confirmDelete": false,
+  "diffEditor.renderSideBySide": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.autoSave": "onFocusChange",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "oxc.enable": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always",
+    "source.format.oxc": "always"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "json.schemas": [
+    {
+      "url": "https://opencode.ai/config.json"
+    }
+  ],
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.preferences.importModuleSpecifierEnding": "js",
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  }
+}
