@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Icon from "@iconify/svelte";
-
   import { Button, Container, Image, InputField, Text } from "../base/index.ts";
   import { AnchoredOverlay } from "../components/index.ts";
   import {
@@ -86,9 +84,7 @@
               id={`${id}-trigger-avatar-placeholder`}
               overrideDefaultStyling={true}
               class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-medium text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
-            >
-              <Icon icon="mdi:account-outline" width="16" height="16"></Icon>
-            </Container>
+            ></Container>
             <Text id={`${id}-trigger-placeholder`} type="span" class="truncate text-sm text-neutral-500 dark:text-neutral-400">{placeholder}</Text>
           {/if}
         </Container>
@@ -97,7 +93,7 @@
           overrideDefaultStyling={true}
           class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-neutral-400"
         >
-          <Icon icon="mdi:unfold-more-horizontal" width="18" height="18"></Icon>
+          <span class="h-1.5 w-1.5 rotate-45 border-b-2 border-r-2 border-current" aria-hidden="true"></span>
         </Container>
       </Button>
     {/snippet}
@@ -155,7 +151,7 @@
                 overrideDefaultStyling={true}
                 class="flex h-5 w-5 shrink-0 items-center justify-center text-primary-600"
               >
-                <Icon icon="mdi:check" width="16" height="16"></Icon>
+                <span class="h-2.5 w-1.5 rotate-45 border-b-2 border-r-2 border-current" aria-hidden="true"></span>
               </Container>
             {/if}
           </Button>

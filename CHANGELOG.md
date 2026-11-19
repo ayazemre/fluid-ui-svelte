@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Added `resolveImageCropState`, `ImageCropAspectRatio`, `ImageCropState`, and `ImageCropTransformOptions` to the `./components` export. The state holds the cover zoom, the crop area, the pan bounds, and the clamped transform.
+- Added a drag to pan example to the image crop documentation, with its code block.
+
+### Changed
+
+- `ImageCrop` clamps zoom to the cover zoom and pans to the bounds of the source image, so the image cannot leave the crop area.
+- `drawOverlay` and `generateCroppedImage` take the crop area and the shape as explicit arguments instead of computing or defaulting them.
+- Image crop samples bind their zoom and pan sliders to the resolved bounds.
+- `SearchableSelector` draws its chevron and check marks with CSS borders instead of `@iconify/svelte` icons.
+- `src/fluidui.css` declares the cascade layers `theme, base, fluid, components, utilities`, and wraps the fluid component styles in the `fluid` layer.
+
+### Fixed
+
+- `serializeStructuredData` escapes `<`, `>`, `&`, and the line and paragraph separators, so structured data cannot close its script element early.
+
+### Removed
+
+- Removed the `section, main.fluid-container` base rule from `src/fluidui.css`.
+- Removed the image crop pan range limits of plus or minus 400 and 1000 pixels in favor of the computed bounds.
+
 ## [0.5.0] - 2026-11-18
 
 ### Added

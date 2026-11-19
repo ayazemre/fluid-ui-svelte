@@ -7,6 +7,7 @@ export { default as Draggable } from "./Draggable.svelte";
 export { default as Drawer } from "./Drawer.svelte";
 export { default as Dropzone } from "./Dropzone.svelte";
 export { default as ImageCrop } from "./ImageCrop.svelte";
+export { resolveImageCropState, type ImageCropAspectRatio, type ImageCropState, type ImageCropTransformOptions } from "./imageCrop.ts";
 export { default as Modal } from "./Modal.svelte";
 export { default as Page } from "./Page.svelte";
 export { default as Pagination } from "./Pagination.svelte";

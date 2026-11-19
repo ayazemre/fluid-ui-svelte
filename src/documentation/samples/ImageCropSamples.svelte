@@ -2,7 +2,15 @@
   import { onMount } from "svelte";
 
   import { Button, Container, Image, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock, ImageCrop, Switch } from "#src/lib/components/index.ts";
+  import {
+    CodeBlock,
+    ImageCrop,
+    resolveImageCropState,
+    Switch,
+    type ImageCropAspectRatio,
+    type ImageCropState,
+    type ImageCropTransformOptions,
+  } from "#src/lib/components/index.ts";
 
   import { codeBlockContents } from "./codeBlockContents.ts";
 
@@ -12,6 +20,25 @@
     const green = parseInt(hex.slice(3, 5), 16);
     const blue = parseInt(hex.slice(5, 7), 16);
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+  }
+
+  type PanDragSession = {
+    displayScale: number;
+    pointerId: number;
+    startClientX: number;
+    startClientY: number;
+    startPanX: number;
+    startPanY: number;
+  };
+
+  function resolveSampleCropState(
+    bitmap: ImageBitmap | undefined,
+    aspectRatio: ImageCropAspectRatio,
+    padding: number,
+    requestedTransform: ImageCropTransformOptions,
+  ): ImageCropState | undefined {
+    if (bitmap === undefined) return undefined;
+    return resolveImageCropState({ height: bitmap.height, width: bitmap.width }, aspectRatio, padding, requestedTransform);
   }
 
   // Helper to transform Data URL to matching source MIME type (JPEG / PNG / WebP)
@@ -57,6 +84,14 @@
   let overlayHex = $state("#000000");
   let overlayOpacity = $state(0.5);
   let overlayColor = $derived(hexToRgba(overlayHex, overlayOpacity));
+  let remoteCropState = $derived(resolveSampleCropState(imageBitmap, { x: 1, y: 1 }, padding, { pan: { x: panX, y: panY }, zoom }));
+
+  $effect(() => {
+    if (remoteCropState === undefined) return;
+    zoom = remoteCropState.transform.zoom;
+    panX = remoteCropState.transform.pan.x;
+    panY = remoteCropState.transform.pan.y;
+  });
 
   // Transform remote crop output to JPG when generated
   $effect(() => {
@@ -89,6 +124,16 @@
   let uploadOverlayHex = $state("#000000");
   let uploadOverlayOpacity = $state(0.5);
   let uploadOverlayColor = $derived(hexToRgba(uploadOverlayHex, uploadOverlayOpacity));
+  let uploadCropState = $derived(
+    resolveSampleCropState(uploadedBitmap, { x: 16, y: 9 }, uploadPadding, { pan: { x: uploadPanX, y: uploadPanY }, zoom: uploadZoom }),
+  );
+
+  $effect(() => {
+    if (uploadCropState === undefined) return;
+    uploadZoom = uploadCropState.transform.zoom;
+    uploadPanX = uploadCropState.transform.pan.x;
+    uploadPanY = uploadCropState.transform.pan.y;
+  });
 
   // Transform uploaded crop output to match source file MIME type
   $effect(() => {
@@ -104,6 +149,44 @@
       transformedUploadResult = undefined;
     }
   });
+
+  let dragPanZoom = $state(1);
+  let dragPanX = $state(0);
+  let dragPanY = $state(0);
+  let dragPanCropState = $derived(resolveSampleCropState(imageBitmap, { x: 1, y: 1 }, 50, { pan: { x: dragPanX, y: dragPanY }, zoom: dragPanZoom }));
+  let panDragSession: PanDragSession | undefined = undefined;
+
+  $effect(() => {
+    if (dragPanCropState === undefined) return;
+    dragPanZoom = dragPanCropState.transform.zoom;
+    dragPanX = dragPanCropState.transform.pan.x;
+    dragPanY = dragPanCropState.transform.pan.y;
+  });
+
+  function startDragPan(event: PointerEvent): void {
+    if (event.button !== 0 || imageBitmap === undefined) return;
+    const dragSurface = event.currentTarget as HTMLElement;
+    dragSurface.setPointerCapture(event.pointerId);
+    panDragSession = {
+      displayScale: Math.min(imageBitmap.width, dragSurface.clientWidth) / imageBitmap.width,
+      pointerId: event.pointerId,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      startPanX: dragPanX,
+      startPanY: dragPanY,
+    };
+  }
+
+  function moveDragPan(event: PointerEvent): void {
+    if (panDragSession === undefined || panDragSession.pointerId !== event.pointerId) return;
+    dragPanX = panDragSession.startPanX + (event.clientX - panDragSession.startClientX) / panDragSession.displayScale;
+    dragPanY = panDragSession.startPanY + (event.clientY - panDragSession.startClientY) / panDragSession.displayScale;
+  }
+
+  function endDragPan(event: PointerEvent): void {
+    if (panDragSession === undefined || panDragSession.pointerId !== event.pointerId) return;
+    panDragSession = undefined;
+  }
 
   onMount(async () => {
     try {
@@ -195,7 +278,7 @@
     </Container>
 
     <Container id="image-crop-remote-preview" class="rounded-lg border p-6 dark:border-neutral-700">
-      {#if imageBitmap}
+      {#if imageBitmap && remoteCropState}
         <Container id="image-crop-remote-content" class="flex flex-col gap-8">
           <!-- Preview Row -->
           <Container id="image-crop-remote-preview-row" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -264,7 +347,15 @@
             <Container id="image-crop-remote-zoom-padding-group" class="flex flex-col gap-4">
               <Container id="image-crop-remote-zoom-group" class="flex flex-col gap-2">
                 <Text id="image-crop-remote-zoom-label" class="text-xs font-medium uppercase text-neutral-500">Zoom ({zoom.toFixed(2)})</Text>
-                <input id="image-crop-remote-zoom-input" type="range" min="0.1" max="5" step="0.01" bind:value={zoom} class="w-full" />
+                <input
+                  id="image-crop-remote-zoom-input"
+                  type="range"
+                  min={remoteCropState.coverZoom}
+                  max="5"
+                  step="0.01"
+                  bind:value={zoom}
+                  class="w-full"
+                />
               </Container>
               <Container id="image-crop-remote-padding-group" class="flex flex-col gap-2">
                 <Text id="image-crop-remote-padding-label" class="text-xs font-medium uppercase text-neutral-500">Padding ({padding}px)</Text>
@@ -275,11 +366,27 @@
             <Container id="image-crop-remote-pan-group" class="flex flex-col gap-4">
               <Container id="image-crop-remote-panx-group" class="flex flex-col gap-2">
                 <Text id="image-crop-remote-panx-label" class="text-xs font-medium uppercase text-neutral-500">Pan X ({panX}px)</Text>
-                <input id="image-crop-remote-panx-input" type="range" min="-400" max="400" step="1" bind:value={panX} class="w-full" />
+                <input
+                  id="image-crop-remote-panx-input"
+                  type="range"
+                  min={remoteCropState.panBounds.minimumX}
+                  max={remoteCropState.panBounds.maximumX}
+                  step="1"
+                  bind:value={panX}
+                  class="w-full"
+                />
               </Container>
               <Container id="image-crop-remote-pany-group" class="flex flex-col gap-2">
                 <Text id="image-crop-remote-pany-label" class="text-xs font-medium uppercase text-neutral-500">Pan Y ({panY}px)</Text>
-                <input id="image-crop-remote-pany-input" type="range" min="-400" max="400" step="1" bind:value={panY} class="w-full" />
+                <input
+                  id="image-crop-remote-pany-input"
+                  type="range"
+                  min={remoteCropState.panBounds.minimumY}
+                  max={remoteCropState.panBounds.maximumY}
+                  step="1"
+                  bind:value={panY}
+                  class="w-full"
+                />
               </Container>
             </Container>
 
@@ -339,7 +446,7 @@
         {/if}
       </Container>
 
-      {#if uploadedBitmap}
+      {#if uploadedBitmap && uploadCropState}
         <Container id="image-crop-upload-content" class="flex flex-col gap-8">
           <!-- Preview Row -->
           <Container id="image-crop-upload-preview-row" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -408,7 +515,15 @@
             <Container id="image-crop-upload-zoom-padding-group" class="flex flex-col gap-4">
               <Container id="image-crop-upload-zoom-group" class="flex flex-col gap-2">
                 <Text id="image-crop-upload-zoom-label" class="text-xs font-medium uppercase text-neutral-500">Zoom ({uploadZoom.toFixed(2)})</Text>
-                <input id="image-crop-upload-zoom-input" type="range" min="0.1" max="5" step="0.01" bind:value={uploadZoom} class="w-full" />
+                <input
+                  id="image-crop-upload-zoom-input"
+                  type="range"
+                  min={uploadCropState.coverZoom}
+                  max="5"
+                  step="0.01"
+                  bind:value={uploadZoom}
+                  class="w-full"
+                />
               </Container>
               <Container id="image-crop-upload-padding-group" class="flex flex-col gap-2">
                 <Text id="image-crop-upload-padding-label" class="text-xs font-medium uppercase text-neutral-500">Padding ({uploadPadding}px)</Text>
@@ -419,11 +534,27 @@
             <Container id="image-crop-upload-pan-group" class="flex flex-col gap-4">
               <Container id="image-crop-upload-panx-group" class="flex flex-col gap-2">
                 <Text id="image-crop-upload-panx-label" class="text-xs font-medium uppercase text-neutral-500">Pan X ({uploadPanX}px)</Text>
-                <input id="image-crop-upload-panx-input" type="range" min="-1000" max="1000" step="1" bind:value={uploadPanX} class="w-full" />
+                <input
+                  id="image-crop-upload-panx-input"
+                  type="range"
+                  min={uploadCropState.panBounds.minimumX}
+                  max={uploadCropState.panBounds.maximumX}
+                  step="1"
+                  bind:value={uploadPanX}
+                  class="w-full"
+                />
               </Container>
               <Container id="image-crop-upload-pany-group" class="flex flex-col gap-2">
                 <Text id="image-crop-upload-pany-label" class="text-xs font-medium uppercase text-neutral-500">Pan Y ({uploadPanY}px)</Text>
-                <input id="image-crop-upload-pany-input" type="range" min="-1000" max="1000" step="1" bind:value={uploadPanY} class="w-full" />
+                <input
+                  id="image-crop-upload-pany-input"
+                  type="range"
+                  min={uploadCropState.panBounds.minimumY}
+                  max={uploadCropState.panBounds.maximumY}
+                  step="1"
+                  bind:value={uploadPanY}
+                  class="w-full"
+                />
               </Container>
             </Container>
 
@@ -459,5 +590,54 @@
       {/if}
     </Container>
     <CodeBlock id="image-crop-upload-code" sourceCode={codeBlockContents.imageCropUpload} language="svelte" />
+  </Container>
+
+  <!-- Example 3: Drag to Pan -->
+  <Container id="image-crop-drag-section" class="flex flex-col gap-4">
+    <Container id="image-crop-drag-header" class="flex flex-col gap-1">
+      <Text id="image-crop-drag-heading" type="h3" class="text-lg font-semibold">Drag to Pan</Text>
+      <Text id="image-crop-drag-description" class="text-sm text-neutral-500"
+        >Drag the image under the crop frame with a mouse or touch. The image stays inside the source bounds.</Text
+      >
+    </Container>
+
+    <Container id="image-crop-drag-preview" class="rounded-lg border p-6 dark:border-neutral-700">
+      {#if imageBitmap && dragPanCropState}
+        <Container
+          id="image-crop-drag-surface"
+          overrideDefaultStyling={true}
+          class="cursor-grab touch-none select-none overflow-hidden rounded bg-neutral-100 active:cursor-grabbing dark:bg-neutral-800"
+          onpointerdown={startDragPan}
+          onpointermove={moveDragPan}
+          onpointerup={endDragPan}
+          onpointercancel={endDragPan}
+        >
+          <ImageCrop
+            id="image-crop-drag"
+            sourceImage={imageBitmap}
+            aspectRatio={{ x: 1, y: 1 }}
+            zoom={dragPanZoom}
+            pan={{ x: dragPanX, y: dragPanY }}
+            padding={50}
+          />
+        </Container>
+
+        <Container id="image-crop-drag-zoom-group" class="mt-6 flex flex-col gap-2">
+          <Text id="image-crop-drag-zoom-label" class="text-xs font-medium uppercase text-neutral-500">Zoom ({dragPanZoom.toFixed(2)})</Text>
+          <input
+            id="image-crop-drag-zoom-input"
+            type="range"
+            min={dragPanCropState.coverZoom}
+            max="5"
+            step="0.01"
+            bind:value={dragPanZoom}
+            class="w-full"
+          />
+        </Container>
+      {:else}
+        <Text id="image-crop-drag-loading-text">Loading image bitmap...</Text>
+      {/if}
+    </Container>
+    <CodeBlock id="image-crop-drag-code" sourceCode={codeBlockContents.imageCropDragToPan} language="svelte" />
   </Container>
 </Container>

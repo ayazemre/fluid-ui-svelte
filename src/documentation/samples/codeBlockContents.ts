@@ -741,6 +741,67 @@ const imageCropCircle = `<script>
   />
 {/if}`;
 
+const imageCropDragToPan = `<script>
+  import { ImageCrop, resolveImageCropState } from 'fluid-ui-svelte/components';
+  import { onMount } from 'svelte';
+
+  const aspectRatio = { x: 1, y: 1 };
+  const padding = 50;
+
+  let bitmap = $state();
+  let zoom = $state(1);
+  let panX = $state(0);
+  let panY = $state(0);
+  let drag;
+
+  let cropState = $derived(
+    bitmap
+      ? resolveImageCropState({ width: bitmap.width, height: bitmap.height }, aspectRatio, padding, { zoom, pan: { x: panX, y: panY } })
+      : undefined,
+  );
+
+  $effect(() => {
+    if (!cropState) return;
+    zoom = cropState.transform.zoom;
+    panX = cropState.transform.pan.x;
+    panY = cropState.transform.pan.y;
+  });
+
+  onMount(async () => {
+    const response = await fetch('https://picsum.photos/id/10/1920/1080');
+    bitmap = await createImageBitmap(await response.blob());
+  });
+
+  function startDrag(event) {
+    if (!bitmap) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    const displayScale = Math.min(bitmap.width, event.currentTarget.clientWidth) / bitmap.width;
+    drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, startPanX: panX, startPanY: panY, displayScale };
+  }
+
+  function moveDrag(event) {
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    panX = drag.startPanX + (event.clientX - drag.startX) / drag.displayScale;
+    panY = drag.startPanY + (event.clientY - drag.startY) / drag.displayScale;
+  }
+
+  function endDrag(event) {
+    if (drag && drag.pointerId === event.pointerId) drag = undefined;
+  }
+</script>
+
+<div
+  class="cursor-grab touch-none select-none"
+  onpointerdown={startDrag}
+  onpointermove={moveDrag}
+  onpointerup={endDrag}
+  onpointercancel={endDrag}
+>
+  {#if bitmap}
+    <ImageCrop id="image-crop-drag" sourceImage={bitmap} {aspectRatio} {zoom} pan={{ x: panX, y: panY }} {padding} />
+  {/if}
+</div>`;
+
 const pageBasic = `<script>
   import { Page } from 'fluid-ui-svelte/components';
   import { Text } from 'fluid-ui-svelte/base';
@@ -1174,6 +1235,7 @@ export const codeBlockContents = {
   howToSnippetComposition,
   imageCropBasic,
   imageCropCircle,
+  imageCropDragToPan,
   imageCropUpload,
   imageLoading,
   imageStandard,
