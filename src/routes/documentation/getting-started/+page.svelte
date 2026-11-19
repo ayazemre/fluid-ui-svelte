@@ -1,6 +1,7 @@
 <script lang="ts">
   import { documentationRegistry } from "#src/documentation/documentation.ts";
-  import { Container, Link, Text } from "#src/lib//base/index.ts";
+  import { layerNumerals } from "#src/documentation/siteContent.ts";
+  import { Container, Text } from "#src/lib/base/index.ts";
   import { CodeBlock, Page } from "#src/lib/components/index.ts";
 
   const pageData = (
@@ -27,78 +28,85 @@
   };
 </script>
 
-<Page id="getting-started-page" title={pageData.title} description={pageData.description}>
-  <Container id="getting-started-main-container" class="flex flex-col gap-10">
-    <!-- Introduction -->
-    <Container id="getting-started-intro-container" class="flex flex-col gap-4 border-b pb-8 dark:border-neutral-800">
-      <Text id="getting-started-heading" type="h1" class="text-3xl font-bold">{introductionSection.title}</Text>
-      <Text id="getting-started-description" class="text-neutral-600 dark:text-neutral-400">
-        {introductionSection.content}
-      </Text>
+<Page id="getting-started-page" variant="site-page" title={pageData.title} description={pageData.description}>
+  <Container id="getting-started-main-container" class="article">
+    <Container id="getting-started-intro-container" class="article-header layer-tone-introduction">
+      <Container id="getting-started-kicker" class="article-kicker">
+        <Text id="getting-started-chip" type="span" class="article-chip">Introduction</Text>
+        <Text id="getting-started-kicker-text" type="span">Guide · Part 01</Text>
+      </Container>
+      <Text id="getting-started-heading" type="h1" class="article-title">{introductionSection.title}</Text>
+      <Text id="getting-started-description" class="article-deck">{introductionSection.content}</Text>
     </Container>
 
-    <!-- Architecture Overview -->
-    <Container id="getting-started-architecture-container" class="flex flex-col gap-4">
-      <Text id="getting-started-structure-heading" type="h2" class="text-xl font-semibold">{architectureSection.title}</Text>
-      <Text id="getting-started-structure-description">{architectureSection.description}</Text>
+    <Container id="getting-started-architecture-container" class="article-section">
+      <Container id="getting-started-architecture-head" class="article-section-head">
+        <Text id="getting-started-architecture-number" type="span" class="mag-section-number">01</Text>
+        <Text id="getting-started-structure-heading" type="h2" class="article-section-heading">{architectureSection.title}</Text>
+      </Container>
+      <Text id="getting-started-structure-description" class="article-prose article-prose-muted">{architectureSection.description}</Text>
 
-      <Container id="getting-started-layers-grid" class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <Container id="getting-started-layers-index" class="layer-index">
         {#each architectureSection.layers as layer (layer.id)}
-          <Container
-            id={`getting-started-${layer.id}-layer-card`}
-            class="rounded-lg border bg-neutral-50 p-6 dark:border-neutral-800 dark:bg-neutral-900"
-          >
-            {#if layer.id === "base"}
-              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="mb-2 font-bold text-primary-600 dark:text-primary-400"
-                >{layer.title}</Text
-              >
-            {:else if layer.id === "components"}
-              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="mb-2 font-bold text-secondary-600 dark:text-secondary-400"
-                >{layer.title}</Text
-              >
-            {:else}
-              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="mb-2 font-bold text-primary-600 dark:text-primary-400"
-                >{layer.title}</Text
-              >
-            {/if}
-            <Text id={`getting-started-${layer.id}-layer-description`} class="text-sm">
-              Located in <Text id={`getting-started-${layer.id}-layer-path`} type="code">{layer.path}</Text>. {layer.description}
-            </Text>
+          <Container id={`getting-started-${layer.id}-layer-item`} class="layer-index-item">
+            <Text id={`getting-started-${layer.id}-layer-index`} type="span" class="layer-index-numeral">{layerNumerals[layer.id]}</Text>
+            <Container id={`getting-started-${layer.id}-layer-heading`} class="layer-index-heading">
+              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="layer-index-title">{layer.title}</Text>
+              <Text id={`getting-started-${layer.id}-layer-path`} type="code" class="layer-index-path">{layer.path}</Text>
+            </Container>
+            <Text id={`getting-started-${layer.id}-layer-description`} class="layer-index-summary">{layer.description}</Text>
           </Container>
         {/each}
       </Container>
     </Container>
 
-    <!-- Installation Steps -->
-    <Container id="getting-started-installation-container" class="flex flex-col gap-6">
-      <Text id="getting-started-installation-heading" type="h2" class="text-xl font-semibold">{installationSection.title}</Text>
+    <Container id="getting-started-installation-container" class="article-section">
+      <Container id="getting-started-installation-head" class="article-section-head">
+        <Text id="getting-started-installation-number" type="span" class="mag-section-number">02</Text>
+        <Text id="getting-started-installation-heading" type="h2" class="article-section-heading">{installationSection.title}</Text>
+      </Container>
 
-      <Container id="getting-started-steps-container" class="flex flex-col gap-8">
-        {#each installationSection.steps as step (step.id)}
-          <Container id={`getting-started-${step.id}-container`} class="flex flex-col gap-3">
-            <Text id={`getting-started-${step.id}-heading`} type="h3" class="font-bold">{step.title}</Text>
-            <Text id={`getting-started-${step.id}-description`} class="text-sm text-neutral-500">
-              {#if step.id === "step-2"}
-                Fluid UI does not inject styles automatically. This allows you to maintain library specific styling and app specific styling
-                separately. Download the reference
-                <Link id="getting-started-fluidui-css-link" href="/fluidui.css" target="_blank" class="font-bold underline">fluidui.css</Link>
-                file, place it in your project (e.g., <Text id="getting-started-src-path" type="code">src/</Text>), and import it in your main CSS
-                file.
-              {:else}
-                {step.description}
-              {/if}
+      <Container id="getting-started-steps-container" class="flex flex-col gap-12">
+        {#each installationSection.steps as step, stepIndex (step.id)}
+          <Container id={`getting-started-${step.id}-container`} class="flex flex-col gap-4">
+            <Text id={`getting-started-${step.id}-heading`} type="h3" class="article-prose text-lg font-semibold">
+              <Text id={`getting-started-${step.id}-index`} type="span" class="mag-section-number mr-3">
+                {String(stepIndex + 1).padStart(2, "0")}
+              </Text>
+              {step.title}
             </Text>
-            <CodeBlock id={`getting-started-${step.id}-code`} sourceCode={step.code} language={step.language ?? "bash"} />
+            <Text id={`getting-started-${step.id}-description`} class="article-prose article-prose-muted">
+              {step.description}
+            </Text>
+            <Container id={`getting-started-${step.id}-frame`} class="specimen dark">
+              <Container id={`getting-started-${step.id}-caption`} class="specimen-caption">
+                <Text id={`getting-started-${step.id}-caption-title`} type="span">{step.title}</Text>
+                <Text id={`getting-started-${step.id}-caption-language`} type="span">{step.language ?? "bash"}</Text>
+              </Container>
+              <Container id={`getting-started-${step.id}-code-frame`} class="specimen-code">
+                <CodeBlock id={`getting-started-${step.id}-code`} sourceCode={step.code} language={step.language ?? "bash"} />
+              </Container>
+            </Container>
           </Container>
         {/each}
       </Container>
     </Container>
 
-    <!-- Usage -->
-    <Container id="getting-started-usage-container" class="flex flex-col gap-4">
-      <Text id="getting-started-usage-heading" type="h2" class="text-xl font-semibold">{usageSection.title}</Text>
-      <Text id="getting-started-usage-description">{usageSection.description}</Text>
-      <CodeBlock id="getting-started-usage-code" sourceCode={usageSection.code} language={usageSection.language ?? "svelte"} />
+    <Container id="getting-started-usage-container" class="article-section">
+      <Container id="getting-started-usage-head" class="article-section-head">
+        <Text id="getting-started-usage-number" type="span" class="mag-section-number">03</Text>
+        <Text id="getting-started-usage-heading" type="h2" class="article-section-heading">{usageSection.title}</Text>
+      </Container>
+      <Text id="getting-started-usage-description" class="article-prose article-prose-muted">{usageSection.description}</Text>
+      <Container id="getting-started-usage-frame" class="specimen dark">
+        <Container id="getting-started-usage-caption" class="specimen-caption">
+          <Text id="getting-started-usage-caption-title" type="span">Usage</Text>
+          <Text id="getting-started-usage-caption-language" type="span">{usageSection.language ?? "svelte"}</Text>
+        </Container>
+        <Container id="getting-started-usage-code-frame" class="specimen-code">
+          <CodeBlock id="getting-started-usage-code" sourceCode={usageSection.code} language={usageSection.language ?? "svelte"} />
+        </Container>
+      </Container>
     </Container>
   </Container>
 </Page>

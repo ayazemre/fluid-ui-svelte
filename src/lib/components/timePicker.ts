@@ -94,8 +94,8 @@ export function formatTimeString(
 
 export function getTimePickerCellStyles(isSelected: boolean): Array<string> {
   if (isSelected) {
-    return ["fluid-timepicker-cell-selected", "bg-primary-600", "text-white", "font-semibold", "rounded-md"];
+    return ["fluid-time-picker-cell", "fluid-time-picker-cell-selected"];
   }
 
-  return ["fluid-timepicker-cell", "text-neutral-700", "dark:text-neutral-200", "hover:bg-neutral-100", "dark:hover:bg-neutral-800", "rounded-md"];
+  return ["fluid-time-picker-cell"];
 }

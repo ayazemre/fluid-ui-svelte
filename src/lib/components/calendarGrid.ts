@@ -118,7 +118,7 @@ export function generateCalendarCellStyles(
   if (currentDate.getMonth() !== cellDate.getMonth()) {
     styles.push("fluid-calendar-cell-rolling-day");
     if (hideRollingDays) {
-      styles.push("invisible");
+      styles.push("fluid-calendar-cell-hidden");
     }
   }
 

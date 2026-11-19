@@ -23,22 +23,22 @@
   const componentState = $state({ isExpanded: false });
 </script>
 
-<Container {id} class={[variant, "fluid-accordion-wrapper", "flex"].join(" ")}>
+<Container id={`fluid-accordion-${id}`} class={["fluid-accordion", variant].join(" ")}>
   <Button
-    id={`${id}-header-button`}
+    id={`fluid-accordion-header-${id}`}
     onclick={async () => {
       componentState.isExpanded = !componentState.isExpanded;
     }}
-    class={[variant, "fluid-accordion-header", "flex", "w-full", "cursor-pointer", "flex-nowrap", "justify-between"].join(" ")}
+    class="fluid-accordion-header"
   >
     {@render header(componentState)}
   </Button>
   {#if componentState.isExpanded}
     <Container
-      id={`${id}-body-container`}
+      id={`fluid-accordion-body-${id}`}
       {transitionFunction}
       transitionParameters={{ duration: transitionDuration }}
-      class={[variant, "fluid-accordion-body"].join(" ")}
+      class="fluid-accordion-body"
     >
       {@render body()}
     </Container>

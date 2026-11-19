@@ -32,10 +32,13 @@
 </script>
 
 <Container
-  {id}
-  class={[variant, "fluid-dropzone", "relative", componentState.isDragOver ? "drag-over" : "", componentState.isInvalid ? "drag-invalid" : ""].join(
-    " ",
-  )}
+  id={`fluid-dropzone-${id}`}
+  class={[
+    "fluid-dropzone",
+    variant,
+    componentState.isDragOver ? "fluid-dropzone-drag-over" : "",
+    componentState.isInvalid ? "fluid-dropzone-drag-invalid" : "",
+  ].join(" ")}
   ondragover={(event: DragEvent) => {
     componentState = processDropzoneDragOver(event, dropEffect, mode);
   }}

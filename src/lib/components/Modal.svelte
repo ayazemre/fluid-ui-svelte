@@ -39,8 +39,8 @@
 
 {#if isOpen}
   <Container
-    {id}
-    class={[variant, "fluid-modal-container"].join(" ")}
+    id={`fluid-modal-${id}`}
+    class={["fluid-modal", variant].join(" ")}
     transitionFunction={backdropTransitionFunction}
     transitionParameters={backdropTransitionParameters}
     onclick={() => {
@@ -52,11 +52,11 @@
     aria-modal="true"
   >
     <Container
-      id={`${id}-panel`}
+      id={`fluid-modal-panel-${id}`}
       onclick={(event: MouseEvent) => event.stopPropagation()}
       onkeydown={(event: KeyboardEvent) => event.stopPropagation()}
       role="presentation"
-      class={[variant, "fluid-modal-panel"].join(" ")}
+      class="fluid-modal-panel"
       {transitionFunction}
       {transitionParameters}
     >

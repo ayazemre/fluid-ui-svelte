@@ -1,116 +1,79 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import Icon from "@iconify/svelte";
 
-  import { Container, Button, Text } from "#src/lib//base/index.ts";
-  import { Page } from "#src/lib/components/index.ts";
+  import { fluidUiGithubUrl, landingBreadcrumbItems, landingLayers } from "#src/documentation/siteContent.ts";
+  import { Button, Container, Link, Text } from "#src/lib/base/index.ts";
+  import { Accordion, Page } from "#src/lib/components/index.ts";
+  import { Breadcrumb } from "#src/lib/prebuilt/index.ts";
 </script>
 
 <Page
   id="home-page"
-  class="flex-1 overflow-hidden"
+  variant="site-page"
   title="Fluid UI"
-  description="Fluid UI is a pragmatic Svelte component library featuring a dual-layer architecture of lightweight semantic wrappers and high-level interactive components for building beautiful, responsive interfaces."
+  description="Fluid UI is a pragmatic Svelte component library featuring a layered architecture of semantic base elements, focused components, and prebuilt workflows."
 >
-  <Container
-    id="home-background-ambient-container"
-    class="fixed inset-0 z-0 overflow-hidden bg-linear-to-br from-primary-50 via-white to-primary-100 transition-colors duration-500 dark:from-neutral-950 dark:via-secondary-950 dark:to-neutral-950"
-  >
-    <Container
-      id="home-ambient-blob-1"
-      class="absolute top-[10%] right-[15%] h-125 w-125 animate-pulse rounded-full bg-linear-to-br from-primary-600/20 via-primary-600/10 to-transparent blur-3xl [animation-duration:8s] dark:from-primary-600/30 dark:via-primary-600/15 dark:to-transparent"
-    ></Container>
-    <Container
-      id="home-ambient-blob-2"
-      class="absolute bottom-[5%] left-[10%] h-150 w-150 animate-pulse rounded-full bg-linear-to-tr from-info-400/20 via-info-400/10 to-transparent blur-3xl [animation-delay:2s] [animation-duration:10s] dark:from-info-400/30 dark:via-info-400/15 dark:to-transparent"
-    ></Container>
-    <Container
-      id="home-ambient-blob-3"
-      class="absolute top-[45%] left-[40%] h-87.5 w-87.5 animate-pulse rounded-full bg-linear-to-bl from-primary-600/15 via-info-400/10 to-transparent blur-3xl [animation-delay:4s] [animation-duration:12s] dark:from-primary-600/25 dark:via-info-400/15 dark:to-transparent"
-    ></Container>
-
-    <Container
-      id="home-ambient-bounce-1"
-      class="absolute top-[20%] left-[25%] h-32 w-32 animate-bounce rounded-full bg-linear-to-br from-primary-600 to-primary-600/50 opacity-[0.08] [animation-duration:6s] dark:opacity-[0.15]"
-    ></Container>
-    <Container
-      id="home-ambient-bounce-2"
-      class="absolute right-[30%] bottom-[25%] h-40 w-40 animate-bounce rounded-full bg-linear-to-tl from-info-400 to-info-400/50 opacity-[0.08] [animation-delay:1s] [animation-duration:7s] dark:opacity-[0.15]"
-    ></Container>
-    <Container
-      id="home-ambient-bounce-3"
-      class="absolute top-[60%] left-[15%] h-24 w-24 animate-bounce rounded-full bg-linear-to-br from-neutral-950 to-neutral-950/50 opacity-[0.05] [animation-delay:2s] [animation-duration:8s] dark:opacity-[0.10]"
-    ></Container>
-
-    <Container
-      id="home-ambient-ping-1"
-      class="absolute top-[30%] right-[25%] h-3 w-3 animate-ping rounded-full bg-primary-600 opacity-30 [animation-duration:3s] dark:opacity-40"
-    ></Container>
-    <Container
-      id="home-ambient-ping-2"
-      class="absolute top-[50%] right-[20%] h-2 w-2 animate-ping rounded-full bg-info-400 opacity-40 [animation-delay:1s] [animation-duration:4s] dark:opacity-50"
-    ></Container>
-    <Container
-      id="home-ambient-ping-3"
-      class="absolute bottom-[40%] left-[30%] h-3 w-3 animate-ping rounded-full bg-primary-600 opacity-25 [animation-delay:2s] [animation-duration:5s] dark:opacity-35"
-    ></Container>
-    <Container
-      id="home-ambient-ping-4"
-      class="absolute top-[70%] right-[40%] h-2 w-2 animate-ping rounded-full bg-neutral-950 opacity-20 [animation-delay:1.5s] [animation-duration:4.5s] dark:opacity-30"
-    ></Container>
-    <Container
-      id="home-ambient-ping-5"
-      class="absolute top-[35%] left-[45%] h-2 w-2 animate-ping rounded-full bg-info-400 opacity-35 [animation-delay:0.5s] [animation-duration:3.5s] dark:opacity-45"
-    ></Container>
-
-    <Container
-      id="home-ambient-spin-1"
-      class="absolute top-[25%] right-[35%] h-20 w-20 animate-spin rounded-full border-2 border-primary-600 opacity-[0.12] [animation-duration:20s] dark:opacity-[0.20]"
-    ></Container>
-    <Container
-      id="home-ambient-spin-2"
-      class="absolute bottom-[35%] left-[25%] h-28 w-28 animate-spin rounded-full border-2 border-info-400 opacity-[0.12] [animation-direction:reverse] [animation-duration:25s] dark:opacity-[0.20]"
-    ></Container>
+  <Container id="home-hero-section" type="section" class="landing-hero">
+    <Text id="home-hero-eyebrow" type="span" class="landing-eyebrow">Svelte 5 component library</Text>
+    <Text id="home-hero-heading" type="h1" class="landing-title">Fluid UI</Text>
+    <Text id="home-hero-lede" class="landing-lede">
+      Semantic base elements, focused components, and prebuilt workflows. Each layer is built on the one below it.
+    </Text>
+    <Container id="home-hero-actions" class="landing-actions">
+      <Link id="home-get-started-link" href="/documentation/getting-started" class="site-cta site-cta--solid">
+        Get Started
+        <Icon icon="ri:arrow-right-line" class="size-4" />
+      </Link>
+      <Link id="home-github-link" href={fluidUiGithubUrl} target="_blank" rel="noreferrer" class="site-cta site-cta--ghost">
+        <Icon icon="ri:github-fill" class="size-4" />
+        GitHub
+      </Link>
+    </Container>
   </Container>
 
-  <Container id="home-hero-content-container" class="z-10 flex flex-1 flex-col items-center justify-center gap-6 bg-transparent px-4 py-16 md:p-16">
-    <Container id="home-hero-title-wrapper" class="flex text-center">
-      <Text id="home-hero-heading" type="h1" class="text-4xl font-bold text-neutral-950 sm:text-5xl md:text-6xl dark:text-neutral-50"
-        >Build with <Text
-          id="home-hero-heading-highlight"
-          type="span"
-          class="bg-linear-to-r from-primary-600 to-secondary-300 bg-clip-text text-transparent">Fluid UI</Text
-        ></Text
-      >
+  <Container id="home-layers-section" type="section" class="landing-layers-section">
+    <Container id="home-layers-grid" class="landing-layers">
+      {#each landingLayers as layer (layer.id)}
+        <Container id={`home-layer-${layer.id}`} class={`landing-layer layer-tone-${layer.id}`}>
+          <Container id={`home-layer-head-${layer.id}`} class="landing-layer-head">
+            <Text id={`home-layer-numeral-${layer.id}`} type="span" class="landing-numeral">{layer.numeral}</Text>
+            <Text id={`home-layer-name-${layer.id}`} type="h2" class="landing-layer-name">{layer.name}</Text>
+          </Container>
+          <Text id={`home-layer-summary-${layer.id}`} class="landing-layer-summary">{layer.summary}</Text>
+
+          {#if layer.id === "base"}
+            <Container id="home-layer-stage-base" class="landing-stage">
+              <Button id="home-example-button-primary" class="fluid-button-primary" onclick={async () => {}}>Save</Button>
+              <Button id="home-example-button-outline" class="fluid-button-outline" onclick={async () => {}}>Cancel</Button>
+            </Container>
+          {:else if layer.id === "components"}
+            <Container id="home-layer-stage-components" class="landing-stage">
+              <Accordion id="home-example-accordion">
+                {#snippet header({ isExpanded })}
+                  <Container id="home-example-accordion-header" class="landing-accordion-header">
+                    <Text id="home-example-accordion-title">Delivery</Text>
+                    <Icon icon={isExpanded ? "ri:subtract-line" : "ri:add-line"} class="size-4" />
+                  </Container>
+                {/snippet}
+                {#snippet body()}
+                  <Text id="home-example-accordion-body" class="landing-accordion-body">Orders ship within two business days.</Text>
+                {/snippet}
+              </Accordion>
+            </Container>
+          {:else}
+            <Container id="home-layer-stage-prebuilt" class="landing-stage">
+              <Breadcrumb id="home-example-breadcrumb" items={landingBreadcrumbItems} />
+            </Container>
+          {/if}
+        </Container>
+      {/each}
     </Container>
-    <Container id="home-hero-description-wrapper" class="flex">
-      <Text
-        id="home-hero-description"
-        class="text-center text-lg text-neutral-950 opacity-70 transition-colors sm:text-xl dark:text-neutral-50 dark:opacity-80"
-        >A modern Svelte component library for building beautiful, responsive interfaces.</Text
-      >
+  </Container>
+
+  <Container id="home-footer" type="footer" class="site-colophon">
+    <Container id="home-footer-inner" class="site-colophon-inner">
+      <Text id="home-footer-wordmark" type="span" class="site-colophon-wordmark">Fluid <em>UI</em></Text>
+      <Text id="home-footer-copyright-text" class="site-colophon-note">{"© Fluid UI " + new Date().getFullYear()}</Text>
     </Container>
-    <Container id="home-hero-actions-container" class="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4" overrideDefaultStyling>
-      <Button
-        id="home-get-started-button"
-        onclick={async () => {
-          await goto("/documentation/getting-started");
-        }}
-        class="fluid-button-primary w-full max-w-xs justify-center px-8! py-3! font-semibold sm:w-auto"
-      >
-        Get Started
-      </Button>
-      <Button
-        id="home-github-button"
-        onclick={async () => {
-          window.open("https://github.com/ayazemre/fluid-ui-svelte", "_blank");
-        }}
-        class="fluid-button-outline flex w-full max-w-xs items-center justify-center gap-2 px-8! py-3! font-semibold sm:w-auto"
-      >
-        <Icon icon="akar-icons:github-fill"></Icon>
-        GitHub
-      </Button>
-    </Container>
-    <Text id="home-footer-copyright-text" class="absolute bottom-4 text-sm text-neutral-400!">{"© Fluid UI " + new Date().getFullYear()}</Text>
   </Container>
 </Page>

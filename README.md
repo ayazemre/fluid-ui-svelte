@@ -44,7 +44,7 @@ Each component is built from three parts that stay separate.
 ## Requirements
 
 - Svelte 5 in Runes mode (`$state`, `$derived`, `$props`, `$bindable`, `$effect`, `Snippet`). The peer dependency is `svelte` `^5.0.0`.
-- Tailwind CSS 4 syntax and CSS variables, for the default styling.
+- Tailwind CSS 4. `fluidui.css` uses Tailwind 4 syntax, and the application defines its colors in its own `@theme` block.
 
 ## Installation
 
@@ -58,11 +58,12 @@ npm install fluid-ui-svelte
 
 Fluid UI does not inject styles automatically. This keeps library styling and application styling separate.
 
-1. Copy the reference `src/fluidui.css` file from the repository into your project, for example into `src/`.
-2. Import it in your main CSS file.
+1. Copy `node_modules/fluid-ui-svelte/src/fluidui.css` into the root of your project. The copy belongs to your application, so you can edit it, and it does not update by itself.
+2. Import it in your main CSS file, after Tailwind.
 
 ```css
 /* src/app.css */
+@import "tailwindcss";
 @import "./fluidui.css";
 ```
 
@@ -83,9 +84,9 @@ Import components from the layer that owns them. Svelte 5 in Runes mode is requi
 ### Usage Rules
 
 - Every element requires an `id` prop from the outside.
-- Internal child base elements use deterministic scoped ids, such as `my-drawer-panel` or `my-modal-title`.
+- Component and prebuilt parts build their ids from the class name and the id: the root is `fluid-<component>-<id>` and each part is `fluid-<component>-<part>-<id>`, for example `fluid-accordion-header-faq`.
 - Snippets are preferred over configuration objects for custom markup.
-- Base elements accept `overrideDefaultStyling`. Components and prebuilt elements accept `variant`.
+- Base elements accept `class`, which is added on top of the default. Components and prebuilt elements accept `variant`, a name the application chooses for the root element, and do not accept `class`.
 
 ### Example: Drawer With Snippet Content
 

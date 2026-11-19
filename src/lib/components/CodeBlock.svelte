@@ -198,77 +198,65 @@
 </script>
 
 <Container
-  {id}
+  id={`fluid-code-block-${id}`}
   role="region"
   aria-label={getCodeRegionLabel(language, isDiffView)}
-  class={[variant, "fluid-code-block-container", "flex", "flex-col", "overflow-auto"].join(" ")}
+  class={["fluid-code-block", variant].join(" ")}
 >
   {#if isDiffView}
     {#if condensedDiffRows.length === 0}
-      <Container id={id + "-no-changes"} class={[variant, "fluid-code-block-row", "flex", "items-start"].join(" ")}>
-        <Container id={id + "-no-changes-content"} class={[variant, "fluid-code-block-content", "flex", "min-w-0", "flex-1", "flex-col"].join(" ")}>
-          <Text id={id + "-no-changes-text"} type="pre">No changes</Text>
+      <Container id={`fluid-code-block-row-empty-${id}`} class="fluid-code-block-row">
+        <Container id={`fluid-code-block-content-empty-${id}`} class="fluid-code-block-content">
+          <Text id={`fluid-code-block-text-empty-${id}`} type="pre">No changes</Text>
         </Container>
       </Container>
     {:else}
       {#each condensedDiffRows as diffRow, index}
         {#if diffRow.kind === "gap"}
-          <Container id={id + "-gap-" + index} class={[variant, "fluid-code-block-row", "flex", "items-start"].join(" ")}>
+          <Container id={`fluid-code-block-row-gap-${index}-${id}`} class="fluid-code-block-row">
             {#if showLineNumbers}
-              <Container
-                id={id + "-gap-index-container-" + index}
-                aria-hidden="true"
-                class={[variant, "fluid-code-block-index", "sticky", "left-0", "z-1", "min-w-10", "shrink-0", "px-2"].join(" ")}
-              >
-                <Text id={id + "-gap-index-" + index} class="select-none">…</Text>
+              <Container id={`fluid-code-block-index-gap-${index}-${id}`} aria-hidden="true" class="fluid-code-block-index">
+                <Text id={`fluid-code-block-number-gap-${index}-${id}`} class="fluid-code-block-number">…</Text>
               </Container>
             {/if}
-            <Container
-              id={id + "-gap-content-" + index}
-              class={[variant, "fluid-code-block-content", "flex", "min-w-0", "flex-1", "flex-col"].join(" ")}
-            >
-              <Text id={id + "-gap-text-" + index} type="pre">
-                <span id={id + "-gap-code-" + index} class={effectiveDiffThemeMapping.gapRow}>
+            <Container id={`fluid-code-block-content-gap-${index}-${id}`} class="fluid-code-block-content">
+              <Text id={`fluid-code-block-text-gap-${index}-${id}`} type="pre">
+                <span id={`fluid-code-block-code-gap-${index}-${id}`} class={effectiveDiffThemeMapping.gapRow}>
                   {diffRow.skippedLineCount + " unchanged lines hidden"}
                 </span>
               </Text>
             </Container>
           </Container>
         {:else}
-          <Container
-            id={id + "-row-" + index}
-            class={[variant, "fluid-code-block-row", "flex", "items-start", getDiffRowBackground(diffRow.kind)].join(" ")}
-          >
+          <Container id={`fluid-code-block-row-${index}-${id}`} class={["fluid-code-block-row", getDiffRowBackground(diffRow.kind)].join(" ")}>
             {#if showLineNumbers}
-              <Container
-                id={id + "-index-container-" + index}
-                aria-hidden="true"
-                class={[variant, "fluid-code-block-index", "sticky", "left-0", "z-1", "min-w-10", "shrink-0", "px-2"].join(" ")}
-              >
-                <Text id={id + "-index-" + index} class={"select-none " + getDiffMarkerClass(diffRow.kind)}>
+              <Container id={`fluid-code-block-index-${index}-${id}`} aria-hidden="true" class="fluid-code-block-index">
+                <Text id={`fluid-code-block-number-${index}-${id}`} class={["fluid-code-block-number", getDiffMarkerClass(diffRow.kind)].join(" ")}>
                   {getDiffMarker(diffRow.kind) + " " + getDiffLineNumberText(diffRow.kind, diffRow.sourceLineNumber)}
                 </Text>
               </Container>
             {/if}
-            <Container id={id + "-content-" + index} class={[variant, "fluid-code-block-content", "flex", "min-w-0", "flex-1", "flex-col"].join(" ")}>
-              <Text id={id + "-pre-" + index} type="pre">
-                <span id={id + "-code-" + index} class={"language-" + language}>{@html getDiffRowHtml(diffRow.text) || "&nbsp;"}</span>
+            <Container id={`fluid-code-block-content-${index}-${id}`} class="fluid-code-block-content">
+              <Text id={`fluid-code-block-text-${index}-${id}`} type="pre">
+                <span id={`fluid-code-block-code-${index}-${id}`} class={"language-" + language}
+                  >{@html getDiffRowHtml(diffRow.text) || "&nbsp;"}</span
+                >
               </Text>
             </Container>
             {#if isChangeBlockActionRow(condensedDiffRows, index)}
-              <Container id={id + "-actions-" + index} class={[variant, "flex", "shrink-0", "items-center", "gap-1", "px-2"].join(" ")}>
+              <Container id={`fluid-code-block-actions-${index}-${id}`} class="fluid-code-block-actions">
                 <Button
-                  id={id + "-accept-" + index}
+                  id={`fluid-code-block-accept-${index}-${id}`}
                   aria-label="Accept change"
-                  class="fluid-button-secondary"
+                  class="fluid-button-secondary fluid-code-block-accept"
                   onclick={async () => await handleAcceptDiffRow(diffRow, index)}
                 >
                   ✓
                 </Button>
                 <Button
-                  id={id + "-reject-" + index}
+                  id={`fluid-code-block-reject-${index}-${id}`}
                   aria-label="Reject change"
-                  class="fluid-button-outline"
+                  class="fluid-button-outline fluid-code-block-reject"
                   onclick={async () => await handleRejectDiffRow(diffRow, index)}
                 >
                   ✕
@@ -281,19 +269,15 @@
     {/if}
   {:else}
     {#each highlightedLines as lineHtml, index}
-      <Container id={id + "-row-" + index} class={[variant, "fluid-code-block-row", "flex", "items-start"].join(" ")}>
+      <Container id={`fluid-code-block-row-${index}-${id}`} class="fluid-code-block-row">
         {#if showLineNumbers}
-          <Container
-            id={id + "-index-container-" + index}
-            aria-hidden="true"
-            class={[variant, "fluid-code-block-index", "sticky", "left-0", "z-1", "min-w-10", "shrink-0", "px-2"].join(" ")}
-          >
-            <Text id={id + "-index-" + index} class="select-none">{getDisplayLineNumber(index)}</Text>
+          <Container id={`fluid-code-block-index-${index}-${id}`} aria-hidden="true" class="fluid-code-block-index">
+            <Text id={`fluid-code-block-number-${index}-${id}`} class="fluid-code-block-number">{getDisplayLineNumber(index)}</Text>
           </Container>
         {/if}
-        <Container id={id + "-content-" + index} class={[variant, "fluid-code-block-content", "flex", "min-w-0", "flex-1", "flex-col"].join(" ")}>
-          <Text id={id + "-pre-" + index} type="pre">
-            <span id={id + "-code-" + index} class={"language-" + language}>{@html lineHtml || "&nbsp;"}</span>
+        <Container id={`fluid-code-block-content-${index}-${id}`} class="fluid-code-block-content">
+          <Text id={`fluid-code-block-text-${index}-${id}`} type="pre">
+            <span id={`fluid-code-block-code-${index}-${id}`} class={"language-" + language}>{@html lineHtml || "&nbsp;"}</span>
           </Text>
         </Container>
       </Container>

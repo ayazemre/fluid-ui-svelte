@@ -14,7 +14,6 @@
     closeOnClickOutside = true,
     closeOnEscape = true,
     variant = "",
-    overlayClass = "",
     transitionFunction = fade,
     transitionParameters = { duration: 150 },
     anchor,
@@ -27,7 +26,6 @@
     closeOnClickOutside?: boolean;
     closeOnEscape?: boolean;
     variant?: string;
-    overlayClass?: string;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
     transitionParameters?: TransitionConfig & Record<string, unknown>;
     anchor: Snippet<[{ close: () => void; isOpen: boolean; open: () => void; toggle: () => void }]>;
@@ -48,8 +46,10 @@
       autoFlip,
       closeOnClickOutside,
       closeOnEscape,
-      getContainerElement: () => containerElement ?? (typeof document !== "undefined" ? document.getElementById(id) : undefined),
-      getFloatElement: () => floatElement ?? (typeof document !== "undefined" ? document.getElementById(`${id}-float`) : undefined),
+      getContainerElement: () =>
+        containerElement ?? (typeof document !== "undefined" ? document.getElementById(`fluid-anchored-overlay-${id}`) : undefined),
+      getFloatElement: () =>
+        floatElement ?? (typeof document !== "undefined" ? document.getElementById(`fluid-anchored-overlay-float-${id}`) : undefined),
       getIsOpen: () => isOpen,
       onClose: () => {
         isOpen = false;
@@ -62,12 +62,7 @@
   });
 </script>
 
-<Container
-  {id}
-  bind:underlyingElement={containerElement}
-  overrideDefaultStyling={true}
-  class={["fluid-anchored-overlay-container", variant].join(" ")}
->
+<Container id={`fluid-anchored-overlay-${id}`} bind:underlyingElement={containerElement} class={["fluid-anchored-overlay", variant].join(" ")}>
   {@render anchor({
     close: () => {
       isOpen = false;
@@ -83,11 +78,10 @@
 
   {#if isOpen}
     <Container
-      id={`${id}-float`}
+      id={`fluid-anchored-overlay-float-${id}`}
       bind:underlyingElement={floatElement}
-      overrideDefaultStyling={true}
       role="region"
-      class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition), overlayClass].join(" ")}
+      class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition)].join(" ")}
       {transitionFunction}
       {transitionParameters}
     >

@@ -37,10 +37,21 @@
   });
 </script>
 
-<Container {id} role="region" aria-live="polite" class={[variant, "fluid-notification-area", getNotificationAreaPositionClass(position)].join(" ")}>
+<Container
+  id={`fluid-notification-area-${id}`}
+  role="region"
+  aria-live="polite"
+  class={["fluid-notification-area", getNotificationAreaPositionClass(position), variant].join(" ")}
+>
   {#each items as item (item.id)}
     <!-- Note: raw <div> is intentional — animate:flip cannot be applied through Container's svelte:element -->
-    <div id={`${id}-item-${item.id}`} animate:flip={{ duration: 300 }} in:fly={getNotificationFlyParameters(position)} out:fade={{ duration: 200 }}>
+    <div
+      id={`fluid-notification-item-${item.id}-${id}`}
+      class="fluid-notification-item"
+      animate:flip={{ duration: 300 }}
+      in:fly={getNotificationFlyParameters(position)}
+      out:fade={{ duration: 200 }}
+    >
       {@render itemSnippet(item, () => {
         items = removeItemFromList(items, item.id);
       })}

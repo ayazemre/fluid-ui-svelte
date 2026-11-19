@@ -9,7 +9,6 @@
     underlyingElement = $bindable(null),
     onclick,
     class: className = "",
-    overrideDefaultStyling = false,
     loadingPlaceholder,
     children,
     ...rest
@@ -18,7 +17,6 @@
     underlyingElement?: HTMLButtonElement | null;
     onclick: (event: MouseEvent | Event, buttonState: { inProgress: boolean }) => Promise<unknown> | void;
     class?: string;
-    overrideDefaultStyling?: boolean;
     loadingPlaceholder?: Snippet;
     children: Snippet;
   } & Omit<HTMLButtonAttributes, "onclick" | "id"> = $props();
@@ -32,7 +30,7 @@
   type="button"
   onclick={async (event: MouseEvent | Event) => await onclick(event, buttonState)}
   {...rest}
-  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-button flex cursor-pointer")}
+  class={mergeClasses(className, "fluid-button")}
 >
   {#if buttonState.inProgress && loadingPlaceholder}
     {@render loadingPlaceholder()}

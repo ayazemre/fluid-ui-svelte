@@ -4,6 +4,7 @@
 export const gettingStartedInstallation = `npm install fluid-ui-svelte`;
 
 export const gettingStartedStylesCss = `/* src/styles.css */
+@import "tailwindcss";
 @import "./fluidui.css";
 
 /* Your application styles */`;
@@ -38,6 +39,69 @@ export const howToNamingAndHandling = `function getCountryData(isoCode: string):
   const upperCode = isoCode.toUpperCase();
   return COUNTRY_DATA_MAP[upperCode] ?? COUNTRY_DATA_MAP["US"];
 }`;
+
+export const howToCopyStylesheet = `cp node_modules/fluid-ui-svelte/src/fluidui.css ./src/fluidui.css`;
+
+export const howToStylesheetImport = `/* src/styles.css */
+@import "tailwindcss";
+@import "./fluidui.css";
+
+/* Your application styles go below, unlayered, so they win over the library */`;
+
+export const howToThemeColors = `/* src/styles.css */
+@import "tailwindcss";
+@import "./fluidui.css";
+
+@theme {
+  --color-primary-500: #3e6ff3;
+  --color-secondary-500: #8b5cf6;
+  /* every shade from 50 to 950 for primary, secondary, neutral, success, warning, error, and info */
+}`;
+
+export const howToIdConvention = `<Accordion id="faq">
+  {#snippet header()}Shipping{/snippet}
+  {#snippet body()}Delivery takes three days.{/snippet}
+</Accordion>
+
+<!-- rendered ids and classes -->
+<!-- root:   id="fluid-accordion-faq"        class="fluid-accordion" -->
+<!-- header: id="fluid-accordion-header-faq" class="fluid-accordion-header" -->
+<!-- body:   id="fluid-accordion-body-faq"  class="fluid-accordion-body" -->`;
+
+export const howToVariantMarkup = `<Accordion id="faq" variant="faq-tight">
+  {#snippet header()}Shipping{/snippet}
+  {#snippet body()}Delivery takes three days.{/snippet}
+</Accordion>`;
+
+export const howToVariantRules = `/* src/styles.css, after the import of fluidui.css */
+.faq-tight .fluid-accordion-header {
+  padding: 0.25rem;
+  font-size: 0.875rem;
+}`;
+
+export const howToOverrideMarkup = `<Button id="save-button" class="rounded-full">Save</Button>`;
+
+export const howToOverrideRules = `/* every fluid-button in the application */
+.fluid-button {
+  border-radius: 999px;
+}
+
+/* every fluid-button inside one variant */
+.faq-tight .fluid-button {
+  padding: 0.25rem;
+}`;
+
+export const howToDarkMode = `<!-- src/routes/+layout.svelte -->
+<script lang="ts">
+  import { Container } from "fluid-ui-svelte/base";
+
+  let { children } = $props();
+  let isDarkMode = $state(false);
+</script>
+
+<Container id="global-layout" class={["min-h-screen", isDarkMode ? "dark" : ""].join(" ")}>
+  {@render children()}
+</Container>`;
 
 // --- Button ---
 

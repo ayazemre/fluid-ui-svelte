@@ -78,25 +78,21 @@
 </script>
 
 <Container
-  {id}
+  id={`fluid-carousel-${id}`}
   bind:underlyingElement={containerElement}
   onscroll={handleScroll}
   onscrollend={handleScrollEnd}
   class={[
+    "fluid-carousel",
+    orientation === "vertical" ? "fluid-carousel-vertical" : "fluid-carousel-horizontal",
+    snapItems ? "fluid-carousel-snap" : "",
     variant,
-    "fluid-carousel-container",
-    "relative",
-    "flex",
-    "scroll-smooth",
-    ...(orientation === "vertical"
-      ? ["h-full", "flex-col", "overflow-y-auto", snapItems ? "snap-y" : "", snapItems ? "snap-mandatory" : ""]
-      : ["overflow-x-auto", snapItems ? "snap-x" : "", snapItems ? "snap-mandatory" : ""]),
   ].join(" ")}
 >
   {#each items as item, index}
     <Container
-      id={`${id}-item-${index}`}
-      class={[variant, "fluid-carousel-item", "shrink-0", snapItems ? "snap-start" : ""].join(" ")}
+      id={`fluid-carousel-item-${index}-${id}`}
+      class={["fluid-carousel-item", snapItems ? "fluid-carousel-item-snap" : ""].join(" ")}
       style="flex-basis: calc(100% / {visibleItemCount})"
     >
       {@render itemTemplate({ item, index })}

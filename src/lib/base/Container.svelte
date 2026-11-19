@@ -14,7 +14,6 @@
       return {};
     },
     transitionParameters,
-    overrideDefaultStyling = false,
     children,
     ...rest
   }: {
@@ -24,7 +23,6 @@
     class?: string;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
     transitionParameters?: Record<string, unknown>;
-    overrideDefaultStyling?: boolean;
     children?: Snippet;
   } & Omit<HTMLAttributes<HTMLElement>, "id"> = $props();
 </script>
@@ -35,7 +33,7 @@
   bind:this={underlyingElement}
   {...rest}
   transition:transitionFunction={transitionParameters}
-  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-container")}
+  class={mergeClasses(className, "fluid-container")}
 >
   {@render children?.()}
 </svelte:element>

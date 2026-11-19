@@ -51,7 +51,16 @@ export function getSearchableSelectorAvatarBackground(label: string): string {
   for (let index = 0; index < label.length; index++) {
     hash = label.charCodeAt(index) + ((hash << 5) - hash);
   }
-  const colors = ["bg-primary-500", "bg-violet-500", "bg-emerald-500", "bg-amber-500", "bg-rose-500", "bg-sky-500", "bg-teal-500", "bg-orange-500"];
+  const colors = [
+    "fluid-searchable-selector-avatar-color-0",
+    "fluid-searchable-selector-avatar-color-1",
+    "fluid-searchable-selector-avatar-color-2",
+    "fluid-searchable-selector-avatar-color-3",
+    "fluid-searchable-selector-avatar-color-4",
+    "fluid-searchable-selector-avatar-color-5",
+    "fluid-searchable-selector-avatar-color-6",
+    "fluid-searchable-selector-avatar-color-7",
+  ];
   const colorIndex = Math.abs(hash) % colors.length;
   return colors[colorIndex];
 }

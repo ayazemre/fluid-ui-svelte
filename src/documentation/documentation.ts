@@ -2,9 +2,17 @@ import {
   gettingStartedStylesCss,
   gettingStartedInstallation,
   gettingStartedUsage,
-  howToMandatoryId,
+  howToCopyStylesheet,
+  howToDarkMode,
+  howToIdConvention,
   howToNamingAndHandling,
+  howToOverrideMarkup,
+  howToOverrideRules,
   howToSnippetComposition,
+  howToStylesheetImport,
+  howToThemeColors,
+  howToVariantMarkup,
+  howToVariantRules,
 } from "./samples/codeBlockContents.ts";
 
 export const documentationRegistry = {
@@ -24,12 +32,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the button.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-button class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "undefined",
@@ -68,12 +70,6 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "false",
-          description: "If true, removes the base fluid-container class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
-        },
-        {
           default: "undefined",
           description: "Svelte transition function.",
           prop: "transitionFunction",
@@ -103,12 +99,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the form.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-form class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "required",
@@ -145,12 +135,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the image.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-image class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "—",
@@ -190,12 +174,6 @@ export const documentationRegistry = {
           type: "string",
         },
         {
-          default: "false",
-          description: "If true, removes the base fluid-input-field class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
-        },
-        {
           default: "—",
           description: "Standard HTML <input> attributes.",
           prop: "...rest",
@@ -218,12 +196,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the label.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-label class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "—",
@@ -254,12 +226,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the link.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-link class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "—",
@@ -302,12 +268,6 @@ export const documentationRegistry = {
           description: "Custom CSS classes for each list item (li).",
           prop: "itemClass",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes default fluid styling.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "—",
@@ -405,12 +365,6 @@ export const documentationRegistry = {
           prop: "footerClass",
           type: "string",
         },
-        {
-          default: "false",
-          description: "If true, removes default fluid-table classes.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
-        },
       ],
       title: "Fluid UI - Table",
     },
@@ -428,12 +382,6 @@ export const documentationRegistry = {
           description: "CSS classes to apply to the element.",
           prop: "class",
           type: "string",
-        },
-        {
-          default: "false",
-          description: "If true, removes the base fluid-text class.",
-          prop: "overrideDefaultStyling",
-          type: "boolean",
         },
         {
           default: "—",
@@ -458,7 +406,7 @@ export const documentationRegistry = {
       props: [
         {
           default: "''",
-          description: "Custom CSS class to apply to the accordion wrapper.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -554,14 +502,8 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming the container.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
-          type: "string",
-        },
-        {
-          default: "''",
-          description: "Custom CSS classes for the floating overlay panel.",
-          prop: "overlayClass",
           type: "string",
         },
       ],
@@ -579,7 +521,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -682,7 +624,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -787,7 +729,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom CSS classes to apply custom styling variants.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -805,7 +747,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom CSS variant class.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -877,7 +819,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -937,7 +879,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom CSS variant class.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1003,7 +945,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1039,7 +981,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1239,7 +1181,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1287,7 +1229,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom CSS variant class.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1348,7 +1290,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom CSS variant class.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1357,6 +1299,225 @@ export const documentationRegistry = {
     },
   },
   pages: {
+    conventions: {
+      description: "Guides for building with Fluid UI Svelte. Learn how ids, styling, variants, and overrides fit together.",
+      sections: [
+        {
+          content:
+            "These guides show how to build with Fluid UI. They cover the id and class conventions, how to style the library, and how to customize components with variants and CSS.",
+          id: "intro",
+          title: "Conventions",
+        },
+        {
+          code: howToIdConvention,
+          description:
+            "Give every element an id. Component and prebuilt elements build the ids of their parts from their class name and that id. The root is fluid-<component>-<id>, and each part is fluid-<component>-<part>-<id>, so an id and a class use the same words. Base elements keep the id you give them.",
+          id: "mandatory-id",
+          language: "svelte",
+          table: {
+            headers: ["Element", "Class", "Id"],
+            rows: [
+              ["Accordion root", "fluid-accordion", "fluid-accordion-faq"],
+              ["Accordion header", "fluid-accordion-header", "fluid-accordion-header-faq"],
+              ["Accordion body", "fluid-accordion-body", "fluid-accordion-body-faq"],
+              ["AnchoredOverlay float", "fluid-anchored-overlay-float", "fluid-anchored-overlay-float-my-overlay"],
+            ],
+          },
+          title: "Id Convention",
+        },
+        {
+          description:
+            "Build components, prebuilt elements, and pages from base elements instead of raw HTML tags. Base elements merge classes and handle accessibility, so your markup stays consistent.",
+          id: "composition-law",
+          table: {
+            headers: ["Instead of", "Use"],
+            rows: [
+              ["<div>, <p>, <span>", "<Container>, <Text>"],
+              ["<button>, <a>", "<Button>, <Link>"],
+              ["<table>, <canvas>", "<Table>, <Canvas>"],
+              ["<input>", "<InputField>"],
+            ],
+          },
+          title: "Using Base Elements",
+        },
+        {
+          description:
+            "Base elements are low-level wrappers around native HTML. They merge classes and keep markup consistent, so you add styles to them with class.",
+          id: "base-rules",
+          table: {
+            headers: ["Prop", "Type", "Default", "Purpose"],
+            rows: [
+              ["id", "string", "required", "Identifies the element in the DOM"],
+              ["underlyingElement", "HTMLElement | null", "null ($bindable)", "Exposed as $bindable(null) for bind:this"],
+              ["class", "string", '""', "Added on top of the default fluid-* class"],
+              ["variant (Components/Prebuilt)", "string", '""', "A name you choose, added to the root element"],
+            ],
+          },
+          title: "Base Element Props",
+        },
+        {
+          description:
+            "Every element gets its default look from fluidui.css. You change the look in three ways: a class on a base element, a variant on a component or prebuilt element, or a CSS rule in your application. Components and prebuilt elements do not accept class, so you change their look through variants and CSS.",
+          id: "style-injection",
+          table: {
+            headers: ["Layer", "Hook", "Example"],
+            rows: [
+              ["Base", "class, added on top of the default", '<Button class="rounded-full">'],
+              ["Components", "variant, a name added to the root", '<Modal variant="faq-modal">'],
+              ["Prebuilt", "variant, a name added to the root", '<InternationalInput variant="checkout-country">'],
+            ],
+          },
+          title: "Styling Hooks",
+        },
+        {
+          code: howToCopyStylesheet,
+          description:
+            "fluidui.css ships inside the package. Copy it into the root of your project. The copy belongs to your application, so you can edit it. Copies do not update themselves, so copy the file again after each release.",
+          id: "stylesheet-copy",
+          language: "bash",
+          title: "Stylesheet Copy",
+        },
+        {
+          code: howToStylesheetImport,
+          description:
+            "Import the copied file in your main stylesheet after Tailwind. Fluid UI styles use Tailwind 4 syntax, so your application must run Tailwind 4. Rules you write below the import have no layer, so they win over the library.",
+          id: "stylesheet-import",
+          language: "css",
+          title: "Stylesheet Import",
+        },
+        {
+          code: howToThemeColors,
+          description:
+            "The library uses Tailwind theme names, such as bg-primary-500. You define the values in your own @theme block. Define every shade from 50 to 950 for primary, secondary, neutral, success, warning, error, and info. The library ships no design tokens in this version. A token layer is planned for a later release.",
+          id: "stylesheet-colors",
+          language: "css",
+          title: "Colors",
+        },
+        {
+          description:
+            "All library rules sit in one layer named fluid, placed after the base rules and before utilities. Your unlayered CSS beats every library rule, so overrides need no !important.",
+          id: "layers",
+          table: {
+            headers: ["Rule", "Effect"],
+            rows: [
+              ["Unlayered application CSS", "Beats every library rule"],
+              ["Scoped selectors", ".fluid-accordion .fluid-accordion-body beats the single-class default of the same element"],
+              ["Equal specificity", "The rule that comes later in fluidui.css wins"],
+            ],
+          },
+          title: "Layers and Specificity",
+        },
+        {
+          description:
+            "Every base element has one default class that holds its look. Components build their parts from base elements, so the parts inherit these defaults unless the component's own rules change them.",
+          id: "base-defaults",
+          table: {
+            headers: ["Element", "Default class"],
+            rows: [
+              ["Button", "fluid-button"],
+              ["Canvas", "fluid-canvas"],
+              ["Container", "fluid-container"],
+              ["Form", "fluid-form"],
+              ["Image", "fluid-image"],
+              ["InputField", "fluid-input-field"],
+              ["Label", "fluid-label"],
+              ["Link", "fluid-link"],
+              ["List", "fluid-unordered-list or fluid-ordered-list"],
+              ["Table", "fluid-table, with fluid-table-head, fluid-table-body, fluid-table-row, fluid-table-cell, and fluid-table-footer"],
+              ["Text", "fluid-text"],
+            ],
+          },
+          title: "Base Defaults",
+        },
+        {
+          code: howToOverrideMarkup,
+          description:
+            "Add a class to a base element to change one instance. The class is added on top of the default, so the element keeps its default look except where your class sets a different value.",
+          id: "overrides-class",
+          language: "svelte",
+          title: "Overrides Through Class",
+        },
+        {
+          code: howToOverrideRules,
+          description:
+            "Write a rule in your application to change every element of a kind, or only the elements inside one variant. Start a variant rule from the variant name so it reaches the parts of the component.",
+          id: "overrides-rules",
+          language: "css",
+          title: "Overrides Through CSS",
+        },
+        {
+          code: howToVariantMarkup,
+          description:
+            "A variant is a name you choose. It is added to the root element of a component or prebuilt element. The library never sets a variant, so the defaults stay unchanged. Variant names must be unique in your application.",
+          id: "variants",
+          language: "svelte",
+          title: "Variants",
+        },
+        {
+          code: howToVariantRules,
+          description:
+            "Every rule for a variant starts from the variant name, so the variant reaches the parts of its component without the parts carrying the name themselves.",
+          id: "variant-rules",
+          language: "css",
+          title: "Variant Rules",
+        },
+        {
+          code: howToDarkMode,
+          description:
+            "Dark values use the Tailwind dark variant, which applies inside any element with the dark class. Set the class on the container of the root layout, in src/routes/+layout.svelte, so every page inside it switches together.",
+          id: "dark-mode",
+          language: "svelte",
+          title: "Dark Mode",
+        },
+        {
+          code: howToSnippetComposition,
+          description:
+            "Use Svelte 5 snippets instead of configuration objects when you need custom markup, such as a slot or an item template. Snippets keep the markup flexible and the components consistent.",
+          id: "snippet-passing",
+          language: "svelte",
+          title: "Snippets for Custom Markup",
+        },
+        {
+          description:
+            "Import components from the package in your application. The internal paths below are used inside the library's own source and documentation.",
+          id: "imports",
+          table: {
+            headers: ["Context", "Import Path", "Example"],
+            rows: [
+              ["Library source", "#src/lib/base/index.ts", 'import { Button } from "#src/lib/base/index.ts"'],
+              ["Library source (components)", "#src/lib/components/index.ts", 'import { AnchoredOverlay } from "#src/lib/components/index.ts"'],
+              ["Your application", "fluid-ui-svelte/base", "import { Button } from 'fluid-ui-svelte/base'"],
+              ["Your application (components)", "fluid-ui-svelte/components", "import { Modal } from 'fluid-ui-svelte/components'"],
+              ["Your application (prebuilt)", "fluid-ui-svelte/prebuilt", "import { Breadcrumb } from 'fluid-ui-svelte/prebuilt'"],
+            ],
+          },
+          title: "Import Paths",
+        },
+        {
+          description:
+            "Keep markup, logic, and styles in separate files. Markup in .svelte files describes what is rendered. Logic in .ts helpers holds pure functions that compute values. Styles in fluidui.css hold the look.",
+          id: "pillars-howto",
+          table: {
+            headers: ["Kind", "File", "Contains"],
+            rows: [
+              [".svelte", "Component.svelte", "Markup, with helpers imported from component.ts"],
+              [".ts helper", "component.ts", "Pure functions that compute state and values"],
+              ["fluidui.css", "fluidui.css", "One block per element, part, and variant"],
+            ],
+          },
+          title: "Where Code Lives",
+        },
+        {
+          code: howToNamingAndHandling,
+          description:
+            "Use full names for variables and functions, keep functions short, and return early when a precondition fails, so the main path stays at the top level.",
+          id: "naming-howto",
+          language: "typescript",
+          title: "Naming and Error Handling",
+        },
+      ],
+      title: "Fluid UI - Conventions",
+    },
     "getting-started": {
       description: "Installation and usage guide for the Fluid UI Svelte component library.",
       sections: [
@@ -1372,21 +1533,21 @@ export const documentationRegistry = {
           layers: [
             {
               description:
-                "Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links). Purpose is to reduce HTML tag fatigue, enforce semantic consistency, and maintain accessibility without imposing heavy styles. Utility responsibility is class deduplication, merging, and attribute sanitization. Every base element exposes underlyingElement as $bindable(null) and accepts overrideDefaultStyling boolean.",
+                "Fundamental, low-level semantic wrappers around native HTML elements (Buttons, Inputs, Containers, Tables, Text, Links). Purpose is to reduce HTML tag fatigue, enforce semantic consistency, and maintain accessibility without imposing heavy styles. Utility responsibility is class deduplication, merging, and attribute sanitization. Every base element exposes underlyingElement as $bindable(null) and accepts class, which is added on top of its default fluid-* class.",
               id: "base",
               path: "fluid-ui-svelte/base",
               title: "Base Layer",
             },
             {
               description:
-                "Assembled UI elements (Accordions, Modals, Calendars, Drawers, Dropzones, Switches, Pagination). Purpose is to provide focused, cohesive functional primitives. Must be assembled strictly from Base Layer elements. Must accept variant string prop for theme injection.",
+                "Assembled UI elements (Accordions, Modals, Calendars, Drawers, Dropzones, Switches, Pagination). Purpose is to provide focused, cohesive functional primitives. Must be assembled strictly from Base Layer elements. Accepts a variant string that names the root class for user styling. Does not accept class.",
               id: "components",
               path: "fluid-ui-svelte/components",
               title: "Components Layer",
             },
             {
               description:
-                "High-level, fully usable, self-contained domain components (Breadcrumbs, International Inputs, Notification Areas). Purpose is to combine multiple base and composed components into turnkey workflows. Must compose Base and Components. Must accept variant string prop.",
+                "High-level, fully usable, self-contained domain components (Breadcrumbs, International Inputs, Notification Areas). Purpose is to combine multiple base and composed components into turnkey workflows. Must compose Base and Components. Accepts a variant string that names the root class for user styling. Does not accept class.",
               id: "prebuilt",
               path: "fluid-ui-svelte/prebuilt",
               title: "Prebuilt Layer",
@@ -1407,7 +1568,7 @@ export const documentationRegistry = {
             {
               code: gettingStartedStylesCss,
               description:
-                "Fluid UI does not inject styles automatically. This allows you to maintain library specific styling and app specific styling separately. Download the reference fluidui.css file, place it in your project (e.g., src/), and import it in your main CSS file.",
+                "Fluid UI does not inject styles automatically. Copy fluidui.css from the installed package into your project, then import it in your main stylesheet after Tailwind. The file uses Tailwind 4 syntax.",
               id: "step-2",
               language: "css",
               title: "2. Configure Global Styles",
@@ -1424,127 +1585,6 @@ export const documentationRegistry = {
         },
       ],
       title: "Fluid UI - Getting Started",
-    },
-    "how-to": {
-      description: "Advanced guides and recipes for using Fluid UI Svelte. Learn composition rules, styling, and best practices.",
-      sections: [
-        {
-          content:
-            "This section collects practical recipes for building with Fluid UI. It consolidates the General Ruleset, Three Pillars, and Naming Conventions from the agent guidelines into actionable examples.",
-          id: "intro",
-          title: "How To Guides",
-        },
-        {
-          code: howToMandatoryId,
-          description:
-            "Every element across all three layers (Base, Components, Prebuilt) must accept a mandatory id prop passed from the outside. When a component renders internal child Base Layer elements, it must pass deterministic scoped IDs derived from the parent id to each child.",
-          id: "mandatory-id",
-          language: "svelte",
-          table: {
-            headers: ["Parent id", "Child id Example", "Use"],
-            rows: [
-              ["my-drawer", "my-drawer-panel", "DOM targeting"],
-              ["my-drawer", "my-drawer-header", "aria-labelledby"],
-              ["my-input", "my-input-label", "aria-describedby"],
-              ["my-overlay", "my-overlay-float", "aria-controls"],
-            ],
-          },
-          title: "Mandatory id & Scoped Child Identifiers",
-        },
-        {
-          description:
-            "Anything above the Base Layer (components, prebuilt, documentation pages, sample views) must strictly use Base Layer elements rather than raw HTML tags. This ensures class deduplication and accessibility are handled only by Base.",
-          id: "composition-law",
-          table: {
-            headers: ["Instead of", "Use"],
-            rows: [
-              ["<div>, <p>, <span>", "<Container>, <Text>"],
-              ["<button>, <a>", "<Button>, <Link>"],
-              ["<table>, <canvas>", "<Table>, <Canvas>"],
-              ["<input>", "<InputField>"],
-            ],
-          },
-          title: "Mandatory Composition Law",
-          warning: "If a required primitive or attribute wrapper is missing from the Base Layer, warn the user before building higher layers.",
-        },
-        {
-          description:
-            "Base elements are low-level semantic wrappers. They encapsulate utilities like class deduplication via mergeClasses and must never be bypassed.",
-          id: "base-rules",
-          table: {
-            headers: ["Prop", "Type", "Default", "Purpose"],
-            rows: [
-              ["id", "string", "required", "Deterministic DOM targeting"],
-              ["underlyingElement", "HTMLElement | null", "null ($bindable)", "Exposed as $bindable(null) for bind:this"],
-              ["overrideDefaultStyling", "boolean", "false", "When true, strips default fluid-* classes"],
-              ["class", "string", '""', "Additional classes merged via Base"],
-              ["variant (Components/Prebuilt)", "string", '""', "Theme injection (not for Base)"],
-            ],
-          },
-          title: "Base Layer Rules",
-        },
-        {
-          description:
-            "Base uses overrideDefaultStyling boolean to strip defaults. Components and Prebuilt use variant string to inject custom theme classes. All default visual styling lives in fluidui.css in dedicated class blocks. Every element must have its own block.",
-          id: "style-injection",
-          table: {
-            headers: ["Layer", "Prop", "Example"],
-            rows: [
-              ["Base", "overrideDefaultStyling={true}", '<Button overrideDefaultStyling class="my-btn">'],
-              ["Components", 'variant="my-theme"', '<Modal variant="my-modal">'],
-              ["Prebuilt", 'variant="custom"', '<InternationalInput variant="w-full">'],
-            ],
-          },
-          title: "Style Injection & Central Styling",
-        },
-        {
-          code: howToSnippetComposition,
-          description:
-            "Prioritize Svelte 5 Snippets over complex configuration objects or data arrays whenever delegating custom markup rendering, slots, or item templates. Snippets give flexible composition while maintaining semantic consistency.",
-          id: "snippet-passing",
-          language: "svelte",
-          title: "Prioritize Snippet-Based Passing",
-        },
-        {
-          description:
-            "Library code and internal documentation must use internal paths and module aliases. Usage examples in CodeBlocks must show external package names for end-users.",
-          id: "imports",
-          table: {
-            headers: ["Context", "Import Path", "Example"],
-            rows: [
-              ["Library Code", "#src/lib/base/index.ts", 'import { Button } from "#src/lib/base/index.ts"'],
-              ["Prebuilt", "#src/lib/components/index.ts", 'import { AnchoredOverlay } from "#src/lib/components/index.ts"'],
-              ["Docs CodeBlock (external)", "fluid-ui-svelte/base", "import { Button } from 'fluid-ui-svelte/base'"],
-              ["Docs CodeBlock (components)", "fluid-ui-svelte/components", "import { Modal } from 'fluid-ui-svelte/components'"],
-              ["Docs CodeBlock (prebuilt)", "fluid-ui-svelte/prebuilt", "import { Breadcrumb } from 'fluid-ui-svelte/prebuilt'"],
-            ],
-          },
-          title: "Internal vs External Imports",
-        },
-        {
-          description:
-            "Keep these separated: 1. Reactive UI Markup (.svelte) - only WHAT is rendered (structure, snippets, events). 2. Pure TypeScript Logic (.ts helper) - pure functions, no business logic, no side effects, immutable via spread. 3. Central Styling (fluidui.css) - dedicated class blocks for theming.",
-          id: "pillars-howto",
-          table: {
-            headers: ["Pillar", "File", "Rule"],
-            rows: [
-              [".svelte", "Component.svelte", "Only markup, import helpers from ./component.ts"],
-              [".ts helper", "component.ts", "Pure functions, no classes, use type not interface, Result/DataTrail for errors"],
-              ["fluidui.css", "fluidui.css", "One block per element: .fluid-accordion-wrapper, .fluid-modal-panel, etc."],
-            ],
-          },
-          title: "Three Pillars in Practice",
-        },
-        {
-          code: howToNamingAndHandling,
-          description:
-            "Avoid shorthand, use explicit names, keep functions short with single responsibility and early returns. Handle failures explicitly, narrow to happy path via guard clauses.",
-          id: "naming-howto",
-          language: "typescript",
-          title: "Naming & Error Handling",
-        },
-      ],
-      title: "Fluid UI - How To",
     },
   },
   prebuilt: {
@@ -1571,7 +1611,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1632,7 +1672,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1663,7 +1703,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },
@@ -1718,7 +1758,7 @@ export const documentationRegistry = {
         },
         {
           default: "''",
-          description: "Custom variant class for theming.",
+          description: "User-defined variant name, added to the root element. Style it with a CSS rule that starts from the root.",
           prop: "variant",
           type: "string",
         },

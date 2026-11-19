@@ -605,7 +605,6 @@
       {#if imageBitmap && dragPanCropState}
         <Container
           id="image-crop-drag-surface"
-          overrideDefaultStyling={true}
           class="cursor-grab touch-none select-none overflow-hidden rounded bg-neutral-100 active:cursor-grabbing dark:bg-neutral-800"
           onpointerdown={startDragPan}
           onpointermove={moveDragPan}

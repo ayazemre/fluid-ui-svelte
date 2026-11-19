@@ -9,7 +9,6 @@
     underlyingElement = $bindable(null),
     type = "p",
     class: className = "",
-    overrideDefaultStyling = false,
     children,
     ...rest
   }: {
@@ -38,10 +37,9 @@
       | "sup";
     children?: Snippet;
     class?: string;
-    overrideDefaultStyling?: boolean;
   } & Omit<HTMLAttributes<HTMLParagraphElement & HTMLHeadingElement & HTMLSpanElement>, "id"> = $props();
 </script>
 
-<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-text")}>
+<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, "fluid-text")}>
   {@render children?.()}
 </svelte:element>
