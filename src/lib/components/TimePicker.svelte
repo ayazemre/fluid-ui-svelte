@@ -37,73 +37,44 @@
   let availableSeconds = $derived(generateSeconds(stepSecondInterval));
 </script>
 
-<Container
-  {id}
-  overrideDefaultStyling={true}
-  class={[
-    "fluid-timepicker-wrapper flex flex-col rounded-xl border border-neutral-200 bg-white p-3 shadow-sm dark:border-neutral-800 dark:bg-neutral-900",
-    variant,
-  ].join(" ")}
->
+<Container id={`fluid-time-picker-${id}`} class={["fluid-time-picker", variant].join(" ")}>
   {#if showHeader}
-    <Container
-      id={`${id}-header`}
-      overrideDefaultStyling={true}
-      class="fluid-timepicker-header mb-2 flex items-center justify-between border-b border-neutral-100 pb-2 dark:border-neutral-800"
-    >
-      <Text id={`${id}-header-mode-label`} class="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+    <Container id={`fluid-time-picker-header-${id}`} class="fluid-time-picker-header">
+      <Text id={`fluid-time-picker-mode-${id}`} class="fluid-time-picker-mode">
         {mode === "hour" ? "Hour" : "Time"}
       </Text>
-      <Text id={`${id}-header-selected-time`} class="text-xs font-medium text-neutral-700 dark:text-neutral-200">
+      <Text id={`fluid-time-picker-selected-${id}`} class="fluid-time-picker-selected">
         {selectedTime}
       </Text>
     </Container>
   {/if}
 
-  <Container id={`${id}-body`} overrideDefaultStyling={true} class="fluid-timepicker-body flex items-stretch gap-1.5">
-    <!-- Hours Column -->
-    <Container
-      id={`${id}-hours-column`}
-      overrideDefaultStyling={true}
-      class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
-    >
+  <Container id={`fluid-time-picker-body-${id}`} class="fluid-time-picker-body">
+    <Container id={`fluid-time-picker-column-hours-${id}`} class="fluid-time-picker-column">
       {#each availableHours as hourItem (hourItem)}
         <Button
-          id={`${id}-hour-option-${hourItem}`}
+          id={`fluid-time-picker-cell-hour-${hourItem}-${id}`}
           type="button"
-          overrideDefaultStyling={true}
           onclick={async () => {
             selectedTime = formatTimeString(hourItem, parsedTime.minute, parsedTime.period, parsedTime.second, mode);
           }}
-          class={[
-            "flex h-8 w-full items-center justify-center text-xs transition-colors",
-            ...getTimePickerCellStyles(parsedTime.hour === hourItem),
-          ].join(" ")}
+          class={getTimePickerCellStyles(parsedTime.hour === hourItem).join(" ")}
         >
           {hourItem}
         </Button>
       {/each}
     </Container>
 
-    <!-- Minutes Column -->
     {#if mode === "minute" || mode === "second"}
-      <Container
-        id={`${id}-minutes-column`}
-        overrideDefaultStyling={true}
-        class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
-      >
+      <Container id={`fluid-time-picker-column-minutes-${id}`} class="fluid-time-picker-column">
         {#each availableMinutes as minuteItem (minuteItem)}
           <Button
-            id={`${id}-minute-option-${minuteItem}`}
+            id={`fluid-time-picker-cell-minute-${minuteItem}-${id}`}
             type="button"
-            overrideDefaultStyling={true}
             onclick={async () => {
               selectedTime = formatTimeString(parsedTime.hour, minuteItem, parsedTime.period, parsedTime.second, mode);
             }}
-            class={[
-              "flex h-8 w-full items-center justify-center text-xs transition-colors",
-              ...getTimePickerCellStyles(parsedTime.minute === minuteItem),
-            ].join(" ")}
+            class={getTimePickerCellStyles(parsedTime.minute === minuteItem).join(" ")}
           >
             {minuteItem}
           </Button>
@@ -111,25 +82,16 @@
       </Container>
     {/if}
 
-    <!-- Seconds Column -->
     {#if mode === "second"}
-      <Container
-        id={`${id}-seconds-column`}
-        overrideDefaultStyling={true}
-        class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin]"
-      >
+      <Container id={`fluid-time-picker-column-seconds-${id}`} class="fluid-time-picker-column">
         {#each availableSeconds as secondItem (secondItem)}
           <Button
-            id={`${id}-second-option-${secondItem}`}
+            id={`fluid-time-picker-cell-second-${secondItem}-${id}`}
             type="button"
-            overrideDefaultStyling={true}
             onclick={async () => {
               selectedTime = formatTimeString(parsedTime.hour, parsedTime.minute, parsedTime.period, secondItem, mode);
             }}
-            class={[
-              "flex h-8 w-full items-center justify-center text-xs transition-colors",
-              ...getTimePickerCellStyles(parsedTime.second === secondItem),
-            ].join(" ")}
+            class={getTimePickerCellStyles(parsedTime.second === secondItem).join(" ")}
           >
             {secondItem}
           </Button>
@@ -137,21 +99,16 @@
       </Container>
     {/if}
 
-    <!-- 12-Hour AM / PM Column -->
     {#if format === "12h"}
-      <Container id={`${id}-period-column`} overrideDefaultStyling={true} class="flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5">
+      <Container id={`fluid-time-picker-column-period-${id}`} class="fluid-time-picker-column">
         {#each ["AM", "PM"] as const as periodItem (periodItem)}
           <Button
-            id={`${id}-period-option-${periodItem}`}
+            id={`fluid-time-picker-cell-period-${periodItem}-${id}`}
             type="button"
-            overrideDefaultStyling={true}
             onclick={async () => {
               selectedTime = formatTimeString(parsedTime.hour, parsedTime.minute, periodItem, parsedTime.second, mode);
             }}
-            class={[
-              "flex h-8 w-full items-center justify-center text-xs transition-colors",
-              ...getTimePickerCellStyles(parsedTime.period === periodItem),
-            ].join(" ")}
+            class={getTimePickerCellStyles(parsedTime.period === periodItem).join(" ")}
           >
             {periodItem}
           </Button>

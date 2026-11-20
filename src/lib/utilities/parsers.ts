@@ -1,21 +1,21 @@
 export const defaultCodeBlockTokenTheme: TokenThemeMapping = {
-  attribute: "text-[#0284c7] dark:text-[#38bdf8]",
-  comment: "text-[#737373] italic",
-  delimiter: "text-[#404040] dark:text-[#d4d4d4]",
-  keyword: "text-[#9333ea] dark:text-[#c084fc]",
-  number: "text-[#db2777] dark:text-[#f472b6]",
-  string: "text-[#d97706] dark:text-[#fcd34d]",
-  tag: "text-[#dc2626] dark:text-[#f87171]",
-  type: "text-[#16a34a] dark:text-[#4ade80]",
-  variable: "text-[#0891b2] dark:text-[#22d3ee]",
+  attribute: "fluid-code-token-attribute",
+  comment: "fluid-code-token-comment",
+  delimiter: "fluid-code-token-delimiter",
+  keyword: "fluid-code-token-keyword",
+  number: "fluid-code-token-number",
+  string: "fluid-code-token-string",
+  tag: "fluid-code-token-tag",
+  type: "fluid-code-token-type",
+  variable: "fluid-code-token-variable",
 };
 
 export const defaultCodeBlockDiffTheme: DiffThemeMapping = {
-  addedGutter: "text-[#1a7f37] dark:text-[#3fb950]",
-  addedRow: "bg-[#e6ffec] dark:bg-[#12261c]",
-  gapRow: "text-[#737373] italic",
-  removedGutter: "text-[#d1242c] dark:text-[#f85149]",
-  removedRow: "bg-[#ffebe9] dark:bg-[#2c1618]",
+  addedGutter: "fluid-code-diff-added-gutter",
+  addedRow: "fluid-code-diff-added-row",
+  gapRow: "fluid-code-diff-gap",
+  removedGutter: "fluid-code-diff-removed-gutter",
+  removedRow: "fluid-code-diff-removed-row",
 };
 
 export const svelteParserConfiguration: ParserConfiguration = {

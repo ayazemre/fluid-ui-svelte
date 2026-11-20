@@ -3,10 +3,10 @@ import type { TransitionConfig } from "svelte/transition";
 export type DrawerPosition = "bottom" | "left" | "right" | "top";
 
 export const positionClasses: Record<DrawerPosition, string> = {
-  bottom: "bottom-0 right-0 left-0 w-full border-t",
-  left: "left-0 top-0 bottom-0 h-full border-r",
-  right: "right-0 top-0 bottom-0 h-full border-l",
-  top: "top-0 right-0 left-0 w-full border-b",
+  bottom: "fluid-drawer-bottom",
+  left: "fluid-drawer-left",
+  right: "fluid-drawer-right",
+  top: "fluid-drawer-top",
 };
 
 export function emptyDrawerTransition(_node: Element, _parameters?: Record<string, unknown>): TransitionConfig {

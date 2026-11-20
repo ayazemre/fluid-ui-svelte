@@ -33,6 +33,6 @@
   });
 </script>
 
-<Container {id} class={[variant, "fluid-image-crop-wrapper"].join(" ")}>
-  <Canvas id={`${id}-canvas`} bind:underlyingElement={canvasReference} class={[variant, "fluid-image-cropper-canvas"].join(" ")} />
+<Container id={`fluid-image-crop-${id}`} class={["fluid-image-crop", variant].join(" ")}>
+  <Canvas id={`fluid-image-crop-canvas-${id}`} bind:underlyingElement={canvasReference} class="fluid-image-crop-canvas" />
 </Container>

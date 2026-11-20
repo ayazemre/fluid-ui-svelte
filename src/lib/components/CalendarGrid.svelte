@@ -37,20 +37,20 @@
   }
 </script>
 
-<Container {id} class={[variant, "fluid-calendar-wrapper", "flex", "flex-col"].join(" ")}>
-  <Container id={`${id}-header`} class={[variant, "fluid-calendar-header", "flex", "w-full"].join(" ")}>
-    <Text id={`${id}-month-title`}>{monthName}</Text>
+<Container id={`fluid-calendar-${id}`} class={["fluid-calendar", variant].join(" ")}>
+  <Container id={`fluid-calendar-header-${id}`} class="fluid-calendar-header">
+    <Text id={`fluid-calendar-title-${id}`} class="fluid-calendar-title">{monthName}</Text>
   </Container>
-  <Container id={`${id}-body`} class={[variant, "fluid-calendar-body", "grid", "grid-cols-7", "justify-items-center"].join(" ")}>
+  <Container id={`fluid-calendar-body-${id}`} class="fluid-calendar-body">
     {#each weekDays as day}
-      <Text id={`${id}-weekday-${day}`}>{day}</Text>
+      <Text id={`fluid-calendar-weekday-${day}-${id}`} class="fluid-calendar-weekday">{day}</Text>
     {/each}
 
     {#each calendarDays as cellDay}
       <Button
-        id={`${id}-cell-${cellDay}`}
+        id={`fluid-calendar-cell-${cellDay}-${id}`}
         onclick={async () => handleDateSelection(cellDay)}
-        class={[variant, ...generateCalendarCellStyles(currentDate, cellDay, startDate, endDate, hideRollingDays)].join(" ")}
+        class={generateCalendarCellStyles(currentDate, cellDay, startDate, endDate, hideRollingDays).join(" ")}
       >
         {getDayNumberFromIsoDateString(cellDay)}
       </Button>

@@ -70,16 +70,16 @@ test.describe("Components Elements E2E Tests", () => {
     await expect(page.getByRole("heading", { exact: true, name: "Full file review" })).toBeVisible();
 
     // Verify condensed diff collapses unchanged sections into gap rows
-    const condensedDiffContainer = page.locator("#code-block-sample-diff");
+    const condensedDiffContainer = page.locator("#fluid-code-block-code-block-sample-diff");
     await expect(condensedDiffContainer.getByText(/unchanged lines hidden/).first()).toBeVisible();
 
     // Verify full diff renders every line without gap rows
-    const fullDiffContainer = page.locator("#code-block-sample-full-diff");
+    const fullDiffContainer = page.locator("#fluid-code-block-code-block-sample-full-diff");
     await expect(fullDiffContainer.getByText(/unchanged lines hidden/)).toHaveCount(0);
 
     // Capture initial per line action counts on both shared state review views
-    const condensedReviewContainer = page.locator("#code-block-sample-review-condensed");
-    const fullReviewContainer = page.locator("#code-block-sample-review-full");
+    const condensedReviewContainer = page.locator("#fluid-code-block-code-block-sample-review-condensed");
+    const fullReviewContainer = page.locator("#fluid-code-block-code-block-sample-review-full");
     const initialCondensedAcceptCount = await condensedReviewContainer.getByRole("button", { name: "Accept change" }).count();
     const initialFullRejectCount = await fullReviewContainer.getByRole("button", { name: "Reject change" }).count();
     expect(initialCondensedAcceptCount).toBeGreaterThan(0);
@@ -250,7 +250,7 @@ test.describe("Components Elements E2E Tests", () => {
     // Verify initial time display and select new hour
     await expect(page.getByText("Selected Time: 14:30").first()).toBeVisible();
 
-    const hour16Button = page.locator("#time-picker-demo-minute").getByRole("button", { exact: true, name: "16" });
+    const hour16Button = page.locator("#fluid-time-picker-time-picker-demo-minute").getByRole("button", { exact: true, name: "16" });
     await expect(hour16Button).toBeVisible();
     await hour16Button.click();
 

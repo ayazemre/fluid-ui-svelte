@@ -1,0 +1,11 @@
+.git
+.gitignore
+.containerignore
+.env*
+.svelte-kit
+.DS_Store
+build
+coverage
+dist
+node_modules
+temporary

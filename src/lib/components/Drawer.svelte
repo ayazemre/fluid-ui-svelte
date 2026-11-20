@@ -40,8 +40,8 @@
 
 {#if isOpen}
   <Container
-    {id}
-    class={[variant, "fluid-drawer-container", "fixed", "inset-0", "z-10"].join(" ")}
+    id={`fluid-drawer-${id}`}
+    class={["fluid-drawer", variant].join(" ")}
     transitionFunction={backdropTransitionFunction}
     transitionParameters={backdropTransitionParameters}
     onclick={() => {
@@ -53,9 +53,9 @@
     aria-modal="true"
   >
     <Container
-      id={`${id}-panel`}
+      id={`fluid-drawer-panel-${id}`}
       onclick={(event: MouseEvent) => event.stopPropagation()}
-      class={[variant, "fluid-drawer-panel", "fixed", "z-20", positionClasses[position]].join(" ")}
+      class={["fluid-drawer-panel", positionClasses[position]].join(" ")}
       {transitionFunction}
       {transitionParameters}
     >

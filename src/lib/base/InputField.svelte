@@ -11,7 +11,6 @@
     value = $bindable(""),
     class: className = "",
     characterFilter,
-    overrideDefaultStyling = false,
     oninput,
     ...rest
   }: {
@@ -21,7 +20,6 @@
     type?: "text" | "password" | "textarea";
     value?: string;
     characterFilter?: Array<string>;
-    overrideDefaultStyling?: boolean;
     oninput?: (event: Event) => void;
   } & Omit<HTMLInputAttributes, "value" | "type" | "id"> &
     Omit<HTMLTextareaAttributes, "value" | "id"> = $props();
@@ -39,7 +37,7 @@
       oninput?.(event);
     }}
     {...rest}
-    class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-input-field")}></textarea>
+    class={mergeClasses(className, "fluid-input-field")}></textarea>
 {:else}
   <input
     {id}
@@ -53,6 +51,6 @@
       oninput?.(event);
     }}
     {...rest}
-    class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-input-field")}
+    class={mergeClasses(className, "fluid-input-field")}
   />
 {/if}

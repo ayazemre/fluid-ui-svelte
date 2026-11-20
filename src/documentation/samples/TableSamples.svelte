@@ -61,7 +61,7 @@
           {item}
         {/snippet}
         {#snippet footerTemplate()}
-          <Container id="table-sample-styled-footer-empty" overrideDefaultStyling />
+          <Container id="table-sample-styled-footer-empty" />
         {/snippet}
       </Table>
     </Container>

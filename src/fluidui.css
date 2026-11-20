@@ -1,3 +1,5 @@
+@layer theme, base, fluid, components, utilities;
+
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -105,355 +107,645 @@
   --color-error-950: #450a0a;
 }
 
-/* ==========================================================================
-   BASE LAYER STYLES
-   Fundamental building blocks and semantic wrappers.
-   ========================================================================== */
+@layer fluid {
+  /* ==========================================================================
+     BASE LAYER STYLES
+     ========================================================================== */
 
-/* Button -------------------------- */
-.fluid-button {
-  @apply items-center gap-1 rounded-md p-2 transition-all duration-500;
-}
-.fluid-button-primary {
-  @apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
-}
-.fluid-button-secondary {
-  @apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
-}
-.fluid-button-outline {
-  @apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
-}
-.fluid-button-transparent {
-  @apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
-}
+  /* Shared transition for base elements ----- */
+  .fluid-button,
+  .fluid-canvas,
+  .fluid-container,
+  .fluid-label,
+  .fluid-table,
+  .fluid-table-head,
+  .fluid-table-row,
+  .fluid-table-cell,
+  .fluid-table-footer,
+  .fluid-text {
+    @apply transition-all duration-500;
+  }
 
-/* Canvas -------------------------- */
-.fluid-canvas {
-  @apply block transition-all duration-500;
-}
+  /* Button -------------------------- */
+  .fluid-button {
+    @apply flex cursor-pointer items-center gap-1 rounded-md p-2;
+  }
+  .fluid-button-primary {
+    @apply bg-primary-500 text-neutral-50 hover:bg-primary-400;
+  }
+  .fluid-button-secondary {
+    @apply bg-secondary-500 text-neutral-50 hover:bg-secondary-400;
+  }
+  .fluid-button-outline {
+    @apply text-primary-500 outline-2 outline-primary-500 hover:bg-primary-500 hover:text-neutral-50;
+  }
+  .fluid-button-transparent {
+    @apply text-primary-500 hover:text-primary-700 dark:hover:text-neutral-50;
+  }
 
-/* Container ----------------------- */
-.fluid-container {
-  @apply transition-all duration-500;
-}
+  /* Canvas -------------------------- */
+  .fluid-canvas {
+    @apply block;
+  }
 
-section,
-main.fluid-container {
-  @apply min-w-0 bg-neutral-50 transition-all duration-500 dark:bg-neutral-900;
-}
+  /* Form ---------------------------- */
+  .fluid-form {
+    @apply flex flex-col;
+  }
 
-/* Form ---------------------------- */
-.fluid-form {
-  @apply flex-col;
-}
+  /* Image --------------------------- */
+  .fluid-image {
+    @apply object-contain;
+  }
+  .fluid-image-loading {
+    @apply animate-pulse bg-primary-500;
+  }
 
-/* Image --------------------------- */
-.fluid-image {
-  @apply object-contain;
-}
-.fluid-image-loading {
-  @apply animate-pulse bg-primary-500;
-}
+  /* Input Field --------------------- */
+  .fluid-input-field {
+    @apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
+  }
+  .fluid-input-field-error {
+    @apply outline-2 outline-error-500;
+  }
 
-/* Input Field --------------------- */
-.fluid-input-field {
-  @apply rounded-md bg-neutral-50 p-1 outline-1 outline-primary-500 transition-all focus:outline-2 focus:outline-primary-500 dark:bg-neutral-800 dark:text-neutral-50;
-}
-.fluid-input-field-error {
-  @apply outline-2 outline-error-500;
-}
+  /* Label --------------------------- */
+  .fluid-label {
+    @apply text-sm font-medium text-neutral-950 select-none dark:text-neutral-50;
+  }
 
-/* Label --------------------------- */
-.fluid-label {
-  @apply text-sm font-medium text-neutral-950 transition-all duration-500 select-none dark:text-neutral-50;
-}
+  /* Link ---------------------------- */
+  .fluid-link {
+    @apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
+  }
 
-/* Link ---------------------------- */
-.fluid-link {
-  @apply text-neutral-950 transition-all visited:text-primary-300 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300;
-}
+  /* List ---------------------------- */
+  .fluid-unordered-list {
+    @apply list-disc text-neutral-950 dark:text-neutral-50;
+  }
+  .fluid-ordered-list {
+    @apply list-decimal text-neutral-950 dark:text-neutral-50;
+  }
 
-/* List ---------------------------- */
-.fluid-unordered-list {
-  @apply list-disc text-neutral-950 dark:text-neutral-50;
-}
-.fluid-ordered-list {
-  @apply list-decimal text-neutral-950 dark:text-neutral-50;
-}
+  /* Table --------------------------- */
+  .fluid-table {
+    @apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border dark:border-neutral-300;
+  }
+  .fluid-table-head {
+    @apply bg-neutral-200 dark:bg-neutral-800;
+  }
+  .fluid-table-row {
+    @apply even:bg-neutral-200 dark:even:bg-neutral-800;
+  }
+  .fluid-table-cell {
+    @apply border-collapse bg-clip-padding text-center;
+  }
+  .fluid-table-footer {
+    @apply bg-clip-padding p-2 odd:bg-neutral-100 dark:odd:bg-neutral-800;
+  }
 
-/* Table --------------------------- */
-.fluid-table {
-  @apply w-full border-separate border-spacing-0 overflow-hidden rounded-md border transition-all duration-500 dark:border-neutral-300;
-}
-.fluid-table-head {
-  @apply bg-neutral-200 transition-all duration-500 dark:bg-neutral-800;
-}
-.fluid-table-row {
-  @apply transition-all duration-500 even:bg-neutral-200 dark:even:bg-neutral-800;
-}
-.fluid-table-cell {
-  @apply border-collapse bg-clip-padding text-center transition-all duration-500;
-}
-.fluid-table-body {
-}
-.fluid-table-footer {
-  @apply bg-clip-padding p-2 transition-all duration-500 odd:bg-neutral-100 dark:odd:bg-neutral-800;
-}
+  /* Text ---------------------------- */
+  .fluid-text {
+    @apply text-neutral-950 dark:text-neutral-50;
+  }
 
-/* Text ---------------------------- */
-.fluid-text {
-  @apply text-neutral-950 transition-all duration-500 dark:text-neutral-50;
-}
+  /* ==========================================================================
+     COMPONENT LAYER STYLES
+     Complex UI elements composed from the Base Layer.
+     ========================================================================== */
 
-/* ==========================================================================
-   COMPONENT LAYER STYLES
-   Complex UI elements composed from the Base Layer.
-   ========================================================================== */
+  /* Shared transition for component elements ----- */
+  .fluid-drawer-panel,
+  .fluid-draggable,
+  .fluid-modal-panel,
+  .fluid-notification,
+  .fluid-searchable-selector-trigger {
+    @apply transition-all;
+  }
 
-/* Accordion ----------------------- */
-.fluid-accordion-wrapper {
-  @apply flex-col;
-}
-.fluid-accordion-header {
-  @apply items-center rounded-md p-2 transition-all hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
-}
-.fluid-accordion-body {
-  @apply flex w-full flex-col gap-1 p-2;
-}
+  /* Accordion ----------------------- */
+  .fluid-accordion {
+    @apply flex flex-col;
+  }
+  .fluid-accordion .fluid-accordion-header {
+    @apply w-full flex-nowrap justify-between hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800;
+  }
+  .fluid-accordion .fluid-accordion-body {
+    @apply flex w-full flex-col gap-1 p-2;
+  }
 
-/* Calendar ------------------------ */
+  /* Calendar ------------------------ */
 
-.fluid-calendar-wrapper {
-  @apply items-center gap-1 p-2;
-}
-.fluid-calendar-header {
-  @apply justify-center;
-}
-.fluid-calendar-body {
-  @apply gap-4;
-}
-.fluid-calendar-cell {
-  @apply dark:text-neutral-50;
-}
-.fluid-calendar-cell-selected {
-  @apply bg-primary-600 text-neutral-50;
-}
-.fluid-calendar-cell-in-range {
-  @apply bg-primary-400 text-neutral-50;
-}
-.fluid-calendar-cell-rolling-day {
-  @apply opacity-25;
-}
+  .fluid-calendar {
+    @apply flex flex-col items-center gap-1 p-2;
+  }
+  .fluid-calendar-header {
+    @apply flex w-full justify-center;
+  }
+  .fluid-calendar-body {
+    @apply grid grid-cols-7 justify-items-center gap-4;
+  }
+  .fluid-calendar-cell-hidden {
+    @apply invisible;
+  }
+  .fluid-calendar-cell {
+    @apply dark:text-neutral-50;
+  }
+  .fluid-calendar-cell-selected {
+    @apply bg-primary-600 text-neutral-50;
+  }
+  .fluid-calendar-cell-in-range {
+    @apply bg-primary-400 text-neutral-50;
+  }
+  .fluid-calendar-cell-rolling-day {
+    @apply opacity-25;
+  }
 
-/* Carousel ------------------------ */
-.fluid-carousel-container {
-  @apply scrollbar-none [&::-webkit-scrollbar]:hidden;
-}
-.fluid-carousel-item {
-  @apply p-2;
-}
+  /* Carousel ------------------------ */
+  .fluid-carousel {
+    @apply relative flex scroll-smooth scrollbar-none [&::-webkit-scrollbar]:hidden;
+  }
+  .fluid-carousel-horizontal {
+    @apply overflow-x-auto;
+  }
+  .fluid-carousel-vertical {
+    @apply h-full flex-col overflow-y-auto;
+  }
+  .fluid-carousel-snap.fluid-carousel-horizontal {
+    @apply snap-x snap-mandatory;
+  }
+  .fluid-carousel-snap.fluid-carousel-vertical {
+    @apply snap-y snap-mandatory;
+  }
+  .fluid-carousel-item {
+    @apply shrink-0 p-2;
+  }
+  .fluid-carousel-item-snap {
+    @apply snap-start;
+  }
 
-/* Code Block ---------------------- */
-.fluid-code-block-container {
-  @apply rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
-}
-.fluid-code-block-row {
-  @apply gap-2;
-}
-.fluid-code-block-index {
-  @apply border-r border-neutral-500 bg-neutral-200 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
-}
-.fluid-code-block-content {
-  @apply px-4;
-}
+  /* Code Block ---------------------- */
+  .fluid-code-block {
+    @apply flex flex-col overflow-auto rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
+  }
+  .fluid-code-block-row {
+    @apply flex items-start gap-2;
+  }
+  .fluid-code-block-index {
+    @apply sticky left-0 z-1 min-w-10 shrink-0 border-r border-neutral-500 bg-neutral-200 px-2 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
+  }
+  .fluid-code-block-content {
+    @apply flex min-w-0 flex-1 flex-col px-4;
+  }
+  .fluid-code-block-actions {
+    @apply flex shrink-0 items-center gap-1 px-2;
+  }
+  .fluid-code-token-attribute {
+    @apply text-[#0284c7] dark:text-[#38bdf8];
+  }
+  .fluid-code-token-comment {
+    @apply text-[#737373] italic;
+  }
+  .fluid-code-token-delimiter {
+    @apply text-[#404040] dark:text-[#d4d4d4];
+  }
+  .fluid-code-token-keyword {
+    @apply text-[#9333ea] dark:text-[#c084fc];
+  }
+  .fluid-code-token-number {
+    @apply text-[#db2777] dark:text-[#f472b6];
+  }
+  .fluid-code-token-string {
+    @apply text-[#d97706] dark:text-[#fcd34d];
+  }
+  .fluid-code-token-tag {
+    @apply text-[#dc2626] dark:text-[#f87171];
+  }
+  .fluid-code-token-type {
+    @apply text-[#16a34a] dark:text-[#4ade80];
+  }
+  .fluid-code-token-variable {
+    @apply text-[#0891b2] dark:text-[#22d3ee];
+  }
+  .fluid-code-diff-added-gutter {
+    @apply text-[#1a7f37] dark:text-[#3fb950];
+  }
+  .fluid-code-diff-added-row {
+    @apply bg-[#e6ffec] dark:bg-[#12261c];
+  }
+  .fluid-code-diff-gap {
+    @apply text-[#737373] italic;
+  }
+  .fluid-code-diff-removed-gutter {
+    @apply text-[#d1242c] dark:text-[#f85149];
+  }
+  .fluid-code-diff-removed-row {
+    @apply bg-[#ffebe9] dark:bg-[#2c1618];
+  }
 
-/* Drawer -------------------------- */
-.fluid-drawer-container {
-  @apply bg-black/30 backdrop-blur-sm;
-}
-.fluid-drawer-panel {
-  @apply bg-white p-6 shadow-xl transition-all dark:bg-neutral-900;
-}
+  /* Drawer -------------------------- */
+  .fluid-drawer {
+    @apply fixed inset-0 z-10 bg-black/30 backdrop-blur-sm;
+  }
+  .fluid-drawer-panel {
+    @apply fixed z-20 bg-white p-6 shadow-xl dark:bg-neutral-900;
+  }
+  .fluid-drawer-bottom {
+    @apply bottom-0 right-0 left-0 w-full border-t;
+  }
+  .fluid-drawer-left {
+    @apply left-0 top-0 bottom-0 h-full border-r;
+  }
+  .fluid-drawer-right {
+    @apply right-0 top-0 bottom-0 h-full border-l;
+  }
+  .fluid-drawer-top {
+    @apply top-0 right-0 left-0 w-full border-b;
+  }
 
-/* Draggable ----------------------- */
-.fluid-draggable {
-  @apply rounded-md border bg-white p-4 shadow-sm transition-all dark:border-neutral-700 dark:bg-neutral-800;
-}
+  /* Draggable ----------------------- */
+  .fluid-draggable {
+    @apply rounded-md border bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-800;
+  }
+  .fluid-draggable:not(.fluid-draggable-disabled) {
+    @apply cursor-grab;
+  }
+  .fluid-draggable:not(.fluid-draggable-disabled):active {
+    @apply cursor-grabbing;
+  }
+  .fluid-draggable-disabled {
+    @apply cursor-not-allowed opacity-60;
+  }
+  .fluid-draggable-dragging {
+    @apply opacity-50;
+  }
 
-/* Dropzone ------------------------ */
-.fluid-dropzone {
-  @apply flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
-}
-.fluid-dropzone.drag-over {
-  @apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
-}
-.fluid-dropzone.drag-invalid {
-  @apply border-error-500 bg-error-50 dark:bg-error-950/20;
-}
+  /* Dropzone ------------------------ */
+  .fluid-dropzone {
+    @apply relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 p-12 transition-all duration-200 dark:border-neutral-700 dark:bg-neutral-900;
+  }
+  .fluid-dropzone-drag-over {
+    @apply border-primary-500 bg-primary-50 dark:bg-primary-950/20;
+  }
+  .fluid-dropzone-drag-invalid {
+    @apply border-error-500 bg-error-50 dark:bg-error-950/20;
+  }
 
-/* Page ---------------------------- */
-.fluid-page {
-  @apply p-8 md:p-16;
-}
+  /* Page ---------------------------- */
+  .fluid-page {
+    @apply flex w-full flex-1 flex-col p-8 md:p-16;
+  }
 
-/* Image Crop ---------------------- */
-.fluid-image-crop-wrapper {
-  @apply flex size-full flex-col justify-center;
-}
-.fluid-image-cropper-canvas {
-  @apply block max-w-full;
-}
+  /* Image Crop ---------------------- */
+  .fluid-image-crop {
+    @apply flex size-full flex-col justify-center;
+  }
+  .fluid-image-crop-canvas {
+    @apply block max-w-full;
+  }
 
-/* Switch -------------------------- */
-.fluid-switch-button {
-  @apply bg-neutral-200;
-}
-.fluid-switch-circle {
-  @apply bg-white shadow;
-}
-.fluid-switch-button.checked {
-  @apply bg-primary-600;
-}
+  /* Time Picker --------------------- */
+  .fluid-time-picker {
+    @apply flex flex-col rounded-xl border border-neutral-200 bg-white p-3 shadow-sm dark:border-neutral-800 dark:bg-neutral-900;
+  }
+  .fluid-time-picker-header {
+    @apply mb-2 flex items-center justify-between border-b border-neutral-100 pb-2 dark:border-neutral-800;
+  }
+  .fluid-time-picker-mode {
+    @apply text-xs font-semibold tracking-wider text-neutral-400 uppercase;
+  }
+  .fluid-time-picker-selected {
+    @apply text-xs font-medium text-neutral-700 dark:text-neutral-200;
+  }
+  .fluid-time-picker-body {
+    @apply flex items-stretch gap-1.5;
+  }
+  .fluid-time-picker-column {
+    @apply flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin];
+  }
+  .fluid-time-picker-cell {
+    @apply flex h-8 w-full items-center justify-center rounded-md text-xs text-neutral-700 transition-colors dark:text-neutral-200;
+  }
+  .fluid-time-picker-cell:not(.fluid-time-picker-cell-selected):hover {
+    @apply bg-neutral-100 dark:bg-neutral-800;
+  }
+  .fluid-time-picker-cell-selected {
+    @apply bg-primary-600 font-semibold text-white;
+  }
 
-/* Anchored Overlay & Popover ------------------------- */
-.fluid-anchored-overlay-container,
-.fluid-popover-container {
-  @apply relative inline-block;
-}
-.fluid-anchored-overlay-float,
-.fluid-popover-content {
-  @apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
-}
-.fluid-anchored-overlay-top,
-.fluid-popover-top {
-  @apply bottom-full left-1/2 mb-2 -translate-x-1/2;
-}
-.fluid-anchored-overlay-top-start {
-  @apply bottom-full left-0 mb-2;
-}
-.fluid-anchored-overlay-top-end {
-  @apply bottom-full right-0 mb-2;
-}
-.fluid-anchored-overlay-bottom,
-.fluid-popover-bottom {
-  @apply left-1/2 top-full mt-2 -translate-x-1/2;
-}
-.fluid-anchored-overlay-bottom-start {
-  @apply left-0 top-full mt-2;
-}
-.fluid-anchored-overlay-bottom-end {
-  @apply right-0 top-full mt-2;
-}
-.fluid-anchored-overlay-left,
-.fluid-popover-left {
-  @apply right-full top-1/2 mr-2 -translate-y-1/2;
-}
-.fluid-anchored-overlay-left-start {
-  @apply right-full top-0 mr-2;
-}
-.fluid-anchored-overlay-left-end {
-  @apply bottom-0 right-full mr-2;
-}
-.fluid-anchored-overlay-right,
-.fluid-popover-right {
-  @apply left-full top-1/2 ml-2 -translate-y-1/2;
-}
-.fluid-anchored-overlay-right-start {
-  @apply left-full top-0 ml-2;
-}
-.fluid-anchored-overlay-right-end {
-  @apply bottom-0 left-full ml-2;
-}
+  /* Switch -------------------------- */
+  .fluid-switch {
+    @apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center gap-0 rounded-full border-2 border-transparent bg-neutral-200 p-0 transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .fluid-switch.fluid-switch-checked {
+    @apply bg-primary-600;
+  }
+  .fluid-switch-circle {
+    @apply pointer-events-none inline-block h-4 w-4 translate-x-0 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+  }
+  .fluid-switch.fluid-switch-checked .fluid-switch-circle {
+    @apply translate-x-4;
+  }
 
-/* Modal --------------------------- */
-.fluid-modal-container {
-  @apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
-}
-.fluid-modal-panel {
-  @apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden transition-all;
-}
+  /* Anchored Overlay & Popover ------------------------- */
+  .fluid-anchored-overlay,
+  .fluid-popover-container {
+    @apply relative inline-block;
+  }
+  .fluid-anchored-overlay-float,
+  .fluid-popover-content {
+    @apply absolute z-50 rounded-md border border-neutral-200 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+  }
+  .fluid-anchored-overlay-top,
+  .fluid-popover-top {
+    @apply bottom-full left-1/2 mb-2 -translate-x-1/2;
+  }
+  .fluid-anchored-overlay-top-start {
+    @apply bottom-full left-0 mb-2;
+  }
+  .fluid-anchored-overlay-top-end {
+    @apply bottom-full right-0 mb-2;
+  }
+  .fluid-anchored-overlay-bottom,
+  .fluid-popover-bottom {
+    @apply left-1/2 top-full mt-2 -translate-x-1/2;
+  }
+  .fluid-anchored-overlay-bottom-start {
+    @apply left-0 top-full mt-2;
+  }
+  .fluid-anchored-overlay-bottom-end {
+    @apply right-0 top-full mt-2;
+  }
+  .fluid-anchored-overlay-left,
+  .fluid-popover-left {
+    @apply right-full top-1/2 mr-2 -translate-y-1/2;
+  }
+  .fluid-anchored-overlay-left-start {
+    @apply right-full top-0 mr-2;
+  }
+  .fluid-anchored-overlay-left-end {
+    @apply bottom-0 right-full mr-2;
+  }
+  .fluid-anchored-overlay-right,
+  .fluid-popover-right {
+    @apply left-full top-1/2 ml-2 -translate-y-1/2;
+  }
+  .fluid-anchored-overlay-right-start {
+    @apply left-full top-0 ml-2;
+  }
+  .fluid-anchored-overlay-right-end {
+    @apply bottom-0 left-full ml-2;
+  }
 
-/* Breadcrumb ---------------------- */
-.fluid-breadcrumb-container {
-  @apply flex items-center gap-2 text-sm;
-}
-.fluid-breadcrumb-list {
-  @apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
-}
-.fluid-breadcrumb-item {
-  @apply flex items-center gap-2;
-}
-.fluid-breadcrumb-separator {
-  @apply text-neutral-400 select-none;
-}
+  /* Modal --------------------------- */
+  .fluid-modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4;
+  }
+  .fluid-modal-panel {
+    @apply bg-white dark:bg-neutral-900 rounded-lg shadow-xl max-w-lg w-full overflow-hidden;
+  }
 
-/* Pagination ---------------------- */
-.fluid-pagination-container {
-  @apply flex items-center gap-1;
-}
-.fluid-pagination-button {
-  @apply min-w-10 h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
-}
-.fluid-pagination-button-active {
-  @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
-}
+  /* Breadcrumb ---------------------- */
+  .fluid-breadcrumb,
+  .fluid-breadcrumb-item {
+    @apply flex items-center gap-2;
+  }
+  .fluid-breadcrumb {
+    @apply text-sm;
+  }
+  .fluid-breadcrumb-list {
+    @apply flex items-center flex-wrap gap-2 list-none p-0 m-0;
+  }
+  .fluid-breadcrumb-separator {
+    @apply text-neutral-400 select-none;
+  }
+  .fluid-breadcrumb-current {
+    @apply font-bold;
+  }
 
-/* Notification Area --------------- */
-.fluid-notification-area {
-  @apply fixed z-100 flex flex-col gap-2 p-4 pointer-events-none;
-}
-.fluid-notification-area-top-left {
-  @apply top-0 left-0 items-start;
-}
-.fluid-notification-area-top-center {
-  @apply top-0 left-1/2 -translate-x-1/2 items-center;
-}
-.fluid-notification-area-top-right {
-  @apply top-0 right-0 items-end;
-}
-.fluid-notification-area-center-left {
-  @apply top-1/2 left-0 -translate-y-1/2 items-start;
-}
-.fluid-notification-area-center-right {
-  @apply top-1/2 right-0 -translate-y-1/2 items-end;
-}
-.fluid-notification-area-bottom-left {
-  @apply bottom-0 left-0 flex-col-reverse items-start;
-}
-.fluid-notification-area-bottom-center {
-  @apply bottom-0 left-1/2 -translate-x-1/2 flex-col-reverse items-center;
-}
-.fluid-notification-area-bottom-right {
-  @apply bottom-0 right-0 flex-col-reverse items-end;
-}
+  /* Pagination ---------------------- */
+  .fluid-pagination {
+    @apply flex items-center gap-1;
+  }
+  .fluid-pagination-ellipsis {
+    @apply flex h-10 min-w-10 items-center justify-center text-neutral-400 select-none;
+  }
+  .fluid-pagination-button {
+    @apply min-w-10 h-10 px-2 flex items-center justify-center rounded-md border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .fluid-pagination-button-active {
+    @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600;
+  }
 
-.fluid-notification {
-  @apply pointer-events-auto min-w-75 max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg transition-all dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
-}
-.fluid-notification-success {
-  @apply border-l-4 border-l-success-500;
-}
-.fluid-notification-error {
-  @apply border-l-4 border-l-error-500;
-}
-.fluid-notification-warning {
-  @apply border-l-4 border-l-warning-500;
-}
-.fluid-notification-info {
-  @apply border-l-4 border-l-info-500;
-}
+  /* Notification Area --------------- */
+  .fluid-notification-area {
+    @apply fixed z-100 flex flex-col gap-2 p-4 pointer-events-none;
+  }
+  .fluid-notification-area-top-left {
+    @apply top-0 left-0 items-start;
+  }
+  .fluid-notification-area-top-center {
+    @apply top-0 left-1/2 -translate-x-1/2 items-center;
+  }
+  .fluid-notification-area-top-right {
+    @apply top-0 right-0 items-end;
+  }
+  .fluid-notification-area-center-left {
+    @apply top-1/2 left-0 -translate-y-1/2 items-start;
+  }
+  .fluid-notification-area-center-right {
+    @apply top-1/2 right-0 -translate-y-1/2 items-end;
+  }
+  .fluid-notification-area-bottom-left {
+    @apply bottom-0 left-0 flex-col-reverse items-start;
+  }
+  .fluid-notification-area-bottom-center {
+    @apply bottom-0 left-1/2 -translate-x-1/2 flex-col-reverse items-center;
+  }
+  .fluid-notification-area-bottom-right {
+    @apply bottom-0 right-0 flex-col-reverse items-end;
+  }
 
-.fluid-notification-content {
-  @apply flex-1;
-}
-.fluid-notification-close {
-  @apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
-}
+  .fluid-notification {
+    @apply pointer-events-auto min-w-75 max-w-md rounded-lg border border-neutral-200 bg-white p-4 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 flex items-start gap-3;
+  }
+  .fluid-notification-success,
+  .fluid-notification-error,
+  .fluid-notification-warning,
+  .fluid-notification-info {
+    @apply border-l-4;
+  }
+  .fluid-notification-success {
+    @apply border-l-success-500;
+  }
+  .fluid-notification-error {
+    @apply border-l-error-500;
+  }
+  .fluid-notification-warning {
+    @apply border-l-warning-500;
+  }
+  .fluid-notification-info {
+    @apply border-l-info-500;
+  }
 
-/* Searchable Selector ------------ */
-.fluid-searchable-selector-trigger {
-  @apply transition-all;
-}
-.fluid-searchable-selector-dropdown {
-  @apply rounded-xl border bg-white shadow-xl dark:border-neutral-700 dark:bg-neutral-900;
+  .fluid-notification-content {
+    @apply flex-1;
+  }
+  .fluid-notification-close {
+    @apply text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors;
+  }
+
+  /* International Input ------------- */
+  .fluid-international-input {
+    @apply flex items-center rounded-lg border border-neutral-300 bg-white transition-all focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20 dark:border-neutral-700 dark:bg-neutral-900;
+  }
+  .fluid-international-input-country {
+    @apply inline-flex w-auto;
+  }
+  .fluid-international-input-disabled {
+    @apply pointer-events-none opacity-60;
+  }
+  .fluid-international-input-trigger {
+    @apply flex items-center gap-2 bg-neutral-50 px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700;
+  }
+  .fluid-international-input-trigger-country {
+    @apply min-w-50 justify-between rounded-lg;
+  }
+  .fluid-international-input-trigger-code {
+    @apply rounded-l-lg border-r border-neutral-200 dark:border-neutral-700;
+  }
+  .fluid-international-input-display {
+    @apply flex items-center gap-2;
+  }
+  .fluid-international-input-flag {
+    @apply text-base;
+  }
+  .fluid-international-input-label {
+    @apply text-xs;
+  }
+  .fluid-international-input-arrow {
+    @apply text-[10px] text-neutral-400;
+  }
+  .fluid-international-input .fluid-international-input-field {
+    @apply flex-1 rounded-none bg-transparent p-0 px-3 py-2 text-sm transition-none outline-none placeholder:text-neutral-400 focus:outline-none dark:text-neutral-50 dark:placeholder:text-neutral-500;
+  }
+  .fluid-international-input .fluid-anchored-overlay-float {
+    @apply flex w-64 flex-col gap-1 rounded-xl border border-neutral-200 bg-white p-1.5 shadow-xl dark:border-neutral-700 dark:bg-neutral-900 z-50;
+  }
+  .fluid-international-input-search {
+    @apply rounded-md border border-neutral-200 px-2 py-1 text-xs dark:border-neutral-700;
+  }
+  .fluid-international-input-list {
+    @apply flex max-h-48 flex-col gap-0.5 overflow-y-auto;
+  }
+  .fluid-international-input-option {
+    @apply flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800;
+  }
+  .fluid-international-input-option-selected {
+    @apply bg-neutral-100 font-semibold dark:bg-neutral-800;
+  }
+  .fluid-international-input-option-info {
+    @apply flex items-center gap-2 truncate;
+  }
+  .fluid-international-input-option-flag {
+    @apply text-sm;
+  }
+  .fluid-international-input-option-name {
+    @apply truncate text-neutral-800 dark:text-neutral-200;
+  }
+  .fluid-international-input-option-detail {
+    @apply ml-2 shrink-0 text-neutral-400;
+  }
+
+  /* Searchable Selector ------------ */
+  .fluid-searchable-selector {
+    @apply inline-flex w-full;
+  }
+  .fluid-searchable-selector-trigger {
+    @apply flex w-full items-center justify-between gap-3 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-left transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800;
+  }
+  .fluid-searchable-selector-disabled {
+    @apply pointer-events-none opacity-60;
+  }
+  .fluid-searchable-selector-trigger-content {
+    @apply flex items-center gap-3 truncate;
+  }
+  .fluid-searchable-selector-avatar {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white;
+  }
+  .fluid-searchable-selector-avatar-framed {
+    @apply overflow-hidden p-0;
+  }
+  .fluid-searchable-selector-avatar-empty {
+    @apply bg-neutral-100 font-medium text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400;
+  }
+  .fluid-searchable-selector-avatar-image {
+    @apply h-8 w-8 rounded-full object-cover;
+  }
+  .fluid-searchable-selector-avatar-color-0 {
+    @apply bg-primary-500;
+  }
+  .fluid-searchable-selector-avatar-color-1 {
+    @apply bg-[#8b5cf6];
+  }
+  .fluid-searchable-selector-avatar-color-2 {
+    @apply bg-[#10b981];
+  }
+  .fluid-searchable-selector-avatar-color-3 {
+    @apply bg-[#f59e0b];
+  }
+  .fluid-searchable-selector-avatar-color-4 {
+    @apply bg-[#f43f5e];
+  }
+  .fluid-searchable-selector-avatar-color-5 {
+    @apply bg-[#0ea5e9];
+  }
+  .fluid-searchable-selector-avatar-color-6 {
+    @apply bg-[#14b8a6];
+  }
+  .fluid-searchable-selector-avatar-color-7 {
+    @apply bg-[#f97316];
+  }
+  .fluid-searchable-selector-label {
+    @apply truncate text-sm font-medium text-neutral-900 dark:text-neutral-100;
+  }
+  .fluid-searchable-selector-placeholder {
+    @apply truncate text-sm text-neutral-500 dark:text-neutral-400;
+  }
+  .fluid-searchable-selector-arrow {
+    @apply flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-neutral-400;
+  }
+  .fluid-searchable-selector-chevron {
+    @apply h-1.5 w-1.5 rotate-45 border-b-2 border-r-2 border-current;
+  }
+  .fluid-searchable-selector .fluid-anchored-overlay-float {
+    @apply flex w-[320px] flex-col gap-2 rounded-xl border border-neutral-200 bg-white p-2 shadow-xl dark:border-neutral-700 dark:bg-neutral-900 z-50;
+  }
+  .fluid-searchable-selector-search {
+    @apply rounded-md border border-neutral-200 px-3 py-2 text-sm dark:border-neutral-700;
+  }
+  .fluid-searchable-selector-list {
+    @apply flex max-h-64 flex-col gap-0.5 overflow-y-auto;
+  }
+  .fluid-searchable-selector-option {
+    @apply flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800;
+  }
+  .fluid-searchable-selector-option-selected {
+    @apply bg-neutral-100 font-medium dark:bg-neutral-800;
+  }
+  .fluid-searchable-selector-option-label {
+    @apply flex-1 truncate text-sm text-neutral-800 dark:text-neutral-200;
+  }
+  .fluid-searchable-selector-check {
+    @apply flex h-5 w-5 shrink-0 items-center justify-center text-primary-600;
+  }
+  .fluid-searchable-selector-check-mark {
+    @apply h-2.5 w-1.5 rotate-45 border-b-2 border-r-2 border-current;
+  }
+  .fluid-searchable-selector-empty {
+    @apply flex flex-col items-center gap-2 py-8;
+  }
+  .fluid-searchable-selector-empty-text {
+    @apply text-sm text-neutral-500;
+  }
 }

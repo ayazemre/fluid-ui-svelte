@@ -1,29 +1,39 @@
 import { error } from "@sveltejs/kit";
 
-import { documentationRegistry } from "#src/documentation/documentation.ts";
+import {
+  documentationCategoryLabels,
+  documentationCategoryRegistries,
+  findDocumentationNeighborLinks,
+  toDocumentationPageName,
+} from "#src/documentation/documentationNavigation.ts";
+import { layerNumerals } from "#src/documentation/siteContent.ts";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = ({ params }) => {
   const { category, slug } = params;
 
-  // @ts-ignore
-  const categoryRegistry = documentationRegistry[category];
-
-  if (!categoryRegistry) {
+  if (!Object.hasOwn(documentationCategoryRegistries, category)) {
     error(404, "Category not found");
   }
 
-  const componentData = categoryRegistry[slug];
+  const categoryRegistry = documentationCategoryRegistries[category];
 
-  if (!componentData) {
+  if (!Object.hasOwn(categoryRegistry, slug)) {
     error(404, "Component not found");
   }
 
-  // We return only the serializable data
+  const componentData = categoryRegistry[slug];
+  const neighborLinks = findDocumentationNeighborLinks(`/documentation/${category}/${slug}`);
+
   return {
     category,
+    categoryLabel: documentationCategoryLabels[category],
     description: componentData.description,
+    layerNumeral: layerNumerals[category],
+    name: toDocumentationPageName(componentData.title),
+    nextLink: neighborLinks.nextLink,
+    previousLink: neighborLinks.previousLink,
     props: componentData.props,
     slug,
     title: componentData.title,

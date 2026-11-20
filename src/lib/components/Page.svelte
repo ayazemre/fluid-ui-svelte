@@ -23,7 +23,7 @@
     keywords = "",
     author = "",
     structuredData,
-    class: className = "",
+    variant = "",
     children,
     ...rest
   }: {
@@ -44,9 +44,9 @@
     keywords?: string;
     author?: string;
     structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
-    class?: string;
+    variant?: string;
     children?: Snippet;
-  } & HTMLAttributes<HTMLElement> = $props();
+  } & Omit<HTMLAttributes<HTMLElement>, "class" | "id"> = $props();
 
   const serializedLdJson = $derived(structuredData ? serializeStructuredData(structuredData) : "");
 </script>
@@ -130,6 +130,6 @@
   {/if}
 </svelte:head>
 
-<Container {id} type="main" class={[className, "fluid-page flex w-full flex-1 flex-col"].join(" ")} {...rest}>
+<Container id={`fluid-page-${id}`} type="main" class={["fluid-page", variant].join(" ")} {...rest}>
   {@render children?.()}
 </Container>

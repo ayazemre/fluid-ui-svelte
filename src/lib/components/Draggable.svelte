@@ -26,7 +26,7 @@
 </script>
 
 <Container
-  {id}
+  id={`fluid-draggable-${id}`}
   draggable={!disabled}
   ondragstart={(event: DragEvent) => {
     isDragging = handleDraggableDragStart(event, disabled, ondragstart);
@@ -35,12 +35,7 @@
   ondragend={(event: DragEvent) => {
     isDragging = handleDraggableDragEnd(event, ondragend);
   }}
-  class={[
-    variant,
-    disabled ? "cursor-not-allowed opacity-60" : "cursor-grab active:cursor-grabbing",
-    isDragging ? "fluid-dragging opacity-50" : "",
-    "fluid-draggable",
-  ].join(" ")}
+  class={["fluid-draggable", variant, disabled ? "fluid-draggable-disabled" : "", isDragging ? "fluid-draggable-dragging" : ""].join(" ")}
 >
   {@render children({ isDragging })}
 </Container>

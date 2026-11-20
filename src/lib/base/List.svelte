@@ -12,7 +12,6 @@
     itemTemplate,
     class: className = "",
     itemClass = "",
-    overrideDefaultStyling = false,
     ...rest
   }: {
     id: string;
@@ -22,7 +21,6 @@
     itemTemplate: Snippet<[T, number]>;
     class?: string;
     itemClass?: string;
-    overrideDefaultStyling?: boolean;
   } & Omit<HTMLAttributes<HTMLUListElement | HTMLOListElement>, "id"> = $props();
 
   const classes = {
@@ -31,9 +29,9 @@
   };
 </script>
 
-<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, overrideDefaultStyling ? "" : classes[type])}>
+<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, classes[type])}>
   {#each items as item, index}
-    <li class={mergeClasses(itemClass, overrideDefaultStyling ? "" : classes[type] + "-item")}>
+    <li class={mergeClasses(itemClass, classes[type] + "-item")}>
       {@render itemTemplate(item, index)}
     </li>
   {/each}

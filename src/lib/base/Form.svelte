@@ -8,7 +8,6 @@
     id,
     underlyingElement = $bindable(null),
     class: className = "",
-    overrideDefaultStyling = false,
     onsubmit,
     children,
     ...rest
@@ -16,7 +15,6 @@
     id: string;
     underlyingElement?: HTMLFormElement | null;
     class?: string;
-    overrideDefaultStyling?: boolean;
     onsubmit?: (event: SubmitEvent) => void;
     children: Snippet;
   } & Omit<HTMLFormAttributes, "onsubmit" | "id"> = $props();
@@ -31,7 +29,7 @@
   }}
   novalidate
   {...rest}
-  class={mergeClasses(className, overrideDefaultStyling ? "" : "fluid-form flex")}
+  class={mergeClasses(className, "fluid-form")}
 >
   {@render children()}
 </form>

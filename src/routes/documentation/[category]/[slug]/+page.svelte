@@ -1,122 +1,125 @@
 <script lang="ts">
-  import * as Samples from "#src/documentation/samples/index.ts";
-  import { Container, Text, Table } from "#src/lib//base/index.ts";
+  import Icon from "@iconify/svelte";
+
+  import { documentationSampleRegistry } from "#src/documentation/samples/sampleRegistry.ts";
+  import { Container, Link, Table, Text } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
 
-  let { data } = $props();
+  import type { PageProps } from "./$types";
 
-  const sampleMap: Record<string, Record<string, any>> = {
-    base: {
-      button: Samples.ButtonSamples,
-      container: Samples.ContainerSamples,
-      form: Samples.FormSamples,
-      image: Samples.ImageSamples,
-      "input-field": Samples.InputFieldSamples,
-      label: Samples.LabelSamples,
-      link: Samples.LinkSamples,
-      list: Samples.ListSamples,
-      table: Samples.TableSamples,
-      text: Samples.TextSamples,
-    },
-    components: {
-      accordion: Samples.AccordionSamples,
-      "anchored-overlay": Samples.AnchoredOverlaySamples,
-      "calendar-grid": Samples.CalendarGridSamples,
-      carousel: Samples.CarouselSamples,
-      "code-block": Samples.CodeBlockSamples,
-      draggable: Samples.DraggableSamples,
-      drawer: Samples.DrawerSamples,
-      dropzone: Samples.DropzoneSamples,
-      "image-crop": Samples.ImageCropSamples,
-      modal: Samples.ModalSamples,
-      page: Samples.PageSamples,
-      pagination: Samples.PaginationSamples,
-      switch: Samples.SwitchSamples,
-      "time-picker": Samples.TimePickerSamples,
-    },
-    prebuilt: {
-      breadcrumb: Samples.BreadcrumbSamples,
-      "international-input": Samples.InternationalInputSamples,
-      "notification-area": Samples.NotificationSamples,
-      "searchable-selector": Samples.SearchableSelectorSamples,
-    },
+  let { data }: PageProps = $props();
+
+  type PropertyCell = {
+    cellId: string;
+    column: "prop" | "type" | "default" | "description";
+    value: string;
   };
 
-  let SampleComponent = $derived(sampleMap[data.category]?.[data.slug]);
+  const propertyTableHeaders = ["Prop", "Type", "Default", "Description"];
 
-  const headers = ["Prop", "Type", "Default", "Description"];
+  const SampleComponent = $derived(documentationSampleRegistry[data.category]?.[data.slug]);
 
-  // Prepare the rows for the props table
-  const tableRows = $derived(
-    data.props.map((p: any) => [
-      { col: "prop", value: p.prop },
-      { col: "type", value: p.type },
-      { col: "default", value: p.default },
-      { col: "desc", value: p.description },
+  const propertyTableRows = $derived(
+    data.props.map((propertyRow, rowIndex): Array<PropertyCell> => [
+      { cellId: `doc-props-${rowIndex}-prop`, column: "prop", value: propertyRow.prop },
+      { cellId: `doc-props-${rowIndex}-type`, column: "type", value: propertyRow.type },
+      { cellId: `doc-props-${rowIndex}-default`, column: "default", value: propertyRow.default },
+      { cellId: `doc-props-${rowIndex}-description`, column: "description", value: propertyRow.description },
     ]),
   );
 </script>
 
-<Page id={`doc-page-${data.category}-${data.slug}`} title={data.title} description={data.description}>
-  <Container id={`doc-page-main-container-${data.category}-${data.slug}`} class="flex flex-col gap-8">
-    <!-- Header -->
-    <Container id={`doc-page-header-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
-      <Text id={`doc-page-main-title-${data.category}-${data.slug}`} type="h1" class="text-4xl font-bold"
-        >{data.title.replace("Fluid UI - ", "")}</Text
-      >
-      <Text id={`doc-page-main-description-${data.category}-${data.slug}`}>
+<Page id={`doc-page-${data.category}-${data.slug}`} variant="site-page" title={data.title} description={data.description}>
+  <Container id={`doc-page-content-${data.category}-${data.slug}`} class="article">
+    <Container id={`doc-page-header-container-${data.category}-${data.slug}`} class={`article-header layer-tone-${data.category}`}>
+      <Container id={`doc-page-kicker-${data.category}-${data.slug}`} class="article-kicker">
+        <Text id={`doc-page-category-${data.category}-${data.slug}`} type="span" class="article-chip">{data.categoryLabel}</Text>
+        <Text id={`doc-page-layer-order-${data.category}-${data.slug}`} type="span">Layer {data.layerNumeral}</Text>
+      </Container>
+      <Text id={`doc-page-main-title-${data.category}-${data.slug}`} type="h1" class="article-title">
+        {data.name}
+      </Text>
+      <Text id={`doc-page-main-description-${data.category}-${data.slug}`} class="article-deck">
         {data.description}
       </Text>
     </Container>
 
-    <!-- Props Table -->
-    <Container id={`doc-page-props-container-${data.category}-${data.slug}`} class="hidden flex-col gap-4 overflow-x-auto md:flex">
-      <Text id={`doc-page-props-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Props</Text>
-      <Table
-        id={`doc-page-props-table-${data.category}-${data.slug}`}
-        tableHeadItems={headers}
-        tableRowItems={tableRows}
-        tableFooterItems={[]}
-        class="w-full text-left"
-      >
-        {#snippet headTemplate(item)}
-          <Text id={`doc-props-head-${item.toLowerCase().replace(/ /g, "-")}`} class="p-2 font-bold">{item}</Text>
-        {/snippet}
+    {#if data.props.length > 0}
+      <Container id={`doc-page-props-container-${data.category}-${data.slug}`} class="article-section">
+        <Container id={`doc-page-props-head-${data.category}-${data.slug}`} class="article-section-head">
+          <Text id={`doc-page-props-number-${data.category}-${data.slug}`} type="span" class="mag-section-number">01</Text>
+          <Text id={`doc-page-props-title-${data.category}-${data.slug}`} type="h2" class="article-section-heading">Props</Text>
+        </Container>
+        <Container id={`doc-page-props-frame-${data.category}-${data.slug}`} class="mag-table-frame">
+          <Table
+            id={`doc-page-props-table-${data.category}-${data.slug}`}
+            tableHeadItems={propertyTableHeaders}
+            tableRowItems={propertyTableRows}
+            tableFooterItems={[]}
+            class="mag-table"
+            footerClass="hidden"
+          >
+            {#snippet headTemplate(headerLabel: string)}
+              <Text id={`doc-props-head-${headerLabel.toLowerCase()}`} type="span">{headerLabel}</Text>
+            {/snippet}
 
-        {#snippet bodyTemplate(item: { value: string; col: string })}
-          <Container id={`doc-props-body-cell-${item.col}-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} overrideDefaultStyling={true} class="p-2">
-            {#if item.col === "prop"}
-              <Text id={`doc-props-val-prop-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} type="code" class="font-bold text-primary-600"
-                >{item.value}</Text
-              >
-            {:else if item.col === "type"}
-              <Text
-                id={`doc-props-val-type-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`}
-                type="code"
-                class="text-sm text-neutral-600 dark:text-neutral-400">{item.value}</Text
-              >
-            {:else if item.col === "default"}
-              <Text id={`doc-props-val-default-${item.value.replace(/[^a-zA-Z0-9]/g, "-")}`} type="code" class="text-sm text-neutral-500"
-                >{item.value}</Text
-              >
-            {:else}
-              <Text id={`doc-props-val-desc-${item.value.replace(/[^a-zA-Z0-9]/g, "-").slice(0, 20)}`} class="text-sm">{item.value}</Text>
-            {/if}
-          </Container>
-        {/snippet}
+            {#snippet bodyTemplate(propertyCell: PropertyCell)}
+              {#if propertyCell.column === "prop"}
+                <Text id={propertyCell.cellId} type="code" class="mag-table-prop">{propertyCell.value}</Text>
+              {:else if propertyCell.column === "type"}
+                <Text id={propertyCell.cellId} type="code" class="mag-table-code">{propertyCell.value}</Text>
+              {:else if propertyCell.column === "default"}
+                <Text id={propertyCell.cellId} type="code" class="mag-table-code">{propertyCell.value}</Text>
+              {:else}
+                <Text id={propertyCell.cellId} class="article-prose">{propertyCell.value}</Text>
+              {/if}
+            {/snippet}
 
-        {#snippet footerTemplate()}
-          <Container id={`doc-props-footer-empty-${data.category}-${data.slug}`} overrideDefaultStyling={true} />
-        {/snippet}
-      </Table>
-    </Container>
-
-    <!-- Samples -->
-    {#if SampleComponent}
-      <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="flex flex-col gap-4">
-        <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="text-2xl font-semibold">Samples</Text>
-        <SampleComponent />
+            {#snippet footerTemplate()}{/snippet}
+          </Table>
+        </Container>
       </Container>
     {/if}
+
+    {#if SampleComponent}
+      <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="article-section">
+        <Container id={`doc-page-samples-head-${data.category}-${data.slug}`} class="article-section-head">
+          <Text id={`doc-page-samples-number-${data.category}-${data.slug}`} type="span" class="mag-section-number">
+            {data.props.length > 0 ? "02" : "01"}
+          </Text>
+          <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="article-section-heading">Samples</Text>
+        </Container>
+        <Container id={`doc-page-samples-frame-${data.category}-${data.slug}`} class="docs-sample-frame">
+          <SampleComponent />
+        </Container>
+      </Container>
+    {/if}
+
+    <Container id={`doc-page-pager-${data.category}-${data.slug}`} class="mag-pager">
+      {#if data.previousLink}
+        <Link id={`doc-page-pager-previous-${data.category}-${data.slug}`} href={data.previousLink.url} class="mag-pager-card">
+          <Text id={`doc-page-pager-previous-direction-${data.category}-${data.slug}`} type="span" class="mag-pager-direction">
+            <Icon icon="ri:arrow-left-s-line" class="inline size-4" />
+            Previous
+          </Text>
+          <Text id={`doc-page-pager-previous-label-${data.category}-${data.slug}`} type="span" class="mag-pager-label">{data.previousLink.label}</Text
+          >
+        </Link>
+      {:else}
+        <Container id={`doc-page-pager-previous-empty-${data.category}-${data.slug}`} />
+      {/if}
+
+      {#if data.nextLink}
+        <Link id={`doc-page-pager-next-${data.category}-${data.slug}`} href={data.nextLink.url} class="mag-pager-card mag-pager-card-next">
+          <Text id={`doc-page-pager-next-direction-${data.category}-${data.slug}`} type="span" class="mag-pager-direction">
+            Next
+            <Icon icon="ri:arrow-right-s-line" class="inline size-4" />
+          </Text>
+          <Text id={`doc-page-pager-next-label-${data.category}-${data.slug}`} type="span" class="mag-pager-label">{data.nextLink.label}</Text>
+        </Link>
+      {:else}
+        <Container id={`doc-page-pager-next-empty-${data.category}-${data.slug}`} />
+      {/if}
+    </Container>
   </Container>
 </Page>
