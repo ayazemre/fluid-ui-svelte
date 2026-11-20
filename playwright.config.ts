@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const applicationOrigin = process.env.ORIGIN ?? "http://localhost:3000";
 const applicationBasePath = process.env.BASE_PATH ?? "";
-const browserSlowMotionMilliseconds = process.env.CI ? 0 : 1000;
+const browserSlowMotionMilliseconds = Number(process.env.BROWSER_SLOW_MOTION_MILLISECONDS ?? 0);
 
 export default defineConfig({
   forbidOnly: !!process.env.CI,

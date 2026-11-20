@@ -6,7 +6,11 @@ This document describes the test suites of the package and how to run them.
 
 ```
 tests/
-  browser/       Browser suites, named *.spec.ts
+  browser/
+    actions.ts               Shared steps used by the browser suites
+    base/                    One *.spec.ts file per base element test
+    components/              One *.spec.ts file per component test
+    prebuilt/                One *.spec.ts file per prebuilt element test
 ```
 
 ## Running
