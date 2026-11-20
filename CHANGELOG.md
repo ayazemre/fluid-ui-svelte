@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The `containerfile` exposes and serves the site on port 4000 instead of 3000.
+
 ## [0.6.0] - 2026-11-19
 
 ### Added
