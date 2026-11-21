@@ -1,9 +1,11 @@
 <script lang="ts">
   import { Button, Container, InputField, Text } from "../base/index.ts";
   import {
-    applyDifferenceLineDecision,
     buildHighlightedLines,
     buildViewDifferenceRows,
+    canEditDifferenceRow,
+    commitLineEdit,
+    focusLineEditInput,
     getCodeRegionLabel,
     getDifferenceMarkerClass,
     getDifferenceRowBackground,
@@ -11,12 +13,16 @@
     getDifferenceRowMarker,
     getDifferenceRowNumberText,
     getDisplayLineNumber,
-    getEditableModifiedLineNumber,
-    getModifiedLineText,
+    handleDifferenceDecision,
+    handleLineEditKey,
     isChangeBlockActionRow,
-    replaceModifiedCodeLine,
+    isLineBeingEdited,
+    openLineEdit,
+    openLineEditFromCodeKey,
+    stopClickPropagation,
     tokenizeCodeLines,
-    type CondensedDifferenceRow,
+    type CodeContent,
+    type CodeEditorLineEditState,
     type DifferenceThemeMapping,
     type LineTokenizer,
     type TokenThemeMapping,
@@ -25,8 +31,7 @@
   let {
     id,
     variant = "",
-    sourceCode = $bindable(),
-    modifiedCode = $bindable(),
+    codeContent = $bindable(),
     language = "",
     showLineNumbers = true,
     tokenizer,
@@ -39,8 +44,7 @@
   }: {
     id: string;
     variant?: string;
-    sourceCode: string;
-    modifiedCode?: string;
+    codeContent: CodeContent;
     language?: string;
     showLineNumbers?: boolean;
     tokenizer?: LineTokenizer<unknown>;
@@ -52,89 +56,26 @@
     editableDifferences?: boolean;
   } = $props();
 
-  const isDifferenceView = $derived(modifiedCode !== undefined);
-  const sourceTokenLines = $derived(tokenizeCodeLines(sourceCode.split("\n"), tokenizer));
-  const modifiedTokenLines = $derived(modifiedCode === undefined ? [] : tokenizeCodeLines(modifiedCode.split("\n"), tokenizer));
+  const isDifferenceView = $derived(codeContent.modifiedCode !== undefined);
+  const sourceTokenLines = $derived(tokenizeCodeLines(codeContent.sourceCode.split("\n"), tokenizer));
+  const modifiedTokenLines = $derived(
+    codeContent.modifiedCode === undefined ? [] : tokenizeCodeLines(codeContent.modifiedCode.split("\n"), tokenizer),
+  );
   const highlightedLines = $derived(buildHighlightedLines(sourceTokenLines, tokenThemeMapping));
-  const condensedDifferenceRows = $derived(buildViewDifferenceRows(sourceCode, modifiedCode, condensedDifference, differenceContextLineCount));
+  const condensedDifferenceRows = $derived(
+    buildViewDifferenceRows(codeContent.sourceCode, codeContent.modifiedCode, condensedDifference, differenceContextLineCount),
+  );
 
-  let editingModifiedLineNumber: number | null = $state(null);
-  let editingLineText = $state("");
-  let editingInputElement: HTMLInputElement | HTMLTextAreaElement | null = $state(null);
-
-  let editingCaretOffset = $state(0);
-
-  $effect(() => {
-    if (editingInputElement === null) return;
-    editingInputElement.focus();
-    editingInputElement.setSelectionRange(editingCaretOffset, editingCaretOffset);
+  const lineEditState: CodeEditorLineEditState = $state({
+    caretOffset: 0,
+    inputElement: null,
+    modifiedLineNumber: null,
+    text: "",
   });
 
-  function isEditableDifferenceRow(differenceRow: CondensedDifferenceRow): boolean {
-    return editableDifferences && getEditableModifiedLineNumber(differenceRow) !== undefined;
-  }
-
-  function isLineBeingEdited(differenceRow: CondensedDifferenceRow): boolean {
-    return editingModifiedLineNumber !== null && getEditableModifiedLineNumber(differenceRow) === editingModifiedLineNumber;
-  }
-
-  function getCaretNodeAndOffsetFromPoint(clientX: number, clientY: number): { node: Node; offset: number } | null {
-    if (typeof document.caretPositionFromPoint === "function") {
-      const caretPosition = document.caretPositionFromPoint(clientX, clientY);
-      return caretPosition ? { node: caretPosition.offsetNode, offset: caretPosition.offset } : null;
-    }
-    const caretRange = document.caretRangeFromPoint(clientX, clientY);
-    return caretRange ? { node: caretRange.startContainer, offset: caretRange.startOffset } : null;
-  }
-
-  function getClickedCharacterOffset(clickEvent: MouseEvent): number {
-    if (!(clickEvent.currentTarget instanceof Element)) return 0;
-    const codeElement = clickEvent.currentTarget.querySelector(".fluid-code-editor-content > .fluid-code-editor-text");
-    if (!codeElement) return 0;
-
-    const caretNodeAndOffset = getCaretNodeAndOffsetFromPoint(clickEvent.clientX, clickEvent.clientY);
-    if (!caretNodeAndOffset || !codeElement.contains(caretNodeAndOffset.node)) {
-      return clickEvent.clientX < codeElement.getBoundingClientRect().left ? 0 : Number.POSITIVE_INFINITY;
-    }
-
-    const characterRange = document.createRange();
-    characterRange.selectNodeContents(codeElement);
-    characterRange.setEnd(caretNodeAndOffset.node, caretNodeAndOffset.offset);
-    return characterRange.toString().length;
-  }
-
-  function startLineEdit(differenceRow: CondensedDifferenceRow, clickEvent?: MouseEvent): void {
-    const modifiedLineNumber = getEditableModifiedLineNumber(differenceRow);
-    if (!editableDifferences || modifiedLineNumber === undefined || modifiedCode === undefined) return;
-    if (editingModifiedLineNumber === modifiedLineNumber) return;
-    const lineText = getModifiedLineText(modifiedCode, modifiedLineNumber);
-    editingLineText = lineText;
-    editingCaretOffset = clickEvent === undefined ? lineText.length : Math.min(getClickedCharacterOffset(clickEvent), lineText.length);
-    editingModifiedLineNumber = modifiedLineNumber;
-  }
-
-  function commitLineEdit(): void {
-    if (editingModifiedLineNumber === null) return;
-    const modifiedLineNumber = editingModifiedLineNumber;
-    editingModifiedLineNumber = null;
-    modifiedCode = replaceModifiedCodeLine(modifiedCode, modifiedLineNumber, editingLineText);
-  }
-
-  function cancelLineEdit(): void {
-    editingModifiedLineNumber = null;
-  }
-
-  function handleLineEditKeydown(event: KeyboardEvent): void {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      commitLineEdit();
-    }
-    if (event.key === "Escape") {
-      event.preventDefault();
-      event.stopPropagation();
-      cancelLineEdit();
-    }
-  }
+  $effect(() => {
+    focusLineEditInput(lineEditState);
+  });
 </script>
 
 <Container
@@ -172,10 +113,10 @@
             id={`fluid-code-editor-row-${index}-${id}`}
             class={[
               "fluid-code-editor-row",
-              isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-row-editable" : "",
+              canEditDifferenceRow(editableDifferences, differenceRow) ? "fluid-code-editor-row-editable" : "",
               getDifferenceRowBackground(differenceRow.kind, differenceThemeMapping),
             ].join(" ")}
-            onclick={(clickEvent) => startLineEdit(differenceRow, clickEvent)}
+            onclick={(clickEvent) => openLineEdit(lineEditState, codeContent, editableDifferences, differenceRow, clickEvent)}
           >
             {#if showLineNumbers}
               <Container id={`fluid-code-editor-index-${index}-${id}`} aria-hidden="true" class="fluid-code-editor-index">
@@ -192,26 +133,28 @@
               </Container>
             {/if}
             <Container id={`fluid-code-editor-content-${index}-${id}`} class="fluid-code-editor-content">
-              {#if isLineBeingEdited(differenceRow)}
+              {#if isLineBeingEdited(lineEditState, differenceRow)}
                 <InputField
                   id={`fluid-code-editor-input-${index}-${id}`}
                   class="fluid-code-editor-input"
-                  aria-label={`Edit modified line ${editingModifiedLineNumber}`}
+                  aria-label={`Edit modified line ${lineEditState.modifiedLineNumber}`}
                   spellcheck="false"
-                  bind:domReference={editingInputElement}
-                  bind:value={editingLineText}
-                  onblur={commitLineEdit}
-                  onkeydown={handleLineEditKeydown}
+                  bind:domReference={lineEditState.inputElement}
+                  bind:value={lineEditState.text}
+                  onblur={() => commitLineEdit(lineEditState, codeContent)}
+                  onkeydown={(keyboardEvent) => handleLineEditKey(lineEditState, codeContent, keyboardEvent)}
                 />
               {:else}
                 <Text
                   id={`fluid-code-editor-text-${index}-${id}`}
                   type="pre"
-                  class={["fluid-code-editor-text", isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-editable" : ""].join(" ")}
-                  tabindex={isEditableDifferenceRow(differenceRow) ? 0 : undefined}
-                  onkeydown={(event) => {
-                    if (event.key === "Enter") startLineEdit(differenceRow);
-                  }}
+                  class={[
+                    "fluid-code-editor-text",
+                    canEditDifferenceRow(editableDifferences, differenceRow) ? "fluid-code-editor-editable" : "",
+                  ].join(" ")}
+                  tabindex={canEditDifferenceRow(editableDifferences, differenceRow) ? 0 : undefined}
+                  onkeydown={(keyboardEvent) =>
+                    openLineEditFromCodeKey(lineEditState, codeContent, editableDifferences, differenceRow, keyboardEvent)}
                 >
                   <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={["fluid-code-editor-text", "language-" + language].join(" ")}
                     >{@html getDifferenceRowContentMarkup(
@@ -225,18 +168,12 @@
                 </Text>
               {/if}
               {#if isChangeBlockActionRow(condensedDifferenceRows, index, showDifferenceLineActions)}
-                <Container
-                  id={`fluid-code-editor-actions-${index}-${id}`}
-                  class="fluid-code-editor-actions"
-                  onclick={(event) => event.stopPropagation()}
-                >
+                <Container id={`fluid-code-editor-actions-${index}-${id}`} class="fluid-code-editor-actions" onclick={stopClickPropagation}>
                   <Button
                     id={`fluid-code-editor-accept-${index}-${id}`}
                     aria-label="Accept change"
                     class="fluid-code-editor-action fluid-code-editor-accept"
-                    onclick={() => {
-                      ({ sourceCode, modifiedCode } = applyDifferenceLineDecision(sourceCode, modifiedCode, differenceRow, "accepted"));
-                    }}
+                    onclick={() => handleDifferenceDecision(codeContent, differenceRow, "accepted")}
                   >
                     ✓
                   </Button>
@@ -244,9 +181,7 @@
                     id={`fluid-code-editor-reject-${index}-${id}`}
                     aria-label="Reject change"
                     class="fluid-code-editor-action fluid-code-editor-reject"
-                    onclick={() => {
-                      ({ sourceCode, modifiedCode } = applyDifferenceLineDecision(sourceCode, modifiedCode, differenceRow, "rejected"));
-                    }}
+                    onclick={() => handleDifferenceDecision(codeContent, differenceRow, "rejected")}
                   >
                     ✕
                   </Button>

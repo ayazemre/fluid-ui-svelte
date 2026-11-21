@@ -27,7 +27,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="input-sample-basic-code"
-      sourceCode={codeEditorContents.inputBasic}
+      codeContent={{ sourceCode: codeEditorContents.inputBasic }}
       language="svelte"
     />
   </Container>
@@ -45,7 +45,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="input-sample-password-code"
-      sourceCode={codeEditorContents.inputPassword}
+      codeContent={{ sourceCode: codeEditorContents.inputPassword }}
       language="svelte"
     />
   </Container>
@@ -69,7 +69,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="input-sample-textarea-code"
-      sourceCode={codeEditorContents.inputTextArea}
+      codeContent={{ sourceCode: codeEditorContents.inputTextArea }}
       language="svelte"
     />
   </Container>
@@ -93,7 +93,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="input-sample-numeric-code"
-      sourceCode={codeEditorContents.inputNumeric}
+      codeContent={{ sourceCode: codeEditorContents.inputNumeric }}
       language="svelte"
     />
   </Container>
@@ -111,7 +111,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="input-sample-error-code"
-      sourceCode={codeEditorContents.inputError}
+      codeContent={{ sourceCode: codeEditorContents.inputError }}
       language="svelte"
     />
   </Container>

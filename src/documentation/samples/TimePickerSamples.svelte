@@ -35,7 +35,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="time-picker-sample-hour-code"
-      sourceCode={codeEditorContents.timePickerHourOnly}
+      codeContent={{ sourceCode: codeEditorContents.timePickerHourOnly }}
       language="svelte"
     />
   </Container>
@@ -61,7 +61,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="time-picker-sample-minute-code"
-      sourceCode={codeEditorContents.timePickerBasic}
+      codeContent={{ sourceCode: codeEditorContents.timePickerBasic }}
       language="svelte"
     />
   </Container>
@@ -87,7 +87,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="time-picker-sample-seconds-code"
-      sourceCode={codeEditorContents.timePickerWithSeconds}
+      codeContent={{ sourceCode: codeEditorContents.timePickerWithSeconds }}
       language="svelte"
     />
   </Container>
@@ -113,7 +113,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="time-picker-sample-12h-code"
-      sourceCode={codeEditorContents.timePickerTwelveHour}
+      codeContent={{ sourceCode: codeEditorContents.timePickerTwelveHour }}
       language="svelte"
     />
   </Container>

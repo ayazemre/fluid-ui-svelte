@@ -20,7 +20,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="link-sample-standard-code"
-      sourceCode={codeEditorContents.linkStandard}
+      codeContent={{ sourceCode: codeEditorContents.linkStandard }}
       language="svelte"
     />
   </Container>
@@ -37,7 +37,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="link-sample-custom-code"
-      sourceCode={codeEditorContents.linkCustom}
+      codeContent={{ sourceCode: codeEditorContents.linkCustom }}
       language="svelte"
     />
   </Container>

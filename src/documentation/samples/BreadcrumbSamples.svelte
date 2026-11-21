@@ -33,7 +33,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="breadcrumb-sample-basic-code"
-      sourceCode={codeEditorContents.breadcrumbBasic}
+      codeContent={{ sourceCode: codeEditorContents.breadcrumbBasic }}
       language="svelte"
     />
   </Container>
@@ -50,7 +50,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="breadcrumb-sample-separator-code"
-      sourceCode={codeEditorContents.breadcrumbSeparator}
+      codeContent={{ sourceCode: codeEditorContents.breadcrumbSeparator }}
       language="svelte"
     />
   </Container>

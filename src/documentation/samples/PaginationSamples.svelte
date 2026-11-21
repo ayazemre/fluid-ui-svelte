@@ -32,7 +32,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="pagination-sample-basic-code"
-      sourceCode={codeEditorContents.paginationBasic}
+      codeContent={{ sourceCode: codeEditorContents.paginationBasic }}
       language="svelte"
     />
   </Container>

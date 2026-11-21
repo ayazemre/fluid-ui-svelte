@@ -51,7 +51,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="searchable-selector-basic-code"
-      sourceCode={codeEditorContents.searchableSelectorBasic}
+      codeContent={{ sourceCode: codeEditorContents.searchableSelectorBasic }}
       language="svelte"
     />
   </Container>
@@ -81,7 +81,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="searchable-selector-images-code"
-      sourceCode={codeEditorContents.searchableSelectorImages}
+      codeContent={{ sourceCode: codeEditorContents.searchableSelectorImages }}
       language="svelte"
     />
   </Container>

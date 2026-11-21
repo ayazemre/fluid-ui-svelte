@@ -41,7 +41,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="anchored-overlay-sample-click-code"
-      sourceCode={codeEditorContents.anchoredOverlayClick}
+      codeContent={{ sourceCode: codeEditorContents.anchoredOverlayClick }}
       language="svelte"
     />
   </Container>
@@ -77,7 +77,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="anchored-overlay-sample-hover-code"
-      sourceCode={codeEditorContents.anchoredOverlayHover}
+      codeContent={{ sourceCode: codeEditorContents.anchoredOverlayHover }}
       language="svelte"
     />
   </Container>

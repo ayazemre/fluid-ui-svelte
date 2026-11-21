@@ -97,7 +97,7 @@
                 tokenThemeMapping={codeEditorTokenThemeMapping}
                 differenceThemeMapping={codeEditorDifferenceThemeMapping}
                 id={`cookbook-${section.id}-code`}
-                sourceCode={section.code}
+                codeContent={{ sourceCode: section.code }}
                 language={section.language ?? "svelte"}
                 tokenizer={resolveSvelteTokenizerForLanguage(section.language ?? "svelte")}
               />
@@ -117,7 +117,7 @@
                   tokenThemeMapping={codeEditorTokenThemeMapping}
                   differenceThemeMapping={codeEditorDifferenceThemeMapping}
                   id={`cookbook-${section.id}-sample-${codeSampleIndex}-code`}
-                  sourceCode={codeSample.code}
+                  codeContent={{ sourceCode: codeSample.code }}
                   language={codeSample.language}
                   tokenizer={resolveSvelteTokenizerForLanguage(codeSample.language)}
                 />

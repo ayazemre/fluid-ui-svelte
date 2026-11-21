@@ -436,7 +436,7 @@ const codeEditorExample = `<script lang="ts">
   import CodeEditor from 'fluid-ui-svelte/prebuilt';
 </script>
 
-<CodeEditor language="typescript" sourceCode="console.log('Hello, Fluid UI!');" />`;
+<CodeEditor language="typescript" codeContent={{ sourceCode: "console.log('Hello, Fluid UI!');" }} />`;
 
 const codeEditorDifferenceSource = `<script>
   import { Button } from 'fluid-ui-svelte/base';
@@ -505,15 +505,13 @@ const codeEditorDifferenceReview = `<script>
   import { CodeEditor } from 'fluid-ui-svelte/prebuilt';
   import { codeEditorDifferenceModified, codeEditorDifferenceSource } from './codeEditorContents';
 
-  let reviewSourceCode = $state(codeEditorDifferenceSource);
-  let reviewModifiedCode = $state(codeEditorDifferenceModified);
+  let reviewContent = $state({ sourceCode: codeEditorDifferenceSource, modifiedCode: codeEditorDifferenceModified });
 </script>
 
 <CodeEditor
   id="code-editor-review"
   language="svelte"
-  bind:sourceCode={reviewSourceCode}
-  bind:modifiedCode={reviewModifiedCode}
+  bind:codeContent={reviewContent}
   showDifferenceLineActions
 />`;
 

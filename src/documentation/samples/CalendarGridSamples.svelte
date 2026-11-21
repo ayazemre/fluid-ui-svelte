@@ -45,7 +45,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="calendar-grid-sample-single-code"
-      sourceCode={codeEditorContents.calendarGridSingle}
+      codeContent={{ sourceCode: codeEditorContents.calendarGridSingle }}
       language="svelte"
     />
   </Container>
@@ -85,7 +85,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="calendar-grid-sample-multi-code"
-      sourceCode={codeEditorContents.calendarGridMulti}
+      codeContent={{ sourceCode: codeEditorContents.calendarGridMulti }}
       language="svelte"
     />
   </Container>

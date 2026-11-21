@@ -91,7 +91,7 @@
                   tokenThemeMapping={codeEditorTokenThemeMapping}
                   differenceThemeMapping={codeEditorDifferenceThemeMapping}
                   id={`getting-started-${step.id}-code`}
-                  sourceCode={step.code}
+                  codeContent={{ sourceCode: step.code }}
                   language={step.language ?? "bash"}
                   tokenizer={resolveSvelteTokenizerForLanguage(step.language ?? "bash")}
                 />
@@ -118,7 +118,7 @@
             tokenThemeMapping={codeEditorTokenThemeMapping}
             differenceThemeMapping={codeEditorDifferenceThemeMapping}
             id="getting-started-usage-code"
-            sourceCode={usageSection.code}
+            codeContent={{ sourceCode: usageSection.code }}
             language={usageSection.language ?? "svelte"}
             tokenizer={resolveSvelteTokenizerForLanguage(usageSection.language ?? "svelte")}
           />

@@ -47,7 +47,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="form-sample-basic-code"
-      sourceCode={codeEditorContents.formBasic}
+      codeContent={{ sourceCode: codeEditorContents.formBasic }}
       language="svelte"
     />
   </Container>

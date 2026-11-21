@@ -791,6 +791,121 @@ export function replaceModifiedCodeLine(modifiedCode: string | undefined, modifi
   return modifiedLines.join("\n");
 }
 
+export type CodeEditorLineEditState = {
+  caretOffset: number;
+  inputElement: HTMLInputElement | HTMLTextAreaElement | null;
+  modifiedLineNumber: number | null;
+  text: string;
+};
+
+export type CodeContent = {
+  modifiedCode?: string;
+  sourceCode: string;
+};
+
+export function canEditDifferenceRow(editableDifferences: boolean, differenceRow: CondensedDifferenceRow): boolean {
+  return editableDifferences && getEditableModifiedLineNumber(differenceRow) !== undefined;
+}
+
+export function isLineBeingEdited(lineEditState: CodeEditorLineEditState, differenceRow: CondensedDifferenceRow): boolean {
+  return lineEditState.modifiedLineNumber !== null && getEditableModifiedLineNumber(differenceRow) === lineEditState.modifiedLineNumber;
+}
+
+export function openLineEdit(
+  lineEditState: CodeEditorLineEditState,
+  codeContent: CodeContent,
+  editableDifferences: boolean,
+  differenceRow: CondensedDifferenceRow,
+  clickEvent?: MouseEvent,
+): void {
+  const modifiedLineNumber = getEditableModifiedLineNumber(differenceRow);
+  if (!editableDifferences || modifiedLineNumber === undefined || codeContent.modifiedCode === undefined) return;
+  if (lineEditState.modifiedLineNumber === modifiedLineNumber) return;
+
+  const lineText = getModifiedLineText(codeContent.modifiedCode, modifiedLineNumber);
+  lineEditState.text = lineText;
+  lineEditState.caretOffset = getCaretOffsetForOpen(lineText, clickEvent);
+  lineEditState.modifiedLineNumber = modifiedLineNumber;
+}
+
+export function openLineEditFromCodeKey(
+  lineEditState: CodeEditorLineEditState,
+  codeContent: CodeContent,
+  editableDifferences: boolean,
+  differenceRow: CondensedDifferenceRow,
+  keyboardEvent: KeyboardEvent,
+): void {
+  if (keyboardEvent.key !== "Enter") return;
+  openLineEdit(lineEditState, codeContent, editableDifferences, differenceRow);
+}
+
+export function commitLineEdit(lineEditState: CodeEditorLineEditState, codeContent: CodeContent): void {
+  if (lineEditState.modifiedLineNumber === null) return;
+  const modifiedLineNumber = lineEditState.modifiedLineNumber;
+  lineEditState.modifiedLineNumber = null;
+  codeContent.modifiedCode = replaceModifiedCodeLine(codeContent.modifiedCode, modifiedLineNumber, lineEditState.text);
+}
+
+export function handleDifferenceDecision(codeContent: CodeContent, differenceRow: DifferenceLine, decision: DifferenceLineDecision): void {
+  const decisionResult = applyDifferenceLineDecision(codeContent.sourceCode, codeContent.modifiedCode, differenceRow, decision);
+  codeContent.sourceCode = decisionResult.sourceCode;
+  codeContent.modifiedCode = decisionResult.modifiedCode;
+}
+
+export function focusLineEditInput(lineEditState: CodeEditorLineEditState): void {
+  const inputElement = lineEditState.inputElement;
+  if (inputElement === null) return;
+  inputElement.focus();
+  inputElement.setSelectionRange(lineEditState.caretOffset, lineEditState.caretOffset);
+}
+
+export function handleLineEditKey(lineEditState: CodeEditorLineEditState, codeContent: CodeContent, keyboardEvent: KeyboardEvent): void {
+  if (keyboardEvent.key === "Enter") {
+    keyboardEvent.preventDefault();
+    commitLineEdit(lineEditState, codeContent);
+    return;
+  }
+  if (keyboardEvent.key === "Escape") {
+    keyboardEvent.preventDefault();
+    keyboardEvent.stopPropagation();
+    lineEditState.modifiedLineNumber = null;
+  }
+}
+
+export function stopClickPropagation(clickEvent: MouseEvent): void {
+  clickEvent.stopPropagation();
+}
+
+function getCaretOffsetForOpen(lineText: string, clickEvent: MouseEvent | undefined): number {
+  if (clickEvent === undefined) return lineText.length;
+  return Math.min(getClickedCharacterOffset(clickEvent), lineText.length);
+}
+
+function getCaretNodeAndOffsetFromPoint(clientX: number, clientY: number): { node: Node; offset: number } | null {
+  if (typeof document.caretPositionFromPoint === "function") {
+    const caretPosition = document.caretPositionFromPoint(clientX, clientY);
+    return caretPosition ? { node: caretPosition.offsetNode, offset: caretPosition.offset } : null;
+  }
+  const caretRange = document.caretRangeFromPoint(clientX, clientY);
+  return caretRange ? { node: caretRange.startContainer, offset: caretRange.startOffset } : null;
+}
+
+function getClickedCharacterOffset(clickEvent: MouseEvent): number {
+  if (!(clickEvent.currentTarget instanceof Element)) return 0;
+  const codeElement = clickEvent.currentTarget.querySelector(".fluid-code-editor-content > .fluid-code-editor-text");
+  if (!codeElement) return 0;
+
+  const caretNodeAndOffset = getCaretNodeAndOffsetFromPoint(clickEvent.clientX, clickEvent.clientY);
+  if (!caretNodeAndOffset || !codeElement.contains(caretNodeAndOffset.node)) {
+    return clickEvent.clientX < codeElement.getBoundingClientRect().left ? 0 : Number.POSITIVE_INFINITY;
+  }
+
+  const characterRange = document.createRange();
+  characterRange.selectNodeContents(codeElement);
+  characterRange.setEnd(caretNodeAndOffset.node, caretNodeAndOffset.offset);
+  return characterRange.toString().length;
+}
+
 export function isChangeBlockActionRow(displayedRows: Array<CondensedDifferenceRow>, rowIndex: number, showDifferenceLineActions: boolean): boolean {
   if (!showDifferenceLineActions) {
     return false;

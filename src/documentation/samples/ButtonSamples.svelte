@@ -35,7 +35,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="button-sample-primary-code"
-      sourceCode={codeEditorContents.buttonPrimary}
+      codeContent={{ sourceCode: codeEditorContents.buttonPrimary }}
       language="svelte"
     />
   </Container>
@@ -65,7 +65,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="button-sample-secondary-code"
-      sourceCode={codeEditorContents.buttonSecondary}
+      codeContent={{ sourceCode: codeEditorContents.buttonSecondary }}
       language="svelte"
     />
   </Container>
@@ -95,7 +95,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="button-sample-outline-code"
-      sourceCode={codeEditorContents.buttonOutline}
+      codeContent={{ sourceCode: codeEditorContents.buttonOutline }}
       language="svelte"
     />
   </Container>
@@ -125,7 +125,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="button-sample-transparent-code"
-      sourceCode={codeEditorContents.buttonTransparent}
+      codeContent={{ sourceCode: codeEditorContents.buttonTransparent }}
       language="svelte"
     />
   </Container>
@@ -156,7 +156,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="button-sample-icon-code"
-      sourceCode={codeEditorContents.buttonIcon}
+      codeContent={{ sourceCode: codeEditorContents.buttonIcon }}
       language="svelte"
     />
   </Container>

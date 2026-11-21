@@ -80,7 +80,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="page-sample-basic-code"
-      sourceCode={codeEditorContents.pageBasic}
+      codeContent={{ sourceCode: codeEditorContents.pageBasic }}
       language="svelte"
     />
   </Container>
@@ -96,7 +96,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="page-sample-metadata-code"
-      sourceCode={codeEditorContents.pageMetadata}
+      codeContent={{ sourceCode: codeEditorContents.pageMetadata }}
       language="svelte"
     />
   </Container>

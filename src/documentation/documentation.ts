@@ -1515,7 +1515,7 @@ export const documentationRegistry = {
     },
     "code-editor": {
       description:
-        "A view only code viewer with syntax highlighting and condensed difference support. Pass modifiedCode to switch into difference mode, otherwise sourceCode renders as a single view.",
+        "A view only code viewer with syntax highlighting and condensed difference support. Set codeContent.modifiedCode to switch into difference mode, otherwise codeContent.sourceCode renders as a single view.",
       props: [
         {
           default: "required",
@@ -1526,16 +1526,9 @@ export const documentationRegistry = {
         {
           default: "required",
           description:
-            "The source code to display. Bindable: accepting or rejecting a change in difference mode updates it, so other parts of the application can react to the new code.",
-          prop: "sourceCode",
-          type: "string",
-        },
-        {
-          default: "undefined",
-          description:
-            "The modified code. When set, the block renders a condensed difference of changed lines plus context. Bindable: accepting or rejecting a change updates it.",
-          prop: "modifiedCode",
-          type: "string",
+            "The code to display, as an object with sourceCode and an optional modifiedCode. Bindable: accepting, rejecting, or editing a line updates it, so other parts of the application can react to the new code. Set modifiedCode to render a condensed difference of changed lines plus context.",
+          prop: "codeContent",
+          type: "CodeContent",
         },
         {
           default: "''",

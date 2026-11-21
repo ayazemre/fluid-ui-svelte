@@ -39,7 +39,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="modal-basic-codeeditor"
-      sourceCode={codeEditorContents.modalBasic}
+      codeContent={{ sourceCode: codeEditorContents.modalBasic }}
       language="svelte"
     />
   </Container>

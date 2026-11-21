@@ -41,7 +41,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="draggable-sample-basic-code"
-      sourceCode={codeEditorContents.draggableBasic}
+      codeContent={{ sourceCode: codeEditorContents.draggableBasic }}
       language="svelte"
     />
   </Container>

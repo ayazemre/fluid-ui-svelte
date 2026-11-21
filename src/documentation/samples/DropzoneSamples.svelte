@@ -59,7 +59,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="dropzone-sample-file-code"
-      sourceCode={codeEditorContents.dropzoneFile}
+      codeContent={{ sourceCode: codeEditorContents.dropzoneFile }}
       language="svelte"
     />
   </Container>
@@ -126,7 +126,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="dropzone-sample-data-code"
-      sourceCode={codeEditorContents.dropzoneData}
+      codeContent={{ sourceCode: codeEditorContents.dropzoneData }}
       language="svelte"
     />
   </Container>

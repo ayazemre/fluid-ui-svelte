@@ -6,20 +6,24 @@
   import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
   import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
-  let reviewSourceCode = $state(codeEditorContents.codeEditorDifferenceSource);
-  let reviewModifiedCode = $state<string | undefined>(codeEditorContents.codeEditorDifferenceModified);
+  let reviewContent = $state({
+    modifiedCode: codeEditorContents.codeEditorDifferenceModified,
+    sourceCode: codeEditorContents.codeEditorDifferenceSource,
+  });
 
-  let editableSourceCode = $state(codeEditorContents.codeEditorDifferenceSource);
-  let editableModifiedCode = $state<string | undefined>(codeEditorContents.codeEditorDifferenceModified);
+  let editableContent = $state({
+    modifiedCode: codeEditorContents.codeEditorDifferenceModified,
+    sourceCode: codeEditorContents.codeEditorDifferenceSource,
+  });
 
   function handleResetReview(): void {
-    reviewSourceCode = codeEditorContents.codeEditorDifferenceSource;
-    reviewModifiedCode = codeEditorContents.codeEditorDifferenceModified;
+    reviewContent.sourceCode = codeEditorContents.codeEditorDifferenceSource;
+    reviewContent.modifiedCode = codeEditorContents.codeEditorDifferenceModified;
   }
 
   function handleResetEditableDifference(): void {
-    editableSourceCode = codeEditorContents.codeEditorDifferenceSource;
-    editableModifiedCode = codeEditorContents.codeEditorDifferenceModified;
+    editableContent.sourceCode = codeEditorContents.codeEditorDifferenceSource;
+    editableContent.modifiedCode = codeEditorContents.codeEditorDifferenceModified;
   }
 </script>
 
@@ -27,7 +31,9 @@
   <Text id="code-editor-sample-description">Here is an example of the CodeEditor component.</Text>
   <Container id="code-editor-sample-single-section" class="flex flex-col gap-2">
     <Text id="code-editor-sample-single-heading" type="h3" class="text-lg font-semibold">Single view</Text>
-    <Text id="code-editor-sample-single-description" class="text-sm text-neutral-500">Pass sourceCode on its own for highlighted static output.</Text>
+    <Text id="code-editor-sample-single-description" class="text-sm text-neutral-500">
+      Pass codeContent with only sourceCode for highlighted static output.
+    </Text>
     <Container id="code-editor-sample-preview" class="flex flex-col gap-4 rounded-lg border p-4">
       <CodeEditor
         tokenizer={codeEditorSvelteTokenizer}
@@ -35,7 +41,7 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-example"
         language="svelte"
-        sourceCode={codeEditorContents.codeEditorExample}
+        codeContent={{ sourceCode: codeEditorContents.codeEditorExample }}
       />
     </Container>
   </Container>
@@ -43,7 +49,7 @@
   <Container id="code-editor-sample-difference-section" class="flex flex-col gap-2">
     <Text id="code-editor-sample-difference-heading" type="h3" class="text-lg font-semibold">Condensed difference</Text>
     <Text id="code-editor-sample-difference-description" class="text-sm text-neutral-500">
-      Pass modifiedCode to switch into difference mode. Only changed lines plus context render, the rest collapse into gap rows.
+      Set codeContent.modifiedCode to switch into difference mode. Only changed lines plus context render, the rest collapse into gap rows.
     </Text>
     <Container id="code-editor-sample-difference-preview" class="flex flex-col gap-4 rounded-lg border p-4">
       <CodeEditor
@@ -52,8 +58,10 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-difference"
         language="svelte"
-        sourceCode={codeEditorContents.codeEditorDifferenceSource}
-        modifiedCode={codeEditorContents.codeEditorDifferenceModified}
+        codeContent={{
+          sourceCode: codeEditorContents.codeEditorDifferenceSource,
+          modifiedCode: codeEditorContents.codeEditorDifferenceModified,
+        }}
       />
     </Container>
   </Container>
@@ -70,8 +78,10 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-full-difference"
         language="svelte"
-        sourceCode={codeEditorContents.codeEditorDifferenceSource}
-        modifiedCode={codeEditorContents.codeEditorDifferenceModified}
+        codeContent={{
+          sourceCode: codeEditorContents.codeEditorDifferenceSource,
+          modifiedCode: codeEditorContents.codeEditorDifferenceModified,
+        }}
         condensedDifference={false}
       />
     </Container>
@@ -95,8 +105,7 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-review-condensed"
         language="svelte"
-        bind:sourceCode={reviewSourceCode}
-        bind:modifiedCode={reviewModifiedCode}
+        bind:codeContent={reviewContent}
         showDifferenceLineActions
       />
       <Text id="code-editor-sample-review-full-heading" type="h3" class="text-lg font-semibold">Full file review</Text>
@@ -106,8 +115,7 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-review-full"
         language="svelte"
-        bind:sourceCode={reviewSourceCode}
-        bind:modifiedCode={reviewModifiedCode}
+        bind:codeContent={reviewContent}
         condensedDifference={false}
         showDifferenceLineActions
       />
@@ -118,7 +126,7 @@
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="code-editor-sample-review-code"
       language="svelte"
-      sourceCode={codeEditorContents.codeEditorDifferenceReview}
+      codeContent={{ sourceCode: codeEditorContents.codeEditorDifferenceReview }}
     />
   </Container>
 
@@ -126,7 +134,7 @@
     <Text id="code-editor-sample-editable-heading" type="h3" class="text-lg font-semibold">Editable difference</Text>
     <Text id="code-editor-sample-editable-description" class="text-sm text-neutral-500">
       Enable editableDifferences to edit added and changed lines on the modified side. Click a row, or press Enter on its code, to open an input.
-      Enter or leaving the input saves the line, and Escape cancels. Edits write to the bound modifiedCode, and the difference recomputes.
+      Enter or leaving the input saves the line, and Escape cancels. Edits write to the bound codeContent.modifiedCode, and the difference recomputes.
     </Text>
     <Container id="code-editor-sample-editable-preview" class="flex flex-col gap-4 rounded-lg border p-4">
       <Container id="code-editor-sample-editable-actions" class="flex gap-2">
@@ -140,8 +148,7 @@
         differenceThemeMapping={codeEditorDifferenceThemeMapping}
         id="code-editor-sample-editable"
         language="svelte"
-        bind:sourceCode={editableSourceCode}
-        bind:modifiedCode={editableModifiedCode}
+        bind:codeContent={editableContent}
         editableDifferences
       />
     </Container>

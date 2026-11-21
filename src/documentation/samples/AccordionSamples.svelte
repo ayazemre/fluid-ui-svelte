@@ -36,7 +36,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="accordion-sample-standard-code"
-      sourceCode={codeEditorContents.accordionStandard}
+      codeContent={{ sourceCode: codeEditorContents.accordionStandard }}
       language="svelte"
     />
   </Container>
@@ -64,7 +64,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="accordion-sample-custom-code"
-      sourceCode={codeEditorContents.accordionCustom}
+      codeContent={{ sourceCode: codeEditorContents.accordionCustom }}
       language="svelte"
     />
   </Container>

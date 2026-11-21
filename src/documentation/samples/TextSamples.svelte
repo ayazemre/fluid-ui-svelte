@@ -22,7 +22,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="text-sample-headings-code"
-      sourceCode={codeEditorContents.textHeadings}
+      codeContent={{ sourceCode: codeEditorContents.textHeadings }}
       language="svelte"
     />
   </Container>
@@ -42,7 +42,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="text-sample-inline-code"
-      sourceCode={codeEditorContents.textInline}
+      codeContent={{ sourceCode: codeEditorContents.textInline }}
       language="svelte"
     />
   </Container>
@@ -65,7 +65,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="text-sample-code-code"
-      sourceCode={codeEditorContents.textCode}
+      codeContent={{ sourceCode: codeEditorContents.textCode }}
       language="svelte"
     />
   </Container>
@@ -88,7 +88,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="text-sample-semantic-code"
-      sourceCode={codeEditorContents.textSemantic}
+      codeContent={{ sourceCode: codeEditorContents.textSemantic }}
       language="svelte"
     />
   </Container>

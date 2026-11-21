@@ -61,7 +61,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="drawer-sample-basic-code"
-      sourceCode={codeEditorContents.drawerBasicUsage}
+      codeContent={{ sourceCode: codeEditorContents.drawerBasicUsage }}
       language="svelte"
     />
   </Container>
@@ -122,7 +122,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="drawer-sample-positions-code"
-      sourceCode={codeEditorContents.drawerPositions}
+      codeContent={{ sourceCode: codeEditorContents.drawerPositions }}
       language="svelte"
     />
   </Container>
@@ -170,7 +170,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="drawer-sample-animated-code"
-      sourceCode={codeEditorContents.drawerAnimated}
+      codeContent={{ sourceCode: codeEditorContents.drawerAnimated }}
       language="svelte"
     />
   </Container>
@@ -218,7 +218,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="drawer-sample-fly-code"
-      sourceCode={codeEditorContents.drawerFlyAnimation}
+      codeContent={{ sourceCode: codeEditorContents.drawerFlyAnimation }}
       language="svelte"
     />
   </Container>

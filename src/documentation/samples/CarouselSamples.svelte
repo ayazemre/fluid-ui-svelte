@@ -63,7 +63,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="carousel-sample-h-1-code"
-      sourceCode={codeEditorContents.carouselInteractive}
+      codeContent={{ sourceCode: codeEditorContents.carouselInteractive }}
       language="svelte"
     />
   </Container>
@@ -111,7 +111,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="carousel-sample-h-autoplay-code"
-      sourceCode={codeEditorContents.carouselAutoplay}
+      codeContent={{ sourceCode: codeEditorContents.carouselAutoplay }}
       language="svelte"
     />
   </Container>
@@ -157,7 +157,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="carousel-sample-h-multi-code"
-      sourceCode={codeEditorContents.carouselUsage}
+      codeContent={{ sourceCode: codeEditorContents.carouselUsage }}
       language="svelte"
     />
   </Container>

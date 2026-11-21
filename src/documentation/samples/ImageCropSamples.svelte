@@ -413,7 +413,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="image-crop-remote-code"
-      sourceCode={codeEditorContents.imageCropBasic}
+      codeContent={{ sourceCode: codeEditorContents.imageCropBasic }}
       language="svelte"
     />
   </Container>
@@ -603,7 +603,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="image-crop-upload-code"
-      sourceCode={codeEditorContents.imageCropUpload}
+      codeContent={{ sourceCode: codeEditorContents.imageCropUpload }}
       language="svelte"
     />
   </Container>
@@ -658,7 +658,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="image-crop-drag-code"
-      sourceCode={codeEditorContents.imageCropDragToPan}
+      codeContent={{ sourceCode: codeEditorContents.imageCropDragToPan }}
       language="svelte"
     />
   </Container>

@@ -45,7 +45,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="international-input-phone-code"
-      sourceCode={codeEditorContents.internationalInputBasic}
+      codeContent={{ sourceCode: codeEditorContents.internationalInputBasic }}
       language="svelte"
     />
   </Container>
@@ -72,7 +72,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="international-input-country-code"
-      sourceCode={codeEditorContents.internationalInputCountry}
+      codeContent={{ sourceCode: codeEditorContents.internationalInputCountry }}
       language="svelte"
     />
   </Container>
@@ -101,7 +101,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="international-input-currency-code"
-      sourceCode={codeEditorContents.internationalInputCurrency}
+      codeContent={{ sourceCode: codeEditorContents.internationalInputCurrency }}
       language="svelte"
     />
   </Container>

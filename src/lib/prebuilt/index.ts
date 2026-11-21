@@ -4,5 +4,5 @@ export { default as InternationalInput } from "./InternationalInput.svelte";
 export { default as NotificationArea } from "./NotificationArea.svelte";
 export { default as SearchableSelector } from "./SearchableSelector.svelte";
 
-export type { DifferenceThemeMapping, LineTokenizer, ParserToken, TokenizedLine, TokenThemeMapping } from "./codeEditor.ts";
+export type { CodeContent, DifferenceThemeMapping, LineTokenizer, ParserToken, TokenizedLine, TokenThemeMapping } from "./codeEditor.ts";
 export type { CountryData, CountryDataMap, InternationalInputMode } from "./internationalInput.ts";

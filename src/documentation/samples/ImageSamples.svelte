@@ -32,7 +32,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="image-sample-standard-code"
-      sourceCode={codeEditorContents.imageStandard}
+      codeContent={{ sourceCode: codeEditorContents.imageStandard }}
       language="svelte"
     />
   </Container>
@@ -53,7 +53,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="image-sample-loading-code"
-      sourceCode={codeEditorContents.imageLoading}
+      codeContent={{ sourceCode: codeEditorContents.imageLoading }}
       language="svelte"
     />
   </Container>

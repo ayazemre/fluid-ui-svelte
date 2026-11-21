@@ -44,7 +44,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="table-sample-basic-code"
-      sourceCode={codeEditorContents.tableStandard}
+      codeContent={{ sourceCode: codeEditorContents.tableStandard }}
       language="svelte"
     />
   </Container>
@@ -79,7 +79,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="table-sample-styled-code"
-      sourceCode={codeEditorContents.tableStyled}
+      codeContent={{ sourceCode: codeEditorContents.tableStyled }}
       language="svelte"
     />
   </Container>

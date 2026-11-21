@@ -34,7 +34,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="switch-sample-basic-code"
-      sourceCode={codeEditorContents.switchBasic}
+      codeContent={{ sourceCode: codeEditorContents.switchBasic }}
       language="svelte"
     />
   </Container>
@@ -60,7 +60,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="switch-sample-disabled-code"
-      sourceCode={codeEditorContents.switchDisabled}
+      codeContent={{ sourceCode: codeEditorContents.switchDisabled }}
       language="svelte"
     />
   </Container>

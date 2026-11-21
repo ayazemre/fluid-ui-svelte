@@ -304,7 +304,7 @@
       tokenThemeMapping={codeEditorTokenThemeMapping}
       differenceThemeMapping={codeEditorDifferenceThemeMapping}
       id="notification-sample-code"
-      sourceCode={codeEditorContents.notificationBasic}
+      codeContent={{ sourceCode: codeEditorContents.notificationBasic }}
       language="svelte"
     />
   </Container>
