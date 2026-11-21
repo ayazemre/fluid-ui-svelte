@@ -9,9 +9,17 @@
   let reviewSourceCode = $state(codeEditorContents.codeEditorDifferenceSource);
   let reviewModifiedCode = $state<string | undefined>(codeEditorContents.codeEditorDifferenceModified);
 
+  let editableSourceCode = $state(codeEditorContents.codeEditorDifferenceSource);
+  let editableModifiedCode = $state<string | undefined>(codeEditorContents.codeEditorDifferenceModified);
+
   function handleResetReview(): void {
     reviewSourceCode = codeEditorContents.codeEditorDifferenceSource;
     reviewModifiedCode = codeEditorContents.codeEditorDifferenceModified;
+  }
+
+  function handleResetEditableDifference(): void {
+    editableSourceCode = codeEditorContents.codeEditorDifferenceSource;
+    editableModifiedCode = codeEditorContents.codeEditorDifferenceModified;
   }
 </script>
 
@@ -112,5 +120,30 @@
       language="svelte"
       sourceCode={codeEditorContents.codeEditorDifferenceReview}
     />
+  </Container>
+
+  <Container id="code-editor-sample-editable-section" class="flex flex-col gap-2">
+    <Text id="code-editor-sample-editable-heading" type="h3" class="text-lg font-semibold">Editable difference</Text>
+    <Text id="code-editor-sample-editable-description" class="text-sm text-neutral-500">
+      Enable editableDifferences to edit lines on the modified side. Click a line, or press Enter on it, to open an input. Enter or leaving the input
+      saves the line, and Escape cancels. Edits write to the bound modifiedCode, and the difference recomputes.
+    </Text>
+    <Container id="code-editor-sample-editable-preview" class="flex flex-col gap-4 rounded-lg border p-4">
+      <Container id="code-editor-sample-editable-actions" class="flex gap-2">
+        <Button id="code-editor-sample-editable-reset" class="fluid-button-secondary" onclick={() => handleResetEditableDifference()}
+          >Reset edits</Button
+        >
+      </Container>
+      <CodeEditor
+        tokenizer={codeEditorSvelteTokenizer}
+        tokenThemeMapping={codeEditorTokenThemeMapping}
+        differenceThemeMapping={codeEditorDifferenceThemeMapping}
+        id="code-editor-sample-editable"
+        language="svelte"
+        bind:sourceCode={editableSourceCode}
+        bind:modifiedCode={editableModifiedCode}
+        editableDifferences
+      />
+    </Container>
   </Container>
 </Container>

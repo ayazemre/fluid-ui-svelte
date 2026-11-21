@@ -303,7 +303,7 @@
     @apply cursor-text outline-none focus-visible:outline-1 focus-visible:outline-offset-1;
   }
   .fluid-code-editor-input {
-    @apply h-[1lh] min-w-0 flex-1 bg-transparent outline-none;
+    @apply h-[1lh] min-w-0 flex-1 rounded-none bg-transparent p-0 outline-none focus:outline-none dark:bg-transparent dark:text-neutral-300;
   }
   /* Drawer -------------------------- */
   .fluid-drawer {

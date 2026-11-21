@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Container, Text } from "../base/index.ts";
+  import { Button, Container, InputField, Text } from "../base/index.ts";
   import {
     applyDifferenceLineDecision,
     buildHighlightedLines,
@@ -60,6 +60,11 @@
 
   let editingModifiedLineNumber: number | null = $state(null);
   let editingLineText = $state("");
+  let editingInputElement: HTMLInputElement | HTMLTextAreaElement | null = $state(null);
+
+  $effect(() => {
+    editingInputElement?.focus();
+  });
 
   function isEditableDifferenceRow(differenceRow: CondensedDifferenceRow): boolean {
     return editableDifferences && getEditableModifiedLineNumber(differenceRow) !== undefined;
@@ -151,12 +156,12 @@
             {/if}
             <Container id={`fluid-code-editor-content-${index}-${id}`} class="fluid-code-editor-content">
               {#if isLineBeingEdited(differenceRow)}
-                <input
+                <InputField
                   id={`fluid-code-editor-input-${index}-${id}`}
                   class="fluid-code-editor-input"
                   aria-label={`Edit modified line ${editingModifiedLineNumber}`}
                   spellcheck="false"
-                  {@attach (inputElement) => inputElement.focus()}
+                  bind:domReference={editingInputElement}
                   bind:value={editingLineText}
                   onblur={commitLineEdit}
                   onkeydown={handleLineEditKeydown}
