@@ -15,20 +15,20 @@
 </script>
 
 <Page id="error-page" variant="site-page" title={`Fluid UI - ${headingText}`} description={descriptionText}>
-  <Container id="error-page-content">
-    <Container id="error-page-inner" class="article error-page-inner">
-      <Text id="error-page-status" type="span" class="error-page-status">{page.status}</Text>
-      <Text id="error-page-heading" type="h1" class="article-title">{headingText}</Text>
-      <Text id="error-page-description" class="article-deck">{descriptionText}</Text>
+  <Container id="error-page-content" class="error-layout">
+    <Container id="error-page-inner" class="error-inner">
+      <Text id="error-page-status" type="span" class="error-status">{page.status}</Text>
+      <Text id="error-page-heading" type="h1" class="doc-title">{headingText}</Text>
+      <Text id="error-page-description" class="doc-deck">{descriptionText}</Text>
       {#if page.error?.message}
-        <Text id="error-page-detail" class="mag-callout">{page.error.message}</Text>
+        <Text id="error-page-detail" class="doc-note">{page.error.message}</Text>
       {/if}
-      <Container id="error-page-actions" class="landing-actions">
-        <Link id="error-page-home-link" href="/" class="site-cta site-cta--solid">
+      <Container id="error-page-actions" class="error-actions">
+        <Link id="error-page-home-link" href="/" class="home-button home-button-primary">
           <Icon icon="ri:arrow-left-line" class="size-4" />
           Home
         </Link>
-        <Link id="error-page-documentation-link" href="/documentation/getting-started" class="site-cta site-cta--ghost">Documentation</Link>
+        <Link id="error-page-documentation-link" href="/documentation/getting-started" class="home-button home-button-secondary">Documentation</Link>
       </Container>
     </Container>
   </Container>

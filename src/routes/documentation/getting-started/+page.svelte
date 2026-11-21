@@ -1,5 +1,7 @@
 <script lang="ts">
   import { documentationRegistry } from "#src/documentation/documentation.ts";
+  import { findDocumentationNeighborLinks } from "#src/documentation/documentationNavigation.ts";
+  import DocumentationPager from "#src/documentation/DocumentationPager.svelte";
   import { resolveSvelteTokenizerForLanguage } from "#src/documentation/samples/codeEditorSvelteTokenizer.ts";
   import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "#src/documentation/samples/codeEditorThemes.ts";
   import { layerNumerals } from "#src/documentation/siteContent.ts";
@@ -29,64 +31,61 @@
     code: string;
     language: string;
   };
+  const neighborLinks = findDocumentationNeighborLinks("/documentation/getting-started");
 </script>
 
 <Page id="getting-started-page" variant="site-page" title={pageData.title} description={pageData.description}>
-  <Container id="getting-started-main-container" class="article">
-    <Container id="getting-started-intro-container" class="article-header layer-tone-introduction">
-      <Container id="getting-started-kicker" class="article-kicker">
-        <Text id="getting-started-chip" type="span" class="article-chip">Introduction</Text>
-        <Text id="getting-started-kicker-text" type="span">Guide · Part 01</Text>
+  <Container id="getting-started-main-container" class="doc-page">
+    <Container id="getting-started-intro-container" class="doc-header layer-tone-introduction">
+      <Container id="getting-started-kicker" class="doc-kicker">
+        <Text id="getting-started-chip" type="span" class="doc-badge">Introduction</Text>
+        <Text id="getting-started-kicker-text" type="span" class="doc-kicker-note">Guide · Part 01</Text>
       </Container>
-      <Text id="getting-started-heading" type="h1" class="article-title">{introductionSection.title}</Text>
-      <Text id="getting-started-description" class="article-deck">{introductionSection.content}</Text>
+      <Text id="getting-started-heading" type="h1" class="doc-title">{introductionSection.title}</Text>
+      <Text id="getting-started-description" class="doc-deck">{introductionSection.content}</Text>
     </Container>
 
-    <Container id="getting-started-architecture-container" class="article-section">
-      <Container id="getting-started-architecture-head" class="article-section-head">
-        <Text id="getting-started-architecture-number" type="span" class="mag-section-number">01</Text>
-        <Text id="getting-started-structure-heading" type="h2" class="article-section-heading">{architectureSection.title}</Text>
+    <Container id="getting-started-architecture-container" class="doc-section">
+      <Container id="getting-started-architecture-head" class="doc-section-head">
+        <Text id="getting-started-architecture-number" type="span" class="doc-section-index">01</Text>
+        <Text id="getting-started-structure-heading" type="h2" class="doc-section-title">{architectureSection.title}</Text>
       </Container>
-      <Text id="getting-started-structure-description" class="article-prose article-prose-muted">{architectureSection.description}</Text>
+      <Text id="getting-started-structure-description" class="doc-prose doc-prose-muted">{architectureSection.description}</Text>
 
-      <Container id="getting-started-layers-index" class="layer-index">
+      <Container id="getting-started-layers-index" class="guide-layer-list">
         {#each architectureSection.layers as layer (layer.id)}
-          <Container id={`getting-started-${layer.id}-layer-item`} class="layer-index-item">
-            <Text id={`getting-started-${layer.id}-layer-index`} type="span" class="layer-index-numeral">{layerNumerals[layer.id]}</Text>
-            <Container id={`getting-started-${layer.id}-layer-heading`} class="layer-index-heading">
-              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="layer-index-title">{layer.title}</Text>
-              <Text id={`getting-started-${layer.id}-layer-path`} type="code" class="layer-index-path">{layer.path}</Text>
+          <Container id={`getting-started-${layer.id}-layer-item`} class="guide-layer-item">
+            <Text id={`getting-started-${layer.id}-layer-index`} type="span" class="guide-layer-index">{layerNumerals[layer.id]}</Text>
+            <Container id={`getting-started-${layer.id}-layer-heading`} class="guide-layer-main">
+              <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="guide-layer-title">{layer.title}</Text>
+              <Text id={`getting-started-${layer.id}-layer-path`} type="code" class="guide-layer-path">{layer.path}</Text>
+              <Text id={`getting-started-${layer.id}-layer-description`} class="guide-layer-description">{layer.description}</Text>
             </Container>
-            <Text id={`getting-started-${layer.id}-layer-description`} class="layer-index-summary">{layer.description}</Text>
           </Container>
         {/each}
       </Container>
     </Container>
 
-    <Container id="getting-started-installation-container" class="article-section">
-      <Container id="getting-started-installation-head" class="article-section-head">
-        <Text id="getting-started-installation-number" type="span" class="mag-section-number">02</Text>
-        <Text id="getting-started-installation-heading" type="h2" class="article-section-heading">{installationSection.title}</Text>
+    <Container id="getting-started-installation-container" class="doc-section">
+      <Container id="getting-started-installation-head" class="doc-section-head">
+        <Text id="getting-started-installation-number" type="span" class="doc-section-index">02</Text>
+        <Text id="getting-started-installation-heading" type="h2" class="doc-section-title">{installationSection.title}</Text>
       </Container>
 
-      <Container id="getting-started-steps-container" class="flex flex-col gap-12">
+      <Container id="getting-started-steps-container" class="guide-steps">
         {#each installationSection.steps as step, stepIndex (step.id)}
-          <Container id={`getting-started-${step.id}-container`} class="flex flex-col gap-4">
-            <Text id={`getting-started-${step.id}-heading`} type="h3" class="article-prose text-lg font-semibold">
-              <Text id={`getting-started-${step.id}-index`} type="span" class="mag-section-number mr-3">
-                {String(stepIndex + 1).padStart(2, "0")}
-              </Text>
-              {step.title}
-            </Text>
-            <Text id={`getting-started-${step.id}-description`} class="article-prose article-prose-muted">
-              {step.description}
-            </Text>
-            <Container id={`getting-started-${step.id}-frame`} class="specimen dark">
-              <Container id={`getting-started-${step.id}-caption`} class="specimen-caption">
+          <Container id={`getting-started-${step.id}-container`} class="guide-step">
+            <Container id={`getting-started-${step.id}-heading-row`} class="guide-step-head">
+              <Text id={`getting-started-${step.id}-index`} type="span" class="guide-step-index">{String(stepIndex + 1).padStart(2, "0")}</Text>
+              <Text id={`getting-started-${step.id}-heading`} type="h3" class="guide-step-title">{step.title}</Text>
+            </Container>
+            <Text id={`getting-started-${step.id}-description`} class="doc-prose doc-prose-muted">{step.description}</Text>
+            <Container id={`getting-started-${step.id}-frame`} class="doc-code">
+              <Container id={`getting-started-${step.id}-caption`} class="doc-code-caption">
                 <Text id={`getting-started-${step.id}-caption-title`} type="span">{step.title}</Text>
                 <Text id={`getting-started-${step.id}-caption-language`} type="span">{step.language ?? "bash"}</Text>
               </Container>
-              <Container id={`getting-started-${step.id}-code-frame`} class="specimen-code">
+              <Container id={`getting-started-${step.id}-code-frame`} class="doc-code-body">
                 <CodeEditor
                   tokenThemeMapping={codeEditorTokenThemeMapping}
                   differenceThemeMapping={codeEditorDifferenceThemeMapping}
@@ -102,18 +101,18 @@
       </Container>
     </Container>
 
-    <Container id="getting-started-usage-container" class="article-section">
-      <Container id="getting-started-usage-head" class="article-section-head">
-        <Text id="getting-started-usage-number" type="span" class="mag-section-number">03</Text>
-        <Text id="getting-started-usage-heading" type="h2" class="article-section-heading">{usageSection.title}</Text>
+    <Container id="getting-started-usage-container" class="doc-section">
+      <Container id="getting-started-usage-head" class="doc-section-head">
+        <Text id="getting-started-usage-number" type="span" class="doc-section-index">03</Text>
+        <Text id="getting-started-usage-heading" type="h2" class="doc-section-title">{usageSection.title}</Text>
       </Container>
-      <Text id="getting-started-usage-description" class="article-prose article-prose-muted">{usageSection.description}</Text>
-      <Container id="getting-started-usage-frame" class="specimen dark">
-        <Container id="getting-started-usage-caption" class="specimen-caption">
+      <Text id="getting-started-usage-description" class="doc-prose doc-prose-muted">{usageSection.description}</Text>
+      <Container id="getting-started-usage-frame" class="doc-code">
+        <Container id="getting-started-usage-caption" class="doc-code-caption">
           <Text id="getting-started-usage-caption-title" type="span">Usage</Text>
           <Text id="getting-started-usage-caption-language" type="span">{usageSection.language ?? "svelte"}</Text>
         </Container>
-        <Container id="getting-started-usage-code-frame" class="specimen-code">
+        <Container id="getting-started-usage-code-frame" class="doc-code-body">
           <CodeEditor
             tokenThemeMapping={codeEditorTokenThemeMapping}
             differenceThemeMapping={codeEditorDifferenceThemeMapping}
@@ -125,5 +124,7 @@
         </Container>
       </Container>
     </Container>
+
+    <DocumentationPager idPrefix="getting-started-pager" previousLink={neighborLinks.previousLink} nextLink={neighborLinks.nextLink} />
   </Container>
 </Page>

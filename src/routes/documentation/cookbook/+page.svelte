@@ -1,6 +1,7 @@
 <script lang="ts">
   import { documentationRegistry } from "#src/documentation/documentation.ts";
-  import { toDocumentationPageName } from "#src/documentation/documentationNavigation.ts";
+  import { findDocumentationNeighborLinks, toDocumentationPageName } from "#src/documentation/documentationNavigation.ts";
+  import DocumentationPager from "#src/documentation/DocumentationPager.svelte";
   import { resolveSvelteTokenizerForLanguage } from "#src/documentation/samples/codeEditorSvelteTokenizer.ts";
   import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "#src/documentation/samples/codeEditorThemes.ts";
   import { Container, Link, Text } from "#src/lib/base/index.ts";
@@ -27,6 +28,7 @@
   };
 
   const sections = pageData.sections as unknown as Array<CookbookSection>;
+  const neighborLinks = findDocumentationNeighborLinks("/documentation/cookbook");
 
   function buildSectionAnchorId(sectionId: string): string {
     return `cookbook-${sectionId}-container`;
@@ -38,23 +40,21 @@
 </script>
 
 <Page id="cookbook-page" variant="site-page" title={pageData.title} description={pageData.description}>
-  <Container id="cookbook-main-container" class="article">
-    <Container id="cookbook-header-container" class="article-header layer-tone-introduction">
-      <Container id="cookbook-kicker" class="article-kicker">
-        <Text id="cookbook-eyebrow" type="span" class="article-chip">Cookbook</Text>
-        <Text id="cookbook-kicker-text" type="span">Guide · Part 02</Text>
+  <Container id="cookbook-main-container" class="doc-page">
+    <Container id="cookbook-header-container" class="doc-header layer-tone-introduction">
+      <Container id="cookbook-kicker" class="doc-kicker">
+        <Text id="cookbook-eyebrow" type="span" class="doc-badge">Cookbook</Text>
+        <Text id="cookbook-kicker-text" type="span" class="doc-kicker-note">Guide · Part 02</Text>
       </Container>
-      <Text id="cookbook-title-text" type="h1" class="article-title">{pageName}</Text>
-      <Text id="cookbook-description-text" class="article-deck">{pageData.description}</Text>
+      <Text id="cookbook-title-text" type="h1" class="doc-title">{pageName}</Text>
+      <Text id="cookbook-description-text" class="doc-deck">{pageData.description}</Text>
 
-      <Container id="cookbook-contents-container" type="nav" class="article-contents-wrapper">
-        <Container id="cookbook-contents-list" class="article-contents">
-          <Text id="cookbook-contents-heading" type="span" class="article-contents-heading">On this page</Text>
+      <Container id="cookbook-contents-container" type="nav" class="doc-contents">
+        <Text id="cookbook-contents-heading" type="span" class="doc-contents-heading">On this page</Text>
+        <Container id="cookbook-contents-list" class="doc-contents-list">
           {#each sections as section, sectionIndex (section.id)}
-            <Link id={`cookbook-contents-link-${section.id}`} href={`#${buildSectionAnchorId(section.id)}`} class="article-contents-link">
-              <Text id={`cookbook-contents-index-${section.id}`} type="span" class="article-contents-index">
-                {buildSectionNumber(sectionIndex)}
-              </Text>
+            <Link id={`cookbook-contents-link-${section.id}`} href={`#${buildSectionAnchorId(section.id)}`} class="doc-contents-link">
+              <Text id={`cookbook-contents-index-${section.id}`} type="span" class="doc-contents-index">{buildSectionNumber(sectionIndex)}</Text>
               <Text id={`cookbook-contents-title-${section.id}`} type="span">{section.title}</Text>
             </Link>
           {/each}
@@ -63,36 +63,36 @@
     </Container>
 
     {#each sections as section, sectionIndex (section.id)}
-      <Container id={buildSectionAnchorId(section.id)} class="article-section">
-        <Container id={`cookbook-${section.id}-head`} class="article-section-head">
-          <Text id={`cookbook-${section.id}-number`} type="span" class="mag-section-number">{buildSectionNumber(sectionIndex)}</Text>
-          <Text id={`cookbook-${section.id}-heading`} type="h2" class="article-section-heading">{section.title}</Text>
+      <Container id={buildSectionAnchorId(section.id)} class="doc-section">
+        <Container id={`cookbook-${section.id}-head`} class="doc-section-head">
+          <Text id={`cookbook-${section.id}-number`} type="span" class="doc-section-index">{buildSectionNumber(sectionIndex)}</Text>
+          <Text id={`cookbook-${section.id}-heading`} type="h2" class="doc-section-title">{section.title}</Text>
         </Container>
 
         {#if section.description}
-          <Text id={`cookbook-${section.id}-description`} class="article-prose article-prose-muted">{section.description}</Text>
+          <Text id={`cookbook-${section.id}-description`} class="doc-prose doc-prose-muted">{section.description}</Text>
         {/if}
 
         {#if section.content}
-          <Text id={`cookbook-${section.id}-body`} class="article-prose">{section.content}</Text>
+          <Text id={`cookbook-${section.id}-body`} class="doc-prose">{section.content}</Text>
         {/if}
 
         {#if section.warning}
-          <Container id={`cookbook-${section.id}-warning`} class="mag-callout">
+          <Container id={`cookbook-${section.id}-warning`} class="doc-note">
             <Text id={`cookbook-${section.id}-warning-text`} type="span">
-              <Text id={`cookbook-${section.id}-warning-label`} type="span" class="mag-callout-label">Note</Text>
+              <Text id={`cookbook-${section.id}-warning-label`} type="span" class="doc-note-label">Note</Text>
               {section.warning}
             </Text>
           </Container>
         {/if}
 
         {#if section.code}
-          <Container id={`cookbook-${section.id}-frame`} class="specimen dark">
-            <Container id={`cookbook-${section.id}-caption`} class="specimen-caption">
+          <Container id={`cookbook-${section.id}-frame`} class="doc-code">
+            <Container id={`cookbook-${section.id}-caption`} class="doc-code-caption">
               <Text id={`cookbook-${section.id}-caption-title`} type="span">{section.title}</Text>
               <Text id={`cookbook-${section.id}-caption-language`} type="span">{section.language ?? "svelte"}</Text>
             </Container>
-            <Container id={`cookbook-${section.id}-code-frame`} class="specimen-code">
+            <Container id={`cookbook-${section.id}-code-frame`} class="doc-code-body">
               <CodeEditor
                 tokenThemeMapping={codeEditorTokenThemeMapping}
                 differenceThemeMapping={codeEditorDifferenceThemeMapping}
@@ -107,12 +107,12 @@
 
         {#if section.codeSamples}
           {#each section.codeSamples as codeSample, codeSampleIndex (codeSample.caption)}
-            <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-frame`} class="specimen dark">
-              <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-caption`} class="specimen-caption">
+            <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-frame`} class="doc-code">
+              <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-caption`} class="doc-code-caption">
                 <Text id={`cookbook-${section.id}-sample-${codeSampleIndex}-caption-title`} type="span">{codeSample.caption}</Text>
                 <Text id={`cookbook-${section.id}-sample-${codeSampleIndex}-caption-language`} type="span">{codeSample.language}</Text>
               </Container>
-              <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-code-frame`} class="specimen-code">
+              <Container id={`cookbook-${section.id}-sample-${codeSampleIndex}-code-frame`} class="doc-code-body">
                 <CodeEditor
                   tokenThemeMapping={codeEditorTokenThemeMapping}
                   differenceThemeMapping={codeEditorDifferenceThemeMapping}
@@ -127,5 +127,7 @@
         {/if}
       </Container>
     {/each}
+
+    <DocumentationPager idPrefix="cookbook-pager" previousLink={neighborLinks.previousLink} nextLink={neighborLinks.nextLink} />
   </Container>
 </Page>

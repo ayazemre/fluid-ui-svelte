@@ -14,12 +14,6 @@ export const documentationSidebarGroups: Array<DocumentationNavigationGroup> = [
   { id: "prebuilt", label: "Prebuilt", links: buildCategoryLinks("prebuilt", documentationRegistry.prebuilt) },
 ];
 
-export const documentationLlmGuideLink: DocumentationNavigationLink = {
-  label: "LLM Guide",
-  slug: "llm-guide",
-  url: "/llm-protocol",
-};
-
 export const documentationCategoryLabels: Record<string, string> = {
   base: "Base Layer",
   components: "Components Layer",
