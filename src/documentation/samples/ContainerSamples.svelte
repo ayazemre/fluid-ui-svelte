@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="container-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -14,7 +16,14 @@
         <Text id="container-sample-header-text" type="h3" class="text-primary-900 dark:text-primary-100">Header Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-header-code" sourceCode={codeBlockContents.containerHeader} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="container-sample-header-code"
+      sourceCode={codeEditorContents.containerHeader}
+      language="svelte"
+    />
   </Container>
 
   <!-- Nav Container -->
@@ -25,7 +34,14 @@
         <Text id="container-sample-nav-text" class="text-secondary-900 dark:text-secondary-100">Navigation Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-nav-code" sourceCode={codeBlockContents.containerNav} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="container-sample-nav-code"
+      sourceCode={codeEditorContents.containerNav}
+      language="svelte"
+    />
   </Container>
 
   <!-- Section Container -->
@@ -36,7 +52,14 @@
         <Text id="container-sample-section-text" class="text-info-900 dark:text-info-100">Section Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-section-code" sourceCode={codeBlockContents.containerSection} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="container-sample-section-code"
+      sourceCode={codeEditorContents.containerSection}
+      language="svelte"
+    />
   </Container>
 
   <!-- Footer Container -->
@@ -47,6 +70,13 @@
         <Text id="container-sample-footer-text" class="text-warning-900 dark:text-warning-100">Footer Content</Text>
       </Container>
     </Container>
-    <CodeBlock id="container-sample-footer-code" sourceCode={codeBlockContents.containerFooter} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="container-sample-footer-code"
+      sourceCode={codeEditorContents.containerFooter}
+      language="svelte"
+    />
   </Container>
 </Container>

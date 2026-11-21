@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock, TimePicker } from "#src/lib/components/index.ts";
+  import { TimePicker } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let hourOnlyTime = $state("14");
   let minuteTime = $state("14:30");
@@ -27,7 +30,14 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-hour-code" sourceCode={codeBlockContents.timePickerHourOnly} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="time-picker-sample-hour-code"
+      sourceCode={codeEditorContents.timePickerHourOnly}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Standard Hour & Minute Mode -->
@@ -46,7 +56,14 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-minute-code" sourceCode={codeBlockContents.timePickerBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="time-picker-sample-minute-code"
+      sourceCode={codeEditorContents.timePickerBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- 3. Precise Seconds Mode -->
@@ -65,7 +82,14 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-seconds-code" sourceCode={codeBlockContents.timePickerWithSeconds} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="time-picker-sample-seconds-code"
+      sourceCode={codeEditorContents.timePickerWithSeconds}
+      language="svelte"
+    />
   </Container>
 
   <!-- 4. 12-Hour AM/PM Format -->
@@ -84,6 +108,13 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="time-picker-sample-12h-code" sourceCode={codeBlockContents.timePickerTwelveHour} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="time-picker-sample-12h-code"
+      sourceCode={codeEditorContents.timePickerTwelveHour}
+      language="svelte"
+    />
   </Container>
 </Container>

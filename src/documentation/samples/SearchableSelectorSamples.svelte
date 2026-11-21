@@ -1,9 +1,10 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
-  import { SearchableSelector } from "#src/lib/prebuilt/index.ts";
+  import { CodeEditor, SearchableSelector } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   const sampleItems = [
     { avatarText: "EA", label: "Emre Ayaz", value: "emre" },
@@ -45,7 +46,14 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="searchable-selector-basic-code" sourceCode={codeBlockContents.searchableSelectorBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="searchable-selector-basic-code"
+      sourceCode={codeEditorContents.searchableSelectorBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. With Avatar Images -->
@@ -68,6 +76,13 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="searchable-selector-images-code" sourceCode={codeBlockContents.searchableSelectorImages} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="searchable-selector-images-code"
+      sourceCode={codeEditorContents.searchableSelectorImages}
+      language="svelte"
+    />
   </Container>
 </Container>

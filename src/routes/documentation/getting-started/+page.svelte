@@ -1,8 +1,11 @@
 <script lang="ts">
   import { documentationRegistry } from "#src/documentation/documentation.ts";
+  import { resolveSvelteTokenizerForLanguage } from "#src/documentation/samples/codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "#src/documentation/samples/codeEditorThemes.ts";
   import { layerNumerals } from "#src/documentation/siteContent.ts";
   import { Container, Text } from "#src/lib/base/index.ts";
-  import { CodeBlock, Page } from "#src/lib/components/index.ts";
+  import { Page } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
   const pageData = (
     documentationRegistry as unknown as Record<
@@ -84,7 +87,14 @@
                 <Text id={`getting-started-${step.id}-caption-language`} type="span">{step.language ?? "bash"}</Text>
               </Container>
               <Container id={`getting-started-${step.id}-code-frame`} class="specimen-code">
-                <CodeBlock id={`getting-started-${step.id}-code`} sourceCode={step.code} language={step.language ?? "bash"} />
+                <CodeEditor
+                  tokenThemeMapping={codeEditorTokenThemeMapping}
+                  differenceThemeMapping={codeEditorDifferenceThemeMapping}
+                  id={`getting-started-${step.id}-code`}
+                  sourceCode={step.code}
+                  language={step.language ?? "bash"}
+                  tokenizer={resolveSvelteTokenizerForLanguage(step.language ?? "bash")}
+                />
               </Container>
             </Container>
           </Container>
@@ -104,7 +114,14 @@
           <Text id="getting-started-usage-caption-language" type="span">{usageSection.language ?? "svelte"}</Text>
         </Container>
         <Container id="getting-started-usage-code-frame" class="specimen-code">
-          <CodeBlock id="getting-started-usage-code" sourceCode={usageSection.code} language={usageSection.language ?? "svelte"} />
+          <CodeEditor
+            tokenThemeMapping={codeEditorTokenThemeMapping}
+            differenceThemeMapping={codeEditorDifferenceThemeMapping}
+            id="getting-started-usage-code"
+            sourceCode={usageSection.code}
+            language={usageSection.language ?? "svelte"}
+            tokenizer={resolveSvelteTokenizerForLanguage(usageSection.language ?? "svelte")}
+          />
         </Container>
       </Container>
     </Container>

@@ -30,7 +30,7 @@ export const landingLayers: Array<LandingLayer> = [
 export const landingBreadcrumbItems: Array<LandingBreadcrumbItem> = [
   { href: "/", label: "Home" },
   { href: "/documentation/getting-started", label: "Documentation" },
-  { href: "/documentation/conventions", label: "Conventions" },
+  { href: "/documentation/cookbook", label: "Cookbook" },
 ];
 
 export type LandingLayer = {

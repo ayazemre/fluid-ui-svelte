@@ -44,7 +44,7 @@ Each component is built from three parts that stay separate.
 ## Requirements
 
 - Svelte 5 in Runes mode (`$state`, `$derived`, `$props`, `$bindable`, `$effect`, `Snippet`). The peer dependency is `svelte` `^5.0.0`.
-- Tailwind CSS 4. `fluidui.css` uses Tailwind 4 syntax, and the application defines its colors in its own `@theme` block.
+- Tailwind CSS 4. `fluidui.css` uses Tailwind 4 syntax, and your brand colors go in the `@theme` block of your copy of `fluidui.css`.
 
 ## Installation
 
@@ -58,13 +58,35 @@ npm install fluid-ui-svelte
 
 Fluid UI does not inject styles automatically. This keeps library styling and application styling separate.
 
-1. Copy `node_modules/fluid-ui-svelte/src/fluidui.css` into the root of your project. The copy belongs to your application, so you can edit it, and it does not update by itself.
-2. Import it in your main CSS file, after Tailwind.
+1. Copy `node_modules/fluid-ui-svelte/src/fluidui.css` into the root of your project. The copy does not update by itself. Set your brand in the `@theme` block, and do not edit the `fluid-ui` layer.
+2. Import it in your main CSS file. The file imports Tailwind itself, so do not import Tailwind again.
 
 ```css
 /* src/app.css */
-@import "tailwindcss";
 @import "./fluidui.css";
+```
+
+Style your application with two kinds of CSS:
+
+- Component overrides go in `@layer overrides`. The overrides layer beats the `fluid-ui` and `utilities` layers and the `theme` layer.
+- Token values such as colors and fonts go in `@layer tokens`. The tokens layer beats the `overrides` layer, the `fluid-ui` and `utilities` layers, and the `theme` layer.
+- Variants go in `@layer variants`. The variants layer is declared last, so it beats every other layer, including `overrides` and `tokens`.
+
+None of the layers needs `!important`.
+
+```css
+/* src/app.css */
+@layer overrides {
+  .fluid-button {
+    border-radius: 999px;
+  }
+}
+
+@layer tokens {
+  :root {
+    --color-primary-500: #1f7a4d;
+  }
+}
 ```
 
 ## Usage
@@ -100,11 +122,11 @@ Import components from the layer that owns them. Svelte 5 in Runes mode is requi
 
 The table lists each layer, its import path, and its components. The documentation registry in `src/documentation/documentation.ts` holds the full description and props table of each component.
 
-| Layer      | Import path                  | Components                                                                                                                                         |
-| ---------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Base       | `fluid-ui-svelte/base`       | Button, Canvas, Container, Form, Image, InputField, Label, Link, List, Table, Text                                                                 |
-| Components | `fluid-ui-svelte/components` | Accordion, AnchoredOverlay, CalendarGrid, Carousel, CodeBlock, Draggable, Drawer, Dropzone, ImageCrop, Modal, Page, Pagination, Switch, TimePicker |
-| Prebuilt   | `fluid-ui-svelte/prebuilt`   | Breadcrumb, InternationalInput, NotificationArea, SearchableSelector                                                                               |
+| Layer      | Import path                  | Components                                                                                                                              |
+| ---------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Base       | `fluid-ui-svelte/base`       | Button, Canvas, Container, Form, Image, InputField, Label, Link, List, Table, Text                                                      |
+| Components | `fluid-ui-svelte/components` | Accordion, AnchoredOverlay, CalendarGrid, Carousel, Draggable, Drawer, Dropzone, ImageCrop, Modal, Page, Pagination, Switch, TimePicker |
+| Prebuilt   | `fluid-ui-svelte/prebuilt`   | Breadcrumb, CodeEditor, InternationalInput, NotificationArea, SearchableSelector                                                        |
 
 ## Naming Conventions
 

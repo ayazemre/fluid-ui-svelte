@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Image, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let delayedSrc = $state("");
   $effect(() => {
@@ -25,7 +27,14 @@
         <Image id="image-sample-standard-img" src="https://picsum.photos/id/1018/500/300" alt="Nature scene" class="h-full w-full object-cover!" />
       </Container>
     </Container>
-    <CodeBlock id="image-sample-standard-code" sourceCode={codeBlockContents.imageStandard} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="image-sample-standard-code"
+      sourceCode={codeEditorContents.imageStandard}
+      language="svelte"
+    />
   </Container>
 
   <!-- Placeholder / Loading Example -->
@@ -39,6 +48,13 @@
         <Image id="image-sample-loading-img" src={delayedSrc} alt="Delayed loading example" class="h-full w-full object-cover!" />
       </Container>
     </Container>
-    <CodeBlock id="image-sample-loading-code" sourceCode={codeBlockContents.imageLoading} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="image-sample-loading-code"
+      sourceCode={codeEditorContents.imageLoading}
+      language="svelte"
+    />
   </Container>
 </Container>

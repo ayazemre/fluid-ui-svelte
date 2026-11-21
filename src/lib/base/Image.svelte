@@ -5,13 +5,13 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     class: className = "",
     onload,
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLImageElement | null;
+    domReference?: HTMLImageElement | null;
     class?: string;
     onload?: (event: Event) => void;
   } & Omit<HTMLImgAttributes, "id"> = $props();
@@ -21,7 +21,7 @@
 
 <img
   {id}
-  bind:this={underlyingElement}
+  bind:this={domReference}
   onload={(event: Event) => {
     isLoaded = true;
     onload?.(event);

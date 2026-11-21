@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text, Button } from "#src/lib//base/index.ts";
-  import { Modal, CodeBlock } from "#src/lib/components/index.ts";
+  import { Modal } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let isBasicOpen = $state(false);
 </script>
@@ -31,6 +34,13 @@
         </Container>
       </Modal>
     </Container>
-    <CodeBlock id="modal-basic-codeblock" sourceCode={codeBlockContents.modalBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="modal-basic-codeeditor"
+      sourceCode={codeEditorContents.modalBasic}
+      language="svelte"
+    />
   </Container>
 </Container>

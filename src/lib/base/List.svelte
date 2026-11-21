@@ -6,7 +6,7 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     type = "ul",
     items = [],
     itemTemplate,
@@ -15,7 +15,7 @@
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLUListElement | HTMLOListElement | null;
+    domReference?: HTMLUListElement | HTMLOListElement | null;
     type?: "ol" | "ul";
     items: Array<T>;
     itemTemplate: Snippet<[T, number]>;
@@ -29,7 +29,7 @@
   };
 </script>
 
-<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, classes[type])}>
+<svelte:element this={type} {id} bind:this={domReference} {...rest} class={mergeClasses(className, classes[type])}>
   {#each items as item, index}
     <li class={mergeClasses(itemClass, classes[type] + "-item")}>
       {@render itemTemplate(item, index)}

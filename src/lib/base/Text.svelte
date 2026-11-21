@@ -6,14 +6,14 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     type = "p",
     class: className = "",
     children,
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLElement | null;
+    domReference?: HTMLElement | null;
     type?:
       | "p"
       | "h1"
@@ -40,6 +40,6 @@
   } & Omit<HTMLAttributes<HTMLParagraphElement & HTMLHeadingElement & HTMLSpanElement>, "id"> = $props();
 </script>
 
-<svelte:element this={type} {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, "fluid-text")}>
+<svelte:element this={type} {id} bind:this={domReference} {...rest} class={mergeClasses(className, "fluid-text")}>
   {@render children?.()}
 </svelte:element>

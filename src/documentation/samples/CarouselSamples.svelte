@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Button, Container, Text } from "#src/lib//base/index.ts";
-  import { Carousel, CodeBlock } from "#src/lib/components/index.ts";
+  import { Carousel } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   const items = [
     { color: "bg-primary-500", text: "1" },
@@ -55,7 +58,14 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-1-code" sourceCode={codeBlockContents.carouselInteractive} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="carousel-sample-h-1-code"
+      sourceCode={codeEditorContents.carouselInteractive}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Horizontal - Autoplay -->
@@ -96,7 +106,14 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-autoplay-code" sourceCode={codeBlockContents.carouselAutoplay} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="carousel-sample-h-autoplay-code"
+      sourceCode={codeEditorContents.carouselAutoplay}
+      language="svelte"
+    />
   </Container>
 
   <!-- 3. Horizontal - Multiple Items (Controlled) -->
@@ -135,7 +152,14 @@
         </Carousel>
       </Container>
     </Container>
-    <CodeBlock id="carousel-sample-h-multi-code" sourceCode={codeBlockContents.carouselUsage} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="carousel-sample-h-multi-code"
+      sourceCode={codeEditorContents.carouselUsage}
+      language="svelte"
+    />
   </Container>
 
   <!-- 4. Horizontal - Free Scroll (No Snap) -->

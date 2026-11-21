@@ -6,14 +6,14 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     class: className = "",
     onsubmit,
     children,
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLFormElement | null;
+    domReference?: HTMLFormElement | null;
     class?: string;
     onsubmit?: (event: SubmitEvent) => void;
     children: Snippet;
@@ -22,7 +22,7 @@
 
 <form
   {id}
-  bind:this={underlyingElement}
+  bind:this={domReference}
   onsubmit={(event: SubmitEvent) => {
     event.preventDefault();
     onsubmit?.(event);

@@ -1,5 +1,7 @@
 @import "./fluidui.css";
 
+/* Site styles. They are unlayered, so they override the library layers without !important. */
+
 /* Tokens. Surfaces are neutral. The palette supplies one accent and a marker color per layer. */
 
 :root {
@@ -409,7 +411,7 @@ body:has(.dark) {
   background-color: #09090b;
 }
 
-.specimen-code .fluid-code-block {
+.specimen-code .fluid-code-editor {
   border-radius: 0;
 }
 
@@ -817,7 +819,7 @@ body:has(.dark) {
   }
 }
 
-/* Library elements inside the site. These rules are unlayered, so they override the library's layered defaults. */
+/* Library elements inside the site. These rules are unlayered, so they override the library defaults in the fluid-ui layer. */
 
 .site-drawer {
   z-index: 60;
@@ -880,4 +882,81 @@ body:has(.dark) {
 .site-canvas .bg-neutral-50,
 .site-canvas .bg-neutral-100 {
   background-color: var(--site-surface);
+}
+
+/* Code editor action buttons. The library sets the base Button styles, and these site rules set the transparent look for the review buttons. */
+
+.fluid-code-editor-action {
+  margin-inline: 0.25rem;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  padding: 0;
+  padding-inline: 0.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.fluid-code-editor-action:hover {
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.fluid-code-editor-accept:hover {
+  color: var(--color-success-300);
+}
+
+.fluid-code-editor-reject:hover {
+  color: var(--color-error-300);
+}
+
+/* Code editor color classes for the documentation samples. The library does not ship colors, so these classes belong to the site. */
+.fluid-code-token-attribute {
+  @apply text-info-600 dark:text-info-400;
+}
+.fluid-code-token-comment {
+  @apply text-neutral-500 italic;
+}
+.fluid-code-token-delimiter {
+  @apply text-neutral-700 dark:text-neutral-300;
+}
+.fluid-code-token-keyword {
+  @apply text-secondary-600 dark:text-secondary-300;
+}
+.fluid-code-token-number {
+  @apply text-primary-600 dark:text-primary-400;
+}
+.fluid-code-token-string {
+  @apply text-warning-600 dark:text-warning-300;
+}
+.fluid-code-token-tag {
+  @apply text-error-600 dark:text-error-400;
+}
+.fluid-code-token-type {
+  @apply text-success-600 dark:text-success-400;
+}
+.fluid-code-token-variable {
+  @apply text-info-700 dark:text-info-300;
+}
+.fluid-code-difference-added-gutter {
+  @apply text-success-600 dark:text-success-400;
+}
+.fluid-code-difference-added-row {
+  @apply bg-success-50 dark:bg-success-950;
+}
+.fluid-code-difference-gap {
+  @apply text-neutral-500 italic;
+}
+.fluid-code-difference-removed-gutter {
+  @apply text-error-600 dark:text-error-400;
+}
+.fluid-code-difference-removed-row {
+  @apply bg-error-50 dark:bg-error-950;
+}
+.fluid-code-difference-changed-added-text {
+  @apply rounded-sm bg-success-200 dark:bg-success-800;
+}
+.fluid-code-difference-changed-removed-text {
+  @apply rounded-sm bg-error-200 dark:bg-error-800;
 }

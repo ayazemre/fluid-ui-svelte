@@ -6,18 +6,18 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     class: className = "",
     children,
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLLabelElement | null;
+    domReference?: HTMLLabelElement | null;
     class?: string;
     children?: Snippet;
   } & Omit<HTMLLabelAttributes, "id"> = $props();
 </script>
 
-<label {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, "fluid-label")}>
+<label {id} bind:this={domReference} {...rest} class={mergeClasses(className, "fluid-label")}>
   {@render children?.()}
 </label>

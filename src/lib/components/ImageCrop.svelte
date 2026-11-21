@@ -34,5 +34,5 @@
 </script>
 
 <Container id={`fluid-image-crop-${id}`} class={["fluid-image-crop", variant].join(" ")}>
-  <Canvas id={`fluid-image-crop-canvas-${id}`} bind:underlyingElement={canvasReference} class="fluid-image-crop-canvas" />
+  <Canvas id={`fluid-image-crop-canvas-${id}`} bind:domReference={canvasReference} class="fluid-image-crop-canvas" />
 </Container>

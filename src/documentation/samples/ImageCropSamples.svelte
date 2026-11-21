@@ -3,7 +3,6 @@
 
   import { Button, Container, Image, Text } from "#src/lib//base/index.ts";
   import {
-    CodeBlock,
     ImageCrop,
     resolveImageCropState,
     Switch,
@@ -11,8 +10,11 @@
     type ImageCropState,
     type ImageCropTransformOptions,
   } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   // Helper to convert hex to RGBA
   function hexToRgba(hex: string, opacity: number): string {
@@ -406,7 +408,14 @@
         <Text id="image-crop-remote-loading-text">Loading image bitmap...</Text>
       {/if}
     </Container>
-    <CodeBlock id="image-crop-remote-code" sourceCode={codeBlockContents.imageCropBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="image-crop-remote-code"
+      sourceCode={codeEditorContents.imageCropBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- Example 2: File Picker -->
@@ -589,7 +598,14 @@
         </Container>
       {/if}
     </Container>
-    <CodeBlock id="image-crop-upload-code" sourceCode={codeBlockContents.imageCropUpload} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="image-crop-upload-code"
+      sourceCode={codeEditorContents.imageCropUpload}
+      language="svelte"
+    />
   </Container>
 
   <!-- Example 3: Drag to Pan -->
@@ -637,6 +653,13 @@
         <Text id="image-crop-drag-loading-text">Loading image bitmap...</Text>
       {/if}
     </Container>
-    <CodeBlock id="image-crop-drag-code" sourceCode={codeBlockContents.imageCropDragToPan} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="image-crop-drag-code"
+      sourceCode={codeEditorContents.imageCropDragToPan}
+      language="svelte"
+    />
   </Container>
 </Container>

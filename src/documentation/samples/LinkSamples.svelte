@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Link, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="link-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -13,7 +15,14 @@
     <Container id="link-sample-standard-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Link id="link-sample-standard-link" href="/documentation/base/button">Navigate to Button</Link>
     </Container>
-    <CodeBlock id="link-sample-standard-code" sourceCode={codeBlockContents.linkStandard} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="link-sample-standard-code"
+      sourceCode={codeEditorContents.linkStandard}
+      language="svelte"
+    />
   </Container>
 
   <!-- Custom Styled -->
@@ -23,6 +32,13 @@
     <Container id="link-sample-custom-preview" class="rounded-lg border p-6 dark:border-neutral-700">
       <Link id="link-sample-custom-link" href="/documentation/base/image" class="font-bold text-primary-600 uppercase">Bold Primary Link</Link>
     </Container>
-    <CodeBlock id="link-sample-custom-code" sourceCode={codeBlockContents.linkCustom} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="link-sample-custom-code"
+      sourceCode={codeEditorContents.linkCustom}
+      language="svelte"
+    />
   </Container>
 </Container>

@@ -2,9 +2,11 @@
   import Icon from "@iconify/svelte";
 
   import { Button, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="button-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -28,7 +30,14 @@
         Primary Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-primary-code" sourceCode={codeBlockContents.buttonPrimary} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="button-sample-primary-code"
+      sourceCode={codeEditorContents.buttonPrimary}
+      language="svelte"
+    />
   </Container>
 
   <!-- Secondary Button -->
@@ -51,7 +60,14 @@
         Secondary Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-secondary-code" sourceCode={codeBlockContents.buttonSecondary} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="button-sample-secondary-code"
+      sourceCode={codeEditorContents.buttonSecondary}
+      language="svelte"
+    />
   </Container>
 
   <!-- Outline Button -->
@@ -74,7 +90,14 @@
         Outline Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-outline-code" sourceCode={codeBlockContents.buttonOutline} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="button-sample-outline-code"
+      sourceCode={codeEditorContents.buttonOutline}
+      language="svelte"
+    />
   </Container>
 
   <!-- Transparent Button -->
@@ -97,7 +120,14 @@
         Transparent Button
       </Button>
     </Container>
-    <CodeBlock id="button-sample-transparent-code" sourceCode={codeBlockContents.buttonTransparent} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="button-sample-transparent-code"
+      sourceCode={codeEditorContents.buttonTransparent}
+      language="svelte"
+    />
   </Container>
 
   <!-- With Icon -->
@@ -121,6 +151,13 @@
         <Text id="button-sample-icon-text" type="span">GitHub</Text>
       </Button>
     </Container>
-    <CodeBlock id="button-sample-icon-code" sourceCode={codeBlockContents.buttonIcon} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="button-sample-icon-code"
+      sourceCode={codeEditorContents.buttonIcon}
+      language="svelte"
+    />
   </Container>
 </Container>

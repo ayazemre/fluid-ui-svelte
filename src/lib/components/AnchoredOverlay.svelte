@@ -62,7 +62,7 @@
   });
 </script>
 
-<Container id={`fluid-anchored-overlay-${id}`} bind:underlyingElement={containerElement} class={["fluid-anchored-overlay", variant].join(" ")}>
+<Container id={`fluid-anchored-overlay-${id}`} bind:domReference={containerElement} class={["fluid-anchored-overlay", variant].join(" ")}>
   {@render anchor({
     close: () => {
       isOpen = false;
@@ -79,7 +79,7 @@
   {#if isOpen}
     <Container
       id={`fluid-anchored-overlay-float-${id}`}
-      bind:underlyingElement={floatElement}
+      bind:domReference={floatElement}
       role="region"
       class={["fluid-anchored-overlay-float", getAnchoredOverlayPositionClass(activePosition)].join(" ")}
       {transitionFunction}

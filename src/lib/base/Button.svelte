@@ -6,7 +6,7 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     onclick,
     class: className = "",
     loadingPlaceholder,
@@ -14,7 +14,7 @@
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLButtonElement | null;
+    domReference?: HTMLButtonElement | null;
     onclick: (event: MouseEvent | Event, buttonState: { inProgress: boolean }) => Promise<unknown> | void;
     class?: string;
     loadingPlaceholder?: Snippet;
@@ -26,7 +26,7 @@
 
 <button
   {id}
-  bind:this={underlyingElement}
+  bind:this={domReference}
   type="button"
   onclick={async (event: MouseEvent | Event) => await onclick(event, buttonState)}
   {...rest}

@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { Dropzone, CodeBlock, Draggable } from "#src/lib/components/index.ts";
+  import { Dropzone, Draggable } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   // File Only State
   let droppedFiles = $state<File[]>([]);
@@ -51,7 +54,14 @@
       </Dropzone>
     </Container>
 
-    <CodeBlock id="dropzone-sample-file-code" sourceCode={codeBlockContents.dropzoneFile} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="dropzone-sample-file-code"
+      sourceCode={codeEditorContents.dropzoneFile}
+      language="svelte"
+    />
   </Container>
 
   <!-- Data Only Dropzone -->
@@ -111,6 +121,13 @@
       </Dropzone>
     </Container>
 
-    <CodeBlock id="dropzone-sample-data-code" sourceCode={codeBlockContents.dropzoneData} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="dropzone-sample-data-code"
+      sourceCode={codeEditorContents.dropzoneData}
+      language="svelte"
+    />
   </Container>
 </Container>

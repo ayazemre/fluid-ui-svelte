@@ -1,8 +1,10 @@
 <script lang="ts">
   import { InputField, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let textValue = $state("");
   let passwordValue = $state("");
@@ -20,7 +22,14 @@
       <InputField id="input-sample-basic-input" placeholder="Enter your name" bind:value={textValue} class="w-full" />
       <Text id="input-sample-basic-value-text" class="mt-2 text-sm text-neutral-500">Value: {textValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-basic-code" sourceCode={codeBlockContents.inputBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="input-sample-basic-code"
+      sourceCode={codeEditorContents.inputBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- Password -->
@@ -31,7 +40,14 @@
       <InputField id="input-sample-password-input" type="password" placeholder="Enter password" bind:value={passwordValue} class="w-full" />
       <Text id="input-sample-password-value-text" class="mt-2 text-sm text-neutral-500">Value: {passwordValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-password-code" sourceCode={codeBlockContents.inputPassword} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="input-sample-password-code"
+      sourceCode={codeEditorContents.inputPassword}
+      language="svelte"
+    />
   </Container>
 
   <!-- Textarea -->
@@ -48,7 +64,14 @@
       />
       <Text id="input-sample-textarea-value-text" class="mt-2 text-sm text-neutral-500">Value: {textAreaValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-textarea-code" sourceCode={codeBlockContents.inputTextArea} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="input-sample-textarea-code"
+      sourceCode={codeEditorContents.inputTextArea}
+      language="svelte"
+    />
   </Container>
 
   <!-- Numeric Filter -->
@@ -65,7 +88,14 @@
       />
       <Text id="input-sample-numeric-value-text" class="mt-2 text-sm text-neutral-500">Value: {numericValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-numeric-code" sourceCode={codeBlockContents.inputNumeric} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="input-sample-numeric-code"
+      sourceCode={codeEditorContents.inputNumeric}
+      language="svelte"
+    />
   </Container>
 
   <!-- Error State -->
@@ -76,6 +106,13 @@
       <InputField id="input-sample-error-input" class="fluid-input-field-error w-full" placeholder="Error styling" bind:value={errorValue} />
       <Text id="input-sample-error-value-text" class="mt-2 text-sm text-neutral-500">Value: {errorValue}</Text>
     </Container>
-    <CodeBlock id="input-sample-error-code" sourceCode={codeBlockContents.inputError} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="input-sample-error-code"
+      sourceCode={codeEditorContents.inputError}
+      language="svelte"
+    />
   </Container>
 </Container>

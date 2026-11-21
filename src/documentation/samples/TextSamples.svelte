@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Text, Container } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="text-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -15,7 +17,14 @@
       <Text id="text-sample-h2" type="h2" class="text-xl font-semibold">Heading 2</Text>
       <Text id="text-sample-h3" type="h3" class="text-lg font-medium">Heading 3</Text>
     </Container>
-    <CodeBlock id="text-sample-headings-code" sourceCode={codeBlockContents.textHeadings} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="text-sample-headings-code"
+      sourceCode={codeEditorContents.textHeadings}
+      language="svelte"
+    />
   </Container>
 
   <!-- Inline Styles -->
@@ -28,7 +37,14 @@
         <Text id="text-sample-inline-mark" type="mark">highlighted</Text>.
       </Text>
     </Container>
-    <CodeBlock id="text-sample-inline-code" sourceCode={codeBlockContents.textInline} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="text-sample-inline-code"
+      sourceCode={codeEditorContents.textInline}
+      language="svelte"
+    />
   </Container>
 
   <!-- Code and Pre -->
@@ -44,7 +60,14 @@
 }`}
       </Text>
     </Container>
-    <CodeBlock id="text-sample-code-code" sourceCode={codeBlockContents.textCode} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="text-sample-code-code"
+      sourceCode={codeEditorContents.textCode}
+      language="svelte"
+    />
   </Container>
 
   <!-- Semantic Extras -->
@@ -60,6 +83,13 @@
         H<Text id="text-sample-sub-formula" type="sub">2</Text>O and E = mc<Text id="text-sample-sup-formula" type="sup">2</Text>
       </Text>
     </Container>
-    <CodeBlock id="text-sample-semantic-code" sourceCode={codeBlockContents.textSemantic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="text-sample-semantic-code"
+      sourceCode={codeEditorContents.textSemantic}
+      language="svelte"
+    />
   </Container>
 </Container>

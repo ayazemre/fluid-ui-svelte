@@ -79,7 +79,7 @@
 
 <Container
   id={`fluid-carousel-${id}`}
-  bind:underlyingElement={containerElement}
+  bind:domReference={containerElement}
   onscroll={handleScroll}
   onscrollend={handleScrollEnd}
   class={[

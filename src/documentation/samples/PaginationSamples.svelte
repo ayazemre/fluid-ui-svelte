@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock, Pagination } from "#src/lib/components/index.ts";
+  import { Pagination } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let basicPage = $state(1);
   let largePage = $state(10);
@@ -24,7 +27,14 @@
       <Pagination id="pagination-basic" bind:currentPage={basicPage} totalPages={5} />
       <Text id="pagination-sample-basic-status" class="mt-4 text-sm text-neutral-600 dark:text-neutral-400">Current Page: {basicPage}</Text>
     </Container>
-    <CodeBlock id="pagination-sample-basic-code" sourceCode={codeBlockContents.paginationBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="pagination-sample-basic-code"
+      sourceCode={codeEditorContents.paginationBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Large Page Count with Ellipsis -->

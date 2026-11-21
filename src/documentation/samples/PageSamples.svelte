@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Container, Text, Image, InputField } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let previewTitle = $state("Fluid UI Svelte");
   let previewDescription = $state("A highly flexible and customizable UI library built with Svelte 5 and Tailwind CSS 4.");
@@ -73,7 +75,14 @@
       </Text>
     </Container>
 
-    <CodeBlock id="page-sample-basic-code" sourceCode={codeBlockContents.pageBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="page-sample-basic-code"
+      sourceCode={codeEditorContents.pageBasic}
+      language="svelte"
+    />
   </Container>
 
   <Container id="page-sample-metadata-section" class="flex flex-col gap-4">
@@ -82,6 +91,13 @@
       >You can provide comprehensive metadata for SEO and social sharing previews (Open Graph & Twitter).</Text
     >
 
-    <CodeBlock id="page-sample-metadata-code" sourceCode={codeBlockContents.pageMetadata} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="page-sample-metadata-code"
+      sourceCode={codeEditorContents.pageMetadata}
+      language="svelte"
+    />
   </Container>
 </Container>

@@ -7,9 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-21
+
+### Added
+
+- `CodeEditor` highlights the changed characters inside paired removed and added lines in difference views, instead of marking the whole line. The `changedAddedText` and `changedRemovedText` keys in `differenceThemeMapping` set the highlight classes.
+
 ### Changed
 
+- Breaking: the `underlyingElement` prop on base elements and components is renamed to `domReference`. Use `bind:domReference` in place of `bind:underlyingElement`.
+- Breaking: `fluidui.css` renames the `fluid` layer to `fluid-ui` and declares the layers `theme, base, fluid-ui, utilities, overrides, tokens, variants`. The `components` layer is removed. Component overrides go in `@layer overrides`, token values in `@layer tokens`, and variants in `@layer variants`. Application CSS in an unlayered `styles.css` no longer wins over the library by default.
+- Breaking: `InternationalInput` no longer ships country data or a default country. The `countries` prop is required and is keyed by ISO country code, and `selectedCountry` is required. The `CountryData` and `CountryDataMap` types are exported from `fluid-ui-svelte/prebuilt`.
+- Breaking: `CodeEditor` no longer ships a parser or colors. It applies a consumer-provided line tokenizer (`tokenizer`) and color maps (`tokenThemeMapping`, `differenceThemeMapping`). `language` is a label only, and `parserConfiguration` and the built-in Svelte grammar are removed. The Svelte tokenizer and colors live in the documentation site.
+- `CodeEditor` runs the tokenizer one line at a time and carries its state to the next line. A difference row inside a multi-line token, such as a block comment, is highlighted with the state of the lines above it.
+- `CodeEditor` computes line differences with Myers' algorithm. Large inputs no longer allocate a full table of line pairs.
+- `CodeEditor` difference gutter shows a `+` or `-` marker only on fully added or removed lines. Partially changed lines show no marker and no line number, and their changed characters are highlighted instead.
+- `CodeEditor` handles accept and reject actions itself and updates the bindable `sourceCode` and `modifiedCode` props. The `onAcceptDifferenceLine` and `onRejectDifferenceLine` props and the `DifferenceLineActionPayload` type are removed.
 - The `containerfile` exposes and serves the site on port 4000 instead of 3000.
+- Breaking: `CodeBlock` is renamed to `CodeEditor` and moved from the components layer to the prebuilt layer. Import it from `fluid-ui-svelte/prebuilt`. Its root class is now `fluid-code-editor`, and its documentation page moved from `/documentation/components/code-block` to `/documentation/prebuilt/code-editor`.
+
+### Fixed
+
+- `Modal` closes on Escape when focus is inside the modal. The panel no longer stops keydown events from reaching the document.
 
 ## [0.6.0] - 2026-11-19
 

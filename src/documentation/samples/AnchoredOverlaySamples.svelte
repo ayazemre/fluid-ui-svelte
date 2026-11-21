@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Button, Container, Text } from "#src/lib//base/index.ts";
-  import { AnchoredOverlay, CodeBlock } from "#src/lib/components/index.ts";
+  import { AnchoredOverlay } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="anchored-overlay-samples-container" class="flex flex-col gap-10">
@@ -33,7 +36,14 @@
         {/snippet}
       </AnchoredOverlay>
     </Container>
-    <CodeBlock id="anchored-overlay-sample-click-code" sourceCode={codeBlockContents.anchoredOverlayClick} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="anchored-overlay-sample-click-code"
+      sourceCode={codeEditorContents.anchoredOverlayClick}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Hover Trigger -->
@@ -62,6 +72,13 @@
         {/snippet}
       </AnchoredOverlay>
     </Container>
-    <CodeBlock id="anchored-overlay-sample-hover-code" sourceCode={codeBlockContents.anchoredOverlayHover} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="anchored-overlay-sample-hover-code"
+      sourceCode={codeEditorContents.anchoredOverlayHover}
+      language="svelte"
+    />
   </Container>
 </Container>

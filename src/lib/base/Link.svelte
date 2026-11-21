@@ -6,18 +6,18 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     class: className = "",
     children,
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLAnchorElement | null;
+    domReference?: HTMLAnchorElement | null;
     class?: string;
     children: Snippet;
   } & Omit<HTMLAnchorAttributes, "id"> = $props();
 </script>
 
-<a {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, "fluid-link")}>
+<a {id} bind:this={domReference} {...rest} class={mergeClasses(className, "fluid-link")}>
   {@render children()}
 </a>

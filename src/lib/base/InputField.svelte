@@ -6,7 +6,7 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     type = "text",
     value = $bindable(""),
     class: className = "",
@@ -15,7 +15,7 @@
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLInputElement | HTMLTextAreaElement | null;
+    domReference?: HTMLInputElement | HTMLTextAreaElement | null;
     class?: string;
     type?: "text" | "password" | "textarea";
     value?: string;
@@ -28,7 +28,7 @@
 {#if type === "textarea"}
   <textarea
     {id}
-    bind:this={underlyingElement}
+    bind:this={domReference}
     bind:value
     oninput={(event: Event) => {
       if (characterFilter) {
@@ -41,7 +41,7 @@
 {:else}
   <input
     {id}
-    bind:this={underlyingElement}
+    bind:this={domReference}
     bind:value
     {type}
     oninput={(event: Event) => {

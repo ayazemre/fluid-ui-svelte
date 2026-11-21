@@ -1,6 +1,6 @@
 {
   "name": "fluid-ui-svelte",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A pragmatic Svelte 5 component library designed for flexibility and ease of use. It separates low-level semantic wrappers from high-level interactive components, giving you complete control over your application's architecture.",
   "keywords": [
     "svelte"

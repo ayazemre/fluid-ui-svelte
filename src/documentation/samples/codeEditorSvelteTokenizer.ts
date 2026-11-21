@@ -1,30 +1,31 @@
-export const defaultCodeBlockTokenTheme: TokenThemeMapping = {
-  attribute: "fluid-code-token-attribute",
-  comment: "fluid-code-token-comment",
-  delimiter: "fluid-code-token-delimiter",
-  keyword: "fluid-code-token-keyword",
-  number: "fluid-code-token-number",
-  string: "fluid-code-token-string",
-  tag: "fluid-code-token-tag",
-  type: "fluid-code-token-type",
-  variable: "fluid-code-token-variable",
+import type { LineTokenizer, ParserToken, TokenizedLine } from "#src/lib/prebuilt/codeEditor.ts";
+
+type ParserRule = {
+  id: string;
+  pattern: RegExp;
+  token: string;
+  nextState?: string;
+  popState?: boolean;
+  pushState?: string;
 };
 
-export const defaultCodeBlockDiffTheme: DiffThemeMapping = {
-  addedGutter: "fluid-code-diff-added-gutter",
-  addedRow: "fluid-code-diff-added-row",
-  gapRow: "fluid-code-diff-gap",
-  removedGutter: "fluid-code-diff-removed-gutter",
-  removedRow: "fluid-code-diff-removed-row",
+type ParserStateDefinition = {
+  name: string;
+  rules: Array<ParserRule>;
 };
 
-export const svelteParserConfiguration: ParserConfiguration = {
+type ParserConfiguration = {
+  initialState: string;
+  states: Record<string, ParserStateDefinition>;
+};
+
+const codeEditorSvelteGrammar: ParserConfiguration = {
   initialState: "root",
   states: {
     comment: {
       name: "comment",
       rules: [
-        { id: "commentContent", pattern: /^[^<]+/, token: "comment" },
+        { id: "commentContent", pattern: /^(?:(?!-->)[\s\S])+/, token: "comment" },
         { id: "commentEnd", pattern: /^-->/, popState: true, token: "comment" },
         { id: "commentStart", pattern: /^<!--/, token: "comment" },
       ],
@@ -42,8 +43,8 @@ export const svelteParserConfiguration: ParserConfiguration = {
         { id: "scriptOpen", pattern: /^<script(\s[^>]*)?>/, pushState: "script", token: "tag" },
         { id: "styleOpen", pattern: /^<style(\s[^>]*)?>/, pushState: "style", token: "tag" },
         { id: "htmlComment", pattern: /^<!--/, pushState: "comment", token: "comment" },
-        { id: "tagClose", pattern: /^<\//, pushState: "tag", token: "delimiter" },
-        { id: "tagOpen", pattern: /^<(?=[A-Za-z])/, pushState: "tag", token: "delimiter" },
+        { id: "tagClose", pattern: /^<\/(?=[A-Za-z])/, pushState: "tagName", token: "delimiter" },
+        { id: "tagOpen", pattern: /^<(?=[A-Za-z])/, pushState: "tagName", token: "delimiter" },
         { id: "snippetBlock", pattern: /^\{#(if|each|await|key|snippet)[^}]*\}/, token: "keyword" },
         { id: "snippetClose", pattern: /^\{\/(if|each|await|key|snippet)\}/, token: "keyword" },
         { id: "elseBlock", pattern: /^\{:else[^}]*\}/, token: "keyword" },
@@ -97,8 +98,6 @@ export const svelteParserConfiguration: ParserConfiguration = {
       name: "tag",
       rules: [
         { id: "whitespace", pattern: /^\s+/, token: "plain" },
-        { id: "componentName", pattern: /^[A-Z][A-Za-z0-9]*/, token: "type" },
-        { id: "htmlTagName", pattern: /^[a-zA-Z0-9-]+/, token: "tag" },
         { id: "attributeName", pattern: /^[a-zA-Z\-:@]+/, token: "attribute" },
         { id: "equals", pattern: /^=/, token: "delimiter" },
         { id: "doubleQuotedString", pattern: /^"[^"]*"/, token: "string" },
@@ -107,40 +106,100 @@ export const svelteParserConfiguration: ParserConfiguration = {
         { id: "tagEnd", pattern: /^\/?>/, popState: true, token: "delimiter" },
       ],
     },
+    tagName: {
+      name: "tagName",
+      rules: [
+        { id: "componentName", nextState: "tag", pattern: /^[A-Z][A-Za-z0-9]*/, token: "type" },
+        { id: "htmlTagName", nextState: "tag", pattern: /^[a-zA-Z0-9-]+/, token: "tag" },
+      ],
+    },
   },
 };
 
-export type ParserConfiguration = {
-  initialState: string;
-  states: Record<string, ParserStateDefinition>;
-  theme?: TokenThemeMapping;
+export type CodeEditorSvelteTokenizerState = {
+  stateStack: Array<string>;
 };
 
-export type TokenThemeMapping = Record<string, string>;
-
-export type DiffThemeMapping = {
-  addedGutter: string;
-  addedRow: string;
-  gapRow: string;
-  removedGutter: string;
-  removedRow: string;
+type RuleMatch = {
+  matchedRule: ParserRule;
+  matchedText: string;
 };
 
-export type ParserRule = {
-  id: string;
-  pattern: RegExp;
-  token: string;
-  nextState?: string;
-  popState?: boolean;
-  pushState?: string;
+const stickyPatternCache = new WeakMap<RegExp, RegExp>();
+
+export const codeEditorSvelteTokenizer: LineTokenizer<CodeEditorSvelteTokenizerState> = {
+  initialState: { stateStack: [codeEditorSvelteGrammar.initialState] },
+  tokenizeLine: tokenizeSvelteLine,
 };
 
-export type ParserStateDefinition = {
-  name: string;
-  rules: Array<ParserRule>;
-};
+export function resolveSvelteTokenizerForLanguage(language: string): LineTokenizer<CodeEditorSvelteTokenizerState> | undefined {
+  if (language === "svelte" || language === "html") {
+    return codeEditorSvelteTokenizer;
+  }
+  return undefined;
+}
 
-export type ParserToken = {
-  type: string;
-  value: string;
-};
+function getStickyPattern(pattern: RegExp): RegExp {
+  const cachedStickyPattern = stickyPatternCache.get(pattern);
+  if (cachedStickyPattern) {
+    return cachedStickyPattern;
+  }
+  const patternSourceWithoutAnchor = pattern.source.startsWith("^") ? pattern.source.slice(1) : pattern.source;
+  const stickyPattern = new RegExp(patternSourceWithoutAnchor, pattern.flags.replace(/[gy]/g, "") + "y");
+  stickyPatternCache.set(pattern, stickyPattern);
+  return stickyPattern;
+}
+
+function findMatchingRuleAtPosition(candidateRules: Array<ParserRule>, lineText: string, matchPosition: number): RuleMatch | null {
+  for (const candidateRule of candidateRules) {
+    const stickyPattern = getStickyPattern(candidateRule.pattern);
+    stickyPattern.lastIndex = matchPosition;
+    const matchResult = stickyPattern.exec(lineText);
+    if (matchResult && matchResult[0].length > 0) {
+      return { matchedRule: candidateRule, matchedText: matchResult[0] };
+    }
+  }
+  return null;
+}
+
+function applyMatchedRuleToStateStack(stateStack: Array<string>, matchedRule: ParserRule): void {
+  if (matchedRule.popState) {
+    if (stateStack.length > 1) {
+      stateStack.pop();
+    }
+    return;
+  }
+
+  if (matchedRule.pushState) {
+    stateStack.push(matchedRule.pushState);
+    return;
+  }
+
+  if (matchedRule.nextState) {
+    stateStack[stateStack.length - 1] = matchedRule.nextState;
+  }
+}
+
+function tokenizeSvelteLine(lineText: string, previousState: CodeEditorSvelteTokenizerState): TokenizedLine<CodeEditorSvelteTokenizerState> {
+  const stateStack = [...previousState.stateStack];
+  const tokens: Array<ParserToken> = [];
+  let matchPosition = 0;
+
+  while (matchPosition < lineText.length) {
+    const currentStateName = stateStack[stateStack.length - 1] ?? codeEditorSvelteGrammar.initialState;
+    const currentStateDefinition = codeEditorSvelteGrammar.states[currentStateName];
+    const ruleMatch = currentStateDefinition ? findMatchingRuleAtPosition(currentStateDefinition.rules, lineText, matchPosition) : null;
+
+    if (!ruleMatch) {
+      tokens.push({ type: "plain", value: lineText[matchPosition] ?? "" });
+      matchPosition += 1;
+      continue;
+    }
+
+    tokens.push({ type: ruleMatch.matchedRule.token, value: ruleMatch.matchedText });
+    matchPosition += ruleMatch.matchedText.length;
+    applyMatchedRuleToStateStack(stateStack, ruleMatch.matchedRule);
+  }
+
+  return { nextState: { stateStack }, tokens };
+}

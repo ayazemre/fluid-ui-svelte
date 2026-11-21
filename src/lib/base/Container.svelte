@@ -7,7 +7,7 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     type = "div",
     class: className = "",
     transitionFunction = () => {
@@ -18,7 +18,7 @@
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLElement | null;
+    domReference?: HTMLElement | null;
     type?: "div" | "nav" | "section" | "main" | "header" | "footer" | "aside" | "article";
     class?: string;
     transitionFunction?: (node: Element, parameters?: Record<string, unknown>) => TransitionConfig;
@@ -30,7 +30,7 @@
 <svelte:element
   this={type}
   {id}
-  bind:this={underlyingElement}
+  bind:this={domReference}
   {...rest}
   transition:transitionFunction={transitionParameters}
   class={mergeClasses(className, "fluid-container")}

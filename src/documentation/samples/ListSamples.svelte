@@ -1,8 +1,10 @@
 <script lang="ts">
   import { List, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   const fruitItems = ["Apple", "Banana", "Orange"];
   const numberItems = [1, 2, 3];
@@ -25,7 +27,14 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-unordered-code" sourceCode={codeBlockContents.listUnordered} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="list-sample-unordered-code"
+      sourceCode={codeEditorContents.listUnordered}
+      language="svelte"
+    />
   </Container>
 
   <!-- Ordered -->
@@ -39,7 +48,14 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-ordered-code" sourceCode={codeBlockContents.listOrdered} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="list-sample-ordered-code"
+      sourceCode={codeEditorContents.listOrdered}
+      language="svelte"
+    />
   </Container>
 
   <!-- Item Styling -->
@@ -53,7 +69,14 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-styling-code" sourceCode={codeBlockContents.listItemStyling} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="list-sample-styling-code"
+      sourceCode={codeEditorContents.listItemStyling}
+      language="svelte"
+    />
   </Container>
 
   <!-- Complex Objects -->
@@ -69,6 +92,13 @@
         {/snippet}
       </List>
     </Container>
-    <CodeBlock id="list-sample-complex-code" sourceCode={codeBlockContents.listComplex} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="list-sample-complex-code"
+      sourceCode={codeEditorContents.listComplex}
+      language="svelte"
+    />
   </Container>
 </Container>

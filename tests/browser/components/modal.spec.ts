@@ -26,4 +26,19 @@ test.describe("Components Elements E2E Tests", () => {
     const cancelModalButtonElement = page.getByRole("button", { name: "Cancel" });
     await cancelModalButtonElement.click();
   });
+
+  test("Modal Closes On Escape With Focus Inside", async ({ page }) => {
+    const desktopSidebarContainer = page.locator("#documentation-page-sidebar");
+
+    await desktopSidebarContainer.getByRole("link", { name: "Modal" }).click();
+    await page.getByRole("button", { name: "Open Modal" }).click();
+
+    const modalTitleElement = page.getByRole("heading", { name: "Modal Title" });
+    await expect(modalTitleElement).toBeVisible();
+
+    const cancelModalButtonElement = page.getByRole("button", { name: "Cancel" });
+    await cancelModalButtonElement.focus();
+    await page.keyboard.press("Escape");
+    await expect(modalTitleElement).toBeHidden();
+  });
 });

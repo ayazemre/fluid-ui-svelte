@@ -6,7 +6,7 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     caption = "",
     tableHeadItems,
     tableRowItems,
@@ -24,7 +24,7 @@
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLTableElement | null;
+    domReference?: HTMLTableElement | null;
     caption?: string;
     tableHeadItems: Array<T>;
     tableRowItems: Array<Array<U>>;
@@ -42,7 +42,7 @@
   } & Omit<HTMLAttributes<HTMLTableElement>, "id"> = $props();
 </script>
 
-<table {id} bind:this={underlyingElement} class={mergeClasses(className, "fluid-table")} {...rest}>
+<table {id} bind:this={domReference} class={mergeClasses(className, "fluid-table")} {...rest}>
   {#if caption}
     <caption class={mergeClasses(captionClass, "fluid-table-caption")}>
       {caption}

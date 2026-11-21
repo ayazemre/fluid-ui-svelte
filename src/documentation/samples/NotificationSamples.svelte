@@ -2,12 +2,13 @@
   import { onDestroy } from "svelte";
 
   import { Button, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
-  import { NotificationArea } from "#src/lib/prebuilt/index.ts";
+  import { CodeEditor, NotificationArea } from "#src/lib/prebuilt/index.ts";
 
   import type { NotificationPosition } from "#src/lib/prebuilt/notificationArea.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   type CustomNotification = {
     actionLabel?: string;
@@ -298,6 +299,13 @@
       </NotificationArea>
     </Container>
 
-    <CodeBlock id="notification-sample-code" sourceCode={codeBlockContents.notificationBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="notification-sample-code"
+      sourceCode={codeEditorContents.notificationBasic}
+      language="svelte"
+    />
   </Container>
 </Container>

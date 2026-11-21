@@ -5,14 +5,14 @@
 
   let {
     id,
-    underlyingElement = $bindable(null),
+    domReference = $bindable(null),
     class: className = "",
     ...rest
   }: {
     id: string;
-    underlyingElement?: HTMLCanvasElement | null;
+    domReference?: HTMLCanvasElement | null;
     class?: string;
   } & Omit<HTMLCanvasAttributes, "id"> = $props();
 </script>
 
-<canvas {id} bind:this={underlyingElement} {...rest} class={mergeClasses(className, "fluid-canvas")}></canvas>
+<canvas {id} bind:this={domReference} {...rest} class={mergeClasses(className, "fluid-canvas")}></canvas>

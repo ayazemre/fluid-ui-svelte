@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Form, InputField, Button, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let username = $state("");
 </script>
@@ -40,6 +42,13 @@
       </Form>
     </Container>
 
-    <CodeBlock id="form-sample-basic-code" sourceCode={codeBlockContents.formBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="form-sample-basic-code"
+      sourceCode={codeEditorContents.formBasic}
+      language="svelte"
+    />
   </Container>
 </Container>

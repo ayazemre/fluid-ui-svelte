@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { Draggable, CodeBlock } from "#src/lib/components/index.ts";
+  import { Draggable } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let dragStatus = $state("Drag something!");
 </script>
@@ -33,6 +36,13 @@
       <Text id="draggable-sample-status-text" class="text-sm font-mono italic text-neutral-400">{dragStatus}</Text>
     </Container>
 
-    <CodeBlock id="draggable-sample-basic-code" sourceCode={codeBlockContents.draggableBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="draggable-sample-basic-code"
+      sourceCode={codeEditorContents.draggableBasic}
+      language="svelte"
+    />
   </Container>
 </Container>

@@ -2,7 +2,6 @@ export { default as Accordion } from "./Accordion.svelte";
 export { default as AnchoredOverlay } from "./AnchoredOverlay.svelte";
 export { default as CalendarGrid } from "./CalendarGrid.svelte";
 export { default as Carousel } from "./Carousel.svelte";
-export { default as CodeBlock } from "./CodeBlock.svelte";
 export { default as Draggable } from "./Draggable.svelte";
 export { default as Drawer } from "./Drawer.svelte";
 export { default as Dropzone } from "./Dropzone.svelte";

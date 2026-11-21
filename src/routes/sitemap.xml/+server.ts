@@ -5,7 +5,7 @@ const lastmod = new Date().toISOString().split("T")[0];
 export async function GET() {
   const site = "https://fluidui.io";
 
-  const pages = ["", "documentation/getting-started", "documentation/conventions"];
+  const pages = ["", "documentation/getting-started", "documentation/cookbook"];
 
   const componentUrls = [];
   for (const [category, items] of Object.entries(documentationRegistry)) {

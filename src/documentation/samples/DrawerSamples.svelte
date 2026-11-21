@@ -2,9 +2,12 @@
   import { fade, fly } from "svelte/transition";
 
   import { Button, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock, Drawer } from "#src/lib/components/index.ts";
+  import { Drawer } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let isBasicDrawerOpen = $state(false);
   let isPositionedDrawerOpen = $state(false);
@@ -53,7 +56,14 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-basic-code" sourceCode={codeBlockContents.drawerBasicUsage} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="drawer-sample-basic-code"
+      sourceCode={codeEditorContents.drawerBasicUsage}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Positions -->
@@ -107,7 +117,14 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-positions-code" sourceCode={codeBlockContents.drawerPositions} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="drawer-sample-positions-code"
+      sourceCode={codeEditorContents.drawerPositions}
+      language="svelte"
+    />
   </Container>
 
   <!-- 3. Animated -->
@@ -148,7 +165,14 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-animated-code" sourceCode={codeBlockContents.drawerAnimated} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="drawer-sample-animated-code"
+      sourceCode={codeEditorContents.drawerAnimated}
+      language="svelte"
+    />
   </Container>
 
   <!-- 4. Fly Animation -->
@@ -189,6 +213,13 @@
         </Container>
       </Drawer>
     </Container>
-    <CodeBlock id="drawer-sample-fly-code" sourceCode={codeBlockContents.drawerFlyAnimation} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="drawer-sample-fly-code"
+      sourceCode={codeEditorContents.drawerFlyAnimation}
+      language="svelte"
+    />
   </Container>
 </Container>

@@ -6,14 +6,16 @@
     getCountryData,
     getPlaceholderForMode,
     getTriggerDisplay,
+    type CountryDataMap,
     type InternationalInputMode,
   } from "../prebuilt/internationalInput.ts";
 
   let {
     id,
     mode = "phone",
-    selectedCountry = $bindable("US"),
-    dialCode = $bindable("+1"),
+    countries,
+    selectedCountry = $bindable(),
+    dialCode = $bindable(),
     value = $bindable(""),
     placeholder,
     searchPlaceholder = "Search country...",
@@ -22,7 +24,8 @@
   }: {
     id: string;
     mode?: InternationalInputMode;
-    selectedCountry?: string;
+    countries: CountryDataMap;
+    selectedCountry: string;
     dialCode?: string;
     value?: string;
     placeholder?: string;
@@ -33,14 +36,14 @@
 
   let searchQuery = $state("");
 
-  let currentCountry = $derived(getCountryData(selectedCountry));
+  let currentCountry = $derived(getCountryData(countries, selectedCountry));
   let triggerInfo = $derived(getTriggerDisplay(mode, selectedCountry, currentCountry));
-  let filteredCountries = $derived(filterCountryEntries(searchQuery));
+  let filteredCountries = $derived(filterCountryEntries(countries, searchQuery));
 
   $effect(() => {
-    dialCode = currentCountry.dialCode;
+    dialCode = currentCountry?.dialCode;
     if (mode === "country") {
-      value = currentCountry.name;
+      value = currentCountry?.name ?? "";
     }
   });
 </script>

@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Container, InputField, Label, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="label-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -16,7 +18,14 @@
         <InputField id="full-name" placeholder="John Doe" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-standard-code" sourceCode={codeBlockContents.labelStandard} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="label-sample-standard-code"
+      sourceCode={codeEditorContents.labelStandard}
+      language="svelte"
+    />
   </Container>
 
   <!-- Required Indicator -->
@@ -33,7 +42,14 @@
         <InputField id="email-address" type="text" placeholder="john@example.com" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-required-code" sourceCode={codeBlockContents.labelRequired} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="label-sample-required-code"
+      sourceCode={codeEditorContents.labelRequired}
+      language="svelte"
+    />
   </Container>
 
   <!-- Custom Styled -->
@@ -46,6 +62,13 @@
         <InputField id="custom-input" placeholder="Styled input" class="w-full" />
       </Container>
     </Container>
-    <CodeBlock id="label-sample-custom-code" sourceCode={codeBlockContents.labelCustom} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="label-sample-custom-code"
+      sourceCode={codeEditorContents.labelCustom}
+      language="svelte"
+    />
   </Container>
 </Container>

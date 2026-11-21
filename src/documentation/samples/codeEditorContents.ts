@@ -4,7 +4,6 @@
 export const gettingStartedInstallation = `npm install fluid-ui-svelte`;
 
 export const gettingStartedStylesCss = `/* src/styles.css */
-@import "tailwindcss";
 @import "./fluidui.css";
 
 /* Your application styles */`;
@@ -14,7 +13,7 @@ export const gettingStartedUsage = `<script>
   import { Button } from 'fluid-ui-svelte/base';
 
   // Import a pre-built component
-  import { Accordion } from 'fluid-ui-svelte/components';
+  import { Accordion } from 'fluid-ui-svelte/prebuilt';
 </script>
 
 <Button onclick={handleClick}>Submit</Button>
@@ -23,16 +22,60 @@ export const gettingStartedUsage = `<script>
   <!-- Accordion content -->
 </Accordion>`;
 
-export const howToMandatoryId = `<Drawer id="my-drawer" bind:isOpen={isOpen} position="left">
-  <Container id={\`\${id}-panel\`}>...</Container>
-</Drawer>`;
+export const howToSnippetComposition = `<List items={tasks}>
+  {#snippet itemTemplate(item)}
+    <Text class={item.completed ? 'line-through' : ''}>{item.text}</Text>
+  {/snippet}
+</List>`;
 
-export const howToSnippetComposition = `{#snippet anchor({ toggle })}
-  <Button onclick={async () => toggle()}>Open</Button>
-{/snippet}
-{#snippet overlay({ close })}
-  <Container>...</Container>
-{/snippet}`;
+export const howToCompositionLaw = `<!-- Not used: raw HTML tags -->
+<div class="profile">
+  <p>Ada Lovelace</p>
+  <button>Save</button>
+</div>
+
+<!-- Required: base elements -->
+<Container id="profile">
+  <Text id="profile-name">Ada Lovelace</Text>
+  <Button id="profile-save">Save</Button>
+</Container>`;
+
+export const howToBaseProps = `<script lang="ts">
+  import { Button } from "fluid-ui-svelte/base";
+
+  let saveButtonElement: HTMLButtonElement | null = $state(null);
+</script>
+
+<Button id="save-button" class="rounded-full" bind:domReference={saveButtonElement}>Save</Button>`;
+
+export const howToBaseTypeProp = `<Container id="article" type="section">
+  <Text id="article-heading" type="h2">Shipping</Text>
+  <Text id="article-body">Delivery takes three days.</Text>
+</Container>
+
+<InputField id="access-code" type="password" />`;
+
+export const howToBaseUnderlyingElement = `<script lang="ts">
+  import { Canvas, InputField, Text } from "fluid-ui-svelte/base";
+
+  let signatureCanvas: HTMLCanvasElement | null = $state(null);
+  let noteField: HTMLInputElement | HTMLTextAreaElement | null = $state(null);
+  let statusText: HTMLElement | null = $state(null);
+</script>
+
+<Canvas id="signature-pad" bind:domReference={signatureCanvas} />
+<InputField id="note" type="textarea" bind:domReference={noteField} />
+<Text id="status" bind:domReference={statusText}>Saved</Text>`;
+
+export const howToBaseNativeAttributes = `<Link id="docs-link" href="/documentation" target="_blank" rel="noreferrer">Documentation</Link>
+
+<Canvas id="signature-pad" width={320} height={120} aria-label="Signature" />
+
+<Text id="save-status" aria-live="polite">Saved</Text>`;
+
+export const howToImports = `import { Button } from "fluid-ui-svelte/base";
+import { Accordion, Modal } from "fluid-ui-svelte/components";
+import { Breadcrumb } from "fluid-ui-svelte/prebuilt";`;
 
 export const howToNamingAndHandling = `function getCountryData(isoCode: string): CountryData {
   if (!isoCode) return COUNTRY_DATA_MAP["US"];
@@ -43,19 +86,23 @@ export const howToNamingAndHandling = `function getCountryData(isoCode: string):
 export const howToCopyStylesheet = `cp node_modules/fluid-ui-svelte/src/fluidui.css ./src/fluidui.css`;
 
 export const howToStylesheetImport = `/* src/styles.css */
-@import "tailwindcss";
 @import "./fluidui.css";
 
-/* Your application styles go below, unlayered, so they win over the library */`;
+/* fluidui.css is not edited. Component overrides go in the overrides layer, and variants go in the variants layer */
+@layer overrides {
+  .fluid-button {
+    border-radius: 999px;
+  }
+}
 
-export const howToThemeColors = `/* src/styles.css */
-@import "tailwindcss";
-@import "./fluidui.css";
+/* ... */`;
 
+export const howToThemeColors = `/* src/fluidui.css, in the @theme block of your copy */
 @theme {
-  --color-primary-500: #3e6ff3;
+  --color-primary-500: #0f766e;
   --color-secondary-500: #8b5cf6;
   /* every shade from 50 to 950 for primary, secondary, neutral, success, warning, error, and info */
+  /* ... */
 }`;
 
 export const howToIdConvention = `<Accordion id="faq">
@@ -73,23 +120,73 @@ export const howToVariantMarkup = `<Accordion id="faq" variant="faq-tight">
   {#snippet body()}Delivery takes three days.{/snippet}
 </Accordion>`;
 
+export const howToLayerStructure = `/* src/fluidui.css, first line. The order sets which layer wins. */
+@layer theme, base, fluid-ui, utilities, overrides, tokens, variants;
+
+/* theme      @theme tokens: the palette and the font. Brand colors are set here. */
+/* base       Tailwind base styles. Not edited. */
+/* fluid-ui   Library rules for every component. Not edited. */
+/* utilities  Tailwind utility classes. */
+/* overrides  Component overrides for every element of a kind. */
+/* tokens     Override a default token or create your own. */
+/* variants   Rules for the elements inside one variant. Declared last, so it wins. */
+
+/* Unlayered rules in your site stylesheet beat every layer. */`;
+
+export const howToTokensLayer = `/* src/styles.css, after the import of fluidui.css */
+@layer tokens {
+  :root {
+    --color-primary-500: #0f766e;
+    --color-primary-600: #0d6660;
+  }
+}`;
+
 export const howToVariantRules = `/* src/styles.css, after the import of fluidui.css */
+@layer variants {
+  .faq-tight .fluid-accordion-header {
+    padding: 0.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ... */`;
+
+export const howToStylingHooksStyles = `/* src/styles.css */
+@import "./fluidui.css";
+
+/* Unlayered rules override every library layer without !important. */
 .faq-tight .fluid-accordion-header {
   padding: 0.25rem;
   font-size: 0.875rem;
 }`;
 
+export const howToStylingHooksStylesheet = `/* src/fluidui.css */
+@layer theme, base, fluid-ui, utilities, overrides, tokens, variants;
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ... */`;
+
 export const howToOverrideMarkup = `<Button id="save-button" class="rounded-full">Save</Button>`;
 
-export const howToOverrideRules = `/* every fluid-button in the application */
-.fluid-button {
-  border-radius: 999px;
+export const howToOverrideRules = `/* src/styles.css, after the import of fluidui.css */
+@layer overrides {
+  /* every fluid-button in the application */
+  .fluid-button {
+    border-radius: 999px;
+  }
 }
 
-/* every fluid-button inside one variant */
-.faq-tight .fluid-button {
-  padding: 0.25rem;
-}`;
+@layer variants {
+  /* every fluid-button inside one variant */
+  .faq-tight .fluid-button {
+    padding: 0.25rem;
+  }
+}
+
+/* ... */`;
 
 export const howToDarkMode = `<!-- src/routes/+layout.svelte -->
 <script lang="ts">
@@ -333,15 +430,15 @@ const formBasic = `<script>
   </Button>
 </Form>`;
 
-// --- CodeBlock ---
+// --- CodeEditor ---
 
-const codeBlockExample = `<script lang="ts">
-  import CodeBlock from 'fluid-ui-svelte/components/CodeBlock.svelte';
+const codeEditorExample = `<script lang="ts">
+  import CodeEditor from 'fluid-ui-svelte/prebuilt';
 </script>
 
-<CodeBlock language="typescript" sourceCode="console.log('Hello, Fluid UI!');" />`;
+<CodeEditor language="typescript" sourceCode="console.log('Hello, Fluid UI!');" />`;
 
-const codeBlockDiffSource = `<script>
+const codeEditorDifferenceSource = `<script>
   import { Button } from 'fluid-ui-svelte/base';
   import { Container, Text } from 'fluid-ui-svelte/base';
 
@@ -374,7 +471,7 @@ const codeBlockDiffSource = `<script>
   <Button>Sign in</Button>
 </Container>`;
 
-const codeBlockDiffModified = `<script>
+const codeEditorDifferenceModified = `<script>
   import { Button } from 'fluid-ui-svelte/base';
   import { Container, Text } from 'fluid-ui-svelte/base';
 
@@ -404,37 +501,26 @@ const codeBlockDiffModified = `<script>
   <Button>Continue</Button>
 </Container>`;
 
-const codeBlockDiffReview = `<script>
-  import { CodeBlock } from 'fluid-ui-svelte/components';
-  import { applyDiffLineDecision } from 'fluid-ui-svelte/components/codeBlock';
-  import { codeBlockDiffModified, codeBlockDiffSource } from './codeBlockContents';
+const codeEditorDifferenceReview = `<script>
+  import { CodeEditor } from 'fluid-ui-svelte/prebuilt';
+  import { codeEditorDifferenceModified, codeEditorDifferenceSource } from './codeEditorContents';
 
-  let reviewSourceCode = $state(codeBlockDiffSource);
-  let reviewModifiedCode = $state<string | undefined>(codeBlockDiffModified);
+  let reviewSourceCode = $state(codeEditorDifferenceSource);
+  let reviewModifiedCode = $state(codeEditorDifferenceModified);
 </script>
 
-<CodeBlock
-  id="code-block-review"
+<CodeEditor
+  id="code-editor-review"
   language="svelte"
-  sourceCode={reviewSourceCode}
-  modifiedCode={reviewModifiedCode}
-  showDiffLineActions
-  onAcceptDiffLine={({ diffRow }) => {
-    const result = applyDiffLineDecision(reviewSourceCode, reviewModifiedCode ?? '', diffRow, 'accepted');
-    reviewSourceCode = result.sourceCode;
-    reviewModifiedCode = result.modifiedCode;
-  }}
-  onRejectDiffLine={({ diffRow }) => {
-    const result = applyDiffLineDecision(reviewSourceCode, reviewModifiedCode ?? '', diffRow, 'rejected');
-    reviewSourceCode = result.sourceCode;
-    reviewModifiedCode = result.modifiedCode;
-  }}
+  bind:sourceCode={reviewSourceCode}
+  bind:modifiedCode={reviewModifiedCode}
+  showDifferenceLineActions
 />`;
 
 // --- Drawer ---
 
 const drawerBasicUsage = `<script>
-  import { Drawer } from 'fluid-ui-svelte/components';
+  import { Drawer } from 'fluid-ui-svelte/prebuilt';
   import { Button, Text } from 'fluid-ui-svelte/base';
 
   let isBasicDrawerOpen = $state(false);
@@ -451,7 +537,7 @@ const drawerBasicUsage = `<script>
 </Drawer>`;
 
 const drawerPositions = `<script>
-  import { Drawer } from 'fluid-ui-svelte/components';
+  import { Drawer } from 'fluid-ui-svelte/prebuilt';
   let left = $state(false);
   let right = $state(false);
   let top = $state(false);
@@ -469,7 +555,7 @@ const drawerPositions = `<script>
 <Drawer id="drawer-bottom" bind:isOpen={bottom} position="bottom">Bottom Drawer</Drawer>`;
 
 const drawerAnimated = `<script>
-  import { Drawer } from 'fluid-ui-svelte/components';
+  import { Drawer } from 'fluid-ui-svelte/prebuilt';
   import { fly, fade } from 'svelte/transition';
   
   let isAnimatedDrawerOpen = $state(false);
@@ -489,7 +575,7 @@ const drawerAnimated = `<script>
 </Drawer>`;
 
 const drawerFlyAnimation = `<script>
-  import { Drawer } from 'fluid-ui-svelte/components';
+  import { Drawer } from 'fluid-ui-svelte/prebuilt';
   import { fly } from 'svelte/transition';
   
   let isFlyDrawerOpen = $state(false);
@@ -510,7 +596,7 @@ const drawerFlyAnimation = `<script>
 // --- CalendarGrid ---
 
 const calendarGridSingle = `<script>
-  import { CalendarGrid } from 'fluid-ui-svelte/components';
+  import { CalendarGrid } from 'fluid-ui-svelte/prebuilt';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let currentDate = $state(new Date().toISOString().slice(0, 10));
@@ -531,7 +617,7 @@ const calendarGridSingle = `<script>
 </Container>`;
 
 const calendarGridDual = `<script>
-  import { CalendarGrid } from 'fluid-ui-svelte/components';
+  import { CalendarGrid } from 'fluid-ui-svelte/prebuilt';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString().slice(0, 10));
@@ -563,7 +649,7 @@ const calendarGridDual = `<script>
 </Container>`;
 
 const calendarGridSixMonth = `<script>
-  import { CalendarGrid } from 'fluid-ui-svelte/components';
+  import { CalendarGrid } from 'fluid-ui-svelte/prebuilt';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString().slice(0, 10));
@@ -596,7 +682,7 @@ const calendarGridSixMonth = `<script>
 </Container>`;
 
 const calendarGridRange = `<script>
-  import { CalendarGrid } from 'fluid-ui-svelte/components';
+  import { CalendarGrid } from 'fluid-ui-svelte/prebuilt';
   import { Button, Container, Text } from 'fluid-ui-svelte/base';
 
   let baseDate = $state(new Date().toISOString().slice(0, 10));
@@ -646,7 +732,7 @@ const calendarGridRange = `<script>
 </Container>`;
 
 const calendarGridMulti = `<script>
-  import { CalendarGrid } from 'fluid-ui-svelte/components';
+  import { CalendarGrid } from 'fluid-ui-svelte/prebuilt';
   import { Button, Container } from 'fluid-ui-svelte/base';
 
   const addMonthsToIsoDateString = (dateString: string, monthsToAdd: number) => {
@@ -689,7 +775,7 @@ const calendarGridMulti = `<script>
 // --- Carousel ---
 
 const carouselInteractive = `<script>
-  import { Carousel } from 'fluid-ui-svelte/components';
+  import { Carousel } from 'fluid-ui-svelte/prebuilt';
   const items = [...];
 </script>
 
@@ -702,7 +788,7 @@ const carouselInteractive = `<script>
 </Carousel>`;
 
 const carouselUsage = `<script>
-  import { Carousel } from 'fluid-ui-svelte/components';
+  import { Carousel } from 'fluid-ui-svelte/prebuilt';
   const items = [...];
   let activeIndex = $state(0);
 </script>
@@ -716,7 +802,7 @@ const carouselUsage = `<script>
 </Carousel>`;
 
 const carouselAutoplay = `<script>
-  import { Carousel } from 'fluid-ui-svelte/components';
+  import { Carousel } from 'fluid-ui-svelte/prebuilt';
   const items = [...];
   let activeIndex = $state(0);
   let autoplay = $state(true);
@@ -736,7 +822,7 @@ const carouselAutoplay = `<script>
 </Carousel>`;
 
 const imageCropBasic = `<script>
-  import { ImageCrop } from 'fluid-ui-svelte/components';
+  import { ImageCrop } from 'fluid-ui-svelte/prebuilt';
   import { onMount } from 'svelte';
   
   let bitmap = $state<ImageBitmap>();
@@ -753,7 +839,7 @@ const imageCropBasic = `<script>
 {/if}`;
 
 const imageCropUpload = `<script>
-  import { ImageCrop } from 'fluid-ui-svelte/components';
+  import { ImageCrop } from 'fluid-ui-svelte/prebuilt';
   
   let uploadedBitmap = $state<ImageBitmap>();
   let resultImage = $state<string>();
@@ -783,7 +869,7 @@ const imageCropUpload = `<script>
 {/if}`;
 
 const imageCropCircle = `<script>
-  import { ImageCrop } from 'fluid-ui-svelte/components';
+  import { ImageCrop } from 'fluid-ui-svelte/prebuilt';
   import { onMount } from 'svelte';
   
   let bitmap = $state<ImageBitmap>();
@@ -806,7 +892,7 @@ const imageCropCircle = `<script>
 {/if}`;
 
 const imageCropDragToPan = `<script>
-  import { ImageCrop, resolveImageCropState } from 'fluid-ui-svelte/components';
+  import { ImageCrop, resolveImageCropState } from 'fluid-ui-svelte/prebuilt';
   import { onMount } from 'svelte';
 
   const aspectRatio = { x: 1, y: 1 };
@@ -867,7 +953,7 @@ const imageCropDragToPan = `<script>
 </div>`;
 
 const pageBasic = `<script>
-  import { Page } from 'fluid-ui-svelte/components';
+  import { Page } from 'fluid-ui-svelte/prebuilt';
   import { Text } from 'fluid-ui-svelte/base';
 </script>
 
@@ -881,7 +967,7 @@ const pageBasic = `<script>
 </Page>`;
 
 const pageMetadata = `<script>
-  import { Page } from 'fluid-ui-svelte/components';
+  import { Page } from 'fluid-ui-svelte/prebuilt';
 </script>
 
 <Page 
@@ -901,7 +987,7 @@ const pageMetadata = `<script>
 </Page>`;
 
 const switchBasic = `<script>
-  import { Switch } from 'fluid-ui-svelte/components';
+  import { Switch } from 'fluid-ui-svelte/prebuilt';
   let checked = $state(false);
 </script>
 
@@ -918,7 +1004,7 @@ const switchDisabled = `<Switch disabled onclick={async () => {}} />
 // --- Draggable ---
 
 const draggableBasic = `<script>
-  import { Draggable } from 'fluid-ui-svelte/components';
+  import { Draggable } from 'fluid-ui-svelte/prebuilt';
 </script>
 
 <Draggable 
@@ -931,7 +1017,7 @@ const draggableBasic = `<script>
 // --- Dropzone ---
 
 const dropzoneFile = `<script>
-  import { Dropzone } from 'fluid-ui-svelte/components';
+  import { Dropzone } from 'fluid-ui-svelte/prebuilt';
   
   let droppedFiles = $state<File[]>([]);
 </script>
@@ -958,7 +1044,7 @@ const dropzoneFile = `<script>
 </Dropzone>`;
 
 const dropzoneData = `<script>
-  import { Dropzone } from 'fluid-ui-svelte/components';
+  import { Dropzone } from 'fluid-ui-svelte/prebuilt';
   
   let droppedData = $state('');
 </script>
@@ -983,7 +1069,7 @@ const dropzoneData = `<script>
 // --- Anchored Overlay ---
 
 const anchoredOverlayClick = `<script>
-  import { AnchoredOverlay } from 'fluid-ui-svelte/components';
+  import { AnchoredOverlay } from 'fluid-ui-svelte/prebuilt';
   import { Button, Text } from 'fluid-ui-svelte/base';
 </script>
 
@@ -1001,7 +1087,7 @@ const anchoredOverlayClick = `<script>
 </AnchoredOverlay>`;
 
 const anchoredOverlayHover = `<script>
-  import { AnchoredOverlay } from 'fluid-ui-svelte/components';
+  import { AnchoredOverlay } from 'fluid-ui-svelte/prebuilt';
   import { Text } from 'fluid-ui-svelte/base';
 </script>
 
@@ -1021,7 +1107,7 @@ const anchoredOverlayHover = `<script>
 // --- Modal ---
 
 const modalBasic = `<script>
-  import { Modal } from 'fluid-ui-svelte/components';
+  import { Modal } from 'fluid-ui-svelte/prebuilt';
   import { Button, Text, Container } from 'fluid-ui-svelte/base';
 
   let isModalOpen = $state(false);
@@ -1148,7 +1234,7 @@ const searchableSelectorImages = `<script>
 // --- Pagination ---
 
 const paginationBasic = `<script>
-  import { Pagination } from 'fluid-ui-svelte/components';
+  import { Pagination } from 'fluid-ui-svelte/prebuilt';
 
   let currentPage = $state(1);
 </script>
@@ -1207,7 +1293,7 @@ const notificationBasic = `<script lang="ts">
 // --- Time Picker ---
 
 const timePickerHourOnly = `<script>
-  import { TimePicker } from 'fluid-ui-svelte/components';
+  import { TimePicker } from 'fluid-ui-svelte/prebuilt';
 
   let selectedHour = $state('14');
 </script>
@@ -1219,7 +1305,7 @@ const timePickerHourOnly = `<script>
 />`;
 
 const timePickerBasic = `<script>
-  import { TimePicker } from 'fluid-ui-svelte/components';
+  import { TimePicker } from 'fluid-ui-svelte/prebuilt';
 
   let selectedTime = $state('14:30');
 </script>
@@ -1231,7 +1317,7 @@ const timePickerBasic = `<script>
 />`;
 
 const timePickerWithSeconds = `<script>
-  import { TimePicker } from 'fluid-ui-svelte/components';
+  import { TimePicker } from 'fluid-ui-svelte/prebuilt';
 
   let selectedTime = $state('14:30:45');
 </script>
@@ -1244,7 +1330,7 @@ const timePickerWithSeconds = `<script>
 />`;
 
 const timePickerTwelveHour = `<script>
-  import { TimePicker } from 'fluid-ui-svelte/components';
+  import { TimePicker } from 'fluid-ui-svelte/prebuilt';
 
   let selectedTime = $state('02:30 PM');
 </script>
@@ -1255,7 +1341,7 @@ const timePickerTwelveHour = `<script>
   bind:selectedTime
 />`;
 
-export const codeBlockContents = {
+export const codeEditorContents = {
   accordionCustom,
   accordionStandard,
   anchoredOverlayClick,
@@ -1275,10 +1361,10 @@ export const codeBlockContents = {
   carouselAutoplay,
   carouselInteractive,
   carouselUsage,
-  codeBlockDiffModified,
-  codeBlockDiffReview,
-  codeBlockDiffSource,
-  codeBlockExample,
+  codeEditorDifferenceModified,
+  codeEditorDifferenceReview,
+  codeEditorDifferenceSource,
+  codeEditorExample,
   containerFooter,
   containerHeader,
   containerNav,
@@ -1294,7 +1380,6 @@ export const codeBlockContents = {
   gettingStartedInstallation,
   gettingStartedStylesCss,
   gettingStartedUsage,
-  howToMandatoryId,
   howToNamingAndHandling,
   howToSnippetComposition,
   imageCropBasic,

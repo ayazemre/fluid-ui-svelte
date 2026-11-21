@@ -6,7 +6,7 @@ export const documentationSidebarGroups: Array<DocumentationNavigationGroup> = [
     label: "Introduction",
     links: [
       { label: "Getting Started", slug: "getting-started", url: "/documentation/getting-started" },
-      { label: "Conventions", slug: "conventions", url: "/documentation/conventions" },
+      { label: "Cookbook", slug: "cookbook", url: "/documentation/cookbook" },
     ],
   },
   { id: "base", label: "Base", links: buildCategoryLinks("base", documentationRegistry.base) },

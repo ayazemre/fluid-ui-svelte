@@ -3,9 +3,12 @@
   import { fade } from "svelte/transition";
 
   import { Container, Text } from "#src/lib/base/index.ts";
-  import { Accordion, CodeBlock } from "#src/lib/components/index.ts";
+  import { Accordion } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 </script>
 
 <Container id="accordion-samples-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -28,7 +31,14 @@
         {/snippet}
       </Accordion>
     </Container>
-    <CodeBlock id="accordion-sample-standard-code" sourceCode={codeBlockContents.accordionStandard} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="accordion-sample-standard-code"
+      sourceCode={codeEditorContents.accordionStandard}
+      language="svelte"
+    />
   </Container>
 
   <!-- Custom Transition -->
@@ -49,6 +59,13 @@
         {/snippet}
       </Accordion>
     </Container>
-    <CodeBlock id="accordion-sample-custom-code" sourceCode={codeBlockContents.accordionCustom} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="accordion-sample-custom-code"
+      sourceCode={codeEditorContents.accordionCustom}
+      language="svelte"
+    />
   </Container>
 </Container>

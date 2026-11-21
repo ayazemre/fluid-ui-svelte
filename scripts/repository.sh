@@ -14,7 +14,7 @@ build_container_image() {
   fi
 
   package_version="$(read_package_field --field_name=version)" || return 1
-  image_reference="localhost/fluid-ui-svelte:$package_version"
+  image_reference="localhost/fluid-ui-svelte-documentation-website:$package_version"
 
   printf '\033[94m%s\033[0m\n' "Starting build of the container image $image_reference" >&2
   (cd "$repository_root_path" && podman build --file containerfile --tag "$image_reference" .) >&2 || {
@@ -195,10 +195,10 @@ commit_repository_changes() {
 
 deploy_container_image() {
   # Function metadata
-  # Description: Pushes the container image of the package version to a podman connection with podman image scp, then replaces the fluid-ui-svelte-documentation-website container on that connection with a container limited to 75 percent of the total CPUs of the remote host and publishes port 4000. It reads the CPU count of the remote host, and it reads the CPU quota back from the container after it starts. It writes the progress and the reasons to stderr and nothing to stdout.
+  # Description: Pushes the container image of the package version to a podman connection with podman image scp, then replaces the fluid-ui-svelte-documentation-website container on that connection with a container that publishes port 4000. It writes the progress and the reasons to stderr and nothing to stdout.
   # Input: --podman_connection=<podman connection name>, as listed by podman system connection list.
-  # Exit: 0 when the container runs on the connection with the CPU limit, 1 when podman is missing, the image is not built, the version cannot be read, the host CPU count is not a positive integer, a podman step fails, or the CPU limit is not applied, 2 when --podman_connection is missing, unknown, or an argument is not accepted.
-  local podman_connection_name="" argument="" package_version="" image_reference="" connection_name_list="" container_name="fluid-ui-svelte-documentation-website" host_cpu_count="" cpu_share_percent="75" cpu_period_microseconds="100000" cpu_quota_microseconds="" applied_cpu_quota_microseconds="" applied_cpu_period_microseconds="" container_running_state=""
+  # Exit: 0 when the container runs on the connection, 1 when podman is missing, the image is not built, the version cannot be read, a podman step fails, or the container is not running, 2 when --podman_connection is missing, unknown, or an argument is not accepted.
+  local podman_connection_name="" argument="" package_version="" image_reference="" connection_name_list="" container_name="fluid-ui-svelte-documentation-website" container_running_state=""
 
   for argument in "$@"; do
     case "$argument" in
@@ -229,18 +229,8 @@ deploy_container_image() {
     return 2
   fi
 
-  host_cpu_count="$(podman --connection "$podman_connection_name" info --format '{{.Host.CPUs}}')" || {
-    printf '\033[31m%s\033[0m\n' "Error: the CPU count of the host behind $podman_connection_name cannot be read, check the connection" >&2
-    return 1
-  }
-  if ! printf '%s\n' "$host_cpu_count" | grep -Eq '^[1-9][0-9]*$'; then
-    printf '\033[31m%s\033[0m\n' "Error: the CPU count $host_cpu_count read from $podman_connection_name is not a positive integer" >&2
-    return 1
-  fi
-  cpu_quota_microseconds=$((host_cpu_count * cpu_share_percent * cpu_period_microseconds / 100))
-
   package_version="$(read_package_field --field_name=version)" || return 1
-  image_reference="localhost/fluid-ui-svelte:$package_version"
+  image_reference="localhost/fluid-ui-svelte-documentation-website:$package_version"
   if ! podman image exists "$image_reference"; then
     printf '\033[31m%s\033[0m\n' "Error: the image $image_reference is not built, run the build operation first" >&2
     return 1
@@ -258,23 +248,10 @@ deploy_container_image() {
     printf '\033[31m%s\033[0m\n' "Error: the old container $container_name on $podman_connection_name cannot be removed" >&2
     return 1
   }
-  podman --connection "$podman_connection_name" run --detach --name "$container_name" --cpu-period="$cpu_period_microseconds" --cpu-quota="$cpu_quota_microseconds" --publish 4000:4000 "$image_reference" >&2 || {
+  podman --connection "$podman_connection_name" run --detach --name "$container_name" --publish 4000:4000 "$image_reference" >&2 || {
     printf '\033[31m%s\033[0m\n' "Error: the container $container_name cannot start on $podman_connection_name, check the output above" >&2
     return 1
   }
-
-  applied_cpu_quota_microseconds="$(podman --connection "$podman_connection_name" container inspect --format '{{.HostConfig.CpuQuota}}' "$container_name")" || {
-    printf '\033[31m%s\033[0m\n' "Error: the CPU quota of $container_name on $podman_connection_name cannot be read" >&2
-    return 1
-  }
-  applied_cpu_period_microseconds="$(podman --connection "$podman_connection_name" container inspect --format '{{.HostConfig.CpuPeriod}}' "$container_name")" || {
-    printf '\033[31m%s\033[0m\n' "Error: the CPU period of $container_name on $podman_connection_name cannot be read" >&2
-    return 1
-  }
-  if [ "$applied_cpu_quota_microseconds" != "$cpu_quota_microseconds" ] || [ "$applied_cpu_period_microseconds" != "$cpu_period_microseconds" ]; then
-    printf '\033[31m%s\033[0m\n' "Error: the CPU limit of $container_name is quota $applied_cpu_quota_microseconds over period $applied_cpu_period_microseconds, expected quota $cpu_quota_microseconds over period $cpu_period_microseconds" >&2
-    return 1
-  fi
 
   container_running_state="$(podman --connection "$podman_connection_name" container inspect --format '{{.State.Running}}' "$container_name")" || return 1
   if [ "$container_running_state" != "true" ]; then
@@ -282,7 +259,7 @@ deploy_container_image() {
     return 1
   fi
 
-  printf '\033[32m%s\033[0m\n' "Deploy of $image_reference to $podman_connection_name finished, the container has $cpu_share_percent percent of the $host_cpu_count CPUs of the host" >&2
+  printf '\033[32m%s\033[0m\n' "Deploy of $image_reference to $podman_connection_name finished, the container is running on port 4000" >&2
   return 0
 }
 
@@ -770,8 +747,8 @@ print_repository_help() {
   printf '%s\n' "  test              Check node, install dependencies, build, run the browser tests, exits 1 when a step fails"
   printf '%s\n' "  push              Run the lint with fixes and the format, commit every change with --commit_message=<type: description>, then push the current branch (dev, main, development/*, or maintenance/*), exits 1 when a step fails or the branch is refused, exits 2 when the commit message is wrong"
   printf '%s\n' "  publish           Check node, install dependencies, refuse when the version is not higher than npm, build, then publish with provenance, exits 1 when a step fails"
-  printf '%s\n' "  build             Build the container image from the containerfile with podman, tagged localhost/fluid-ui-svelte:<version>, exits 1 when the build fails"
-  printf '%s\n' "  deploy            Transfer the built image to a podman connection with --podman_connection=<name>, then run it there on port 4000 limited to 75 percent of the total CPUs of the remote host, exits 1 when a step fails, exits 2 when the connection is missing or unknown"
+  printf '%s\n' "  build             Build the container image from the containerfile with podman, tagged localhost/fluid-ui-svelte-documentation-website:<version>, exits 1 when the build fails"
+  printf '%s\n' "  deploy            Transfer the built image to a podman connection with --podman_connection=<name>, then run it there on port 4000, exits 1 when a step fails, exits 2 when the connection is missing or unknown"
   return 0
 }
 

@@ -1,9 +1,10 @@
-@layer theme, base, fluid, components, utilities;
+@layer theme, base, fluid-ui, utilities, overrides, tokens, variants;
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Theme tokens. Edit these to change the palette and the font. */
 @theme {
   --font-family-sans: "Inter", sans-serif;
   --color-*: initial;
@@ -107,11 +108,8 @@
   --color-error-950: #450a0a;
 }
 
-@layer fluid {
-  /* ==========================================================================
-     BASE LAYER STYLES
-     ========================================================================== */
-
+/* Do not edit. These are the library defaults. Component overrides go in the overrides layer, variants go in the variants layer, and token values go in the tokens layer. */
+@layer fluid-ui {
   /* Shared transition for base elements ----- */
   .fluid-button,
   .fluid-canvas,
@@ -209,11 +207,6 @@
     @apply text-neutral-950 dark:text-neutral-50;
   }
 
-  /* ==========================================================================
-     COMPONENT LAYER STYLES
-     Complex UI elements composed from the Base Layer.
-     ========================================================================== */
-
   /* Shared transition for component elements ----- */
   .fluid-drawer-panel,
   .fluid-draggable,
@@ -284,65 +277,28 @@
     @apply snap-start;
   }
 
-  /* Code Block ---------------------- */
-  .fluid-code-block {
-    @apply flex flex-col overflow-auto rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
+  /* Code Editor ---------------------- */
+  .fluid-code-editor {
+    @apply grid grid-cols-[auto_minmax(0,1fr)] overflow-auto rounded-md bg-neutral-200 py-2 font-mono text-sm text-neutral-800 dark:bg-neutral-950 dark:text-neutral-300;
   }
-  .fluid-code-block-row {
-    @apply flex items-start gap-2;
+  .fluid-code-editor-row {
+    @apply grid col-span-full grid-cols-subgrid *:only:col-span-full;
   }
-  .fluid-code-block-index {
-    @apply sticky left-0 z-1 min-w-10 shrink-0 border-r border-neutral-500 bg-neutral-200 px-2 text-right text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
+  .fluid-code-editor-index {
+    @apply sticky left-0 z-1 flex gap-2 border-r border-neutral-500 bg-neutral-200 px-2 text-neutral-500 select-none dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-500;
   }
-  .fluid-code-block-content {
-    @apply flex min-w-0 flex-1 flex-col px-4;
+  .fluid-code-editor-marker {
+    @apply w-[1ch] flex-none text-center;
   }
-  .fluid-code-block-actions {
-    @apply flex shrink-0 items-center gap-1 px-2;
+  .fluid-code-editor-number {
+    @apply flex-1 text-right whitespace-pre;
   }
-  .fluid-code-token-attribute {
-    @apply text-[#0284c7] dark:text-[#38bdf8];
+  .fluid-code-editor-content {
+    @apply flex min-w-0 items-start px-4;
   }
-  .fluid-code-token-comment {
-    @apply text-[#737373] italic;
+  .fluid-code-editor-actions {
+    @apply ml-auto flex h-[1lh] shrink-0 items-center gap-1 pl-2 select-none;
   }
-  .fluid-code-token-delimiter {
-    @apply text-[#404040] dark:text-[#d4d4d4];
-  }
-  .fluid-code-token-keyword {
-    @apply text-[#9333ea] dark:text-[#c084fc];
-  }
-  .fluid-code-token-number {
-    @apply text-[#db2777] dark:text-[#f472b6];
-  }
-  .fluid-code-token-string {
-    @apply text-[#d97706] dark:text-[#fcd34d];
-  }
-  .fluid-code-token-tag {
-    @apply text-[#dc2626] dark:text-[#f87171];
-  }
-  .fluid-code-token-type {
-    @apply text-[#16a34a] dark:text-[#4ade80];
-  }
-  .fluid-code-token-variable {
-    @apply text-[#0891b2] dark:text-[#22d3ee];
-  }
-  .fluid-code-diff-added-gutter {
-    @apply text-[#1a7f37] dark:text-[#3fb950];
-  }
-  .fluid-code-diff-added-row {
-    @apply bg-[#e6ffec] dark:bg-[#12261c];
-  }
-  .fluid-code-diff-gap {
-    @apply text-[#737373] italic;
-  }
-  .fluid-code-diff-removed-gutter {
-    @apply text-[#d1242c] dark:text-[#f85149];
-  }
-  .fluid-code-diff-removed-row {
-    @apply bg-[#ffebe9] dark:bg-[#2c1618];
-  }
-
   /* Drawer -------------------------- */
   .fluid-drawer {
     @apply fixed inset-0 z-10 bg-black/30 backdrop-blur-sm;
@@ -421,7 +377,7 @@
     @apply flex items-stretch gap-1.5;
   }
   .fluid-time-picker-column {
-    @apply flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 [scrollbar-width:thin];
+    @apply flex max-h-48 w-12 flex-col gap-1 overflow-y-auto px-0.5 scrollbar-thin;
   }
   .fluid-time-picker-cell {
     @apply flex h-8 w-full items-center justify-center rounded-md text-xs text-neutral-700 transition-colors dark:text-neutral-200;
@@ -686,25 +642,25 @@
     @apply bg-primary-500;
   }
   .fluid-searchable-selector-avatar-color-1 {
-    @apply bg-[#8b5cf6];
+    @apply bg-secondary-500;
   }
   .fluid-searchable-selector-avatar-color-2 {
-    @apply bg-[#10b981];
+    @apply bg-success-500;
   }
   .fluid-searchable-selector-avatar-color-3 {
-    @apply bg-[#f59e0b];
+    @apply bg-warning-500;
   }
   .fluid-searchable-selector-avatar-color-4 {
-    @apply bg-[#f43f5e];
+    @apply bg-error-500;
   }
   .fluid-searchable-selector-avatar-color-5 {
-    @apply bg-[#0ea5e9];
+    @apply bg-info-500;
   }
   .fluid-searchable-selector-avatar-color-6 {
-    @apply bg-[#14b8a6];
+    @apply bg-success-700;
   }
   .fluid-searchable-selector-avatar-color-7 {
-    @apply bg-[#f97316];
+    @apply bg-warning-600;
   }
   .fluid-searchable-selector-label {
     @apply truncate text-sm font-medium text-neutral-900 dark:text-neutral-100;

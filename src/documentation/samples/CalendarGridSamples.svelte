@@ -1,9 +1,12 @@
 <script lang="ts">
   import { Button, Container, Text } from "#src/lib//base/index.ts";
   import { addMonthsToIsoDateString, getCurrentIsoDateString } from "#src/lib/components/calendarGrid.ts";
-  import { CalendarGrid, CodeBlock } from "#src/lib/components/index.ts";
+  import { CalendarGrid } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let singleCalendarDate = $state(getCurrentIsoDateString());
   const changeSingleMonth = (monthIncrement: number) => {
@@ -37,7 +40,14 @@
         <CalendarGrid id="calendar-single" currentDate={singleCalendarDate} />
       </Container>
     </Container>
-    <CodeBlock id="calendar-grid-sample-single-code" sourceCode={codeBlockContents.calendarGridSingle} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="calendar-grid-sample-single-code"
+      sourceCode={codeEditorContents.calendarGridSingle}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Multi Calendar -->
@@ -70,6 +80,13 @@
         </Container>
       </Container>
     </Container>
-    <CodeBlock id="calendar-grid-sample-multi-code" sourceCode={codeBlockContents.calendarGridMulti} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="calendar-grid-sample-multi-code"
+      sourceCode={codeEditorContents.calendarGridMulti}
+      language="svelte"
+    />
   </Container>
 </Container>

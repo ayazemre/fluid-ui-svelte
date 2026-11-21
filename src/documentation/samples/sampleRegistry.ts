@@ -20,7 +20,6 @@ export const documentationSampleRegistry: Record<string, Record<string, Componen
     "anchored-overlay": Samples.AnchoredOverlaySamples,
     "calendar-grid": Samples.CalendarGridSamples,
     carousel: Samples.CarouselSamples,
-    "code-block": Samples.CodeBlockSamples,
     draggable: Samples.DraggableSamples,
     drawer: Samples.DrawerSamples,
     dropzone: Samples.DropzoneSamples,
@@ -33,6 +32,7 @@ export const documentationSampleRegistry: Record<string, Record<string, Componen
   },
   prebuilt: {
     breadcrumb: Samples.BreadcrumbSamples,
+    "code-editor": Samples.CodeEditorSamples,
     "international-input": Samples.InternationalInputSamples,
     "notification-area": Samples.NotificationSamples,
     "searchable-selector": Samples.SearchableSelectorSamples,

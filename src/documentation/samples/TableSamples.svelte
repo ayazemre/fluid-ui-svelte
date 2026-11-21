@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Table, Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   type User = {
     id: number;
@@ -37,7 +39,14 @@
         {/snippet}
       </Table>
     </Container>
-    <CodeBlock id="table-sample-basic-code" sourceCode={codeBlockContents.tableStandard} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="table-sample-basic-code"
+      sourceCode={codeEditorContents.tableStandard}
+      language="svelte"
+    />
   </Container>
 
   <!-- Custom Styled -->
@@ -65,6 +74,13 @@
         {/snippet}
       </Table>
     </Container>
-    <CodeBlock id="table-sample-styled-code" sourceCode={codeBlockContents.tableStyled} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="table-sample-styled-code"
+      sourceCode={codeEditorContents.tableStyled}
+      language="svelte"
+    />
   </Container>
 </Container>

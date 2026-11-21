@@ -1,9 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { CodeBlock } from "#src/lib/components/index.ts";
-  import { InternationalInput } from "#src/lib/prebuilt/index.ts";
+  import { CodeEditor, InternationalInput } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
+  import { internationalInputCountries } from "./internationalInputCountries.ts";
 
   let phoneNumber = $state("");
   let selectedCountry = $state("US");
@@ -24,13 +26,28 @@
     </Text>
     <Container id="international-input-phone-preview" class="rounded-xl border p-6 dark:border-neutral-800">
       <Container id="international-input-phone-wrapper" class="max-w-md">
-        <InternationalInput id="international-phone-demo" mode="phone" bind:selectedCountry bind:dialCode bind:value={phoneNumber} variant="w-full" />
+        <InternationalInput
+          countries={internationalInputCountries}
+          id="international-phone-demo"
+          mode="phone"
+          bind:selectedCountry
+          bind:dialCode
+          bind:value={phoneNumber}
+          variant="w-full"
+        />
         <Text id="international-input-phone-status" class="mt-3 text-sm text-neutral-500">
           Selected: {selectedCountry} | Dial Code: {dialCode} | Value: {phoneNumber}
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-phone-code" sourceCode={codeBlockContents.internationalInputBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="international-input-phone-code"
+      sourceCode={codeEditorContents.internationalInputBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- 2. Country Only Mode -->
@@ -39,13 +56,25 @@
     <Text id="international-input-country-description" class="text-neutral-500">Clean country picker without an extra input field.</Text>
     <Container id="international-input-country-preview" class="rounded-xl border p-6 dark:border-neutral-800">
       <Container id="international-input-country-wrapper" class="max-w-md">
-        <InternationalInput id="international-country-demo" mode="country" bind:selectedCountry={selectedCountryOnly} />
+        <InternationalInput
+          countries={internationalInputCountries}
+          id="international-country-demo"
+          mode="country"
+          bind:selectedCountry={selectedCountryOnly}
+        />
         <Text id="international-input-country-status" class="mt-3 text-sm text-neutral-500">
           Selected Country: {selectedCountryOnly}
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-country-code" sourceCode={codeBlockContents.internationalInputCountry} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="international-input-country-code"
+      sourceCode={codeEditorContents.internationalInputCountry}
+      language="svelte"
+    />
   </Container>
 
   <!-- 3. Currency Mode -->
@@ -55,6 +84,7 @@
     <Container id="international-input-currency-preview" class="rounded-xl border p-6 dark:border-neutral-800">
       <Container id="international-input-currency-wrapper" class="max-w-md">
         <InternationalInput
+          countries={internationalInputCountries}
           id="international-currency-demo"
           mode="currency"
           bind:selectedCountry={currencyCountry}
@@ -66,6 +96,13 @@
         </Text>
       </Container>
     </Container>
-    <CodeBlock id="international-input-currency-code" sourceCode={codeBlockContents.internationalInputCurrency} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="international-input-currency-code"
+      sourceCode={codeEditorContents.internationalInputCurrency}
+      language="svelte"
+    />
   </Container>
 </Container>

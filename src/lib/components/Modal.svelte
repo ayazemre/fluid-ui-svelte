@@ -54,7 +54,6 @@
     <Container
       id={`fluid-modal-panel-${id}`}
       onclick={(event: MouseEvent) => event.stopPropagation()}
-      onkeydown={(event: KeyboardEvent) => event.stopPropagation()}
       role="presentation"
       class="fluid-modal-panel"
       {transitionFunction}

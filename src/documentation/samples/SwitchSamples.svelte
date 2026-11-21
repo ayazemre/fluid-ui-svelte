@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Container, Text } from "#src/lib//base/index.ts";
-  import { Switch, CodeBlock } from "#src/lib/components/index.ts";
+  import { Switch } from "#src/lib/components/index.ts";
+  import { CodeEditor } from "#src/lib/prebuilt/index.ts";
 
-  import { codeBlockContents } from "./codeBlockContents.ts";
+  import { codeEditorContents } from "./codeEditorContents.ts";
+  import { codeEditorSvelteTokenizer } from "./codeEditorSvelteTokenizer.ts";
+  import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "./codeEditorThemes.ts";
 
   let isChecked = $state(false);
 </script>
@@ -26,7 +29,14 @@
       </Text>
     </Container>
 
-    <CodeBlock id="switch-sample-basic-code" sourceCode={codeBlockContents.switchBasic} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="switch-sample-basic-code"
+      sourceCode={codeEditorContents.switchBasic}
+      language="svelte"
+    />
   </Container>
 
   <!-- Example 2: Disabled State -->
@@ -45,6 +55,13 @@
       </Container>
     </Container>
 
-    <CodeBlock id="switch-sample-disabled-code" sourceCode={codeBlockContents.switchDisabled} language="svelte" />
+    <CodeEditor
+      tokenizer={codeEditorSvelteTokenizer}
+      tokenThemeMapping={codeEditorTokenThemeMapping}
+      differenceThemeMapping={codeEditorDifferenceThemeMapping}
+      id="switch-sample-disabled-code"
+      sourceCode={codeEditorContents.switchDisabled}
+      language="svelte"
+    />
   </Container>
 </Container>
