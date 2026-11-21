@@ -1569,6 +1569,13 @@ export const documentationRegistry = {
           type: "boolean",
         },
         {
+          default: "false",
+          description:
+            "Whether a line of the modified side can be edited in a difference view. Clicking the line or pressing Enter on it opens an input. Enter or blur saves the line to modifiedCode, and Escape cancels.",
+          prop: "editableDifferences",
+          type: "boolean",
+        },
+        {
           default: "undefined",
           description:
             "A line tokenizer that splits each line into tokens and passes its state to the next line. Without it, the code renders as plain text.",

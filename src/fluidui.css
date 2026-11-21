@@ -299,6 +299,12 @@
   .fluid-code-editor-actions {
     @apply ml-auto flex h-[1lh] shrink-0 items-center gap-1 pl-2 select-none;
   }
+  .fluid-code-editor-editable {
+    @apply cursor-text outline-none focus-visible:outline-1 focus-visible:outline-offset-1;
+  }
+  .fluid-code-editor-input {
+    @apply h-[1lh] min-w-0 flex-1 bg-transparent outline-none;
+  }
   /* Drawer -------------------------- */
   .fluid-drawer {
     @apply fixed inset-0 z-10 bg-black/30 backdrop-blur-sm;

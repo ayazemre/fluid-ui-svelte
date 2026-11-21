@@ -774,6 +774,23 @@ export function getDifferenceLineNumberText(differenceKind: string, sourceLineNu
   return String(sourceLineNumber);
 }
 
+export function getEditableModifiedLineNumber(differenceRow: CondensedDifferenceRow): number | undefined {
+  if (differenceRow.kind === "gap" || differenceRow.kind === "removed") {
+    return undefined;
+  }
+  return differenceRow.modifiedLineNumber;
+}
+
+export function getModifiedLineText(modifiedCode: string, modifiedLineNumber: number): string {
+  return modifiedCode.split("\n")[modifiedLineNumber - 1] ?? "";
+}
+
+export function replaceModifiedCodeLine(modifiedCode: string | undefined, modifiedLineNumber: number, replacementLineText: string): string {
+  const modifiedLines = (modifiedCode ?? "").split("\n");
+  modifiedLines[modifiedLineNumber - 1] = replacementLineText;
+  return modifiedLines.join("\n");
+}
+
 export function isChangeBlockActionRow(displayedRows: Array<CondensedDifferenceRow>, rowIndex: number, showDifferenceLineActions: boolean): boolean {
   if (!showDifferenceLineActions) {
     return false;
