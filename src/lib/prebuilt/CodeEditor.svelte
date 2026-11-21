@@ -62,8 +62,12 @@
   let editingLineText = $state("");
   let editingInputElement: HTMLInputElement | HTMLTextAreaElement | null = $state(null);
 
+  let editingCaretOffset = $state(0);
+
   $effect(() => {
-    editingInputElement?.focus();
+    if (editingInputElement === null) return;
+    editingInputElement.focus();
+    editingInputElement.setSelectionRange(editingCaretOffset, editingCaretOffset);
   });
 
   function isEditableDifferenceRow(differenceRow: CondensedDifferenceRow): boolean {
@@ -74,11 +78,38 @@
     return editingModifiedLineNumber !== null && getEditableModifiedLineNumber(differenceRow) === editingModifiedLineNumber;
   }
 
-  function startLineEdit(differenceRow: CondensedDifferenceRow): void {
+  function getCaretNodeAndOffsetFromPoint(clientX: number, clientY: number): { node: Node; offset: number } | null {
+    if (typeof document.caretPositionFromPoint === "function") {
+      const caretPosition = document.caretPositionFromPoint(clientX, clientY);
+      return caretPosition ? { node: caretPosition.offsetNode, offset: caretPosition.offset } : null;
+    }
+    const caretRange = document.caretRangeFromPoint(clientX, clientY);
+    return caretRange ? { node: caretRange.startContainer, offset: caretRange.startOffset } : null;
+  }
+
+  function getClickedCharacterOffset(clickEvent: MouseEvent): number {
+    if (!(clickEvent.currentTarget instanceof Element)) return 0;
+    const codeElement = clickEvent.currentTarget.querySelector(".fluid-code-editor-content > .fluid-code-editor-text");
+    if (!codeElement) return 0;
+
+    const caretNodeAndOffset = getCaretNodeAndOffsetFromPoint(clickEvent.clientX, clickEvent.clientY);
+    if (!caretNodeAndOffset || !codeElement.contains(caretNodeAndOffset.node)) {
+      return clickEvent.clientX < codeElement.getBoundingClientRect().left ? 0 : Number.POSITIVE_INFINITY;
+    }
+
+    const characterRange = document.createRange();
+    characterRange.selectNodeContents(codeElement);
+    characterRange.setEnd(caretNodeAndOffset.node, caretNodeAndOffset.offset);
+    return characterRange.toString().length;
+  }
+
+  function startLineEdit(differenceRow: CondensedDifferenceRow, clickEvent?: MouseEvent): void {
     const modifiedLineNumber = getEditableModifiedLineNumber(differenceRow);
     if (!editableDifferences || modifiedLineNumber === undefined || modifiedCode === undefined) return;
     if (editingModifiedLineNumber === modifiedLineNumber) return;
-    editingLineText = getModifiedLineText(modifiedCode, modifiedLineNumber);
+    const lineText = getModifiedLineText(modifiedCode, modifiedLineNumber);
+    editingLineText = lineText;
+    editingCaretOffset = clickEvent === undefined ? lineText.length : Math.min(getClickedCharacterOffset(clickEvent), lineText.length);
     editingModifiedLineNumber = modifiedLineNumber;
   }
 
@@ -144,7 +175,7 @@
               isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-row-editable" : "",
               getDifferenceRowBackground(differenceRow.kind, differenceThemeMapping),
             ].join(" ")}
-            onclick={() => startLineEdit(differenceRow)}
+            onclick={(clickEvent) => startLineEdit(differenceRow, clickEvent)}
           >
             {#if showLineNumbers}
               <Container id={`fluid-code-editor-index-${index}-${id}`} aria-hidden="true" class="fluid-code-editor-index">
