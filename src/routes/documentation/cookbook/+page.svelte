@@ -4,6 +4,7 @@
   import DocumentationPager from "#src/documentation/DocumentationPager.svelte";
   import { resolveSvelteTokenizerForLanguage } from "#src/documentation/samples/codeEditorSvelteTokenizer.ts";
   import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "#src/documentation/samples/codeEditorThemes.ts";
+  import { buildSectionNumber } from "#src/documentation/siteContent.ts";
   import { Container, Link, Text } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
   import { CodeEditor } from "#src/lib/prebuilt/index.ts";
@@ -33,10 +34,6 @@
   function buildSectionAnchorId(sectionId: string): string {
     return `cookbook-${sectionId}-container`;
   }
-
-  function buildSectionNumber(sectionIndex: number): string {
-    return String(sectionIndex + 1).padStart(2, "0");
-  }
 </script>
 
 <Page id="cookbook-page" variant="site-page" title={pageData.title} description={pageData.description}>
@@ -44,7 +41,7 @@
     <Container id="cookbook-header-container" class="doc-header layer-tone-introduction">
       <Container id="cookbook-kicker" class="doc-kicker">
         <Text id="cookbook-eyebrow" type="span" class="doc-badge">Cookbook</Text>
-        <Text id="cookbook-kicker-text" type="span" class="doc-kicker-note">Guide · Part 02</Text>
+        <Text id="cookbook-kicker-text" type="span" class="doc-kicker-note">Guide</Text>
       </Container>
       <Text id="cookbook-title-text" type="h1" class="doc-title">{pageName}</Text>
       <Text id="cookbook-description-text" class="doc-deck">{pageData.description}</Text>
@@ -54,7 +51,7 @@
         <Container id="cookbook-contents-list" class="doc-contents-list">
           {#each sections as section, sectionIndex (section.id)}
             <Link id={`cookbook-contents-link-${section.id}`} href={`#${buildSectionAnchorId(section.id)}`} class="doc-contents-link">
-              <Text id={`cookbook-contents-index-${section.id}`} type="span" class="doc-contents-index">{buildSectionNumber(sectionIndex)}</Text>
+              <Text id={`cookbook-contents-index-${section.id}`} type="span" class="doc-contents-index">{buildSectionNumber(sectionIndex + 1)}</Text>
               <Text id={`cookbook-contents-title-${section.id}`} type="span">{section.title}</Text>
             </Link>
           {/each}
@@ -65,7 +62,7 @@
     {#each sections as section, sectionIndex (section.id)}
       <Container id={buildSectionAnchorId(section.id)} class="doc-section">
         <Container id={`cookbook-${section.id}-head`} class="doc-section-head">
-          <Text id={`cookbook-${section.id}-number`} type="span" class="doc-section-index">{buildSectionNumber(sectionIndex)}</Text>
+          <Text id={`cookbook-${section.id}-number`} type="span" class="doc-section-index">{buildSectionNumber(sectionIndex + 1)}</Text>
           <Text id={`cookbook-${section.id}-heading`} type="h2" class="doc-section-title">{section.title}</Text>
         </Container>
 

@@ -6,7 +6,6 @@ import {
   findDocumentationNeighborLinks,
   toDocumentationPageName,
 } from "#src/documentation/documentationNavigation.ts";
-import { layerNumerals } from "#src/documentation/siteContent.ts";
 
 import type { PageServerLoad } from "./$types";
 
@@ -30,7 +29,6 @@ export const load: PageServerLoad = ({ params }) => {
     category,
     categoryLabel: documentationCategoryLabels[category],
     description: componentData.description,
-    layerNumeral: layerNumerals[category],
     name: toDocumentationPageName(componentData.title),
     nextLink: neighborLinks.nextLink,
     previousLink: neighborLinks.previousLink,

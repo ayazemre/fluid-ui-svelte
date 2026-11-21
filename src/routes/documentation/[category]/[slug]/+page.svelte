@@ -1,6 +1,7 @@
 <script lang="ts">
   import DocumentationPager from "#src/documentation/DocumentationPager.svelte";
   import { documentationSampleRegistry } from "#src/documentation/samples/sampleRegistry.ts";
+  import { buildSectionNumber } from "#src/documentation/siteContent.ts";
   import { Container, Table, Text } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
 
@@ -18,6 +19,10 @@
 
   const SampleComponent = $derived(documentationSampleRegistry[data.category]?.[data.slug]);
 
+  const hasPropsSection = $derived(data.props.length > 0);
+  const propsSectionNumber = buildSectionNumber(1);
+  const samplesSectionNumber = $derived(buildSectionNumber(hasPropsSection ? 2 : 1));
+
   const propertyTableRows = $derived(
     data.props.map((propertyRow, rowIndex): Array<PropertyCell> => [
       { cellId: `doc-props-${rowIndex}-prop`, column: "prop", value: propertyRow.prop },
@@ -33,7 +38,6 @@
     <Container id={`doc-page-header-container-${data.category}-${data.slug}`} class={`doc-header layer-tone-${data.category}`}>
       <Container id={`doc-page-kicker-${data.category}-${data.slug}`} class="doc-kicker">
         <Text id={`doc-page-category-${data.category}-${data.slug}`} type="span" class="doc-badge">{data.categoryLabel}</Text>
-        <Text id={`doc-page-layer-order-${data.category}-${data.slug}`} type="span" class="doc-kicker-note">Layer {data.layerNumeral}</Text>
       </Container>
       <Text id={`doc-page-main-title-${data.category}-${data.slug}`} type="h1" class="doc-title">
         {data.name}
@@ -43,10 +47,10 @@
       </Text>
     </Container>
 
-    {#if data.props.length > 0}
+    {#if hasPropsSection}
       <Container id={`doc-page-props-container-${data.category}-${data.slug}`} class="doc-section">
         <Container id={`doc-page-props-head-${data.category}-${data.slug}`} class="doc-section-head">
-          <Text id={`doc-page-props-number-${data.category}-${data.slug}`} type="span" class="doc-section-index">01</Text>
+          <Text id={`doc-page-props-number-${data.category}-${data.slug}`} type="span" class="doc-section-index">{propsSectionNumber}</Text>
           <Text id={`doc-page-props-title-${data.category}-${data.slug}`} type="h2" class="doc-section-title">Props</Text>
         </Container>
         <Container id={`doc-page-props-frame-${data.category}-${data.slug}`} class="doc-table-frame">
@@ -83,9 +87,7 @@
     {#if SampleComponent}
       <Container id={`doc-page-samples-container-${data.category}-${data.slug}`} class="doc-section">
         <Container id={`doc-page-samples-head-${data.category}-${data.slug}`} class="doc-section-head">
-          <Text id={`doc-page-samples-number-${data.category}-${data.slug}`} type="span" class="doc-section-index">
-            {data.props.length > 0 ? "02" : "01"}
-          </Text>
+          <Text id={`doc-page-samples-number-${data.category}-${data.slug}`} type="span" class="doc-section-index">{samplesSectionNumber}</Text>
           <Text id={`doc-page-samples-title-${data.category}-${data.slug}`} type="h2" class="doc-section-title">Samples</Text>
         </Container>
         <Container id={`doc-page-samples-frame-${data.category}-${data.slug}`} class="doc-sample-frame">

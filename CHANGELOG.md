@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Breaking: `CodeEditor` replaces the `sourceCode` and `modifiedCode` props with one bindable `codeContent` prop of type `CodeContent`, an object with `sourceCode` and an optional `modifiedCode`. Bind a single object with `bind:codeContent`. Set `modifiedCode` to render a difference. Accepting, rejecting, and editing lines update the object in place.
+- The documentation site numbers only the sections it shows. The Getting Started guide drops its layer numerals and step numbers, and the component pages number the Samples section after the Props section only when Props is shown.
 
 ## [0.7.0] - 2026-11-21
 

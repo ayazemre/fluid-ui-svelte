@@ -1458,7 +1458,7 @@ export const documentationRegistry = {
               description: "Install the library using your package manager of choice.",
               id: "step-1",
               language: "bash",
-              title: "1. Install the package",
+              title: "Install the package",
             },
             {
               code: gettingStartedStylesCss,
@@ -1466,7 +1466,7 @@ export const documentationRegistry = {
                 "Fluid UI does not inject styles automatically. Copy fluidui.css from the installed package into your project, then import it in your main stylesheet. The file imports Tailwind itself. It uses Tailwind 4 syntax.",
               id: "step-2",
               language: "css",
-              title: "2. Configure Global Styles",
+              title: "Configure Global Styles",
             },
           ],
           title: "Installation",

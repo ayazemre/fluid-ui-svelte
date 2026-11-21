@@ -4,7 +4,7 @@
   import DocumentationPager from "#src/documentation/DocumentationPager.svelte";
   import { resolveSvelteTokenizerForLanguage } from "#src/documentation/samples/codeEditorSvelteTokenizer.ts";
   import { codeEditorDifferenceThemeMapping, codeEditorTokenThemeMapping } from "#src/documentation/samples/codeEditorThemes.ts";
-  import { layerNumerals } from "#src/documentation/siteContent.ts";
+  import { buildSectionNumber } from "#src/documentation/siteContent.ts";
   import { Container, Text } from "#src/lib/base/index.ts";
   import { Page } from "#src/lib/components/index.ts";
   import { CodeEditor } from "#src/lib/prebuilt/index.ts";
@@ -39,7 +39,7 @@
     <Container id="getting-started-intro-container" class="doc-header layer-tone-introduction">
       <Container id="getting-started-kicker" class="doc-kicker">
         <Text id="getting-started-chip" type="span" class="doc-badge">Introduction</Text>
-        <Text id="getting-started-kicker-text" type="span" class="doc-kicker-note">Guide · Part 01</Text>
+        <Text id="getting-started-kicker-text" type="span" class="doc-kicker-note">Guide</Text>
       </Container>
       <Text id="getting-started-heading" type="h1" class="doc-title">{introductionSection.title}</Text>
       <Text id="getting-started-description" class="doc-deck">{introductionSection.content}</Text>
@@ -47,7 +47,7 @@
 
     <Container id="getting-started-architecture-container" class="doc-section">
       <Container id="getting-started-architecture-head" class="doc-section-head">
-        <Text id="getting-started-architecture-number" type="span" class="doc-section-index">01</Text>
+        <Text id="getting-started-architecture-number" type="span" class="doc-section-index">{buildSectionNumber(1)}</Text>
         <Text id="getting-started-structure-heading" type="h2" class="doc-section-title">{architectureSection.title}</Text>
       </Container>
       <Text id="getting-started-structure-description" class="doc-prose doc-prose-muted">{architectureSection.description}</Text>
@@ -55,7 +55,6 @@
       <Container id="getting-started-layers-index" class="guide-layer-list">
         {#each architectureSection.layers as layer (layer.id)}
           <Container id={`getting-started-${layer.id}-layer-item`} class="guide-layer-item">
-            <Text id={`getting-started-${layer.id}-layer-index`} type="span" class="guide-layer-index">{layerNumerals[layer.id]}</Text>
             <Container id={`getting-started-${layer.id}-layer-heading`} class="guide-layer-main">
               <Text id={`getting-started-${layer.id}-layer-title`} type="h3" class="guide-layer-title">{layer.title}</Text>
               <Text id={`getting-started-${layer.id}-layer-path`} type="code" class="guide-layer-path">{layer.path}</Text>
@@ -68,15 +67,14 @@
 
     <Container id="getting-started-installation-container" class="doc-section">
       <Container id="getting-started-installation-head" class="doc-section-head">
-        <Text id="getting-started-installation-number" type="span" class="doc-section-index">02</Text>
+        <Text id="getting-started-installation-number" type="span" class="doc-section-index">{buildSectionNumber(2)}</Text>
         <Text id="getting-started-installation-heading" type="h2" class="doc-section-title">{installationSection.title}</Text>
       </Container>
 
       <Container id="getting-started-steps-container" class="guide-steps">
-        {#each installationSection.steps as step, stepIndex (step.id)}
+        {#each installationSection.steps as step (step.id)}
           <Container id={`getting-started-${step.id}-container`} class="guide-step">
             <Container id={`getting-started-${step.id}-heading-row`} class="guide-step-head">
-              <Text id={`getting-started-${step.id}-index`} type="span" class="guide-step-index">{String(stepIndex + 1).padStart(2, "0")}</Text>
               <Text id={`getting-started-${step.id}-heading`} type="h3" class="guide-step-title">{step.title}</Text>
             </Container>
             <Text id={`getting-started-${step.id}-description`} class="doc-prose doc-prose-muted">{step.description}</Text>
@@ -103,7 +101,7 @@
 
     <Container id="getting-started-usage-container" class="doc-section">
       <Container id="getting-started-usage-head" class="doc-section-head">
-        <Text id="getting-started-usage-number" type="span" class="doc-section-index">03</Text>
+        <Text id="getting-started-usage-number" type="span" class="doc-section-index">{buildSectionNumber(3)}</Text>
         <Text id="getting-started-usage-heading" type="h2" class="doc-section-title">{usageSection.title}</Text>
       </Container>
       <Text id="getting-started-usage-description" class="doc-prose doc-prose-muted">{usageSection.description}</Text>

@@ -337,11 +337,7 @@
   }
 
   .guide-layer-item {
-    @apply grid grid-cols-[3rem_minmax(0,1fr)] gap-4 border-b border-neutral-200 py-5 dark:border-neutral-800;
-  }
-
-  .guide-layer-index {
-    @apply font-site-mono text-[0.9rem] text-neutral-500 dark:text-neutral-400;
+    @apply border-b border-neutral-200 py-5 dark:border-neutral-800;
   }
 
   .guide-layer-main {
@@ -370,10 +366,6 @@
 
   .guide-step-head {
     @apply flex items-center gap-3;
-  }
-
-  .guide-step-index {
-    @apply font-site-mono text-[0.75rem] text-primary-600 dark:text-primary-400;
   }
 
   .guide-step-title {
