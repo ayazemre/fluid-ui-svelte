@@ -299,8 +299,20 @@
   .fluid-code-editor-actions {
     @apply ml-auto flex h-[1lh] shrink-0 items-center gap-1 pl-2 select-none;
   }
+  .fluid-code-editor-text {
+    @apply text-current transition-none dark:text-current;
+  }
+  .fluid-code-editor-row-editable {
+    @apply relative cursor-text;
+  }
+  .fluid-code-editor-row-editable::after {
+    @apply pointer-events-none absolute inset-0 content-[''];
+  }
+  .fluid-code-editor-row-editable:hover::after {
+    @apply bg-neutral-950/5 dark:bg-white/10;
+  }
   .fluid-code-editor-editable {
-    @apply cursor-text outline-none focus-visible:outline-1 focus-visible:outline-offset-1;
+    @apply outline-none focus-visible:outline-1 focus-visible:outline-offset-1;
   }
   .fluid-code-editor-input {
     @apply h-[1lh] min-w-0 flex-1 rounded-none bg-transparent p-0 outline-none focus:outline-none dark:bg-transparent dark:text-neutral-300;

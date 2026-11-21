@@ -77,6 +77,7 @@
   function startLineEdit(differenceRow: CondensedDifferenceRow): void {
     const modifiedLineNumber = getEditableModifiedLineNumber(differenceRow);
     if (!editableDifferences || modifiedLineNumber === undefined || modifiedCode === undefined) return;
+    if (editingModifiedLineNumber === modifiedLineNumber) return;
     editingLineText = getModifiedLineText(modifiedCode, modifiedLineNumber);
     editingModifiedLineNumber = modifiedLineNumber;
   }
@@ -138,7 +139,12 @@
         {:else}
           <Container
             id={`fluid-code-editor-row-${index}-${id}`}
-            class={["fluid-code-editor-row", getDifferenceRowBackground(differenceRow.kind, differenceThemeMapping)].join(" ")}
+            class={[
+              "fluid-code-editor-row",
+              isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-row-editable" : "",
+              getDifferenceRowBackground(differenceRow.kind, differenceThemeMapping),
+            ].join(" ")}
+            onclick={() => startLineEdit(differenceRow)}
           >
             {#if showLineNumbers}
               <Container id={`fluid-code-editor-index-${index}-${id}`} aria-hidden="true" class="fluid-code-editor-index">
@@ -170,14 +176,13 @@
                 <Text
                   id={`fluid-code-editor-text-${index}-${id}`}
                   type="pre"
-                  class={isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-editable" : ""}
+                  class={["fluid-code-editor-text", isEditableDifferenceRow(differenceRow) ? "fluid-code-editor-editable" : ""].join(" ")}
                   tabindex={isEditableDifferenceRow(differenceRow) ? 0 : undefined}
-                  onclick={() => startLineEdit(differenceRow)}
                   onkeydown={(event) => {
                     if (event.key === "Enter") startLineEdit(differenceRow);
                   }}
                 >
-                  <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={"language-" + language}
+                  <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={["fluid-code-editor-text", "language-" + language].join(" ")}
                     >{@html getDifferenceRowContentMarkup(
                       differenceRow,
                       sourceTokenLines,
@@ -189,7 +194,11 @@
                 </Text>
               {/if}
               {#if isChangeBlockActionRow(condensedDifferenceRows, index, showDifferenceLineActions)}
-                <Container id={`fluid-code-editor-actions-${index}-${id}`} class="fluid-code-editor-actions">
+                <Container
+                  id={`fluid-code-editor-actions-${index}-${id}`}
+                  class="fluid-code-editor-actions"
+                  onclick={(event) => event.stopPropagation()}
+                >
                   <Button
                     id={`fluid-code-editor-accept-${index}-${id}`}
                     aria-label="Accept change"
@@ -226,8 +235,10 @@
           </Container>
         {/if}
         <Container id={`fluid-code-editor-content-${index}-${id}`} class="fluid-code-editor-content">
-          <Text id={`fluid-code-editor-text-${index}-${id}`} type="pre">
-            <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={"language-" + language}>{@html lineMarkup || "&nbsp;"}</Text>
+          <Text id={`fluid-code-editor-text-${index}-${id}`} type="pre" class="fluid-code-editor-text">
+            <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={["fluid-code-editor-text", "language-" + language].join(" ")}
+              >{@html lineMarkup || "&nbsp;"}</Text
+            >
           </Text>
         </Container>
       </Container>
