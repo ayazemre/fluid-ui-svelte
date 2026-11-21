@@ -125,8 +125,8 @@
   <Container id="code-editor-sample-editable-section" class="flex flex-col gap-2">
     <Text id="code-editor-sample-editable-heading" type="h3" class="text-lg font-semibold">Editable difference</Text>
     <Text id="code-editor-sample-editable-description" class="text-sm text-neutral-500">
-      Enable editableDifferences to edit lines on the modified side. Click a line, or press Enter on it, to open an input. Enter or leaving the input
-      saves the line, and Escape cancels. Edits write to the bound modifiedCode, and the difference recomputes.
+      Enable editableDifferences to edit added and changed lines on the modified side. Click a row, or press Enter on its code, to open an input.
+      Enter or leaving the input saves the line, and Escape cancels. Edits write to the bound modifiedCode, and the difference recomputes.
     </Text>
     <Container id="code-editor-sample-editable-preview" class="flex flex-col gap-4 rounded-lg border p-4">
       <Container id="code-editor-sample-editable-actions" class="flex gap-2">

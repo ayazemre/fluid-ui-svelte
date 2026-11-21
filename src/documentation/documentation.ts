@@ -1571,7 +1571,7 @@ export const documentationRegistry = {
         {
           default: "false",
           description:
-            "Whether a line of the modified side can be edited in a difference view. Clicking the line or pressing Enter on it opens an input. Enter or blur saves the line to modifiedCode, and Escape cancels.",
+            "Whether added and changed lines of the modified side can be edited in a difference view. Clicking the row or pressing Enter on its code opens an input. Enter or blur saves the line to modifiedCode, and Escape cancels. Removed and unchanged lines stay read only.",
           prop: "editableDifferences",
           type: "boolean",
         },

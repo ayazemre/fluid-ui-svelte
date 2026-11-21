@@ -775,7 +775,7 @@ export function getDifferenceLineNumberText(differenceKind: string, sourceLineNu
 }
 
 export function getEditableModifiedLineNumber(differenceRow: CondensedDifferenceRow): number | undefined {
-  if (differenceRow.kind === "gap" || differenceRow.kind === "removed") {
+  if (differenceRow.kind !== "added") {
     return undefined;
   }
   return differenceRow.modifiedLineNumber;

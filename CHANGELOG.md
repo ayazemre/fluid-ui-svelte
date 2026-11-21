@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `CodeEditor` accepts an `editableDifferences` prop. When it is set, a line of the modified side in a difference view can be edited. Clicking the line or pressing Enter on it opens an input, Enter or blur saves the line to the bindable `modifiedCode`, and Escape cancels.
+- `CodeEditor` accepts an `editableDifferences` prop. When it is set, added and changed lines of the modified side in a difference view can be edited. Clicking the row or pressing Enter on its code opens an input, Enter or blur saves the line to the bindable `modifiedCode`, and Escape cancels. Removed and unchanged lines stay read only.
 
 ## [0.7.0] - 2026-11-21
 
