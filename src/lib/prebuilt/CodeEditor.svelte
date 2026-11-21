@@ -129,9 +129,9 @@
             {/if}
             <Container id={`fluid-code-editor-content-gap-${index}-${id}`} class="fluid-code-editor-content">
               <Text id={`fluid-code-editor-text-gap-${index}-${id}`} type="pre">
-                <span id={`fluid-code-editor-code-gap-${index}-${id}`} class={differenceThemeMapping.gapRow}>
+                <Text id={`fluid-code-editor-code-gap-${index}-${id}`} type="span" class={differenceThemeMapping.gapRow}>
                   {differenceRow.skippedLineCount + " unchanged lines hidden"}
-                </span>
+                </Text>
               </Text>
             </Container>
           </Container>
@@ -177,14 +177,14 @@
                     if (event.key === "Enter") startLineEdit(differenceRow);
                   }}
                 >
-                  <span id={`fluid-code-editor-code-${index}-${id}`} class={"language-" + language}
+                  <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={"language-" + language}
                     >{@html getDifferenceRowContentMarkup(
                       differenceRow,
                       sourceTokenLines,
                       modifiedTokenLines,
                       tokenThemeMapping,
                       differenceThemeMapping,
-                    ) || "&nbsp;"}</span
+                    ) || "&nbsp;"}</Text
                   >
                 </Text>
               {/if}
@@ -227,7 +227,7 @@
         {/if}
         <Container id={`fluid-code-editor-content-${index}-${id}`} class="fluid-code-editor-content">
           <Text id={`fluid-code-editor-text-${index}-${id}`} type="pre">
-            <span id={`fluid-code-editor-code-${index}-${id}`} class={"language-" + language}>{@html lineMarkup || "&nbsp;"}</span>
+            <Text id={`fluid-code-editor-code-${index}-${id}`} type="span" class={"language-" + language}>{@html lineMarkup || "&nbsp;"}</Text>
           </Text>
         </Container>
       </Container>
